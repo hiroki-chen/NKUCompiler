@@ -125,6 +125,9 @@ static const char* op_name[]{
     "MOVLT",
     "MOVGE",
     "MOVLE",
+
+    // Alloca.
+    "ALLOCA",
 };
 /**
  * @brief Defines different operations.
@@ -206,6 +209,9 @@ typedef enum op_type {
   MOVLT,
   MOVGE,
   MOVLE,
+
+  // Declare,
+  ALLOCA,
 } op_type;
 
 /**

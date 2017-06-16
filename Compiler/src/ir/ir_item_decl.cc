@@ -32,9 +32,11 @@ void compiler::Item_decl_var::generate_ir_helper(
 
   // Check current scope.
   if (ir_context->is_global_context() == true) {
-    const std::string name_symbol = ir::global_sign;
+    const std::string name_symbol =
+        compiler::concatenate(ir::global_sign, name);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
-    ir_list.emplace_back(compiler::ir::op_type::GLOBAL, default_value);
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL,
+                         new ir::Operand(name_symbol), default_value);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
 
     // Create a new symbol for the symbol table.
@@ -49,6 +51,9 @@ void compiler::Item_decl_var::generate_ir_helper(
         new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
                              false, {}, compiler::to_ir_type(b_type));
     ir_context->get_symbol_table()->add_symbol(name, symbol);
+    // Generate an explicit declare IR.
+    ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
+                         new ir::Operand(name_symbol));
   }
 }
 
@@ -61,10 +66,11 @@ void compiler::Item_decl_var_init::generate_ir_helper(
     std::string name_symbol;
     // Check current scope.
     if (ir_context->is_global_context()) {
+      name_symbol = compiler::concatenate(ir::global_sign, name);
       ir::Operand* const result = expression->eval_runtime(ir_context, ir_list);
-      name_symbol = ir::global_sign;
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
-      ir_list.emplace_back(compiler::ir::op_type::GLOBAL, result);
+      ir_list.emplace_back(compiler::ir::op_type::GLOBAL,
+                           new ir::Operand(name_symbol), result);
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
 
       if (is_const) {
@@ -76,9 +82,12 @@ void compiler::Item_decl_var_init::generate_ir_helper(
             dynamic_cast<compiler::Symbol_const*>(symbol));
       }
     } else {
-      const uint32_t scope_id =
-          ir_context->get_symbol_table()->get_top_scope_uuid();
-      name_symbol = ir::local_sign + std::to_string(scope_id);
+      const uint32_t id = ir_context->get_symbol_table()->get_available_id();
+      name_symbol = compiler::concatenate(ir::local_sign, id);
+      // Generate an explicit declare IR.
+      ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
+                           new ir::Operand(name_symbol));
+
       compiler::Symbol* const symbol =
           new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
                                false, {}, compiler::to_ir_type(b_type));

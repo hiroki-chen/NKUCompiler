@@ -58,7 +58,7 @@ void compiler::Item_func_def::generate_ir_helper(
     compiler::ir::ir_list& ir_list) const {
   try {
     // Reset available id.
-    ir_context->get_symbol_table()->set_available_id(0ul);
+    ir_context->get_symbol_table()->set_available_id(1ul);
 
     // Set symbol
     compiler::Symbol* const func_symbol = new compiler::Symbol(
@@ -140,7 +140,7 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
 
   // Check argument count.
   const size_t arg_count = arguments->get_arguments().size();
-  std::cout << arg_count << ", " << func_symbol->get_arg_count();
+
   if (arg_count != func_symbol->get_arg_count()) {
     throw compiler::unsupported_operation(
         "Error: The argument number is not correct!");

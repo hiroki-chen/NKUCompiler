@@ -24,13 +24,28 @@ static void construct_mapping(const compiler::ir::ir_list& ir_list,
                               std::map<uint32_t, std::string>& id_to_name,
                               compiler::ir::cfg& blocks) {
   // TODO: Need to save global definition.
+  // TODO: Need to stop analyzing the basic block if there is a RET statement.
   // Create mapping while constructing basic blocks for the CFG.
   // Scan the whole ir_list to construct basic blocks and the id.
   uint32_t id = 0;
 
   size_t i = 0;
   while (i < ir_list.size()) {
-    if (ir_list[i].get_op_type() == compiler::ir::op_type::FUNC) {
+    if (ir_list[i].get_op_type() == compiler::ir::op_type::GLOBAL_BEGIN) {
+      // Handle global definitions.
+      uint32_t j = i + 1;
+      compiler::ir::cfg_block global_block;
+
+      while (j < ir_list.size() &&
+             ir_list[j].get_op_type() != compiler::ir::op_type::GLOBAL_END) {
+        global_block.emplace_back(ir_list[j]);
+        j++;
+      }
+
+      i = j;
+      // Add to the whole blocks.
+      blocks["GLOBAL"].emplace_back(id++, global_block);
+    } else if (ir_list[i].get_op_type() == compiler::ir::op_type::FUNC) {
       // Build a new CFG for a function.
       id = 0;
       const std::string function_name = std::move(ir_list[i].get_label());
@@ -86,8 +101,25 @@ static void analyze_control_flow(
   // I.e.:
   //        Foo -> Bar  type: 1 (Unconditional)
   for (auto item : blocks) {
-    const std::string name = item.first;
+    // Prune early return statements.
+    for (auto& block : item.second) {
+      uint32_t end_pos = 0;
+      while (end_pos < block.second.size() &&
+             block.second[end_pos].get_op_type() !=
+                 compiler::ir::op_type::RET) {
+        end_pos++;
+      }
 
+      // HACK: Just pop useless IRs out of the vector!
+      const size_t vec_size = block.second.size();
+      for (size_t i = end_pos + 1; i < vec_size; i++) {
+        block.second.pop_back();
+      }
+    }
+  }
+
+  for (auto item : blocks) {
+    const std::string name = item.first;
     // Analyze the control flow by jump-related instructions.
     const auto blocks = item.second;
     for (auto basic_block : blocks) {
@@ -110,8 +142,9 @@ static void analyze_control_flow(
       // If not, construct an explicit edge.
       // HACK: Assume the next block's id is always cur_id + 1... Is that really
       // so?
-      if (basic_block.second.back().get_op_type() !=
-          compiler::ir::op_type::JMP) {
+      if (basic_block.second.empty() ||
+          basic_block.second.back().get_op_type() !=
+              compiler::ir::op_type::JMP) {
         edges[name].emplace_back(id, id + 1, true);
       }
     }
@@ -139,7 +172,6 @@ static void prune_cfg(
     const uint32_t id = item.second;
     // Search all the blocks that come to this block.
     // Search all the blocks that are connected to it as its successor.
-    
   }
 }
 
