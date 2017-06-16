@@ -26,14 +26,14 @@ extern uint32_t opt_level;
 
 compiler::ir::Operand* compiler::Item_stmt::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   generate_ir(ir_context, ir_list);
   return new compiler::ir::Operand();
 }
 
 void compiler::Item_block::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   try {
     ir_context->enter_scope();
     for (Item_stmt* const statement : statements) {
@@ -42,21 +42,21 @@ void compiler::Item_block::generate_ir_helper(
     ir_context->leave_scope();
   } catch (const compiler::fatal_error& e) {
     // Scope is invalid.
-    std::cerr << termcolor::red << termcolor::bold
-              << "FATAL ERROR: " << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << lineno
+              << ": FATAL ERROR: " << e.what() << std::endl;
     exit(1);
   }
 }
 
 void compiler::Item_stmt_void::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   return;
 }
 
 void compiler::Item_stmt_eif::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   try {
     ir_context->enter_scope();
     // Get the id of current scope.
@@ -85,9 +85,9 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     // Generate a label for if branch.
     ir_list.emplace_back(ir::op_type::LBL,
-                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF:"));
+                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF"));
 
-    std::vector<compiler::ir::IR> ir_if, ir_else;
+    compiler::ir::ir_list ir_if, ir_else;
     compiler::ir::IRContext ir_context_if(*ir_context);
     compiler::ir::IRContext ir_context_else(*ir_context);
 
@@ -104,10 +104,10 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     ir_context->get_symbol_table()->set_available_id(
         ir_context_else.get_symbol_table()->get_available_id());
 
-    std::vector<compiler::ir::IR> ir_list_end;
+    compiler::ir::ir_list ir_list_end;
     ir_list_end.emplace_back(
         compiler::ir::op_type::LBL,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF:"));
+        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
@@ -154,18 +154,18 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     // Append to the ir_list.
     compiler::insert_with_move(ir_list, ir_if);
     if (ir_else.empty() == false) {
-      ir_list.emplace_back(ir::op_type::JMP,
-                           new ir::Operand(compiler::concatenate(
-                               ".LBB", scope_uuid_cur, "_END_IF")));
+      ir_list.emplace_back(
+          ir::op_type::JMP,
+          compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
     }
     ir_list.emplace_back(
         ir::op_type::LBL,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE:"));
+        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE"));
 
     compiler::insert_with_move(ir_list, ir_else);
     ir_list.emplace_back(
         ir::op_type::JMP,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF:"));
+        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
     compiler::insert_with_move(ir_list, ir_list_end);
 
     ir_context->leave_scope();
@@ -206,7 +206,7 @@ compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
 
     return result;
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what()
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     exit(1);
   }
@@ -214,7 +214,7 @@ compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
 
 compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   generate_ir(ir_context, ir_list);
 
   if (identifier->get_ident_type() == compiler::Item_ident::ident_type::ARRAY) {
@@ -232,7 +232,7 @@ compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
 
 void compiler::Item_stmt_assign::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   // We need to check the assigner and the assignee.
   const Item_ident::ident_type type = identifier->get_ident_type();
 
@@ -294,7 +294,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
 // FIXME: phi move does not work.
 void compiler::Item_stmt_while::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   try {
     // Enter a scope.
     ir_context->enter_scope();
@@ -306,27 +306,27 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Step 1: Copy the previous context.
     compiler::ir::IRContext* ir_context_backup =
         new compiler::ir::IRContext(*ir_context);
-    std::vector<ir::IR> ir_list_backup;
+    ir::ir_list ir_list_backup;
 
     // Step 2: Create condition.
     compiler::ir::IRContext* ir_context_condition =
         new compiler::ir::IRContext(*ir_context_backup);
-    std::vector<compiler::ir::IR> ir_list_condition;
+    compiler::ir::ir_list ir_list_condition;
     ir_list_condition.emplace_back(
         compiler::ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
 
     compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context_condition, ir_list_condition);
 
     // Step 3: Set up jump instruction.
-    std::vector<compiler::ir::IR> ir_list_jump;
+    compiler::ir::ir_list ir_list_jump;
     ir_list_jump.emplace_back(
         branch_ir.second, compiler::concatenate(".LB", scope_id, ".LOOP_END"));
 
     // Step 4: Create the do body, and then generate ir from it.
     ir::IRContext* ir_context_do = new ir::IRContext(*ir_context_condition);
-    std::vector<ir::IR> ir_list_do;
+    ir::ir_list ir_list_do;
     ir_context_do->continue_symbol.push({});
     ir_context_do->break_symbol.push({});
     ir_context_do->continue_phi_block.push({});
@@ -338,7 +338,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Step 5: Real do body.
     ir::IRContext* ir_context_do_real =
         new ir::IRContext(*ir_context_condition);
-    std::vector<ir::IR> ir_list_do_real;
+    ir::ir_list ir_list_do_real;
     ir_context_do_real->continue_symbol.push({});
     ir_context_do_real->break_symbol.push({});
     ir_context_do_real->continue_phi_block.push({});
@@ -350,7 +350,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Insert label.
     ir_list_do_real.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY");
     statement->generate_ir(ir_context_do_real, ir_list_do_real);
     // Insert phi blocks.
     for (auto& phi_block : ir_context_do_real->continue_phi_block.top()) {
@@ -376,14 +376,14 @@ void compiler::Item_stmt_while::generate_ir_helper(
 
     // Step 8: Continue statement.
     ir::IRContext* ir_context_continue = new ir::IRContext(*ir_context_do_real);
-    std::vector<ir::IR> ir_list_continue;
+    ir::ir_list ir_list_continue;
     ir_list_continue.emplace_back(
         ir::op_type::JMP,
         ".LB" + ir_context->get_top_loop_label() + "_LOOP_CONTINUE");
     ir_list_condition.clear();
     ir_list_condition.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
     // Handle phi move.
     auto symbol_table =
         ir_context_backup->get_symbol_table()->get_symbol_table();
@@ -426,7 +426,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
         ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
     ir_list_continue.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
 
     //============================= END PRE-PREPARATION
     //============================= BEGIN REAL WHILE STATEMENT
@@ -459,10 +459,10 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_list_do_real.clear();
     ir_list_continue.clear();
     ir_list_continue.emplace_back(ir::op_type::NOP);
-    std::vector<ir::IR> ir_list_end;
+    ir::ir_list ir_list_end;
     ir_list_end.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
     ir_context_do_real->continue_symbol.push({});
     ir_context_do_real->break_symbol.push({});
     ir_context_do_real->continue_phi_block.push({});
@@ -473,7 +473,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
 
     ir_list_do_real.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY");
     statement->generate_ir(ir_context_do_real, ir_list_do_real);
     compiler::handle_phi_move(ir_context_do_real, true);
     compiler::handle_phi_move(ir_context_do_real, false);
@@ -489,7 +489,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_list_continue.emplace_back(
         ir::op_type::LBL,
         new ir::Operand(".LB" + ir_context->get_top_loop_label() +
-                        "_LOOP_CONTINUE:"));
+                        "_LOOP_CONTINUE"));
 
     for (uint32_t i = 0; i < symbol_table.size(); i++) {
       for (auto symbol_prev : *symbol_table[i]->get_block()) {
@@ -541,7 +541,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
 
 void compiler::Item_stmt_postfix::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   // number ++ => number = number + 1;
   compiler::Item_literal* const number =
       new compiler::Item_literal_int(lineno, 1);
@@ -559,7 +559,7 @@ void compiler::Item_stmt_postfix::generate_ir_helper(
 
 compiler::ir::Operand* compiler::Item_stmt_postfix::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   compiler::Symbol* const sym =
       ir_context->get_symbol_table()->find_symbol(identifier->get_name());
   compiler::Item_literal* const number =
@@ -594,20 +594,18 @@ compiler::ir::Operand* compiler::Item_stmt_postfix::eval_runtime_helper(
 
 void compiler::Item_stmt_return::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   if (expr != nullptr) {
     ir::Operand* const return_value = expr->eval_runtime(ir_context, ir_list);
     ir_list.emplace_back(ir::op_type::RET, return_value);
   } else {
-    ir::Operand* const return_value =
-        new ir::Operand(ir::var_type::NONE, "", "", false, false);
-    ir_list.emplace_back(ir::op_type::RET, return_value);
+    ir_list.emplace_back(ir::op_type::RET, nullptr);
   }
 }
 
 void compiler::Item_stmt_break::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   // Check if the context is correct. Break statement cannot break to a non-loop
   // envionment.
   if (ir_context->is_loop_context() == false) {
@@ -638,7 +636,7 @@ void compiler::Item_stmt_break::generate_ir_helper(
 
 void compiler::Item_stmt_continue::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   if (ir_context->is_loop_context() == false) {
     throw compiler::unsupported_operation(
         "Error: Continue statement in a non-loop envionment!");

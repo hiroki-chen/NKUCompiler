@@ -39,7 +39,7 @@ typedef class Item_struct_body final : Item_stmt {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 

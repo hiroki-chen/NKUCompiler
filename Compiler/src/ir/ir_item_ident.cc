@@ -49,7 +49,7 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
 
 compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   compiler::Symbol_table* const symbol_table = ir_context->get_symbol_table();
   try {
     compiler::Symbol_const* const symbol =
@@ -75,12 +75,12 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
 // For generting the IR for array identifiers. E.g.: arr[4][4].
 compiler::ir::Operand* compiler::Item_ident_array::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<ir::IR>& ir_list) const {
+    ir::ir_list& ir_list) const {
   return array_access_helper(ir_context, ir_list, ir::op_type::LDR);
 }
 
 void compiler::Item_ident_array::assign_to_array(
-    ir::IRContext* ir_context, std::vector<ir::IR>& ir_list,
+    ir::IRContext* ir_context, ir::ir_list& ir_list,
     compiler::ir::Operand* const expression) const {
   array_access_helper(ir_context, ir_list, ir::op_type::STR, expression);
 }
@@ -91,7 +91,7 @@ compiler::ir::Operand* compiler::Item_ident_array::eval_runtime_helper(
 }
 
 compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
-    compiler::ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list,
+    compiler::ir::IRContext* const ir_context, ir::ir_list& ir_list,
     const compiler::ir::op_type& op_type,
     compiler::ir::Operand* const expression) const {
   try {

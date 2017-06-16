@@ -113,7 +113,7 @@ void compiler::Compiler_runtime::run(void) {
 
       std::string res;
       std::ostringstream oss;
-      std::vector<compiler::ir::IR> ir_list;
+      compiler::ir::ir_list ir_list;
       if (!output_file.is_open()) {
         const std::string file =
             input_file[i].substr(input_file[i].find_last_of("/"));
@@ -138,25 +138,23 @@ void compiler::Compiler_runtime::run(void) {
 
         for (auto item : ir_list) {
           item.emit_ir(oss, false);
+#ifdef COMPILER_DEBUG
           item.emit_ir(std::cerr, false);
+#endif
         }
 
         res = oss.str();
       }
 
+      compiler::ir::CFG_builder* const cfg_builder =
+          new compiler::ir::CFG_builder(ir_list);
+#ifdef COMPILER_DEBUG
+      cfg_builder->print_cfg();
+#endif
+
       output_file << res;
       output_file.flush();
       output_file.close();
-      // compiler::ir::CFG_builder* const cfg_builder =
-      //     new compiler::ir::CFG_builder(ir_list);
-      // // DEBUG
-      // auto table = cfg_builder->get_look_up_table();
-      // for (auto item : table) {
-      //   std::cout << item.first << ":\n";
-      //   for (auto ir : item.second) {
-      //     ir->emit_ir();
-      //   }
-      // }
     }
 
   } catch (const std::exception& e) {

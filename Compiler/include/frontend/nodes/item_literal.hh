@@ -33,7 +33,7 @@ typedef class Item_literal : public Item_expr {
 
   virtual ir::Operand* eval_runtime_helper(
       ir::IRContext* const ir_context,
-      std::vector<ir::IR>& ir_list) const override {
+      ir::ir_list& ir_list) const override {
     return eval_runtime_helper(ir_context);
   }
 
@@ -56,7 +56,7 @@ typedef class Item_literal : public Item_expr {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
   Item_literal() = delete;
 
@@ -80,7 +80,7 @@ typedef class Item_literal_numeric : public Item_literal {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -101,7 +101,7 @@ typedef class Item_literal_int final : public Item_literal_numeric {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return eval_runtime_helper(ir_context);
   }
 
@@ -114,7 +114,7 @@ typedef class Item_literal_int final : public Item_literal_numeric {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -132,7 +132,7 @@ typedef class Item_literal_real final : public Item_literal_numeric {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return eval_runtime_helper(ir_context);
   }
 
@@ -147,7 +147,7 @@ typedef class Item_literal_real final : public Item_literal_numeric {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -165,7 +165,7 @@ typedef class Item_literal_char final : public Item_literal_numeric {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return eval_runtime_helper(ir_context);
   }
 
@@ -178,7 +178,7 @@ typedef class Item_literal_char final : public Item_literal_numeric {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -202,7 +202,7 @@ typedef class Item_literal_string final : public Item_literal {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 

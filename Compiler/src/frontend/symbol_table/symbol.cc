@@ -24,10 +24,25 @@ compiler::Symbol::Symbol(const std::string& name, const symbol_type& type,
       type(type),
       is_pointer(is_pointer),
       shape(shape),
+      var_type(var_type),
+      arg_count(0) {}
+
+compiler::Symbol::Symbol(const std::string& name, const symbol_type& type,
+                         const uint32_t& arg_count,
+                         const ir::var_type& var_type)
+    : name(name),
+      type(type),
+      arg_count(arg_count),
+      is_pointer(0),
+      shape({}),
       var_type(var_type) {}
 
 compiler::Symbol::Symbol(const Symbol& symbol)
-    : name(symbol.name), type(symbol.type), is_pointer(symbol.is_pointer) {
+    : name(symbol.name),
+      type(symbol.type),
+      is_pointer(symbol.is_pointer),
+      arg_count(symbol.arg_count),
+      var_type(symbol.var_type) {
   for (auto item : symbol.shape) {
     shape.emplace_back(new compiler::ir::Operand(*item));
   }

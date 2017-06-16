@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <sys/time.h>
+extern "C" {
 /* Input & output functions */
 int getint(), getch(), getarray(int a[]);
 void putint(int a), putch(int a), putarray(int n, int a[]);
@@ -20,5 +21,6 @@ __attribute((constructor)) void before_main();
 __attribute((destructor)) void after_main();
 void _sysy_starttime(int lineno);
 void _sysy_stoptime(int lineno);
+}
 
 #endif

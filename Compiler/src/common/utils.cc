@@ -161,6 +161,8 @@ compiler::ir::var_type compiler::to_ir_type(const basic_type& b_type) {
       return ir::var_type::i32;
     case basic_type::REAL_TYPE:
       return ir::var_type::DB;
+    case basic_type::VOID_TYPE:
+      return ir::var_type::NONE;
     default:
       throw compiler::unsupported_operation("Cannot convert this type to IR!");
   }
@@ -174,7 +176,8 @@ uint32_t compiler::to_byte_length(const compiler::basic_type& b_type) {
     case basic_type::REAL_TYPE:
       return 4;
     default:
-      throw compiler::unsupported_operation("Cannot convert this type to byte!");
+      throw compiler::unsupported_operation(
+          "Cannot convert this type to byte!");
   }
 }
 

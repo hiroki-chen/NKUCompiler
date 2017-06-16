@@ -17,15 +17,24 @@
 #ifndef CFG_HH
 #define CFG_HH
 #include <ir/ir.hh>
-#include <vector>
 #include <map>
+#include <vector>
 
 namespace compiler::ir {
 /**
  * @brief Basic block in a control flow graph.
  *
  */
-using cfg_block = std::vector<IR*>;
+using cfg_block = std::vector<IR>;
+
+/**
+ * @brief The CFG itself.
+ *
+ * A CFG is defined as:
+ *    Function -> Blocks = [id, block_body].
+ *
+ */
+using cfg = std::map<std::string, std::vector<std::pair<uint32_t, cfg_block>>>;
 
 /**
  * @brief An edge in the CFG.
@@ -41,31 +50,54 @@ typedef struct Edge {
    *
    */
   bool type;
+
+  Edge() = default;
+
+  Edge(const uint32_t& from, const uint32_t& to, const bool& type)
+      : from(from), to(to), type(type) {}
 } Edge;
 
 /**
  * @brief A class for building the cfg from raw TAC (Three Address Code).
- * 
+ *
  */
 typedef class CFG_builder {
-private:
-  std::vector<Edge> edges;
+ private:
+  /**
+   * @brief The CFG should be a SPARSE graph where each node has at most two
+   *        successors and two predecessors.
+   *
+   */
+  std::map<std::string, std::vector<Edge>> edges;
 
   std::map<uint32_t, cfg_block> look_up_table;
 
   std::map<std::string, uint32_t> name_to_id;
 
-public:
+  std::map<uint32_t, std::string> id_to_name;
+
+  cfg blocks;
+
+ public:
   CFG_builder() = delete;
 
   CFG_builder(const std::vector<IR>& ir_list);
-  
+
   void prettier_ir(std::ostream& out = std::cerr);
 
-  std::vector<Edge> get_edges(void) const { return edges; }
+  std::map<std::string, std::vector<Edge>> get_edges(void) const {
+    return edges;
+  }
 
-  std::map<uint32_t, cfg_block> get_look_up_table(void) const { return look_up_table; }
+  std::map<uint32_t, cfg_block> get_look_up_table(void) const {
+    return look_up_table;
+  }
+
+#ifdef COMPILER_DEBUG
+  void print_cfg(void) const;
+#endif
 } CFG_builder;
+
 }  // namespace compiler::ir
 
 #endif

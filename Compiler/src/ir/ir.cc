@@ -31,8 +31,9 @@ compiler::ir::Operand::Operand()
       is_ptr(false) {}
 
 // Construct an operand type from name.
-compiler::ir::Operand::Operand(const std::string& identifier)
-    : type(compiler::ir::var_type::NONE),
+compiler::ir::Operand::Operand(const std::string& identifier,
+                               const var_type& var_type)
+    : type(var_type),
       identifier(identifier),
       value(""),
       is_var(true),
@@ -137,7 +138,12 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   };
   walk_ir(lambda_walk_ir);
 
-  FORMAT(output, label + "\n", 0);
+  if (type == ir::op_type::LBL) {
+    FORMAT(output, label + ":\n", 0);
+  } else {
+    FORMAT(output, label + "\n", 0);
+  }
+
   if (type == ir::op_type::END_FUNC || type == ir::op_type::GLOBAL_END) {
     output << std::endl;
   }
@@ -281,3 +287,18 @@ compiler::ir::Operand::Operand(const compiler::ir::Operand& operand)
       is_ptr(operand.is_ptr),
       is_var(operand.is_var),
       value(operand.value) {}
+
+bool compiler::ir::is_jump(const op_type& op_type) {
+  switch (op_type) {
+    case op_type::JEQ:
+    case op_type::JL:
+    case op_type::JG:
+    case op_type::JGE:
+    case op_type::JLE:
+    case op_type::JNE:
+    case op_type::JMP:
+      return true;
+    default:
+      return false;
+  }
+}

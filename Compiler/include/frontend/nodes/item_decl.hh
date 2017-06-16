@@ -38,7 +38,7 @@ typedef class Item_decl : public Item {
       is_decl;  // This differentiates between DEFINITION AND DECLARATION.
 
   virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
-                                  std::vector<compiler::ir::IR>& ir_list,
+                                  compiler::ir::ir_list& ir_list,
                                   const basic_type& b_type) const {
     throw;
   }
@@ -73,7 +73,7 @@ typedef class Item_decl : public Item {
    * @param b_type
    */
   virtual void generate_ir(compiler::ir::IRContext* const ir_context,
-                           std::vector<compiler::ir::IR>& ir_list,
+                           compiler::ir::ir_list& ir_list,
                            const basic_type& b_type) const;
 
   virtual ~Item_decl() override = default;
@@ -94,7 +94,7 @@ typedef class Item_stmt_decl : public Item_stmt {
    */
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   virtual Item_stmt::stmt_type get_stmt_type(void) const override {
@@ -124,7 +124,7 @@ typedef class Item_decl_var : public Item_decl {
   Item_ident* const identifier;
 
   virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
-                                  std::vector<compiler::ir::IR>& ir_list,
+                                  compiler::ir::ir_list& ir_list,
                                   const basic_type& b_type) const override;
 
  public:
@@ -182,7 +182,7 @@ typedef class Item_decl_pointer_init final : public Item_decl_pointer {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -208,7 +208,7 @@ typedef class Item_decl_var_init final : public Item_decl_var {
   const bool is_const;
 
   virtual void generate_ir_helper(ir::IRContext* const ir_context,
-                                  std::vector<ir::IR>& ir_list,
+                                  ir::ir_list& ir_list,
                                   const basic_type& b_type) const override;
 
  public:
@@ -237,12 +237,12 @@ typedef class Item_decl_array : public Item_decl {
   Item_ident_array* const identifier;
 
   virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
-                                  std::vector<compiler::ir::IR>& ir_list,
+                                  compiler::ir::ir_list& ir_list,
                                   const basic_type& b_type) const override;
 
   virtual uint32_t calculate_array_size(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type,
+      compiler::ir::ir_list& ir_list, const basic_type& b_type,
       std::vector<ir::Operand*>& shape) const;
 
  public:
@@ -270,7 +270,7 @@ typedef class Item_decl_array_init final : public Item_decl_array {
   Item_literal_array_init* const init_value;
 
   virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
-                                  std::vector<compiler::ir::IR>& ir_list,
+                                  compiler::ir::ir_list& ir_list,
                                   const basic_type& b_type) const override;
 
   /**
@@ -288,7 +288,7 @@ typedef class Item_decl_array_init final : public Item_decl_array {
       const std::vector<compiler::Item_literal_array_init*> value_list,
       std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list,
+      compiler::ir::ir_list& ir_list,
       const compiler::ir::var_type& var_type) const;
 
  public:
@@ -326,7 +326,7 @@ typedef class Item_decl_struct final : public Item_decl {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 

@@ -49,6 +49,8 @@ typedef class Symbol {
 
   ir::var_type var_type;
 
+  uint32_t arg_count;
+
  public:
   Symbol() = delete;
 
@@ -57,9 +59,15 @@ typedef class Symbol {
          const std::vector<ir::Operand*>& shape = {},
          const ir::var_type& var_type = ir::var_type::i32);
 
+  Symbol(const std::string& name, const symbol_type& type,
+         const uint32_t& arg_count,
+         const ir::var_type& var_type);  // For functions.
+
   Symbol(const Symbol& symbol);
 
   virtual void set_value(const std::string& value) { this->value = value; }
+
+  virtual void set_var_type(const ir::var_type& type) { this->var_type = type; }
 
   virtual void add_shape(ir::Operand* const shape) {
     this->shape.emplace_back(shape);
@@ -68,6 +76,12 @@ typedef class Symbol {
   virtual std::vector<ir::Operand*> get_shape(void) const { return shape; }
 
   virtual bool is_const(void) const { return false; }
+
+  virtual uint32_t get_arg_count(void) const { return arg_count; }
+
+  virtual void set_arg_count(const uint32_t& arg_count) {
+    this->arg_count = arg_count;
+  }
 
   virtual std::string get_name(void) const { return name; }
 
