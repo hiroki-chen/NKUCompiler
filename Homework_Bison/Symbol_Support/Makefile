@@ -2,9 +2,8 @@
 
 CXX = g++-11
 CXXFLAGS = -g -o expr -Wno-register
-SRC = yacc.c lex.c symbol.c
+SRC = yacc.c symbol.c
 
-LEX = expr.l
 YACC = expr.y
 
 .PHONY: all
@@ -12,7 +11,5 @@ YACC = expr.y
 all: $(SRC)
 	$(CXX) $(CXXFLAGS) $(SRC)
 
-$(SRC): $(LEX) $(YACC)
+$(SRC): $(YACC)
 	yacc -d -o yacc.c $(YACC)
-	lex -o lex.c $(LEX)
-

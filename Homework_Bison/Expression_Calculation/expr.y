@@ -11,7 +11,6 @@
 #include <string.h>
 
 #define true 1
-#define YYSTYPE double
 
 FILE* yyin;
 extern int yywrap(void);

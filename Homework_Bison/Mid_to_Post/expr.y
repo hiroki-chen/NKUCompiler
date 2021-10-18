@@ -67,6 +67,7 @@ expr:  expr ADD expr            {
     strcat($$, $3);
     strcat($$, "/");
 }
+    | '(' expr ')'              { $$ = $2; }
     |  NUMBER                   { $$ = $1; printf("%s", $1); }
     |  LETTER                   { $$ = $1; }
     ;

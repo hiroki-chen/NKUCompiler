@@ -19,7 +19,7 @@ extern struct symbol* symbol_table;
 digit          [0-9]
 letter         [a-zA-Z]
 digit_letter   [a-zA-Z0-9]
-ignore         [\t\s\n]
+ignore         [ \t\s\n]
 
 %%
 "+"     { return ADD; }

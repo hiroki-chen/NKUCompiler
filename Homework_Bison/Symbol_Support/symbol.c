@@ -20,25 +20,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct symbol* get_symbol(struct symbol* symbol_table, const char* name)
+struct symbol* get_symbol(struct symbol* symbol_table, const char name)
 {
-    struct symbol* sym;
-    for (unsigned int i = 0; i < MAXIMUM_SYMBOL; i++) {
-        sym = &symbol_table[i];
-        if (sym->name != NULL && strcmp(sym->name, name) == 0) {
-            return sym;
-        }
-    }
-
-    for (unsigned int i = 0; i < MAXIMUM_SYMBOL; i++) {
-        sym = &symbol_table[i];
-        if (sym->name == NULL) {
-            sym->name = strdup(name);
-            sym->value = 0.0;
-            return sym;
-        }
-    }
-
+    return &symbol_table[name - 'a'];
+    
     fprintf(stderr, "Too many symbols!\n");
     exit(1);
 }

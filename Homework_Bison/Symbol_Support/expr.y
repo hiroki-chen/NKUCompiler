@@ -20,7 +20,7 @@ extern int yywrap();
 FILE* yyin;
 void yyerror(const char* str);
 
-struct symbol* symbol_table = NULL;
+struct symbol symbol_table[1024];
 
 int init_symbol_table(void);
 %}
@@ -48,6 +48,7 @@ int init_symbol_table(void);
 
 lines:   lines stmt SEMICOLON
      |   stmt SEMICOLON
+     |   END                    { printf("Goodbye:)\n"); exit(0); }
      ;
 
 stmt:   ID EQ expr { $1->value = $3; }
@@ -72,8 +73,9 @@ expr:   expr ADD expr           { $$ = $1 + $3; }
 
 int main(int argc, const char** argv)
 {
-    // Initialize the symbol table.
     init_symbol_table();
+    yyin = stdin;
+    // Initialize the symbol table.
     do {
         yyparse();
     } while (!feof(yyin));
@@ -89,8 +91,12 @@ void yyerror(const char* error)
 
 int init_symbol_table(void)
 {
-    symbol_table = (struct symbol*)(malloc(MAXIMUM_SYMBOL * sizeof(struct symbol)));
-    memset(symbol_table, 0, MAXIMUM_SYMBOL * sizeof(struct symbol));
+    //symbol_table = (struct symbol*)(malloc(MAXIMUM_SYMBOL * sizeof(struct symbol)));
+
+    for (unsigned int i = 0; i < MAXIMUM_SYMBOL; i++) {
+        symbol_table[i].name = NULL;
+        symbol_table[i].value = 0.0;
+    }
 
     if (symbol_table == NULL) {
         fprintf(stderr, "Malloc failed.n");
@@ -130,8 +136,11 @@ int yylex(void)
         } else if (c == '=') {
             return EQ;
         } else if (isalpha(c)){
-            yylval.id = get_symbol(symbol_table, &c);
+            yylval.id = get_symbol(symbol_table, c);
+            // printf("res: %s", yylval.id->name);
             return ID;
+        } else if (c == '$') {
+            return END;
         } else {
             return c;
         }

@@ -26,6 +26,6 @@ struct symbol {
     double value;
 } ;
 
-struct symbol* get_symbol(struct symbol* symbol_table, const char* name);
+struct symbol* get_symbol(struct symbol* symbol_table, const char name);
 
 #endif
