@@ -1,0 +1,61 @@
+%{
+    /*************************************************************
+    expr.l
+    LEX FILE
+    Date: 2021/10/18
+    Haobin Chen (@Aoyamahiroki) <etyyuiope@gmail.com>
+    Jiawei Xu   (@Darren-8)
+
+    Main tokenizer
+    **************************************************************/
+    #include <iostream>
+    #include <stdexcept>
+
+    extern void yyerror(const char* str);
+    extern int yyparse(void);
+%}
+
+// Operators 
+%token          ADD MINUS MUL DIV MOD
+%token          EQ NEQ GEQ LEQ G L
+%token          BIT_AND BIT_OR BIT_XOR BIT_NEG
+%token          LOGIC_AND LOGIC_OR LOGIC_NOT
+
+// Numbers
+%token          DECIMAL OCTAL HEX
+
+// Types
+%token          INT DOUBLE FLOAT CHAR VOID STRUCT
+
+// Keywords
+%token          IF ELSE WHILE FOR RETURN BREAK CONTINUE CONST
+
+// Comment
+%token          SINGLE_COMMENT
+
+// Other symbols
+%token          LBRACE RBRACE LPARENTHESIS RPARENTHESIS
+%token          SEMICOLON
+
+%left           ADD MINUS
+%left           MOD
+%left           MUL DIV
+%nonassoc       UMINUS UADD
+
+%union {
+    char*   raw_str;
+    int     raw_int;
+    double  raw_double;
+    float   raw_float;
+}
+
+%%
+
+%%
+int main(int argc, const char** argv)
+{
+    if (argc != 1) {
+        std::cerr << "Usage: [file_path]" << std::endl;
+    }
+    return yyparse();
+}

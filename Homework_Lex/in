@@ -1,0 +1,13 @@
+// Test Comment.
+
+int factorial(int number) {
+    if (number == 0x1 || number == 063) {
+        return 1;
+    } else {
+        return number * factorial(number - 1);
+    }
+
+    for (int i = 0; i <= 100; i++) {
+        break;
+    }
+}
