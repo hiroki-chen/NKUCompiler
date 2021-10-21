@@ -19,6 +19,7 @@
 
 #include "item.hh"
 
+#include <cstring>
 #include <iostream>
 #include <map>
 #include <string>
@@ -79,7 +80,7 @@ public:
      * @param name          The name of the symbol.
      * @param scope         The current scope.
      */
-    Item_ident(const uint32_t& line_no, const std::string& name, const uint32_t scope);
+    Item_ident(const uint32_t& line_no, const std::string& name, const uint32_t& scope);
 
     /**
      * @brief Get the name object
@@ -120,7 +121,7 @@ public:
 
     virtual int get_int(void) const override { return value; }
 
-    Item_ident_int(const uint32_t& line_no, const std::string& name, const uint32_t scope, const int& value = 0);
+    Item_ident_int(const uint32_t& line_no, const std::string& name, const uint32_t& scope, const int& value = 0);
 
     virtual ~Item_ident_int() override = default;
 } Item_ident_int;
@@ -134,7 +135,7 @@ public:
 
     virtual double get_real(void) const override { return value; }
 
-    Item_ident_real(const uint32_t& line_no, const std::string& name, const uint32_t scope, const double& value = 0.0);
+    Item_ident_real(const uint32_t& line_no, const std::string& name, const uint32_t& scope, const double& value = 0.0);
 
     virtual ~Item_ident_real() override = default;
 } Item_ident_real;
@@ -148,10 +149,23 @@ public:
 
     virtual char get_char(void) const override { return value; }
 
-    Item_ident_char(const uint32_t& line_no, const std::string& name, const uint32_t scope, const char& value = '\0');
+    Item_ident_char(const uint32_t& line_no, const std::string& name, const uint32_t& scope, const char& value = '\0');
 
     virtual ~Item_ident_char() override = default;
 } Item_ident_char;
 
+typedef class Item_ident_str : public Item_ident {
+protected:
+    std::string value;
+
+public:
+    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::CHAR_ARRAY_TYPE; }
+
+    virtual char* get_c_str(void) const { return strdup(value.c_str()); }
+
+    Item_ident_str(const uint32_t& line_no, const std::string& name, const uint32_t& scope, const char* value = nullptr);
+
+    virtual ~Item_ident_str() override = default;
+} Item_ident_str;
 } // namespace compiler
 #endif

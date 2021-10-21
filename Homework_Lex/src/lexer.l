@@ -47,6 +47,7 @@ ID          [[:alpha:]_][[:alpha:][:digit:]_]*
 LINE        ((\r\n)|\n|\r)
 EMPTY       [ \t]
 COMMENT     ^"//"
+STRING      \"(\\.|[^"\\])*\"
 
 %x          BLOCKCOMMENT
 
@@ -442,7 +443,17 @@ COMMENT     ^"//"
         yylval.raw_symbol = strdup(yytext);
         return ID;
     #else
-        
+        return ID;
+    #endif
+}
+
+{STRING} {
+    #ifdef ONLY_FOR_LEX
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "STRING\t\t\t\tstring: " << yytext << std::endl;
+        cur_pos += strlen(yytext);
+        // yylval.raw_string = strdup(yytext);
+    #else
+        return STRING;
     #endif
 }
 

@@ -19,7 +19,7 @@
 compiler::Item_ident::Item_ident(
     const uint32_t& line_no,
     const std::string& name,
-    const uint32_t scope)
+    const uint32_t& scope)
     : Item(line_no)
     , name(name)
     , scope(scope)
@@ -29,7 +29,7 @@ compiler::Item_ident::Item_ident(
 compiler::Item_ident_int::Item_ident_int(
     const uint32_t& line_no,
     const std::string& name,
-    const uint32_t scope,
+    const uint32_t& scope,
     const int& value)
     : Item_ident(line_no, name, scope)
     , value(value)
@@ -39,7 +39,7 @@ compiler::Item_ident_int::Item_ident_int(
 compiler::Item_ident_real::Item_ident_real(
     const uint32_t& line_no,
     const std::string& name,
-    const uint32_t scope,
+    const uint32_t& scope,
     const double& value)
     : Item_ident(line_no, name, scope)
     , value(value)
@@ -49,9 +49,19 @@ compiler::Item_ident_real::Item_ident_real(
 compiler::Item_ident_char::Item_ident_char(
     const uint32_t& line_no,
     const std::string& name,
-    const uint32_t scope,
+    const uint32_t& scope,
     const char& value)
     : Item_ident(line_no, name, scope)
     , value(value)
+{
+}
+
+compiler::Item_ident_str::Item_ident_str(
+    const uint32_t& line_no,
+    const std::string& name,
+    const uint32_t& scope,
+    const char* value)
+    : Item_ident(line_no, name, scope)
+    , value((std::string)(value == nullptr ? "" : value))
 {
 }

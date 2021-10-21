@@ -46,5 +46,28 @@ clang++  -o  obj/lexer.bin  obj/item.o  obj/item_ident.o  obj/lexer.o  obj/symbo
 obj/lexer.bin in out
 ```
 
+Sample Output:
+```
+0 0:    INT                             int
+0 4:    ID                              id: a with scope: 1
+0 5:    ASSIGN                          assign
+0 7:    Decimal                         3
+0 8:    SEMICOLON                               semicolon
+2 0:    LBRACE                          lbrace
+3 4:    INT                             int
+3 8:    ID                              id: a with scope: 2
+3 9:    ASSIGN                          assign
+3 11:   Decimal                         4
+3 12:   SEMICOLON                               semicolon
+3 15:   INT                             int
+3 19:   ID                              id: b with scope: 2
+3 20:   ASSIGN                          assign
+3 22:   Decimal                         4
+3 23:   SEMICOLON                               semicolon
+4 4:    STRING                          string: "OK"
+4 8:    SEMICOLON                               semicolon
+5 0:    RBRACE                          rbrace
+```
+
 ### 其他
 如果有啥不明白可以翻翻源文件，C++文件和头文件基本都加了注释:)

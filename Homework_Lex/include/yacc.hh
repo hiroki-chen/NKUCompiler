@@ -61,28 +61,29 @@
      DECIMAL = 277,
      OCTAL = 278,
      HEX = 279,
-     INT = 280,
-     DOUBLE = 281,
-     FLOAT = 282,
-     CHAR = 283,
-     VOID = 284,
-     STRUCT = 285,
-     IF = 286,
-     ELSE = 287,
-     WHILE = 288,
-     FOR = 289,
-     RETURN = 290,
-     BREAK = 291,
-     CONTINUE = 292,
-     CONST = 293,
-     ASSIGN = 294,
-     LBRACE = 295,
-     RBRACE = 296,
-     LPARENTHESIS = 297,
-     RPARENTHESIS = 298,
-     SEMICOLON = 299,
-     UADD = 300,
-     UMINUS = 301
+     STRING = 280,
+     INT = 281,
+     DOUBLE = 282,
+     FLOAT = 283,
+     CHAR = 284,
+     VOID = 285,
+     STRUCT = 286,
+     IF = 287,
+     ELSE = 288,
+     WHILE = 289,
+     FOR = 290,
+     RETURN = 291,
+     BREAK = 292,
+     CONTINUE = 293,
+     CONST = 294,
+     ASSIGN = 295,
+     LBRACE = 296,
+     RBRACE = 297,
+     LPARENTHESIS = 298,
+     RPARENTHESIS = 299,
+     SEMICOLON = 300,
+     UADD = 301,
+     UMINUS = 302
    };
 #endif
 /* Tokens.  */
@@ -108,28 +109,29 @@
 #define DECIMAL 277
 #define OCTAL 278
 #define HEX 279
-#define INT 280
-#define DOUBLE 281
-#define FLOAT 282
-#define CHAR 283
-#define VOID 284
-#define STRUCT 285
-#define IF 286
-#define ELSE 287
-#define WHILE 288
-#define FOR 289
-#define RETURN 290
-#define BREAK 291
-#define CONTINUE 292
-#define CONST 293
-#define ASSIGN 294
-#define LBRACE 295
-#define RBRACE 296
-#define LPARENTHESIS 297
-#define RPARENTHESIS 298
-#define SEMICOLON 299
-#define UADD 300
-#define UMINUS 301
+#define STRING 280
+#define INT 281
+#define DOUBLE 282
+#define FLOAT 283
+#define CHAR 284
+#define VOID 285
+#define STRUCT 286
+#define IF 287
+#define ELSE 288
+#define WHILE 289
+#define FOR 290
+#define RETURN 291
+#define BREAK 292
+#define CONTINUE 293
+#define CONST 294
+#define ASSIGN 295
+#define LBRACE 296
+#define RBRACE 297
+#define LPARENTHESIS 298
+#define RPARENTHESIS 299
+#define SEMICOLON 300
+#define UADD 301
+#define UMINUS 302
 
 
 
@@ -139,11 +141,12 @@ typedef union YYSTYPE
 #line 29 "src/tokenizer.ypp"
 {
     char*   raw_symbol;
+    char*   raw_string;
     int     raw_int;
     double  raw_real;
 }
 /* Line 1529 of yacc.c.  */
-#line 147 "src/yacc.hh"
+#line 150 "src/yacc.hh"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

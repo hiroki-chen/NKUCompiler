@@ -14,23 +14,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef COMPILER_BODY_HH
-#define COMPILER_BODY_HH
+#include <item_expr.hh>
 
-#include <symbol_table.hh>
-
-#include <map>
-#include <string>
-#include <memory>
-
-namespace compiler {
-
-// Compiler runtime.
-typedef class Compiler {
-private:
-    std::unique_ptr<Symbol_table> symbol_table;
-
-} Compiler;
+compiler::Item_expr::Item_expr(const uint32_t& line_no)
+    : Item_stmt(line_no)
+{
 }
 
-#endif
+compiler::Item_expr_cond::Item_expr_cond(const uint32_t& line_no, Item_expr* const item_expr)
+    : Item_expr(line_no)
+    , expr(item_expr)
+{
+}

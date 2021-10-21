@@ -28,6 +28,7 @@
 %error-verbose
 %union {
     char*   raw_symbol;
+    char*   raw_string;
     int     raw_int;
     double  raw_real;
 }
@@ -38,8 +39,8 @@
 %token          BIT_AND BIT_OR BIT_XOR BIT_NEG
 %token          LOGIC_AND LOGIC_OR LOGIC_NOT
 
-// Numbers
-%token          DECIMAL OCTAL HEX
+// Numbers and string
+%token          DECIMAL OCTAL HEX STRING
 
 // Types
 %token          INT DOUBLE FLOAT CHAR VOID STRUCT
@@ -64,14 +65,15 @@
 
 %%
 lines: lines assignment SEMICOLON
-     |
+     | assignment       SEMICOLON
      ;
 
 assignment:
 INT ID ASSIGN DECIMAL {
     compiler::Item_ident *const item = new compiler::Item_ident_int(yylineno, $2, symbol_table.get_current_scope(), $4);
     symbol_table.put(item);
-};
+}   |
+    ;
 
 %%
 int main(int argc, const char** argv)

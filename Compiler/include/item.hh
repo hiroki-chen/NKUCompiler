@@ -38,7 +38,8 @@ public:
         EXPR_ITEM,
         DECL_ITEM,
         DEF_ITEM,
-        ITENT_ITEM
+        ITENT_ITEM,
+        STMT_ITEM,
     } type;
 
     Item() = delete;
@@ -48,6 +49,8 @@ public:
     Item(const uint32_t& line_no);
 
     virtual Item::type get_type(void) const = 0;
+
+    // virtual void print_result() const = 0;
 
     virtual ~Item() = default;
 } Item;

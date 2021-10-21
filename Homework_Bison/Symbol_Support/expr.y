@@ -27,7 +27,6 @@ int init_symbol_table(void);
 
 // Operators
 %token ADD MINUS MUL DIV EQ END SEMICOLON
-
 %left EQ
 %left ADD MINUS
 %left MUL DIV
