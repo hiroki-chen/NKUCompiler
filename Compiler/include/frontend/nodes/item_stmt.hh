@@ -17,15 +17,14 @@
 #ifndef ITEM_STMT_HH
 #define ITEM_STMT_HH
 
-#include <item.hh>
-#include <item_ident.hh>
-#include <item_expr.hh>
+#include <frontend/nodes/item_ident.hh>
+#include <frontend/nodes/item_expr.hh>
 
 #include <vector>
 
 namespace compiler {
 
-typedef class Item_stmt : public Item {
+typedef class Item_stmt : public Item_expr {
 
 public:
     typedef enum stmt_type {
@@ -37,6 +36,7 @@ public:
         FOR_STMT,
         RETURN_STMT,
         BLOCK,
+        DECL_STMT,
     } stmt_type;
 
     Item_stmt() = delete;

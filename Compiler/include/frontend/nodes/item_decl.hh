@@ -14,17 +14,41 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef TYPES_HH
-#define TYPES_HH
+#ifndef ITEM_DECL_HH
+#define ITEM_DECL_HH
 
+#include <frontend/nodes/item.hh>
+#include <frontend/nodes/item_stmt.hh>
+#include <common/types.hh>
+
+#include <memory>
+#include <vector>
 
 namespace compiler {
 
-typedef enum basic_types {
-    INT,
-    REAL,
-    CHAR
-} basic_types;
+/**
+ * @brief Class for declaration.
+ * 
+ */
+typedef class Item_decl : public Item_stmt {
+public:
+    typedef enum decl_type {
+        VAR_DECL,
+        CONST_DECL,
+        FUNC_DECL,
+        STRUCT_DECL,
+    } decl_type;
+
+    Item_decl() = delete;
+
+    Item_decl(const uint32_t& line_no);
+
+    virtual Item_stmt::stmt_type get_stmt_type(void) const override { return DECL_STMT; }
+
+    virtual Item_decl::decl_type get_decl_type(void) const = 0;
+
+    virtual ~Item_decl() override = default;
+} Item_decl;
 } // namespace compiler
 
 #endif

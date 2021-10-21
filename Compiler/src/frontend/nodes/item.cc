@@ -14,25 +14,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_DECL_HH
-#define ITEM_DECL_HH
+#include <frontend/nodes/item.hh>
 
-#include <item.hh>
-#include <item_stmt.hh>
-#include <types.hh>
-
-#include <memory>
-#include <vector>
-
-namespace compiler {
-
-/**
- * @brief Class for declaration.
- * 
- */
-typedef class Item_decl : public Item_stmt {
-
-} Item_decl;
-} // namespace compiler
-
-#endif
+compiler::Item::Item(const uint32_t& line_no)
+    : line_no(line_no)
+{
+}

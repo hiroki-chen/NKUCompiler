@@ -14,19 +14,20 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_DEC_HH
-#define ITEM_DEC_HH
+#include <frontend/nodes/item_literal.hh>
 
-#include <item.hh>
+compiler::Item_literal::Item_literal(const uint32_t& line_no)
+    : Item_expr(line_no)
+{
+}
 
-namespace compiler {
+compiler::Item_literal_numeric::Item_literal_numeric(const uint32_t& line_no, const double& value)
+    : Item_literal(line_no)
+    , value(value)
+{
+}
 
-typedef class Item_def : public Item {
-public:
-    virtual Item::type get_type(void) const override { return Item::type::DEF_ITEM; }
-
-    virtual ~Item_def() override = default;
-} Item_Def;
-} // namespace compiler
-
-#endif
+compiler::Item_literal_int::Item_literal_int(const uint32_t& line_no, const int& value)
+    : Item_literal_numeric(line_no, (double)value)
+{
+}

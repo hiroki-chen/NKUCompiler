@@ -14,10 +14,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <item_stmt.hh>
+#include <frontend/nodes/item_stmt.hh>
 
 compiler::Item_stmt::Item_stmt(const uint32_t& line_no)
-    : Item(line_no)
+    : Item_expr(line_no)
 {
 }
 

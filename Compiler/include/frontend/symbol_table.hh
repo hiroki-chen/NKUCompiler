@@ -17,7 +17,8 @@
 #ifndef SYMBOL_TABLE_HH
 #define SYMBOL_TABLE_HH
 
-#include "item_ident.hh"
+#include <frontend/nodes/symbol_table.hh>
+#include <frontend/nodes/item_ident.hh>
 
 #include <map>
 #include <vector>

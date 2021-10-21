@@ -14,9 +14,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <item.hh>
+#include <frontend/nodes/item_ident.hh>
 
-compiler::Item::Item(const uint32_t& line_no)
-    : line_no(line_no)
+compiler::Item_ident::Item_ident(const uint32_t& line_no, const std::string& name)
+    : Item_expr(line_no)
+    , name(name)
 {
 }

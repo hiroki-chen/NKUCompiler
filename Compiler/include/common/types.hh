@@ -14,23 +14,27 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef COMPILER_BODY_HH
-#define COMPILER_BODY_HH
-
-#include <symbol_table.hh>
-
-#include <map>
-#include <string>
-#include <memory>
+#ifndef TYPES_HH
+#define TYPES_HH
 
 namespace compiler {
 
-// Compiler runtime.
-typedef class Compiler {
-private:
-    std::unique_ptr<Symbol_table> symbol_table;
+typedef enum binary_type {
+    ADD_TYPE,
+    SUB_TYPE,
+    MUL_TYPE,
+    DIV_TYPE,
+    BITOR_TYPE,
+    BITAND_TYPE,
+    BITXOR_TYPE
+} binary_type;
 
-} Compiler;
-}
+typedef enum unary_type {
+    NOT_TYPE,
+    NEG_TYPE,
+    UMINUS_TYPE,
+    UADD_TYPE
+} unary_type;
+} // namespace compiler
 
 #endif

@@ -14,15 +14,30 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <item_expr.hh>
+#include <frontend/nodes/item_expr.hh>
 
 compiler::Item_expr::Item_expr(const uint32_t& line_no)
-    : Item_stmt(line_no)
+    : Item(line_no)
 {
 }
 
 compiler::Item_expr_cond::Item_expr_cond(const uint32_t& line_no, Item_expr* const item_expr)
     : Item_expr(line_no)
     , expr(item_expr)
+{
+}
+
+compiler::Item_expr_binary::Item_expr_binary(const uint32_t& line_no, const binary_type& type, Item_expr* const lhs, Item_expr* const rhs)
+    : Item_expr(line_no)
+    , type(type)
+    , lhs(lhs)
+    , rhs(rhs)
+{
+}
+
+compiler::Item_expr_unary::Item_expr_unary(const uint32_t& line_no, const unary_type& type, Item_expr* const expr)
+    : Item_expr(line_no)
+    , type(type)
+    , expr(expr)
 {
 }
