@@ -25,7 +25,7 @@ Symbol_table::Symbol_table()
 
 void Symbol_table::enter_scope(void)
 {
-    symbol_table.push(std::map<std::string, Item_ident*>());
+    symbol_table.push_back(std::map<std::string, Item_ident*>());
 }
 
 void Symbol_table::leave_scope(void)
@@ -33,7 +33,7 @@ void Symbol_table::leave_scope(void)
     if (symbol_table.size() <= 0) {
         throw std::runtime_error("Symbol Table does not exists but you still tried to leave a scope?\n");
     } else {
-        symbol_table.pop();
+        symbol_table.pop_back();
     }
 }
 
@@ -42,17 +42,29 @@ void Symbol_table::put(Item_ident* const item)
     if (symbol_table.size() <= 0) {
         throw std::runtime_error("Symbol Table does not exists but you still tried to declare a symbol?\n");
     } else {
-        symbol_table.top()[item->get_name()] = item;
+        symbol_table.back()[item->get_name()] = item;
     }
 }
 
 Item_ident*
 Symbol_table::get(const std::string& name)
 {
-    if (symbol_table.top().count(name) == 0) {
-        throw std::runtime_error("Undeclared identifier!\n");
+    if (symbol_table.size() <= 0) {
+        throw std::runtime_error("There is no symbol table at all!\n");
     } else {
-        return symbol_table.top().at(name);
+        Item_ident* ans = nullptr;
+        
+        for (auto item : symbol_table) {
+            if (item.count(name) != 0) {
+                ans = item[name];
+            }
+        }
+         
+        if (ans != nullptr) {
+            return ans;
+        } else {
+            throw std::runtime_error("Undeclared symbol!\n");
+        }
     }
 }
 

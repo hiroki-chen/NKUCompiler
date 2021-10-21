@@ -23,6 +23,8 @@ namespace compiler {
 /**
  * @brief The most basic type for each node in the AST.
  * 
+ * @note  THIS IS AN ABSTRACT CLASS. DO NOT CREATE AN INSTANCE DIRECTLY FROM IT.
+ *        BUT YOU MAY USE A POINTER TO IT.
  */
 typedef class Item {
 protected:

@@ -28,16 +28,32 @@ namespace compiler {
 /**
  * @brief Class for identifiers.
  * 
+ * @note THIS IS AN ABSTACT CLASS! DO NOT CREATE AN INSTANCE FROM IT. BUT IT IS OK WITH
+ *       Idem_ident *const item_ident = new Idem_int_ident(...);
+ * 
  */
 typedef class Item_ident : public Item {
 protected:
+    /**
+     * @brief The symbol name.
+     * 
+     * E.g.: int a = 3   =>    name = "a"
+     */
     const std::string name;
 
+    /**
+     * @brief In which scope does it reside. Identified by a unique number.
+     * 
+     */
     const uint32_t scope;
 public:
+    /**
+     * @brief The type of the identifier.
+     * 
+     */
     typedef enum ident_type {
         INT_TYPE,
-        REAL_TYPE,
+        REAL_TYPE, // DOUBLE AND FLOAT ARE JUST "REAL" TYPE.
         CHAR_TYPE,
         FUNC_TYPE,
         INT_ARRAY_TYPE,
@@ -45,8 +61,14 @@ public:
         CHAR_ARRAY_TYPE
     } ident_type;
 
+    /**
+     * @brief Get the type object
+     * 
+     * @return Item::type 
+     */
     virtual Item::type get_type(void) const override { return Item::type::ITENT_ITEM; }
 
+    // DO NOT USE A RAW ITEM_IDENT.
     Item_ident() = delete;
 
     Item_ident(const Item_ident& idem_ident) = delete;
@@ -59,19 +81,36 @@ public:
      */
     Item_ident(const uint32_t& line_no, const std::string& name, const uint32_t scope);
 
+    /**
+     * @brief Get the name object
+     * 
+     * @return std::string 
+     */
     virtual std::string get_name(void) const { return name; }
 
     virtual Item_ident::ident_type get_ident_type(void) const = 0;
 
+    /*
+        Here it begins with basic value dump functions.
+        For implementation, we consider every value to be "double" (even with characters)
+        Currently we do not take into consideration the array type and other complex objects like "struct".
+    */
     virtual char get_char(void) const { return 0; }
 
     virtual int get_int(void) const { return 0; }
 
     virtual double get_real(void) const { return 0.0; }
 
+    /**
+     * @brief Destroy the Item_ident object
+     * 
+     */
     virtual ~Item_ident() override = default;
 } Item_ident;
 
+/*
+    Here it begins with identifiers with different types.
+*/
 typedef class Item_ident_int : public Item_ident {
 protected:
     int value;

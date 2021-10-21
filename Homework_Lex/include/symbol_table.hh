@@ -20,7 +20,7 @@
 #include "item_ident.hh"
 
 #include <map>
-#include <stack>
+#include <vector>
 
 namespace compiler {
 
@@ -31,20 +31,55 @@ namespace compiler {
  * 
  */
 typedef class Symbol_table {
-private:
-    std::stack<std::map<std::string, Item_ident*>> symbol_table;
+protected:
+    /**
+     * @brief The symbol table.
+     * 
+     * The lookup of the symbol table is implemented as a stack.
+     * (but not a std::stack because std::stack does not allow for traversal)
+     * You are only allowed to access the top of the stack.
+     */
+    std::vector<std::map<std::string, Item_ident*>> symbol_table;
 
 public:
+    /**
+     * @brief Called when a scope is entered.
+     * 
+     */
     void enter_scope(void);
 
+    /**
+     * @brief Called when a scope is leaved.
+     * 
+     */
     void leave_scope(void);
 
+    /**
+     * @brief Put an item into the symbol table in the current scope.
+     * 
+     * @param item 
+     */
     void put(Item_ident* const item);
 
+    /**
+     * @brief Find a symbol in each scope.
+     * 
+     * @param name 
+     * @return Item_ident* 
+     */
     Item_ident* get(const std::string& name);
 
+    /**
+     * @brief Get the current scope object
+     * 
+     * @return uint32_t 
+     */
     uint32_t get_current_scope(void) { return symbol_table.size(); }
 
+    /**
+     * @brief Construct a new Symbol_table object. By default there is a global symbol table.
+     * 
+     */
     Symbol_table();
 
     Symbol_table(const Symbol_table& symbol_table) = delete;
