@@ -28,10 +28,9 @@ export SY_IN=./sy/out;
 
 3. 船新安装只需要输入
 ```shell
-export CXX=g++;
 export SY_IN=./sy/in;
 export SY_IN=./sy/out;
-make all;
+make all CXX=<g++ or clang++ or whatever>;
 ```
 然后它自动就会运行：
 ```
