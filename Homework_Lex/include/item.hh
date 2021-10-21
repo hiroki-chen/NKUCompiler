@@ -14,13 +14,44 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef NODE_HH
-#define NODE_HH
+#ifndef ITEM_HH
+#define ITEM_HH
 
-#include "symbol.hh"
+#include <cstdint>
 
 namespace compiler {
+/**
+ * @brief The most basic type for each node in the AST.
+ * 
+ */
+typedef class Item {
+protected:
+    const uint32_t line_no;
 
-} // compiler
+public:
+    /**
+     * @brief Defines the type of the item.
+     * 
+     */
+    typedef enum type {
+        NUM_ITEM,
+        EXPR_ITEM,
+        DECL_ITEM,
+        DEF_ITEM,
+        ITENT_ITEM
+    } type;
+
+    Item() = delete;
+
+    Item(const Item& item) = delete;
+
+    Item(const uint32_t& line_no);
+
+    virtual Item::type get_type(void) const = 0;
+
+    virtual ~Item() = default;
+} Item;
+
+} // namespace compiler
 
 #endif

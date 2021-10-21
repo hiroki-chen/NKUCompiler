@@ -9,6 +9,9 @@
 
     Defines regular expressions.
     **************************************************************/
+#include <symbol_table.hh>
+
+#include <yacc.hh>
 
 #include <iostream>
 #include <fstream>
@@ -16,9 +19,12 @@
 #include <cstdint>
 #include <string>
 
-void yyerror(const char* str);
-extern int yylex();
 extern FILE* yyin;
+extern YYSTYPE yylval;
+
+compiler::Symbol_table symbol_table;
+
+//extern compiler::Symbol_table symbol_table;
 
 uint32_t word_count = 0;
 uint32_t line_count = 0;
@@ -49,8 +55,9 @@ COMMENT     ^"//"
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "INT\t\t\t\tint" << std::endl;
         cur_pos += 3;
-    #else
         return INT;
+    #else
+        
     #endif
 }
 
@@ -238,8 +245,9 @@ COMMENT     ^"//"
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "ASSIGN\t\t\t\tassign" << std::endl;
         cur_pos += 1;
-    #else
         return ASSIGN;
+    #else
+        
     #endif
 }
 
@@ -346,8 +354,8 @@ COMMENT     ^"//"
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "SEMICOLON\t\t\t\tsemicolon" << std::endl;
         cur_pos += 1;
-    #else
         return SEMICOLON;
+    #else
     #endif
 }
 
@@ -355,6 +363,7 @@ COMMENT     ^"//"
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "LBRACE\t\t\t\tlbrace" << std::endl;
         cur_pos += 1;
+        symbol_table.enter_scope();
     #else
         return LBRACE;
     #endif
@@ -364,6 +373,7 @@ COMMENT     ^"//"
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "RBRACE\t\t\t\trbrace" << std::endl;
         cur_pos += 1;
+        symbol_table.leave_scope();
     #else
         return RBRACE;
     #endif
@@ -401,8 +411,10 @@ COMMENT     ^"//"
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "Decimal\t\t\t\t" << yytext << std::endl;
         cur_pos += strlen(yytext);
-    #else
+        yylval.raw_int = std::stoi((std::string)yytext);
         return DECIMAL;
+    #else
+        
     #endif
 }
 
@@ -426,10 +438,11 @@ COMMENT     ^"//"
 
 {ID} {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ID\t\t\t\tid: " << yytext << std::endl;
-        cur_pos += strlen(yytext);
-    #else
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ID\t\t\t\tid: " << yytext << " with scope: " << symbol_table.get_current_scope() << std::endl;
+        yylval.raw_symbol = strdup(yytext);
         return ID;
+    #else
+        
     #endif
 }
 
@@ -444,29 +457,8 @@ COMMENT     ^"//"
 <<EOF>> { yyterminate(); }
 
 %%
+
 void yyerror(const char* str)
 {
-    std::cerr << line_count << " " << cur_pos << ":\t" <<  "Parse Error: " << str << std::endl;
-}
-
-int main(int argc, const char** argv)
-{
-    try {
-        if (argc != 3) {
-            throw std::runtime_error("Not enough arguments!");
-        }
-
-        std::ifstream in(argv[1]);
-        std::ofstream out(argv[2]);
-
-        if (!in.good() || !out.good()) {
-            throw std::runtime_error("Cannot open the file!");
-        }
-
-        yyFlexLexer lexer(&in);
-        lexer.yylex();
-    } catch (const std::runtime_error& e) {
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  e.what() << std::endl;
-    }
-    return 0;
+    std::cout << str << std::endl;
 }

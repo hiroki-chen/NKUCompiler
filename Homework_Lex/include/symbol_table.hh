@@ -14,24 +14,44 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef COMPILER_BODY_HH
-#define COMPILER_BODY_HH
+#ifndef SYMBOL_TABLE_HH
+#define SYMBOL_TABLE_HH
 
-#include "symbol.hh"
-#include "node.hh"
+#include "item_ident.hh"
 
 #include <map>
-#include <string>
-#include <memory>
+#include <stack>
 
 namespace compiler {
 
-// Compiler runtime.
-typedef class Compiler {
+/**
+ * @brief A class for symbol table.
+ * 
+ *        The scope will increment as left brace appears. Especially, 1 denotes the global scope.
+ * 
+ */
+typedef class Symbol_table {
 private:
-    std::unique_ptr<SymbolTable> symbol_table;
+    std::stack<std::map<std::string, Item_ident*>> symbol_table;
 
-} Compiler;
+public:
+    void enter_scope(void);
+
+    void leave_scope(void);
+
+    void put(Item_ident* const item);
+
+    Item_ident* get(const std::string& name);
+
+    uint32_t get_current_scope(void) { return symbol_table.size(); }
+
+    Symbol_table();
+
+    Symbol_table(const Symbol_table& symbol_table) = delete;
+
+    virtual ~Symbol_table() = default;
+} Symbol_table;
+
 }
 
 #endif

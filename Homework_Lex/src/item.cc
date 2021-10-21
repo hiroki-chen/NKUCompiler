@@ -14,33 +14,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef UTILS_HH
-#define UTILS_HH
+#include <item.hh>
 
-#include "symbol.hh"
-#include <string>
-
-namespace compiler {
-    /**
-     * @brief 
-     * 
-     * @tparam T type
-     * @param type 
-     * @param value 
-     * @return std::string 
-     */
-    template<class T>
-    std::string convert(const token_type& type, const T& value)
-    {
-        if (type == TYPE_CHAR) {
-            return std::string(&value, 1);
-        } else if (type == TYPE_STR) {
-            return std::string(value);
-        } else {
-            return std::to_string(value);
-        }
-    }
+compiler::Item::Item(const uint32_t& line_no)
+    : line_no(line_no)
+{
 }
-
-
-#endif
