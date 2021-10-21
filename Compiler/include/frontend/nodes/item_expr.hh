@@ -34,6 +34,7 @@ public:
         COND_TYPE,
         LITERAL_TYPE,
         IDENTIFIER_TYPE,
+        ARG_CALL_LIST_TYPE,
     } expr_type;
 
     Item_expr() = delete;
@@ -41,6 +42,8 @@ public:
     Item_expr(const uint32_t& line_no);
 
     virtual Item_expr::expr_type get_expr_type(void) const = 0;
+
+    virtual Item::type get_type(void) const override { return Item::type::EXPR_ITEM; }
 
     // virtual ? eval() const = 0;
 
@@ -51,7 +54,7 @@ public:
  * @brief Class for conditional expressions.
  * 
  */
-typedef class Item_expr_cond : public Item_expr {
+typedef class Item_expr_cond final : public Item_expr {
 protected:
     Item_expr* const expr;
 
@@ -69,7 +72,7 @@ public:
  * @brief Class for binary expressions. 
  * 
  */
-typedef class Item_expr_binary : public Item_expr {
+typedef class Item_expr_binary final : public Item_expr {
 protected:
     const binary_type type;
 
@@ -89,7 +92,7 @@ public:
     virtual ~Item_expr_binary() override = default;
 } Item_expr_binary;
 
-typedef class Item_expr_unary : public Item_expr {
+typedef class Item_expr_unary final : public Item_expr {
 protected:
     const unary_type type;
 
@@ -105,10 +108,6 @@ public:
 
     virtual ~Item_expr_unary() override = default;
 } Item_expr_unary;
-
-typedef class Item_exprnot : public Item_expr_unary {
-
-} Item_expr_not;
 } // namespace compiler
 
 #endif

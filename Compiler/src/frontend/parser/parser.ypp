@@ -1,0 +1,68 @@
+%{
+    /*************************************************************
+    parser.ypp
+    LEX FILE
+    Date: 2021/10/18
+    Haobin Chen (@Aoyamahiroki) <etyyuiope@gmail.com>
+    Jiawei Xu   (@Darren-8)
+
+    Main tokenizer
+    **************************************************************/
+    #include <item_ident.hh>
+    #include <symbol_table.hh>
+    
+    #include <iostream>
+    #include <fstream>
+    #include <string>
+    #include <stdexcept>
+
+    extern compiler::Symbol_table symbol_table;
+    extern uint32_t yylineno;
+
+    extern int yylex(void);
+    extern int yyparse(void);
+    extern void yyerror(const char* str);
+    extern FILE* yyin;
+%}
+%token          ID
+%error-verbose
+%union {
+    char*   raw_symbol;
+    char*   raw_string;
+    int     raw_int;
+    double  raw_real;
+}
+
+// Operators 
+%token          ADD MINUS MUL DIV MOD
+%token          EQ NEQ GEQ LEQ G L
+%token          BIT_AND BIT_OR BIT_XOR BIT_NEG
+%token          LOGIC_AND LOGIC_OR LOGIC_NOT
+
+// Numbers and string
+%token          DECIMAL OCTAL HEX STRING
+
+// Types
+%token          INT DOUBLE FLOAT CHAR VOID STRUCT
+
+// Keywords
+%token          IF ELSE WHILE FOR RETURN BREAK CONTINUE CONST ASSIGN
+
+// Other symbols
+%token          LBRACE RBRACE LPARENTHESIS RPARENTHESIS
+%token          SEMICOLON
+
+%right          ASSIGN
+%left           ADD MINUS
+%left           MOD
+%left           MUL DIV
+%nonassoc       UMINUS UADD
+
+%start lines
+
+%type <raw_symbol> ID
+%type <raw_int>    DECIMAL
+
+%%
+
+%%

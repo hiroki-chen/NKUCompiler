@@ -54,7 +54,7 @@ public:
  * @brief Class for assignment
  * 
  */
-typedef class Item_stmt_assign : public Item_stmt {
+typedef class Item_stmt_assign final : public Item_stmt {
 protected:
     Item_ident* const ident;
 
@@ -74,7 +74,7 @@ public:
  * @brief Class for if-else statement.
  * 
  */
-typedef class Item_stmt_eif : public Item_stmt {
+typedef class Item_stmt_eif final : public Item_stmt {
 protected:
     Item_expr_cond* const condition;
 
@@ -104,7 +104,7 @@ public:
  * @brief Class for while statement
  * 
  */
-typedef class Item_stmt_while : public Item_stmt {
+typedef class Item_stmt_while final : public Item_stmt {
 protected:
     Item_expr_cond* const condition;
 
@@ -124,7 +124,7 @@ public:
  * @brief Class for break statement.
  * 
  */
-typedef class Item_stmt_break : public Item_stmt {
+typedef class Item_stmt_break final : public Item_stmt {
 public:
     Item_stmt_break() = delete;
 
@@ -139,7 +139,7 @@ public:
  * @brief Class for continue statement
  * 
  */
-typedef class Item_stmt_continue : public Item_stmt {
+typedef class Item_stmt_continue final : public Item_stmt {
 public:
     Item_stmt_continue() = delete;
 
@@ -154,7 +154,7 @@ public:
  * @brief Class for return statement
  * 
  */
-typedef class Item_stmt_return : public Item_stmt {
+typedef class Item_stmt_return final : public Item_stmt {
 protected:
     Item_expr* const expr;
 public:
@@ -167,7 +167,7 @@ public:
     virtual ~Item_stmt_return() override = default;
 } Item_stmt_return;
 
-typedef class Item_stmt_for : public Item_stmt {
+typedef class Item_stmt_for final : public Item_stmt {
 protected:
     Item_expr* const expr1;
 
@@ -188,7 +188,7 @@ public:
  * @brief Class for block.
  * 
  */
-typedef class Item_block : public Item_stmt {
+typedef class Item_block final : public Item_stmt {
 protected:
     std::vector<Item_stmt*> statements; // Block body.
 

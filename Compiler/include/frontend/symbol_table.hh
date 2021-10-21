@@ -24,7 +24,7 @@
 #include <vector>
 
 namespace compiler {
-
+// TODO: 把symbol table存储内容改成value / func.
 /**
  * @brief A class for symbol table.
  * 

@@ -34,7 +34,7 @@ public:
      * 
      */
     typedef enum type {
-        STMT_ITEM,
+        EXPR_ITEM,
     } type;
 
     Item() = delete;

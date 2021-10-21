@@ -31,3 +31,13 @@ compiler::Item_literal_int::Item_literal_int(const uint32_t& line_no, const int&
     : Item_literal_numeric(line_no, (double)value)
 {
 }
+
+compiler::Item_literal_real::Item_literal_real(const uint32_t& line_no, const double& value)
+    : Item_literal_numeric(line_no, (double)value)
+{
+}
+
+compiler::Item_literal_char::Item_literal_char(const uint32_t& line_no, const char& value)
+    : Item_literal_numeric(line_no, (double)value)
+{
+}

@@ -19,6 +19,8 @@
 
 #include <frontend/nodes/item_expr.hh>
 
+#include <string>
+
 namespace compiler {
 
 /**
@@ -51,7 +53,7 @@ public:
  */
 typedef class Item_literal_numeric : public Item_literal {
 protected:
-    double value;
+    const double value;
 
 public:
     Item_literal_numeric() = delete;
@@ -63,7 +65,7 @@ public:
     virtual ~Item_literal_numeric() override = default;
 } Item_literal_numeric;
 
-typedef class Item_literal_int : public Item_literal_numeric {
+typedef class Item_literal_int final : public Item_literal_numeric {
 public:
     virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::INT; }
 
@@ -75,6 +77,51 @@ public:
 
     virtual ~Item_literal_int() override = default;
 } Item_literal_int;
+
+typedef class Item_literal_real final : public Item_literal_numeric {
+public:
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::REAL; }
+
+    virtual double get_double() const { return (double)value; }
+
+    virtual float get_float() const { return (float)value; }
+
+    Item_literal_real() = delete;
+
+    Item_literal_real(const uint32_t& line_no, const double& value);
+
+    virtual ~Item_literal_real() override = default;
+} Item_literal_real;
+
+typedef class Item_literal_char final : public Item_literal_numeric {
+public:
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::CHAR; }
+
+    virtual char get_char() const { return (char)value; }
+
+    Item_literal_char() = delete;
+
+    Item_literal_char(const uint32_t& line_no, const char& value);
+
+    virtual ~Item_literal_char() override = default;
+} Item_literal_char;
+
+typedef class Item_literal_string final : public Item_literal {
+protected:
+    const std::string str;
+
+public:
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::STRING; }
+
+    virtual std::string get_str(void) const { return str; }
+
+    Item_literal_string() = delete;
+
+    Item_literal_string(const uint32_t& line_no, const std::string& str);
+
+    virtual ~Item_literal_string() override = default;
+} Item_literal_string;
+
 } // namespace compiler
 
 #endif

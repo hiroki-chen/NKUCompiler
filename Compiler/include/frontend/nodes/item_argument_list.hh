@@ -14,32 +14,30 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_IDENT_HH
-#define ITEM_IDENT_HH
+#ifndef ITEM_ARGUMENT_LIST_HH
+#define ITEM_ARGUMENT_LIST_HH
 
 #include <frontend/nodes/item_expr.hh>
 
-#include <string>
+#include <vector>
 
 namespace compiler {
 
-/**
- * @brief Class for identifiers.
- * 
- */
-typedef class Item_ident final : public Item_expr {
+typedef class Item_expr_call_list : public Item_expr {
 protected:
-    const std::string name;
+    std::vector<Item_expr*> arguments;
 
 public:
-    virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::IDENTIFIER_TYPE; }
+    virtual void add_arg(Item_expr* const arg);
 
-    virtual std::string get_name(void) const { return name; } 
+    virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::ARG_CALL_LIST_TYPE; }
 
-    Item_ident() = delete;
+    Item_expr_call_list() = delete;
 
-    Item_ident(const uint32_t& line_no, const std::string& name);
-} Item_ident;
+    Item_expr_call_list(const uint32_t& line_no);
+
+    virtual ~Item_expr_call_list() override = default;
+} Item_expr_call_list;
 } // namespace compiler
 
 #endif
