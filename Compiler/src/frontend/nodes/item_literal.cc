@@ -41,3 +41,18 @@ compiler::Item_literal_char::Item_literal_char(const uint32_t& line_no, const ch
     : Item_literal_numeric(line_no, (double)value)
 {
 }
+
+compiler::Item_literal_array_init::Item_literal_array_init(
+    const uint32_t& line_no,
+    Item_expr* const expression,
+    const bool& is_numeric)
+    : Item_literal(line_no)
+    , expression(expression)
+    , is_numeric(is_numeric)
+{
+}
+
+void compiler::Item_literal_array_init::add_value(Item_literal_array_init* const value)
+{
+    value_list.emplace_back(value);
+}

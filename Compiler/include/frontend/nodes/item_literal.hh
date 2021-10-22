@@ -20,6 +20,7 @@
 #include <frontend/nodes/item_expr.hh>
 
 #include <string>
+#include <vector>
 
 namespace compiler {
 
@@ -34,6 +35,7 @@ public:
         REAL,
         CHAR,
         STRING,
+        ARRAY_INIT,
     } literal_type;
 
     virtual Item_literal::literal_type get_literal_type(void) const = 0;
@@ -122,6 +124,29 @@ public:
     virtual ~Item_literal_string() override = default;
 } Item_literal_string;
 
+/**
+ * @brief Class for array init value.
+ * 
+ */
+typedef class Item_literal_array_init : public Item_literal {
+protected:
+    const bool is_numeric;
+
+    Item_expr* const expression;
+
+    std::vector<Item_literal_array_init*> value_list;
+
+public:
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::ARRAY_INIT; }
+
+    virtual void add_value(Item_literal_array_init* const value);
+
+    Item_literal_array_init() = delete;
+
+    Item_literal_array_init(const uint32_t& line_no, Item_expr* const expression, const bool& is_numeric);
+
+    virtual ~Item_literal_array_init() override = default;
+} Item_literal_array_init;
 } // namespace compiler
 
 #endif

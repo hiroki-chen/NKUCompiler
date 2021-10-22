@@ -34,7 +34,11 @@ public:
         COND_TYPE,
         LITERAL_TYPE,
         IDENTIFIER_TYPE,
-        ARG_CALL_LIST_TYPE,
+        CALL_LIST_TYPE,
+        FUNC_CALL_TYPE,
+        FUNC_DEF_ARG_TYPE,
+        FUNC_DEF_LIST_TYPE,
+        FUNC_DEF_TYPE,
     } expr_type;
 
     Item_expr() = delete;

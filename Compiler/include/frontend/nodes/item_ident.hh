@@ -20,6 +20,7 @@
 #include <frontend/nodes/item_expr.hh>
 
 #include <string>
+#include <vector>
 
 namespace compiler {
 
@@ -27,7 +28,7 @@ namespace compiler {
  * @brief Class for identifiers.
  * 
  */
-typedef class Item_ident final : public Item_expr {
+typedef class Item_ident : public Item_expr {
 protected:
     const std::string name;
 
@@ -40,6 +41,24 @@ public:
 
     Item_ident(const uint32_t& line_no, const std::string& name);
 } Item_ident;
+
+/**
+ * @brief Class for array identifiers.
+ * 
+ */
+typedef class Item_ident_array final : public Item_ident {
+protected:
+    std::vector<Item_expr*> array_shape;
+
+public:
+    virtual void add_shape(Item_expr* const array_shape);
+
+    Item_ident_array() = delete;
+
+    Item_ident_array(const uint32_t& line_no, const std::string& name);
+
+    virtual ~Item_ident_array() override = default;
+} Item_ident_array;
 } // namespace compiler
 
 #endif

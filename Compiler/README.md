@@ -32,12 +32,13 @@
 
 ```
 Item -> Item_expr -> Item_expr_cond
-                  -> Item_ident
+                  -> Item_ident         -> Item_ident_array
 
                   -> Item_literal       -> Item_literal_numeric     -> Item_literal_int
                                                                     -> Item_literal_real
                                                                     -> Item_literal_char
                                         -> Item_literal_string
+                                        -> Item_literal_array_init
 
                   -> Item_expr_binary   -> Item_expr_add
                                         -> Item_expr_sub
@@ -51,5 +52,8 @@ Item -> Item_expr -> Item_expr_cond
                                         -> Item_stmt_return
                                         -> Item_stmt_break
                                         -> Item_stmt_continue
-                                        -> Item_decl           
+                                        -> Item_stmt_decl
+
+     -> Item_decl -> Item_decl_var      -> Item_decl_var_init
+                  -> Item_decl_array    -> Item_decl_array_init
 ```

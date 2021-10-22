@@ -37,6 +37,7 @@ public:
         RETURN_STMT,
         BLOCK,
         DECL_STMT,
+        VOID_STMT,
     } stmt_type;
 
     Item_stmt() = delete;
@@ -167,6 +168,10 @@ public:
     virtual ~Item_stmt_return() override = default;
 } Item_stmt_return;
 
+/**
+ * @brief Class for for loop statement.
+ * 
+ */
 typedef class Item_stmt_for final : public Item_stmt {
 protected:
     Item_expr* const expr1;
@@ -183,6 +188,19 @@ public:
 
     virtual ~Item_stmt_for() override = default;
 } Item_stmt_for;
+
+/**
+ * @brief Class for nothing.
+ * 
+ */
+typedef class Item_stmt_void final : public Item_stmt {
+public:
+    Item_stmt_void() = default;
+
+    virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::VOID_STMT; }
+
+    virtual ~Item_stmt_void() override = default;
+} Item_stmt_void;
 
 /**
  * @brief Class for block.

@@ -35,6 +35,8 @@ public:
      */
     typedef enum type {
         EXPR_ITEM,
+        FUNC_DEF_ITEM,
+        DECLARE_ITEM,
     } type;
 
     Item() = delete;
@@ -44,6 +46,8 @@ public:
     Item(const uint32_t& line_no);
 
     virtual Item::type get_type(void) const = 0;
+
+    virtual uint32_t get_line_no(void) const { return line_no; }
 
     // virtual void print_result() const = 0;
 

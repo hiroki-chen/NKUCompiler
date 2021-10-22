@@ -35,6 +35,19 @@ typedef enum unary_type {
     UMINUS_TYPE,
     UADD_TYPE
 } unary_type;
+
+typedef enum basic_type {
+    VOID_TYPE,
+    INT_TYPE,
+    REAL_TYPE,
+    CHAR_TYPE,
+    STR_TYPE
+} basic_type;
+
+typedef enum decl_type {
+    VAR_DECL,
+    CONST_DECL,
+} decl_type;
 } // namespace compiler
 
 #endif

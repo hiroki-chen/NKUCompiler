@@ -21,3 +21,12 @@ compiler::Item_ident::Item_ident(const uint32_t& line_no, const std::string& nam
     , name(name)
 {
 }
+
+compiler::Item_ident_array::Item_ident_array(const uint32_t& line_no, const std::string& name)
+: Item_ident(line_no, name)
+{}
+
+void compiler::Item_ident_array::add_shape(Item_expr* const shape)
+{
+    array_shape.emplace_back(shape);
+}
