@@ -14,19 +14,17 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#ifndef ITEM_ALL_HH
+#define ITEM_ALL_HH
+
+// A single header that includes all.
+
 #include <frontend/nodes/item.hh>
+#include <frontend/nodes/item_decl.hh>
+#include <frontend/nodes/item_expr.hh>
+#include <frontend/nodes/item_func.hh>
+#include <frontend/nodes/item_ident.hh>
+#include <frontend/nodes/item_literal.hh>
+#include <frontend/nodes/item_stmt.hh>
 
-compiler::Item::Item(const uint32_t& line_no)
-    : line_no(line_no)
-{
-}
-
-compiler::Item_root::Item_root(const uint32_t& line_no)
-    : Item(line_no)
-{
-}
-
-void compiler::Item_root::add_child(Item* const child)
-{
-    children.emplace_back(child);
-}
+#endif

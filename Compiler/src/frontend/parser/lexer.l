@@ -351,6 +351,24 @@ STRING      \"(\\.|[^"\\])*\"
     #endif
 }
 
+"," {
+    #ifdef ONLY_FOR_LEX
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "COMMA\t\t\t\tcomma" << std::endl;
+        cur_pos += 1;
+        return COMMA;
+    #else
+    #endif
+}
+
+"." {
+    #ifdef ONLY_FOR_LEX
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "DOT\t\t\t\tdot" << std::endl;
+        cur_pos += 1;
+        return SEMICOLON;
+    #else
+    #endif
+}
+
 ";" {
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "SEMICOLON\t\t\t\tsemicolon" << std::endl;
@@ -377,6 +395,24 @@ STRING      \"(\\.|[^"\\])*\"
         symbol_table.leave_scope();
     #else
         return RBRACE;
+    #endif
+}
+
+"[" {
+     #ifdef ONLY_FOR_LEX
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LSQUARE\t\t\t\tlsquare" << std::endl;
+        cur_pos += 1;
+    #else
+        return LSQUARE;
+    #endif
+}
+
+"]" {
+     #ifdef ONLY_FOR_LEX
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "RSQUARE\t\t\t\trsquare" << std::endl;
+        cur_pos += 1;
+    #else
+        return RSQUARE;
     #endif
 }
 
@@ -468,8 +504,3 @@ STRING      \"(\\.|[^"\\])*\"
 <<EOF>> { yyterminate(); }
 
 %%
-
-void yyerror(const char* str)
-{
-    std::cout << str << std::endl;
-}

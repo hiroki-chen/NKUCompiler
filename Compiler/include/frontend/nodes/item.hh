@@ -18,6 +18,7 @@
 #define ITEM_HH
 
 #include <cstdint>
+#include <vector>
 
 namespace compiler {
 /**
@@ -34,6 +35,7 @@ public:
      * 
      */
     typedef enum type {
+        ROOT_ITEM,
         EXPR_ITEM,
         FUNC_DEF_ITEM,
         DECLARE_ITEM,
@@ -53,6 +55,22 @@ public:
 
     virtual ~Item() = default;
 } Item;
+
+typedef class Item_root : public Item {
+protected:
+    std::vector<Item*> children;
+
+public:
+    virtual Item::type get_type(void) const override { return Item::type::ROOT_ITEM; }
+
+    virtual void add_child(Item* const child);
+
+    Item_root() = delete;
+
+    Item_root(const uint32_t& line_no);
+
+    virtual ~Item_root() override = default;
+} Item_root;
 
 } // namespace compiler
 

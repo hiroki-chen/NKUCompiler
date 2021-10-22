@@ -14,19 +14,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#ifndef CONFIG_HH
+#define CONFIG_HH
+
 #include <frontend/nodes/item.hh>
 
-compiler::Item::Item(const uint32_t& line_no)
-    : line_no(line_no)
-{
-}
+namespace compiler {
+    // root
+    extern Item_root* const root;
+} // namespace compiler
 
-compiler::Item_root::Item_root(const uint32_t& line_no)
-    : Item(line_no)
-{
-}
-
-void compiler::Item_root::add_child(Item* const child)
-{
-    children.emplace_back(child);
-}
+#endif

@@ -59,6 +59,8 @@ Item -> Item_expr -> Item_expr_cond
 
      -> Item_decl -> Item_decl_var      -> Item_decl_var_init
                   -> Item_decl_array    -> Item_decl_array_init
+                  
+     -> Item_func_def
 ```
 
 #### Prerequisites
