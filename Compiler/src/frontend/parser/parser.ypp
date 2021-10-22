@@ -12,6 +12,8 @@
     #include <common/types.hh>
     #include <frontend/nodes/item_all.hh>
     #include <frontend/symbol_table.hh>
+
+    #include "test.hh"
     
     #include <iostream>
     #include <fstream>
@@ -61,7 +63,7 @@
     compiler::Item_func_def*            item_func_def;
     compiler::Item_expr*                item_expr;
     compiler::Item_ident*               item_ident;
-    compiler::item_ident_array*         item_ident_array;
+    compiler::Item_ident_array*         item_ident_array;
     compiler::Item_decl_array_init*     item_decl_array_init;
     compiler::Item_literal_array_init*  item_literal_array_init;
     compiler::Item_decl_var*            item_decl_var;
@@ -69,6 +71,7 @@
     compiler::Item_func_def_list*       item_func_def_list;
     compiler::Item_func_def_arg*        item_func_def_arg;
     compiler::Item_block*               item_block;
+    std::string*                        raw_string;
 }
 
 %token          ID
@@ -105,9 +108,11 @@
 %type <item_func_def_arg> FuncParam FuncParamNormal FuncParamArray
 %type <item_decl> VarDef VarDefNormal VarDefArray ConstDef ConstDefNormal ConstDefArray
 %type <item_expr> Exp AddExp BitExp
-%type <item_ident> ID
+%type <item_ident> Ident
 %type <item_ident_array> ArrayID
-%type <Iiem_literal_array_init> ArrayInitVal ArrayInitValHelper
+%type <item_literal_array_init> ArrayInitVal ArrayInitValHelper
+
+%type <raw_string> ID
 
 %start CompUnit
 %%
@@ -146,8 +151,8 @@ VarDef: VarDefNormal
       | VarDefArray
       ;
 
-VarDefNormal: ID ASSIGN Exp             { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, false); }
-            | ID                        { $$ = new compiler::Item_decl_var(yyget_lineno(), $1); }
+VarDefNormal: Ident ASSIGN Exp             { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, false); }
+            | Ident                        { $$ = new compiler::Item_decl_var(yyget_lineno(), $1); }
             ;
 
 VarDefArray: ArrayID ASSIGN ArrayInitVal    { $$ = new compiler::Item_decl_array_init(yyget_lineno(), $1, $3, false); }
@@ -155,7 +160,7 @@ VarDefArray: ArrayID ASSIGN ArrayInitVal    { $$ = new compiler::Item_decl_array
            ;
 
 ArrayID: ArrayID LSQUARE Exp RSQUARE        { $$ = $1; $$->add_shape($3); }
-       | ID LSQUARE Exp RSQUARE             { $$ = new compiler::item_ident_array(yyget_lineno(), $1); $$->add_shape($3); }
+       | Ident LSQUARE Exp RSQUARE             { $$ = new compiler::Item_ident_array(yyget_lineno(), $1->get_name()); $$->add_shape($3); }
        ;
 
 ArrayInitVal: LBRACE ArrayInitValHelper RBRACE             { $$ = $2; }
@@ -166,16 +171,16 @@ ConstDef: ConstDefNormal
         | ConstDefArray
         ;
 
-ConstDefNormal: ID ASSIGN Exp           { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, true); }
+ConstDefNormal: Ident ASSIGN Exp           { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, true); }
               ;
 
 ConstDefArray: ArrayID ASSIGN ArrayInitVal      { $$ = new compiler::Item_decl_array_init(yyget_lineno(), $1, $3, true); }
              ;
 
-FuncDef: BType ID LPARENTHESIS FuncDefList RPARENTHESIS BLOCK    { $$ = new compiler::Item_func_def(yyget_lineno(), $1, $2, $4, $6); }
-       | VOID  ID LPARENTHESIS FuncDefList RPARENTHESIS BLOCK    { $$ = new compiler::Item_func_def(yyget_lineno(), compiler::basic_type::VOID_TYPE, $2, $4, $6); }
-       | BType ID LPARENTHESIS RPARENTHESIS BLOCK                { $$ = new compiler::Item_func_def(yyget_lineno(), $1, $2, new compiler::Item_func_def_list(yyget_lineno()), $6); }
-       | VOID  ID LPARENTHESIS RPARENTHESIS BLOCK                { $$ = new compiler::Item_func_def(yyget_lineno(), compiler::basic_type::VOID_TYPE, $2, new compiler::Item_func_def_list(yyget_lineno()), $6); }
+FuncDef: BType Ident LPARENTHESIS FuncDefList RPARENTHESIS BLOCK    { $$ = new compiler::Item_func_def(yyget_lineno(), $1, $2, $4, $6); }
+       | VOID  Ident LPARENTHESIS FuncDefList RPARENTHESIS BLOCK    { $$ = new compiler::Item_func_def(yyget_lineno(), compiler::basic_type::VOID_TYPE, $2, $4, $6); }
+       | BType Ident LPARENTHESIS RPARENTHESIS BLOCK                { $$ = new compiler::Item_func_def(yyget_lineno(), $1, $2, new compiler::Item_func_def_list(yyget_lineno()), $5); }
+       | VOID  Ident LPARENTHESIS RPARENTHESIS BLOCK                { $$ = new compiler::Item_func_def(yyget_lineno(), compiler::basic_type::VOID_TYPE, $2, new compiler::Item_func_def_list(yyget_lineno()), $5); }
        ;
 
 FuncDefList: FuncDefList COMMA FuncParam        { $$->add_arg($3); }
@@ -186,18 +191,23 @@ FuncParam: FuncParamNormal
          | FuncParamArray
          ;
 
-FuncParamNormal: BType ID       { $$ = new compiler::Item_func_def_arg(yyget_lineno(), $1, $2); }
+FuncParamNormal: BType Ident       { $$ = new compiler::Item_func_def_arg(yyget_lineno(), $1, $2); }
                ;
 
-FuncParamArray: BType ID LSQUARE RSQUARE                {
-                                                            compiler::item_ident_array* ident = new compiler::item_ident_array(yyget_lineno(), $2);
+FuncParamArray: BType Ident LSQUARE RSQUARE                {
+                                                            compiler::Item_ident_array* ident = new compiler::Item_ident_array(yyget_lineno(), $2->get_name());
                                                             ident->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1));
-                                                            $$ = new compiler::item_func_def_arg(yyget_lineno(), $1, ident);
+                                                            $$ = new compiler::Item_func_def_arg(yyget_lineno(), $1, ident);
                                                         }
-              | FuncParamArray LSQUARE RSQUARE          { $$ = $1; $$->get_identifier()->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1)); }
+              | FuncParamArray LSQUARE RSQUARE          { $$ = $1; static_cast<compiler::Item_ident_array*>($$->get_identifier())->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1)); }
               ;
-              
-ArrayInitValHelper: ;
+
+Ident: ID       { $$ = new compiler::Item_ident(yyget_lineno(), *$1); }
+     ;
+
+ArrayInitValHelper: 'foo';
+
+BLOCK: ;
 
 Exp: BitExp
    ;

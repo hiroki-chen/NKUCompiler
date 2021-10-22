@@ -29,6 +29,7 @@ namespace compiler {
 typedef class Item_expr : public Item {
 public:
     typedef enum expr_type {
+        STMT_TYPE,
         UNARY_TYPE,
         BINARY_TYPE,
         COND_TYPE,

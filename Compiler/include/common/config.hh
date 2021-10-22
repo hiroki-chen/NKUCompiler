@@ -23,7 +23,7 @@
 
 namespace compiler {
 // root
-extern Item_root* const root;
+Item_root* root = nullptr;
 
 namespace config {
     bool compile_on = false;

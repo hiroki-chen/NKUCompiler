@@ -44,7 +44,7 @@ public:
 
     Item_stmt(const uint32_t& line_no);
 
-    // virtual Item::type get_type(void) const override { return Item::type::STMT_ITEM; }
+     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::STMT_TYPE; }
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const = 0;
 

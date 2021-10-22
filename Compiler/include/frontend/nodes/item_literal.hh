@@ -31,10 +31,10 @@ namespace compiler {
 typedef class Item_literal : public Item_expr {
 public:
     typedef enum literal_type {
-        INT,
-        REAL,
-        CHAR,
-        STRING,
+        INT_TYPE,
+        REAL_TYPE,
+        CHAR_TYPE,
+        STRING_TYPE,
         ARRAY_INIT,
     } literal_type;
 
@@ -69,7 +69,7 @@ public:
 
 typedef class Item_literal_int final : public Item_literal_numeric {
 public:
-    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::INT; }
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::INT_TYPE; }
 
     virtual int get_int() const { return (int)value; }
 
@@ -82,7 +82,7 @@ public:
 
 typedef class Item_literal_real final : public Item_literal_numeric {
 public:
-    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::REAL; }
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::REAL_TYPE; }
 
     virtual double get_double() const { return (double)value; }
 
@@ -97,7 +97,7 @@ public:
 
 typedef class Item_literal_char final : public Item_literal_numeric {
 public:
-    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::CHAR; }
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::CHAR_TYPE; }
 
     virtual char get_char() const { return (char)value; }
 
@@ -113,7 +113,7 @@ protected:
     const std::string str;
 
 public:
-    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::STRING; }
+    virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::STRING_TYPE; }
 
     virtual std::string get_str(void) const { return str; }
 
