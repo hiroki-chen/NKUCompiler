@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <runtime/runtime.hh>
+#include <common/config.hh>
 
 compiler::Command_parser::Command_parser(const int& argc, const char** argv)
     : argc(argc)
@@ -29,10 +30,10 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
         ;
 
     options->add_options("OTHER")
-        ("c,compile", "Output the object file rather than executable", cxxopts::value<bool>()->default_value("false"))
+        ("c,compile", "Output the object file rather than executable", cxxopts::value<std::string>()->implicit_value("implicit"))
         ("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))
         ("o,outout", "The output file name", cxxopts::value<std::string>()->default_value("a.out"))
-        ("O,optimize", "The level of optimization", cxxopts::value<std::string>()->default_value("0"))
+        ("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))
         ("h,help", "Get the guidance")
         ;
 }
@@ -42,11 +43,26 @@ void compiler::Command_parser::parse(void)
     try {
         result = options->parse(argc, argv);
 
+        // We store configuration in a global accessable field.
         if (result.count("help")) {
             std::cout << options->help() << std::endl;
             exit(0);
         }
+        if (result.count("compile")) {
+            compiler::config::compile_on = true;
+        }
+        if (result.count("debug")) {
+            compiler::config::debug_on = true;
+        }
+        if (result.count("optimize")) {
+            compiler::config::opt_level = result["optimize"].as<int>();
+        }
+        if (result.count("output")) {
+            const std::string file_name = result["output"].as<std::string>();
+            compiler::config::output_file = std::ofstream(file_name, std::ios::out);
+        }
     } catch (const cxxopts::OptionException& e) {
         std::cout << "Error: " << e.what() << std::endl;
+        exit(1);
     }
 }

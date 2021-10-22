@@ -46,7 +46,7 @@ typedef class Item_stmt_decl : public Item_stmt {
 protected:
     std::vector<Item_decl*> declarations;
 
-    const decl_type type;
+    const basic_type type;
 public:
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::DECL_STMT; }
 
@@ -54,7 +54,7 @@ public:
 
     Item_stmt_decl() = delete;
 
-    Item_stmt_decl(const uint32_t& line_no, const decl_type& type);
+    Item_stmt_decl(const uint32_t& line_no, const basic_type& type);
 } Item_stmt_decl;
 
 /**
@@ -112,7 +112,7 @@ typedef class Item_decl_array_init final : public Item_decl_array {
 protected:
     const bool is_const;
 
-    Item_decl_array_init* const init_value;
+    Item_literal_array_init* const init_value;
 public:
     virtual bool get_is_const(void) const { return is_const; }
 
@@ -121,7 +121,7 @@ public:
     Item_decl_array_init(
         const uint32_t& line_no,
         Item_ident_array* const identifier,
-        Item_decl_array_init* const init_value,
+        Item_literal_array_init* const init_value,
         const bool& is_const);
 
     virtual ~Item_decl_array_init() override = default;

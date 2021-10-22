@@ -21,7 +21,7 @@ compiler::Item_decl::Item_decl(const uint32_t& line_no)
 {
 }
 
-compiler::Item_stmt_decl::Item_stmt_decl(const uint32_t& line_no, const decl_type& type)
+compiler::Item_stmt_decl::Item_stmt_decl(const uint32_t& line_no, const basic_type& type)
     : Item_stmt(line_no)
     , type(type)
 {
@@ -53,10 +53,15 @@ compiler::Item_decl_var_init::Item_decl_var_init(
 compiler::Item_decl_array_init::Item_decl_array_init(
     const uint32_t& line_no,
     Item_ident_array* const identifier,
-    Item_decl_array_init* const init_value,
+    Item_literal_array_init* const init_value,
     const bool& is_const)
     : Item_decl_array(line_no, identifier)
     , init_value(init_value)
     , is_const(is_const)
 {
+}
+
+void compiler::Item_stmt_decl::add_declaration(Item_decl* const declaration)
+{
+    declarations.emplace_back(declaration);
 }

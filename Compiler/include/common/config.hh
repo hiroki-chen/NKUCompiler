@@ -19,9 +19,22 @@
 
 #include <frontend/nodes/item.hh>
 
+#include <fstream>
+
 namespace compiler {
-    // root
-    extern Item_root* const root;
+// root
+extern Item_root* const root;
+
+namespace config {
+    bool compile_on = false;
+
+    bool debug_on = false;
+
+    uint32_t opt_level = 0;
+
+    std::ofstream output_file;
+} // namespace config
+
 } // namespace compiler
 
 #endif
