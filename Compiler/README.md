@@ -12,14 +12,17 @@
 ├── backup
 ├── include
 │   ├── common
-│   └── frontend
-│       └── nodes
-└── src
-    ├── backend
-    └── frontend
-        ├── ir
-        ├── nodes
-        └── parser
+│   ├── frontend
+│   │   └── nodes
+│   ├── ir
+│   └── runtime
+├── src
+│   ├── backend
+│   ├── frontend
+│   │   ├── ir
+│   │   ├── nodes
+│   │   └── parser
+│   └── runtime
 ```
 
 ### 继承关系和几点说明
@@ -57,3 +60,7 @@ Item -> Item_expr -> Item_expr_cond
      -> Item_decl -> Item_decl_var      -> Item_decl_var_init
                   -> Item_decl_array    -> Item_decl_array_init
 ```
+
+#### Prerequisites
+* C++标准默认为17，请使用支持C++17以上的编译器进行编译，已知可以在clang 12和GCC-11上运行。
+* 采用了cxxopts库作为command line parser，具体实现已经放在了`src/runtime/runtime.cc`中了。

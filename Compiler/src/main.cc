@@ -14,16 +14,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef RUNTIME_HH
-#define RUNTIME_HH
+#include <runtime/runtime.hh>
+using compiler::Command_parser;
+using compiler::Compiler_runtime;
 
-#include <map>
-#include <string>
-#include <memory>
+int main(int argc, const char** argv)
+{
+    // std::cout << argv[1];
+    // First parse the command line
+    Command_parser* const parser = new Command_parser(argc, argv);
+    parser->parse();
 
-namespace compiler {
-
-
+    // Then send the parsed result to the compiler runtime.
+    //Compiler_runtime* const compiler = new Compiler_runtime(parser->get_result());
+    return 0;
 }
-
-#endif
