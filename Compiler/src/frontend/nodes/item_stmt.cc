@@ -21,6 +21,22 @@ compiler::Item_stmt::Item_stmt(const uint32_t& line_no)
 {
 }
 
+compiler::Item_stmt_assign::Item_stmt_assign(
+    const uint32_t& line_no,
+    Item_ident* const identifier,
+    Item_expr* const expression)
+    : Item_stmt(line_no)
+    , identifier(identifier)
+    , expression(expression)
+{
+}
+
+compiler::Item_stmt_eval::Item_stmt_eval(const uint32_t& line_no, Item_expr* const expression)
+    : Item_stmt(line_no)
+    , expression(expression)
+{
+}
+
 compiler::Item_stmt_eif::Item_stmt_eif(
     const uint32_t& line_no,
     Item_expr_cond* const condition,
@@ -71,12 +87,24 @@ compiler::Item_stmt_for::Item_stmt_for(
 {
 }
 
+compiler::Item_stmt_postfix::Item_stmt_postfix(const uint32_t& line_no, Item_ident* const identifier, const binary_type& type)
+    : Item_stmt(line_no)
+    , identifier(identifier)
+    , type(type)
+{
+}
+
 compiler::Item_block::Item_block(const uint32_t& line_no)
     : Item_stmt(line_no)
 {
 }
 
-void compiler::Item_block::add(Item_stmt* const statement)
+compiler::Item_stmt_void::Item_stmt_void(const uint32_t& line_no)
+    : Item_stmt(line_no)
+{
+}
+
+void compiler::Item_block::add_item(Item_stmt* const statement)
 {
     statements.emplace_back(statement);
 }

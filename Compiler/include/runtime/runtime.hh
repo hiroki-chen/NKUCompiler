@@ -19,6 +19,8 @@
 
 #include <common/cxxopts.hh>
 
+#include <fstream>
+
 namespace compiler {
 /**
  * @brief Class for command line parser.
@@ -58,7 +60,18 @@ public:
  * 
  */
 typedef class Compiler_runtime {
+private:
+    bool compile_on = false;
+
+    bool debug_on = false;
+
+    uint32_t opt_level = 0;
+
+    std::ofstream output_file;
+
 public:
+    void run(void);
+
     Compiler_runtime() = delete;
 
     Compiler_runtime(const cxxopts::ParseResult& result);

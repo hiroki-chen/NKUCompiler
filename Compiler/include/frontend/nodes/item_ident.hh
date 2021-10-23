@@ -59,6 +59,18 @@ public:
 
     virtual ~Item_ident_array() override = default;
 } Item_ident_array;
+
+typedef class Item_ident_pointer final : public Item_ident {
+protected:
+    Item_expr* point_to;
+
+public:
+    Item_ident_pointer() = delete;
+
+    Item_ident_pointer(const uint32_t& line_no, const std::string& name, Item_expr* point_to);
+
+    virtual ~Item_ident_pointer() override = default;
+} Item_ident_pointer;
 } // namespace compiler
 
 #endif

@@ -26,6 +26,6 @@ int main(int argc, const char** argv)
     parser->parse();
 
     // Then send the parsed result to the compiler runtime.
-    //Compiler_runtime* const compiler = new Compiler_runtime(parser->get_result());
+    Compiler_runtime* const compiler = new Compiler_runtime(parser->get_result());
     return 0;
 }

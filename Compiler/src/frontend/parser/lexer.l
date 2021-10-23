@@ -315,12 +315,30 @@ STRING      \"(\\.|[^"\\])*\"
     #endif
 }
 
+"++" {
+    #ifdef ONLY_FOR_LEX
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ADD\t\t\t\tadd" << std::endl;
+        cur_pos += 1;
+    #else
+        return INC;
+    #endif
+}
+
 "+" {
     #ifdef ONLY_FOR_LEX
         std::cerr << line_count << " " << cur_pos << ":\t" <<  "ADD\t\t\t\tadd" << std::endl;
         cur_pos += 1;
     #else
         return ADD;
+    #endif
+}
+
+"--"  {
+    #ifdef ONLY_FOR_LEX
+        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ADD\t\t\t\tadd" << std::endl;
+        cur_pos += 1;
+    #else
+        return DEC;
     #endif
 }
 
@@ -332,6 +350,8 @@ STRING      \"(\\.|[^"\\])*\"
         return MINUS;
     #endif
 }
+
+"--"
 
 "*" {
     #ifdef ONLY_FOR_LEX

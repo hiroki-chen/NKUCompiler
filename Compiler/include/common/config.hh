@@ -25,16 +25,6 @@ namespace compiler {
 // root
 Item_root* root = nullptr;
 
-namespace config {
-    bool compile_on = false;
-
-    bool debug_on = false;
-
-    uint32_t opt_level = 0;
-
-    std::ofstream output_file;
-} // namespace config
-
 } // namespace compiler
 
 #endif

@@ -56,10 +56,15 @@ Item -> Item_expr -> Item_expr_cond
                                         -> Item_stmt_break
                                         -> Item_stmt_continue
                                         -> Item_stmt_decl
+                 
+                 -> Item_func_def_list
+                 -> Item_func_def_arg
+                 -> Item_func_call
+                 -> Item_func_call_list
 
      -> Item_decl -> Item_decl_var      -> Item_decl_var_init
                   -> Item_decl_array    -> Item_decl_array_init
-                  
+
      -> Item_func_def
 ```
 

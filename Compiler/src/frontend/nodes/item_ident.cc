@@ -23,8 +23,15 @@ compiler::Item_ident::Item_ident(const uint32_t& line_no, const std::string& nam
 }
 
 compiler::Item_ident_array::Item_ident_array(const uint32_t& line_no, const std::string& name)
-: Item_ident(line_no, name)
-{}
+    : Item_ident(line_no, name)
+{
+}
+
+compiler::Item_ident_pointer::Item_ident_pointer(const uint32_t& line_no, const std::string& name, Item_expr* point_to)
+    : Item_ident(line_no, name)
+    , point_to(point_to)
+{
+}
 
 void compiler::Item_ident_array::add_shape(Item_expr* const shape)
 {

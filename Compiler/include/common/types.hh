@@ -24,14 +24,23 @@ typedef enum binary_type {
     SUB_TYPE,
     MUL_TYPE,
     DIV_TYPE,
+    MOD_TYPE,
     BITOR_TYPE,
     BITAND_TYPE,
-    BITXOR_TYPE
+    BITXOR_TYPE,
+    EQ_TYPE,
+    NEQ_TYPE,
+    G_TYPE,
+    L_TYPE,
+    GE_TYPE,
+    LE_TYPE,
+    LOR_TYPE,
+    LAND_TYPE,
 } binary_type;
 
 typedef enum unary_type {
-    NOT_TYPE,
-    NEG_TYPE,
+    LNOT_TYPE,
+    BITNEG_TYPE,
     UMINUS_TYPE,
     UADD_TYPE
 } unary_type;

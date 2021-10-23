@@ -39,6 +39,12 @@ compiler::Item_decl_array::Item_decl_array(const uint32_t& line_no, Item_ident_a
 {
 }
 
+compiler::Item_decl_pointer::Item_decl_pointer(const uint32_t& line_no, Item_ident_pointer* const identifier)
+    : Item_decl(line_no)
+    , identifier(identifier)
+{
+}
+
 compiler::Item_decl_var_init::Item_decl_var_init(
     const uint32_t& line_no,
     Item_ident* const identifier,

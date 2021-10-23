@@ -73,6 +73,19 @@ public:
     virtual ~Item_decl_var() override = default;
 } Item_decl_var;
 
+typedef class Item_decl_pointer final : public Item_decl {
+protected:
+    Item_ident_pointer* const identifier;
+
+public:
+    Item_decl_pointer() = delete;
+
+    Item_decl_pointer(const uint32_t& line_no, Item_ident_pointer* const identifier);
+
+    virtual ~Item_decl_pointer() override = default;
+} Item_decl_pointer;
+
+
 /**
  * @brief Class for declaration of variables with initial value.
  * 

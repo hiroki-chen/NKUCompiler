@@ -11,7 +11,7 @@
     #include <common/config.hh>
     #include <common/types.hh>
     #include <frontend/nodes/item_all.hh>
-    #include <frontend/symbol_table.hh>
+    //#include <frontend/symbol_table.hh>
 
     #include "test.hh"
     
@@ -20,7 +20,7 @@
     #include <string>
     #include <stdexcept>
 
-    extern compiler::Symbol_table symbol_table;
+    //extern compiler::Symbol_table symbol_table;
     extern uint32_t yylineno;
 
     extern int yylex(void);
@@ -59,24 +59,29 @@
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
     compiler::Item_decl*                item_decl;
+    compiler::Item_stmt*                item_stmt;
     compiler::Item_stmt_decl*           item_stmt_decl;
     compiler::Item_func_def*            item_func_def;
     compiler::Item_expr*                item_expr;
     compiler::Item_ident*               item_ident;
     compiler::Item_ident_array*         item_ident_array;
+    compiler::Item_ident_pointer*       item_ident_pointer;
     compiler::Item_decl_array_init*     item_decl_array_init;
+    compiler::Item_literal_real*         item_decl_literal_real;
     compiler::Item_literal_array_init*  item_literal_array_init;
     compiler::Item_decl_var*            item_decl_var;
     compiler::Item_decl_var_init*       item_decl_var_init;
     compiler::Item_func_def_list*       item_func_def_list;
     compiler::Item_func_def_arg*        item_func_def_arg;
+    compiler::Item_func_call_list*      item_func_call_list;
     compiler::Item_block*               item_block;
     std::string*                        raw_string;
+    double                              raw_number;
 }
 
-%token          ID
+%token          ID 
 // Operators 
-%token          ADD MINUS MUL DIV MOD
+%token          ADD MINUS MUL DIV MOD INC DEC
 %token          EQ NEQ GEQ LEQ G L
 %token          BIT_AND BIT_OR BIT_XOR BIT_NEG
 %token          LOGIC_AND LOGIC_OR LOGIC_NOT
@@ -96,23 +101,24 @@
 %left ADD MINUS
 %left MUL DIV MOD
 %left LOGIC_NOT
-%nonassoc UMINUS UADD
 
 // Type definition
 %type <btype> BType
-%type <item_block> BLOCK
+%type <item_block> BLOCK BlockItems
 %type <item_root> CompUnit
+%type <item_stmt> BlockItem Stmt ExpStmt AssignStmt Assignment eIfStmt ReturnStmt WhileStmt ForStmt BreakStmt ContinueStmt
 %type <item_stmt_decl> Decl ConstDecl VarDecl ConstDeclStmt VarDeclStmt
 %type <item_func_def> FuncDef
 %type <item_func_def_list> FuncDefList
 %type <item_func_def_arg> FuncParam FuncParamNormal FuncParamArray
 %type <item_decl> VarDef VarDefNormal VarDefArray ConstDef ConstDefNormal ConstDefArray
-%type <item_expr> Exp AddExp BitExp
-%type <item_ident> Ident
-%type <item_ident_array> ArrayID
+%type <item_expr> Exp AddExp MulExp BitExp LOrExp LAndExp EqExp RelExp BitAndExp BitOrExp BitXorExp UnaryExp PrimaryExp FunctionCall
+%type <item_ident> Ident LVal
+%type <item_ident_array> ArrayID ArrayItem
+%type <item_func_call_list> FunctionRParams
 %type <item_literal_array_init> ArrayInitVal ArrayInitValHelper
-
 %type <raw_string> ID
+%type <raw_number> NUMBER HEX DECIMAL OCTAL
 
 %start CompUnit
 %%
@@ -160,7 +166,7 @@ VarDefArray: ArrayID ASSIGN ArrayInitVal    { $$ = new compiler::Item_decl_array
            ;
 
 ArrayID: ArrayID LSQUARE Exp RSQUARE        { $$ = $1; $$->add_shape($3); }
-       | Ident LSQUARE Exp RSQUARE             { $$ = new compiler::Item_ident_array(yyget_lineno(), $1->get_name()); $$->add_shape($3); }
+       | Ident LSQUARE Exp RSQUARE          { $$ = new compiler::Item_ident_array(yyget_lineno(), $1->get_name()); $$->add_shape($3); }
        ;
 
 ArrayInitVal: LBRACE ArrayInitValHelper RBRACE             { $$ = $2; }
@@ -205,17 +211,172 @@ FuncParamArray: BType Ident LSQUARE RSQUARE                {
 Ident: ID       { $$ = new compiler::Item_ident(yyget_lineno(), *$1); }
      ;
 
-ArrayInitValHelper: 'foo';
+ArrayInitValHelper: 'foo'   { $$ = nullptr; /* NOT IMPLEMENTED YET. */}
+                  ;
 
-BLOCK: ;
+BLOCK: LBRACE RBRACE                    { $$ = new compiler::Item_block(yyget_lineno()); }
+     | LBRACE BlockItems RBRACE         { $$ = $2; }
+     ;
 
-Exp: BitExp
-   ;
+BlockItems: BlockItem                   { $$ = new compiler::Item_block(yyget_lineno()); $$->add_item($1); }
+          | BlockItems BlockItem        { $$ = $1; $$->add_item($2); }
+          ;
 
-BitExp: AddExp
+BlockItem: Decl                         { $$ = $<item_stmt>1; }
+         | Stmt                         { $$ = $<item_stmt>1; }
+         ;
+
+Stmt: BLOCK                             { $$ = $<item_stmt>1; }
+    | WhileStmt
+    | ForStmt
+    | eIfStmt
+    | ReturnStmt
+    | BreakStmt
+    | ContinueStmt
+    | AssignStmt
+    | ExpStmt        
+    ;
+
+BreakStmt: BREAK SEMICOLON  { $$ = new compiler::Item_stmt_break(yyget_lineno()); }
+         ;
+
+ContinueStmt: CONTINUE SEMICOLON  { $$ = new compiler::Item_stmt_continue(yyget_lineno()); }
+            ;
+
+ReturnStmt: RETURN SEMICOLON            { $$ = new compiler::Item_stmt_return(yyget_lineno(), nullptr); }
+          | RETURN Exp SEMICOLON        { $$ = new compiler::Item_stmt_return(yyget_lineno(), $2); }
+          ;
+
+eIfStmt: IF LPARENTHESIS Exp RPARENTHESIS Stmt                 { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, new compiler::Item_stmt_void(yyget_lineno())); }
+       | IF LPARENTHESIS Exp RPARENTHESIS Stmt ELSE Stmt       { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, $7); }
+       ;
+
+ExpStmt: Exp SEMICOLON      { $$ = new compiler::Item_stmt_eval(yyget_lineno(), $1); }
+       | SEMICOLON          { $$ = new compiler::Item_stmt_void(yyget_lineno()); }
+       ;
+
+WhileStmt:  WHILE LPARENTHESIS Exp RPARENTHESIS Stmt    { $$ = new compiler::Item_stmt_while(yyget_lineno(), $3, $5); }
+         ;
+
+ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
+       | FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS Exp BLOCK
+       | FOR LPARENTHESIS Decl ExpStmt RPARENTHESIS BLOCK
+       | FOR LPARENTHESIS Decl ExpStmt Exp RPARENTHESIS BLOCK
+       ;
+
+AssignStmt: Assignment SEMICOLON    { $$ = $1; }
+          ;
+
+Assignment: LVal ASSIGN Exp           { $$ = new compiler::Item_stmt_assign(yyget_lineno(), $1, $3); }
+          | LVal INC                  {
+                                            compiler::Item_expr_binary* const expr = 
+                                                new compiler::Item_expr_binary(
+                                                    yyget_lineno(),
+                                                    compiler::binary_type::ADD_TYPE,
+                                                    $1,
+                                                    new compiler::Item_literal_int(yyget_lineno(), 1));
+                                            $$ = new compiler::Item_stmt_assign(yyget_lineno(), $1, expr);
+                                      }
+          | LVal DEC                  {
+                                            compiler::Item_expr_binary* const expr = 
+                                                new compiler::Item_expr_binary(
+                                                    yyget_lineno(),
+                                                    compiler::binary_type::SUB_TYPE,
+                                                    $1,
+                                                    new compiler::Item_literal_int(yyget_lineno(), 1));
+                                            $$ = new compiler::Item_stmt_assign(yyget_lineno(), $1, expr);
+                                      }
+          | INC LVal                  { $$ = new compiler::Item_stmt_postfix(yyget_lineno(), $2, compiler::binary_type::ADD_TYPE); }
+          | DEC LVal                  { $$ = new compiler::Item_stmt_postfix(yyget_lineno(), $2, compiler::binary_type::SUB_TYPE); }
+          ;
+
+LVal: Ident
+    | ArrayItem                       { $$ = $<item_ident>1; }
+    ;
+
+ArrayItem: LVal LSQUARE Exp RSQUARE             { $$ = new compiler::Item_ident_array(yyget_lineno(), $1->get_name()); $$->add_shape($3);}
+         | ArrayItem LSQUARE Exp RSQUARE        { $$ = $1; $$->add_shape($3); }
+         ;
+
+Exp: LOrExp
+        ;
+
+LOrExp: LAndExp LOGIC_OR LAndExp    { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LOR_TYPE, $1, $3); }
+      | LOrExp LOGIC_OR LAndExp     { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LOR_TYPE, $1, $3); }
+      | LAndExp                    
       ;
 
-AddExp: ;
+LAndExp: LAndExp LOGIC_AND EqExp    { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LAND_TYPE, $1, $3); }
+       | EqExp
+       ;
 
+EqExp: RelExp EQ RelExp             { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::EQ_TYPE, $1, $3); }
+     | RelExp NEQ RelExp            { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::NEQ_TYPE, $1, $3); }
+     | RelExp
+     ;
+
+RelExp: RelExp GE RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::GE_TYPE, $1, $3); }
+      | RelExp LE RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LE_TYPE, $1, $3); }
+      | RelExp G RelExp          { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::G_TYPE, $1, $3); }
+      | RelExp L RelExp          { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::L_TYPE, $1, $3); }
+      | AddExp
+      ;
+
+
+BitExp: BitOrExp
+      ;
+
+BitOrExp: BitXorExp BIT_OR BitXorExp        { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITOR_TYPE, $1, $3); }
+        | BitOrExp  BIT_OR BitXorExp        { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITOR_TYPE, $1, $3); }
+        | BitXorExp
+        ;
+
+BitXorExp: BitAndExp BIT_XOR BitAndExp        { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITXOR_TYPE, $1, $3); }
+        | BitXorExp  BIT_XOR BitAndExp        { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITXOR_TYPE, $1, $3); }
+        | BitAndExp
+        ;
+
+BitAndExp: LOrExp BIT_AND LOrExp              { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
+         | BitAndExp BIT_AND LOrExp           { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
+         | LOrExp
+         ;
+
+AddExp: AddExp ADD MulExp                     { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::ADD_TYPE, $1, $3); }
+      | AddExp MINUS MulExp                   { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::SUB_TYPE, $1, $3); }
+      | MulExp
+      ;
+
+MulExp: MulExp MUL UnaryExp                   { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::MUL_TYPE, $1, $3); }
+      | MulExp DIV UnaryExp                   { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::DIV_TYPE, $1, $3); }
+      | MulExp MOD UnaryExp                   { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::MOD_TYPE, $1, $3); }
+      | UnaryExp
+      ;
+
+UnaryExp: ADD UnaryExp                        { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UADD_TYPE, $2); }
+        | MINUS UnaryExp                      { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UMINUS_TYPE, $2); }
+        | LOGIC_NOT UnaryExp                  { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::LNOT_TYPE, $2); }
+        | BIT_NEG UnaryExp                    { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::BITNEG_TYPE, $2); }
+        | FunctionCall
+        | PrimaryExp
+        ;
+
+PrimaryExp: LPARENTHESIS Exp RPARENTHESIS      { $$ = $2; }
+          | LVal                                    { $$ = $<item_expr>1; }
+          | NUMBER                                  { $$ = new compiler::Item_literal_real(yyget_lineno(), $1); }
+          | Assignment                              { $$ = $<item_expr>1; }
+          ;
+
+NUMBER: HEX
+      | OCTAL
+      | DECIMAL
+      ;
+
+FunctionCall: Ident LPARENTHESIS RPARENTHESIS                       { $$ = new compiler::Item_func_call(yyget_lineno(), $1, new compiler::Item_func_call_list(yyget_lineno())); }
+            | Ident LPARENTHESIS FunctionRParams RPARENTHESIS       { $$ = new compiler::Item_func_call(yyget_lineno(), $1, $3); }
+            ;
+
+FunctionRParams: FunctionRParams COMMA BitExp               { $$ = $1; $1->add_arg($3); }
+               | BitExp                                     { $$ = new compiler::Item_func_call_list(yyget_lineno()); $$->add_arg($1); }
+               ;
 
 %%
