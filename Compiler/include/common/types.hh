@@ -57,6 +57,15 @@ typedef enum decl_type {
     VAR_DECL,
     CONST_DECL,
 } decl_type;
+
+typedef enum symbol_type {
+    VAR_TYPE,
+    FUNC_TYPE,
+    POINTER_TYPE,
+    ARRAY_TYPE,
+    STRUCT_TYPE,
+    UNDEFINED,
+} symbol_type;
 } // namespace compiler
 
 #endif

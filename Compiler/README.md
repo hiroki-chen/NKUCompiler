@@ -7,13 +7,14 @@
 * 汇编代码生成；
 
 
-### 项目布局（截止2021-10-22）
+### 项目布局（截止2021-10-23）
 ```
 ├── backup
 ├── include
 │   ├── common
 │   ├── frontend
-│   │   └── nodes
+│   │   ├── nodes
+│   │   └── symbol_table
 │   ├── ir
 │   └── runtime
 ├── src
@@ -21,8 +22,10 @@
 │   ├── frontend
 │   │   ├── ir
 │   │   ├── nodes
-│   │   └── parser
+│   │   ├── parser
+│   │   └── symbol_table
 │   └── runtime
+└── test
 ```
 
 ### 继承关系和几点说明

@@ -39,7 +39,7 @@ compiler::Item_stmt_eval::Item_stmt_eval(const uint32_t& line_no, Item_expr* con
 
 compiler::Item_stmt_eif::Item_stmt_eif(
     const uint32_t& line_no,
-    Item_expr_cond* const condition,
+    Item_expr* const condition,
     Item_stmt* const if_branch,
     Item_stmt* const else_branch)
     : Item_stmt(line_no)
@@ -51,7 +51,7 @@ compiler::Item_stmt_eif::Item_stmt_eif(
 
 compiler::Item_stmt_while::Item_stmt_while(
     const uint32_t& line_no,
-    Item_expr_cond* const condition,
+    Item_expr* const condition,
     Item_stmt* const statement)
     : Item_stmt(line_no)
     , condition(condition)
@@ -78,7 +78,7 @@ compiler::Item_stmt_return::Item_stmt_return(const uint32_t& line_no, Item_expr*
 compiler::Item_stmt_for::Item_stmt_for(
     const uint32_t& line_no,
     Item_expr* const expr1,
-    Item_expr_cond* const condition,
+    Item_expr* const condition,
     Item_expr* const expr2)
     : Item_stmt(line_no)
     , expr1(expr1)

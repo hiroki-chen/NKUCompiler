@@ -1,7 +1,7 @@
 %{
     /*************************************************************
     parser.ypp
-    LEX FILE
+    YACC FILE
     Date: 2021/10/18
     Haobin Chen (@Aoyamahiroki) <etyyuiope@gmail.com>
     Jiawei Xu   (@Darren-8)

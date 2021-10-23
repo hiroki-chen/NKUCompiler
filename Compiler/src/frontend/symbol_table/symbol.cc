@@ -14,22 +14,20 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef CONFIG_HH
-#define CONFIG_HH
+#include <frontend/symbol_table/symbol.hh>
 
-#include <frontend/nodes/item.hh>
-#include <frontend/symbol_table/symbol_table.hh>
+compiler::Symbol::Symbol(const std::string& name, const symbol_type& type)
+    : name(name)
+    , type(type)
+{
+}
 
-#include <fstream>
-
-namespace compiler {
-// ! You need to initialize these variables after a compiler instance compiler::Compiler_runtime is created.
-// root
-Item_root* root = nullptr;
-
-// global symbol table.
-Symbol_table* global_table = nullptr;
-
-} // namespace compiler
-
-#endif
+compiler::Symbol_func::Symbol_func(
+    const std::string& name,
+    const basic_type& return_type,
+    Item_func_def_list* const arguments)
+    : Symbol(name, compiler::symbol_type::FUNC_TYPE)
+    , return_type(return_type)
+    , arguments(arguments)
+{
+}

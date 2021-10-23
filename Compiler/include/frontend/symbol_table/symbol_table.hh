@@ -14,22 +14,32 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef CONFIG_HH
-#define CONFIG_HH
+#ifndef SYMBOL_TABLE_HH
+#define SYMBOL_TABLE_HH
 
-#include <frontend/nodes/item.hh>
-#include <frontend/symbol_table/symbol_table.hh>
+#include <frontend/symbol_table/symbol.hh>
 
-#include <fstream>
+#include <vector>
+#include <unordered_map>
 
 namespace compiler {
-// ! You need to initialize these variables after a compiler instance compiler::Compiler_runtime is created.
-// root
-Item_root* root = nullptr;
+typedef class Symbol_table {
+protected:
+    std::unordered_map<std::string, Symbol*> symbol_table;
 
-// global symbol table.
-Symbol_table* global_table = nullptr;
+    Symbol_table* parent_table;
 
+    Symbol_table* child_table;
+
+public:
+    Symbol_table() = default;
+
+    virtual std::unordered_map<std::string, Symbol*> get_symbol_table(void) { return symbol_table; }
+
+    virtual Symbol* find_symbol(const std::string& name, const bool& recursive = true);
+
+    virtual bool add_symbol(Item_ident* const identifier);
+} Symbol_table;
 } // namespace compiler
 
 #endif

@@ -49,7 +49,12 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
 
 void compiler::Compiler_runtime::run(void)
 {
-    
+    try {
+
+    } catch (const std::runtime_error& e) {
+        // Error handler.
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 void compiler::Command_parser::parse(void)

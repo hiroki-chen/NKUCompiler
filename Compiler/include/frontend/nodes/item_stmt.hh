@@ -82,7 +82,7 @@ public:
  */
 typedef class Item_stmt_eif final : public Item_stmt {
 protected:
-    Item_expr_cond* const condition;
+    Item_expr* const condition;
 
     Item_stmt* const if_branch;
 
@@ -99,7 +99,7 @@ public:
      * @param if_branch 
      * @param else_branch 
      */
-    Item_stmt_eif(const uint32_t& line_no, Item_expr_cond* const condition, Item_stmt* const if_branch, Item_stmt* const else_branch);
+    Item_stmt_eif(const uint32_t& line_no, Item_expr* const condition, Item_stmt* const if_branch, Item_stmt* const else_branch);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::EIF_STMT; }
 
@@ -112,14 +112,14 @@ public:
  */
 typedef class Item_stmt_while final : public Item_stmt {
 protected:
-    Item_expr_cond* const condition;
+    Item_expr* const condition;
 
     Item_stmt* const statement; // while body
 
 public:
     Item_stmt_while() = delete;
 
-    Item_stmt_while(const uint32_t& line_no, Item_expr_cond* const condition, Item_stmt* const statement);
+    Item_stmt_while(const uint32_t& line_no, Item_expr* const condition, Item_stmt* const statement);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::WHILE_STMT; }
 
@@ -173,28 +173,6 @@ public:
 
     virtual ~Item_stmt_return() override = default;
 } Item_stmt_return;
-
-/**
- * @brief Class for for loop statement.
- * 
- */
-typedef class Item_stmt_for final : public Item_stmt {
-protected:
-    Item_expr* const expr1;
-
-    Item_expr_cond* const condition;
-
-    Item_expr* const expr2;
-
-public:
-    Item_stmt_for() = delete;
-
-    Item_stmt_for(const uint32_t& line_no, Item_expr* const expr1 = nullptr, Item_expr_cond* const condition = nullptr, Item_expr* const expr2 = nullptr);
-
-    virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::FOR_STMT; }
-
-    virtual ~Item_stmt_for() override = default;
-} Item_stmt_for;
 
 /**
  * @brief Class for nothing.
