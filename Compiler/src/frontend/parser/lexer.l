@@ -46,8 +46,9 @@ HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
 LINE        ((\r\n)|\n|\r)
 EMPTY       [ \t]
-COMMENT     ^"//"
-STRING      \"(\\.|[^"\\])*\"
+COMMENT     \/\/[^\n\r]+?(\n|\r|\n\r)
+MCOMMENT    (\/\*)(.|\n|\r)+?(\*\/)
+STRING      "[^"]*"
 
 %x          BLOCKCOMMENT
 
