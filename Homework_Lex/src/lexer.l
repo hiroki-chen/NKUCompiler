@@ -70,7 +70,7 @@ STRING      \"(\\.|[^"\\])*\"
         output << line_count << " " << cur_pos << ":\t" <<  "CONST\t\t\t\tconst" << std::endl;
         cur_pos += 5;
     #else
-        return INT;
+        return CONST;
     #endif
 }
 
@@ -79,7 +79,7 @@ STRING      \"(\\.|[^"\\])*\"
         output << line_count << " " << cur_pos << ":\t" <<  "DOUBLE\t\t\t\tdouble" << std::endl;
         cur_pos += 6;
     #else
-        return INT;
+        return DOUBLE;
     #endif
 }
 
@@ -97,7 +97,7 @@ STRING      \"(\\.|[^"\\])*\"
         output << line_count << " " << cur_pos << ":\t" <<  "CHAR\t\t\t\tchar" << std::endl;
         cur_pos += 4;
     #else
-        return INT;
+        return CHAR;
     #endif
 }
 
