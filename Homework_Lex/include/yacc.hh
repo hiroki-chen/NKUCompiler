@@ -138,7 +138,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 29 "src/tokenizer.ypp"
+#line 31 "./src/tokenizer.ypp"
 {
     char*   raw_symbol;
     char*   raw_string;
@@ -146,7 +146,7 @@ typedef union YYSTYPE
     double  raw_real;
 }
 /* Line 1529 of yacc.c.  */
-#line 150 "src/yacc.hh"
+#line 150 "./src/yacc.hh"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

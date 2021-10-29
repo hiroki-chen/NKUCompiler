@@ -24,6 +24,8 @@ extern YYSTYPE yylval;
 
 compiler::Symbol_table symbol_table;
 
+extern std::ofstream output;
+
 //extern compiler::Symbol_table symbol_table;
 
 uint32_t word_count = 0;
@@ -46,7 +48,8 @@ HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
 LINE        ((\r\n)|\n|\r)
 EMPTY       [ \t]
-COMMENT     ^"//"
+COMMENT     \/\/.*(\n|\r|\n\r)
+MCOMMENT    \/\*[^\*\/]*\*\/
 STRING      \"(\\.|[^"\\])*\"
 
 %x          BLOCKCOMMENT
@@ -54,7 +57,7 @@ STRING      \"(\\.|[^"\\])*\"
 %%
 "int" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "INT\t\t\t\tint" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "INT\t\t\t\tint" << std::endl;
         cur_pos += 3;
         return INT;
     #else
@@ -64,7 +67,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "const" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "CONST\t\t\t\tconst" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "CONST\t\t\t\tconst" << std::endl;
         cur_pos += 5;
     #else
         return INT;
@@ -73,7 +76,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "double" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "DOUBLE\t\t\t\tdouble" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "DOUBLE\t\t\t\tdouble" << std::endl;
         cur_pos += 6;
     #else
         return INT;
@@ -82,7 +85,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "float" {
         #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "FLOAT\t\t\t\tfloat" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "FLOAT\t\t\t\tfloat" << std::endl;
         cur_pos += 5;
     #else
         return FLOAT;
@@ -91,7 +94,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "char" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "CHAR\t\t\t\tchar" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "CHAR\t\t\t\tchar" << std::endl;
         cur_pos += 4;
     #else
         return INT;
@@ -100,7 +103,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "void" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "VOID\t\t\t\tvoid" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "VOID\t\t\t\tvoid" << std::endl;
         cur_pos += 4;
     #else
         return VOID;
@@ -109,7 +112,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "struct" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "STRUCT\t\t\t\tstruct" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "STRUCT\t\t\t\tstruct" << std::endl;
         cur_pos += 6;
     #else
         return STRUCT;
@@ -118,7 +121,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "if" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "IF\t\t\t\tif" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "IF\t\t\t\tif" << std::endl;
         cur_pos += 2;
     #else
         return IF;
@@ -127,7 +130,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "else" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ELSE\t\t\t\telse" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "ELSE\t\t\t\telse" << std::endl;
         cur_pos += 4;
     #else
         return ELSE;
@@ -136,7 +139,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "while" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "WHILE\t\t\t\twhile" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "WHILE\t\t\t\twhile" << std::endl;
         cur_pos += 5;
     #else
         return WHILE;
@@ -145,7 +148,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "for" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "FOR\t\t\t\tfor" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "FOR\t\t\t\tfor" << std::endl;
         cur_pos += 3;
     #else
         return FOR;
@@ -154,7 +157,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "break" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "BREAK\t\t\t\tbreak" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "BREAK\t\t\t\tbreak" << std::endl;
         cur_pos += 5;
     #else
         return INT;
@@ -163,7 +166,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "continue" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "CONTINUE\t\t\t\tcontinue" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "CONTINUE\t\t\t\tcontinue" << std::endl;
         cur_pos += 8;
     #else
         return CONTINUE;
@@ -172,7 +175,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "return" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "RETURN\t\t\t\treturn" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "RETURN\t\t\t\treturn" << std::endl;
         cur_pos += 6;
     #else
         return RETURN;
@@ -181,7 +184,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "+" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ADD\t\t\t\tadd" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "ADD\t\t\t\tadd" << std::endl;
         cur_pos += 1;
     #else
         return ADD;
@@ -190,7 +193,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "-" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "MINUS\t\t\t\tminus" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "MINUS\t\t\t\tminus" << std::endl;
         cur_pos += 1;
     #else
         return MINUS;
@@ -199,7 +202,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "*" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "MUL\t\t\t\tmul" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "MUL\t\t\t\tmul" << std::endl;
         cur_pos += 1;
     #else
         return MUL;
@@ -208,7 +211,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "/" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "DIV\t\t\t\tdiv" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "DIV\t\t\t\tdiv" << std::endl;
         cur_pos += 1;
     #else
         return DIV;
@@ -217,7 +220,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "%" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "MOD\t\t\t\tmod" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "MOD\t\t\t\tmod" << std::endl;
         cur_pos += 1;
     #else
         return MOD;
@@ -226,7 +229,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "&&" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LOGIC_AND\t\t\t\tand" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "LOGIC_AND\t\t\t\tand" << std::endl;
         cur_pos += 2;
     #else
         return LOGIC_AND;
@@ -235,7 +238,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "||" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LOGIC_OR\t\t\t\tor" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "LOGIC_OR\t\t\t\tor" << std::endl;
         cur_pos += 2;
     #else
         return LOGIC_OR;
@@ -244,17 +247,16 @@ STRING      \"(\\.|[^"\\])*\"
 
 "=" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ASSIGN\t\t\t\tassign" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "ASSIGN\t\t\t\tassign" << std::endl;
         cur_pos += 1;
-        return ASSIGN;
     #else
-        
+        return ASSIGN;
     #endif
 }
 
 "==" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "EQ\t\t\t\teq" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "EQ\t\t\t\teq" << std::endl;
         cur_pos += 2;
     #else
         return EQ;
@@ -263,7 +265,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "!=" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "NEQ\t\t\t\tneq" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "NEQ\t\t\t\tneq" << std::endl;
         cur_pos += 2;
     #else
         return NEQ;
@@ -272,7 +274,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "!" {
      #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LOGIC_NOT\t\t\t\tnot" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "LOGIC_NOT\t\t\t\tnot" << std::endl;
         cur_pos += 1;
     #else
         return LOGIC_NOT;
@@ -281,7 +283,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 ">" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "GREATE\t\t\t\tgreat" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "GREATE\t\t\t\tgreat" << std::endl;
         cur_pos += 1;
     #else
         return G;
@@ -290,7 +292,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "<" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LESS\t\t\t\tless" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "LESS\t\t\t\tless" << std::endl;
         cur_pos += 1;
     #else
         return L;
@@ -299,7 +301,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 ">=" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "GEQ\t\t\t\tgeq" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "GEQ\t\t\t\tgeq" << std::endl;
         cur_pos += 2;
     #else
         return GEQ;
@@ -308,7 +310,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "<=" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LEQ\t\t\t\tleq" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "LEQ\t\t\t\tleq" << std::endl;
         cur_pos += 2;
     #else
         return LEQ;
@@ -317,7 +319,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "+" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ADD\t\t\t\tadd" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "ADD\t\t\t\tadd" << std::endl;
         cur_pos += 1;
     #else
         return ADD;
@@ -326,7 +328,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "-" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "MINUS\t\t\t\tminus" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "MINUS\t\t\t\tminus" << std::endl;
         cur_pos += 1;
     #else
         return MINUS;
@@ -335,7 +337,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "*" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "MUL\t\t\t\tmul" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "MUL\t\t\t\tmul" << std::endl;
         cur_pos += 1;
     #else
         return MUL;
@@ -344,7 +346,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "/" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "DIV\t\t\t\tdiv" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "DIV\t\t\t\tdiv" << std::endl;
         cur_pos += 1;
     #else
         return DIV;
@@ -353,16 +355,17 @@ STRING      \"(\\.|[^"\\])*\"
 
 ";" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "SEMICOLON\t\t\t\tsemicolon" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "SEMICOLON\t\t\t\tsemicolon" << std::endl;
         cur_pos += 1;
-        return SEMICOLON;
+        
     #else
+        return SEMICOLON;
     #endif
 }
 
 "{" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LBRACE\t\t\t\tlbrace" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "LBRACE\t\t\t\tlbrace" << std::endl;
         cur_pos += 1;
         symbol_table.enter_scope();
     #else
@@ -372,7 +375,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "}" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "RBRACE\t\t\t\trbrace" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "RBRACE\t\t\t\trbrace" << std::endl;
         cur_pos += 1;
         symbol_table.leave_scope();
     #else
@@ -382,7 +385,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 "(" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "LPARENTHESIS\t\t\t\tlparenthesis" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "LPARENTHESIS\t\t\t\tlparenthesis" << std::endl;
         cur_pos += 1;
     #else
         return LPARENTHESIS;
@@ -391,37 +394,26 @@ STRING      \"(\\.|[^"\\])*\"
 
 ")" {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "RPARENTHESIS\t\t\t\trparenthesis" << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "RPARENTHESIS\t\t\t\trparenthesis" << std::endl;
         cur_pos += 1;
     #else
         return RPARENTHESIS;
     #endif
 }
 
-{COMMENT} {
-    #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "SINGLE_COMMENT\t\t\t\t empty" << std::endl;
-        cur_pos += strlen(yytext);
-        line_count ++;
-    #else
-        return SINGLE_COMMENT;
-    #endif
-}
-
 {DECIMAL} {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "Decimal\t\t\t\t" << yytext << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "Decimal\t\t\t\t" << yytext << std::endl;
         cur_pos += strlen(yytext);
+    #else
         yylval.raw_int = std::stoi((std::string)yytext);
         return DECIMAL;
-    #else
-        
     #endif
 }
 
 {OCTAL} {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "OCTAL\t\t\t\t" << std::stoi(yytext, 0, 8) << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "OCTAL\t\t\t\t" << std::stoi(yytext, 0, 8) << std::endl;
         cur_pos += strlen(yytext);
     #else
         return OCTAL;
@@ -430,7 +422,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 {HEX} {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "HEX\t\t\t\t" << std::stoi(yytext, 0, 16) << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "HEX\t\t\t\t" << std::stoi(yytext, 0, 16) << std::endl;
         cur_pos += strlen(yytext);
     #else
         return HEX;
@@ -439,7 +431,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 {ID} {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "ID\t\t\t\tid: " << yytext << " with scope: " << symbol_table.get_current_scope() << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "ID\t\t\t\tid: " << yytext << " with scope: " << symbol_table.get_current_scope() << std::endl;
         yylval.raw_symbol = strdup(yytext);
         return ID;
     #else
@@ -449,7 +441,7 @@ STRING      \"(\\.|[^"\\])*\"
 
 {STRING} {
     #ifdef ONLY_FOR_LEX
-        std::cerr << line_count << " " << cur_pos << ":\t" <<  "STRING\t\t\t\tstring: " << yytext << std::endl;
+        output << line_count << " " << cur_pos << ":\t" <<  "STRING\t\t\t\tstring: " << yytext << std::endl;
         cur_pos += strlen(yytext);
         // yylval.raw_string = strdup(yytext);
     #else
@@ -461,8 +453,20 @@ STRING      \"(\\.|[^"\\])*\"
 
 {LINE} { line_count ++; cur_pos = 0; }
 
+{MCOMMENT} { output << "Multiline Comment" << std::endl; }
+
+{COMMENT} {
+    #ifdef ONLY_FOR_LEX
+        output << line_count << " " << cur_pos << ":\t" <<  "SINGLE_COMMENT\t\t\t\t empty" << std::endl;
+        cur_pos += strlen(yytext);
+        line_count ++;
+    #else
+        return SINGLE_COMMENT;
+    #endif
+}
+
 . {
-    std::cerr << line_count << " " << cur_pos << ":\t" <<  "Syntax error!" << std::endl;
+    output << line_count << " " << cur_pos << ":\t" <<  "Syntax error!" << std::endl;
 }
 
 <<EOF>> { yyterminate(); }

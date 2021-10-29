@@ -164,7 +164,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "src/tokenizer.ypp"
+#line 1 "./src/tokenizer.ypp"
 
     /*************************************************************
     expr.l
@@ -191,6 +191,8 @@
     extern void yyerror(const char* str);
     extern FILE* yyin;
 
+    std::ofstream output;
+
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -212,7 +214,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 29 "src/tokenizer.ypp"
+#line 31 "./src/tokenizer.ypp"
 {
     char*   raw_symbol;
     char*   raw_string;
@@ -220,7 +222,7 @@ typedef union YYSTYPE
     double  raw_real;
 }
 /* Line 193 of yacc.c.  */
-#line 224 "src/yacc.cc"
+#line 226 "./src/yacc.cc"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -233,7 +235,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 237 "src/yacc.cc"
+#line 239 "./src/yacc.cc"
 
 #ifdef short
 # undef short
@@ -446,18 +448,18 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  5
+#define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   26
+#define YYLAST   23
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  48
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  5
+#define YYNRULES  6
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  11
+#define YYNSTATES  8
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -507,20 +509,20 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     7,    10,    15
+       0,     0,     3,     6,     8,     9,    12
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      49,     0,    -1,    49,    50,    45,    -1,    50,    45,    -1,
-      26,     3,    40,    22,    -1,    -1
+      49,     0,    -1,    50,    49,    -1,    50,    -1,    -1,    26,
+       3,    -1,     3,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    67,    67,    68,    72,    75
+       0,    69,    69,    70,    71,    75,    79
 };
 #endif
 
@@ -555,13 +557,13 @@ static const yytype_uint16 yytoknum[] =
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    48,    49,    49,    50,    50
+       0,    48,    49,    49,    49,    50,    50
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     3,     2,     4,     0
+       0,     2,     2,     1,     0,     2,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -569,29 +571,27 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       5,     0,     5,     0,     0,     1,     0,     3,     0,     2,
-       4
+       4,     6,     0,     0,     3,     5,     1,     2
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3
+      -1,     3,     4
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -43
+#define YYPACT_NINF -4
 static const yytype_int8 yypact[] =
 {
-     -25,    -1,     0,   -42,   -36,   -43,   -40,   -43,   -16,   -43,
-     -43
+      -3,    -4,    -2,     2,    -3,    -4,    -4,    -4
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -43,   -43,     5
+      -4,    -1,    -4
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -601,24 +601,23 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       5,     1,     4,     7,     8,     9,    10,     6,     0,     0,
+       1,     5,     6,     7,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     1
+       0,     0,     0,     2
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,    26,     3,    45,    40,    45,    22,     2,    -1,    -1,
+       3,     3,     0,     4,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    26
+      -1,    -1,    -1,    26
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    26,    49,    50,     3,     0,    50,    45,    40,    45,
-      22
+       0,     3,    26,    49,    50,     3,     0,    49
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1432,17 +1431,29 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 4:
-#line 72 "src/tokenizer.ypp"
+        case 5:
+#line 75 "./src/tokenizer.ypp"
     {
-    compiler::Item_ident *const item = new compiler::Item_ident_int(yylineno, (yyvsp[(2) - (4)].raw_symbol), symbol_table.get_current_scope(), (yyvsp[(4) - (4)].raw_int));
+    compiler::Item_ident *const item = new compiler::Item_ident_int(yylineno, (yyvsp[(2) - (2)].raw_symbol), symbol_table.get_current_scope(), 0);
     symbol_table.put(item);
+}
+    break;
+
+  case 6:
+#line 79 "./src/tokenizer.ypp"
+    {
+    auto res = symbol_table.get((yyvsp[(1) - (1)].raw_symbol));
+    if (res != nullptr) {
+        output << "OK! I FOUND IT" << std::endl;
+    } else {
+        output << "Undefined symbol" << std::endl;
+    }
 }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1446 "src/yacc.cc"
+#line 1457 "./src/yacc.cc"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1656,7 +1667,7 @@ yyreturn:
 }
 
 
-#line 78 "src/tokenizer.ypp"
+#line 88 "./src/tokenizer.ypp"
 
 int main(int argc, const char** argv)
 {
@@ -1665,13 +1676,15 @@ int main(int argc, const char** argv)
             throw std::runtime_error("Not enough arguments!");
         }
 
+        output.open(argv[2], std::ios::out | std::ios::trunc);
+
         yyin = fopen(argv[1], "r");
 
         do {
             yyparse();
         } while (!feof(yyin));
     } catch (const std::runtime_error& e) {
-        // std::cerr << line_count << " " << cur_pos << ":\t" <<  e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
     return 0;
 }

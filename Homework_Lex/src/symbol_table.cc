@@ -63,7 +63,8 @@ Symbol_table::get(const std::string& name)
         if (ans != nullptr) {
             return ans;
         } else {
-            throw std::runtime_error("Undeclared symbol!\n");
+            return ans;
+            //throw std::runtime_error("Undeclared symbol!\n");
         }
     }
 }

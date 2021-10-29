@@ -23,6 +23,8 @@
     extern int yyparse(void);
     extern void yyerror(const char* str);
     extern FILE* yyin;
+
+    std::ofstream output;
 %}
 %token          ID
 %error-verbose
@@ -64,16 +66,24 @@
 %type <raw_int>    DECIMAL
 
 %%
-lines: lines assignment SEMICOLON
-     | assignment       SEMICOLON
+lines: assignment lines
+     | assignment
+     |
      ;
 
 assignment:
-INT ID ASSIGN DECIMAL {
-    compiler::Item_ident *const item = new compiler::Item_ident_int(yylineno, $2, symbol_table.get_current_scope(), $4);
+INT ID {
+    compiler::Item_ident *const item = new compiler::Item_ident_int(yylineno, $2, symbol_table.get_current_scope(), 0);
     symbol_table.put(item);
 }   |
-    ;
+ID  {
+    auto res = symbol_table.get($1);
+    if (res != nullptr) {
+        output << "OK! I FOUND IT" << std::endl;
+    } else {
+        output << "Undefined symbol" << std::endl;
+    }
+}
 
 %%
 int main(int argc, const char** argv)
@@ -83,13 +93,15 @@ int main(int argc, const char** argv)
             throw std::runtime_error("Not enough arguments!");
         }
 
+        output.open(argv[2], std::ios::out | std::ios::trunc);
+
         yyin = fopen(argv[1], "r");
 
         do {
             yyparse();
         } while (!feof(yyin));
     } catch (const std::runtime_error& e) {
-        // std::cerr << line_count << " " << cur_pos << ":\t" <<  e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
     return 0;
 }
