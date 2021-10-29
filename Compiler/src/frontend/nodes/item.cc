@@ -16,6 +16,9 @@
  */
 #include <frontend/nodes/item.hh>
 
+#include <string>
+#include <sstream>
+
 compiler::Item::Item(const uint32_t& line_no)
     : line_no(line_no)
 {
@@ -29,4 +32,13 @@ compiler::Item_root::Item_root(const uint32_t& line_no)
 void compiler::Item_root::add_child(Item* const child)
 {
     children.emplace_back(child);
+}
+
+std::string compiler::Item_root::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "ROOT: ";
+    for (uint32_t i = 0; i < children.size(); i++) {
+        oss << children[i]->print_result() << std::endl;
+    }
 }

@@ -24,6 +24,8 @@ namespace compiler {
 /**
  * @brief The most basic type for each node in the AST.
  * 
+ * @note YOU MUST NOT CREATE A DIRECT INSTANCE FROM ANY ABSTRACT CLASS AS THIS MEANS NOTHING.
+ * 
  */
 typedef class Item {
 protected:
@@ -32,6 +34,9 @@ protected:
 public:
     /**
      * @brief Defines the type of the item.
+     * 
+     * Basically, there is a super node called <b>Program</b> node, which is defined as a root node of
+     * the whole AST. Expr, Decl, and Func_def are derived from the \ref{compiler::Item_root} node.
      * 
      */
     typedef enum type {
@@ -50,8 +55,16 @@ public:
     virtual Item::type get_type(void) const = 0;
 
     virtual uint32_t get_line_no(void) const { return line_no; }
-
-    // virtual void print_result() const = 0;
+    
+    /**
+     * @brief Prints the the parse result as an abstract syntax tree.
+     * @note This function will invoke all of its children's print_result() virtual function
+     *       until there is no child anymore.
+     *       You should implement this function in each <b>final</b> class.
+     * 
+     * @return std::string 
+     */
+    virtual std::string print_result(void) const = 0;
 
     virtual ~Item() = default;
 } Item;
@@ -68,6 +81,8 @@ public:
     Item_root() = delete;
 
     Item_root(const uint32_t& line_no);
+
+    virtual std::string print_result(void) const override;
 
     virtual ~Item_root() override = default;
 } Item_root;
