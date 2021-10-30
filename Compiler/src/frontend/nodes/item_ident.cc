@@ -28,6 +28,11 @@ compiler::Item_ident_array::Item_ident_array(const uint32_t& line_no, const std:
 {
 }
 
+compiler::Item_ident_func::Item_ident_func(const uint32_t& line_no, const std::string& name)
+    : Item_ident(line_no, name)
+{
+}
+
 compiler::Item_ident_pointer::Item_ident_pointer(const uint32_t& line_no, const std::string& name, Item_expr* point_to)
     : Item_ident(line_no, name)
     , point_to(point_to)
@@ -45,6 +50,14 @@ compiler::Item_ident::print_result(void) const
 {
     std::ostringstream oss;
     oss << "Node: Identifier with name " << name;
+    return oss.str();
+}
+
+std::string
+compiler::Item_ident_func::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Identifier Function with name " << name;
     return oss.str();
 }
 

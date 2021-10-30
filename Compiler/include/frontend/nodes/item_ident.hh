@@ -33,6 +33,13 @@ protected:
     const std::string name;
 
 public:
+    typedef enum ident_type {
+        VARIABLE,
+        POINTER,
+        ARRAY,
+        FUNCTION
+    } ident_type;
+
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::IDENTIFIER_TYPE; }
 
     virtual std::string get_name(void) const { return name; } 
@@ -40,6 +47,8 @@ public:
     Item_ident() = delete;
 
     Item_ident(const uint32_t& line_no, const std::string& name);
+
+    virtual Item_ident::ident_type get_ident_type(void) const { return Item_ident::ident_type::VARIABLE; }
 
     virtual std::string print_result(void) const override;
 } Item_ident;
@@ -55,6 +64,8 @@ protected:
 public:
     virtual void add_shape(Item_expr* const array_shape);
 
+    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::ARRAY; }
+
     Item_ident_array() = delete;
 
     Item_ident_array(const uint32_t& line_no, const std::string& name);
@@ -63,6 +74,19 @@ public:
 
     virtual ~Item_ident_array() override = default;
 } Item_ident_array;
+
+typedef class Item_ident_func final : public Item_ident {
+public:
+    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::ARRAY; }
+
+    Item_ident_func() = delete;
+
+    Item_ident_func(const uint32_t& line_no, const std::string& name);
+
+    virtual std::string print_result(void) const override;
+
+    virtual ~Item_ident_func() override = default;
+} Item_ident_func;
 
 /**
  * @brief Class for pointers.
@@ -76,6 +100,8 @@ public:
     Item_ident_pointer() = delete;
 
     Item_ident_pointer(const uint32_t& line_no, const std::string& name, Item_expr* point_to);
+
+    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::FUNCTION; }
 
     virtual ~Item_ident_pointer() override = default;
 } Item_ident_pointer;

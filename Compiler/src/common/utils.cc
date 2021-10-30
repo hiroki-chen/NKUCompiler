@@ -83,7 +83,7 @@ compiler::to_string(const compiler::binary_type& type)
 
     case BITOR_TYPE:
         return "Bitwise_or";
-    
+
     case BITAND_TYPE:
         return "Bitwise_and";
 
@@ -92,10 +92,10 @@ compiler::to_string(const compiler::binary_type& type)
 
     case EQ_TYPE:
         return "Conditional_equal";
-    
+
     case NEQ_TYPE:
         return "Conditional_nonequal";
-    
+
     case G_TYPE:
         return "Conditional_greater";
 

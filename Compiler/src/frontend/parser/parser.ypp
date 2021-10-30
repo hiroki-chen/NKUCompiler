@@ -10,7 +10,6 @@
 
     Main tokenizer
     **************************************************************/
-    #include <common/config.hh>
     #include <common/types.hh>
     #include <runtime/runtime.hh>
     #include <frontend/nodes/item_all.hh>

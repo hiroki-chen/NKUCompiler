@@ -187,7 +187,6 @@
 
     Main tokenizer
     **************************************************************/
-    #include <common/config.hh>
     #include <common/types.hh>
     #include <runtime/runtime.hh>
     #include <frontend/nodes/item_all.hh>
@@ -254,7 +253,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 60 "./src/frontend/parser/parser.ypp"
+#line 59 "./src/frontend/parser/parser.ypp"
 {
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
@@ -280,7 +279,7 @@ typedef union YYSTYPE
     char                                raw_char;
 }
 /* Line 193 of yacc.c.  */
-#line 284 "./src/frontend/parser/parser.cc"
+#line 283 "./src/frontend/parser/parser.cc"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -305,7 +304,7 @@ typedef struct YYLTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 309 "./src/frontend/parser/parser.cc"
+#line 308 "./src/frontend/parser/parser.cc"
 
 #ifdef short
 # undef short
@@ -649,20 +648,20 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   138,   138,   139,   140,   141,   144,   145,   148,   151,
-     154,   155,   156,   157,   160,   161,   164,   165,   168,   169,
-     172,   173,   176,   177,   180,   181,   184,   185,   188,   189,
-     192,   195,   198,   199,   200,   201,   204,   205,   208,   209,
-     212,   215,   220,   223,   226,   229,   230,   233,   234,   237,
-     238,   241,   242,   243,   244,   245,   246,   247,   248,   249,
-     252,   255,   258,   259,   262,   263,   266,   267,   270,   273,
-     274,   275,   276,   279,   282,   283,   292,   301,   302,   305,
-     306,   309,   310,   313,   316,   317,   318,   321,   322,   325,
-     326,   327,   330,   331,   332,   333,   334,   338,   341,   342,
-     343,   346,   347,   348,   351,   352,   353,   356,   357,   358,
-     361,   362,   363,   364,   367,   368,   369,   370,   371,   372,
-     375,   376,   377,   378,   381,   382,   383,   384,   385,   388,
-     389,   392,   393
+       0,   137,   137,   138,   139,   140,   143,   144,   147,   150,
+     153,   154,   155,   156,   159,   160,   163,   164,   167,   168,
+     171,   172,   175,   176,   179,   180,   183,   184,   187,   188,
+     191,   194,   197,   198,   199,   200,   203,   204,   207,   208,
+     211,   214,   219,   222,   225,   228,   229,   232,   233,   236,
+     237,   240,   241,   242,   243,   244,   245,   246,   247,   248,
+     251,   254,   257,   258,   261,   262,   265,   266,   269,   272,
+     273,   274,   275,   278,   281,   282,   291,   300,   301,   304,
+     305,   308,   309,   312,   315,   316,   317,   320,   321,   324,
+     325,   326,   329,   330,   331,   332,   333,   337,   340,   341,
+     342,   345,   346,   347,   350,   351,   352,   355,   356,   357,
+     360,   361,   362,   363,   366,   367,   368,   369,   370,   371,
+     374,   375,   376,   377,   380,   381,   382,   383,   384,   387,
+     388,   391,   392
 };
 #endif
 
@@ -1795,162 +1794,162 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 138 "./src/frontend/parser/parser.ypp"
+#line 137 "./src/frontend/parser/parser.ypp"
     { (yyval.item_root)->add_child((yyvsp[(2) - (2)].item_decl)); }
     break;
 
   case 3:
-#line 139 "./src/frontend/parser/parser.ypp"
+#line 138 "./src/frontend/parser/parser.ypp"
     { (yyval.item_root)->add_child((yyvsp[(2) - (2)].item_func_def)); }
     break;
 
   case 4:
-#line 140 "./src/frontend/parser/parser.ypp"
+#line 139 "./src/frontend/parser/parser.ypp"
     { (yyval.item_root) = new compiler::Item_root(yyget_lineno()); compiler_runtime->set_root((yyval.item_root)); (yyval.item_root)->add_child((yyvsp[(1) - (1)].item_decl)); }
     break;
 
   case 5:
-#line 141 "./src/frontend/parser/parser.ypp"
+#line 140 "./src/frontend/parser/parser.ypp"
     { (yyval.item_root) = new compiler::Item_root(yyget_lineno()); compiler_runtime->set_root((yyval.item_root)); (yyval.item_root)->add_child((yyvsp[(1) - (1)].item_func_def)); }
     break;
 
   case 8:
-#line 148 "./src/frontend/parser/parser.ypp"
+#line 147 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt_decl) = (yyvsp[(1) - (2)].item_stmt_decl); }
     break;
 
   case 9:
-#line 151 "./src/frontend/parser/parser.ypp"
+#line 150 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt_decl) = (yyvsp[(1) - (2)].item_stmt_decl); }
     break;
 
   case 10:
-#line 154 "./src/frontend/parser/parser.ypp"
+#line 153 "./src/frontend/parser/parser.ypp"
     { (yyval.btype) = compiler::basic_type::INT_TYPE; }
     break;
 
   case 11:
-#line 155 "./src/frontend/parser/parser.ypp"
+#line 154 "./src/frontend/parser/parser.ypp"
     { (yyval.btype) = compiler::basic_type::REAL_TYPE; }
     break;
 
   case 12:
-#line 156 "./src/frontend/parser/parser.ypp"
+#line 155 "./src/frontend/parser/parser.ypp"
     { (yyval.btype) = compiler::basic_type::REAL_TYPE; }
     break;
 
   case 13:
-#line 157 "./src/frontend/parser/parser.ypp"
+#line 156 "./src/frontend/parser/parser.ypp"
     { (yyval.btype) = compiler::basic_type::CHAR_TYPE; }
     break;
 
   case 14:
-#line 160 "./src/frontend/parser/parser.ypp"
+#line 159 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt_decl) = new compiler::Item_stmt_decl(yyget_lineno(), (yyvsp[(1) - (2)].btype)); (yyval.item_stmt_decl)->add_declaration((yyvsp[(2) - (2)].item_decl)); }
     break;
 
   case 15:
-#line 161 "./src/frontend/parser/parser.ypp"
+#line 160 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt_decl)->add_declaration((yyvsp[(3) - (3)].item_decl)); }
     break;
 
   case 16:
-#line 164 "./src/frontend/parser/parser.ypp"
+#line 163 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt_decl) = new compiler::Item_stmt_decl(yyget_lineno(), (yyvsp[(2) - (3)].btype)); (yyval.item_stmt_decl)->add_declaration((yyvsp[(3) - (3)].item_decl)); }
     break;
 
   case 17:
-#line 165 "./src/frontend/parser/parser.ypp"
+#line 164 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt_decl)->add_declaration((yyvsp[(3) - (3)].item_decl)); }
     break;
 
   case 20:
-#line 172 "./src/frontend/parser/parser.ypp"
+#line 171 "./src/frontend/parser/parser.ypp"
     { (yyval.item_decl) = new compiler::Item_decl_var_init(yyget_lineno(), (yyvsp[(1) - (3)].item_ident), (yyvsp[(3) - (3)].item_expr), false); }
     break;
 
   case 21:
-#line 173 "./src/frontend/parser/parser.ypp"
+#line 172 "./src/frontend/parser/parser.ypp"
     { (yyval.item_decl) = new compiler::Item_decl_var(yyget_lineno(), (yyvsp[(1) - (1)].item_ident)); }
     break;
 
   case 22:
-#line 176 "./src/frontend/parser/parser.ypp"
+#line 175 "./src/frontend/parser/parser.ypp"
     { (yyval.item_decl) = new compiler::Item_decl_array_init(yyget_lineno(), (yyvsp[(1) - (3)].item_ident_array), (yyvsp[(3) - (3)].item_literal_array_init), false); }
     break;
 
   case 23:
-#line 177 "./src/frontend/parser/parser.ypp"
+#line 176 "./src/frontend/parser/parser.ypp"
     { (yyval.item_decl) = new compiler::Item_decl_array(yyget_lineno(), (yyvsp[(1) - (1)].item_ident_array)); }
     break;
 
   case 24:
-#line 180 "./src/frontend/parser/parser.ypp"
+#line 179 "./src/frontend/parser/parser.ypp"
     { (yyval.item_ident_array) = (yyvsp[(1) - (4)].item_ident_array); (yyval.item_ident_array)->add_shape((yyvsp[(3) - (4)].item_expr)); }
     break;
 
   case 25:
-#line 181 "./src/frontend/parser/parser.ypp"
+#line 180 "./src/frontend/parser/parser.ypp"
     { (yyval.item_ident_array) = new compiler::Item_ident_array(yyget_lineno(), (yyvsp[(1) - (4)].item_ident)->get_name()); (yyval.item_ident_array)->add_shape((yyvsp[(3) - (4)].item_expr)); }
     break;
 
   case 26:
-#line 184 "./src/frontend/parser/parser.ypp"
+#line 183 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal_array_init) = (yyvsp[(2) - (3)].item_literal_array_init); }
     break;
 
   case 27:
-#line 185 "./src/frontend/parser/parser.ypp"
+#line 184 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal_array_init) = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); }
     break;
 
   case 30:
-#line 192 "./src/frontend/parser/parser.ypp"
+#line 191 "./src/frontend/parser/parser.ypp"
     { (yyval.item_decl) = new compiler::Item_decl_var_init(yyget_lineno(), (yyvsp[(1) - (3)].item_ident), (yyvsp[(3) - (3)].item_expr), true); }
     break;
 
   case 31:
-#line 195 "./src/frontend/parser/parser.ypp"
+#line 194 "./src/frontend/parser/parser.ypp"
     { (yyval.item_decl) = new compiler::Item_decl_array_init(yyget_lineno(), (yyvsp[(1) - (3)].item_ident_array), (yyvsp[(3) - (3)].item_literal_array_init), true); }
     break;
 
   case 32:
-#line 198 "./src/frontend/parser/parser.ypp"
+#line 197 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def) = new compiler::Item_func_def(yyget_lineno(), (yyvsp[(1) - (6)].btype), (yyvsp[(2) - (6)].item_ident), (yyvsp[(4) - (6)].item_func_def_list), (yyvsp[(6) - (6)].item_block)); }
     break;
 
   case 33:
-#line 199 "./src/frontend/parser/parser.ypp"
+#line 198 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def) = new compiler::Item_func_def(yyget_lineno(), compiler::basic_type::VOID_TYPE, (yyvsp[(2) - (6)].item_ident), (yyvsp[(4) - (6)].item_func_def_list), (yyvsp[(6) - (6)].item_block)); }
     break;
 
   case 34:
-#line 200 "./src/frontend/parser/parser.ypp"
+#line 199 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def) = new compiler::Item_func_def(yyget_lineno(), (yyvsp[(1) - (5)].btype), (yyvsp[(2) - (5)].item_ident), new compiler::Item_func_def_list(yyget_lineno()), (yyvsp[(5) - (5)].item_block)); }
     break;
 
   case 35:
-#line 201 "./src/frontend/parser/parser.ypp"
+#line 200 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def) = new compiler::Item_func_def(yyget_lineno(), compiler::basic_type::VOID_TYPE, (yyvsp[(2) - (5)].item_ident), new compiler::Item_func_def_list(yyget_lineno()), (yyvsp[(5) - (5)].item_block)); }
     break;
 
   case 36:
-#line 204 "./src/frontend/parser/parser.ypp"
+#line 203 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def_list)->add_arg((yyvsp[(3) - (3)].item_func_def_arg)); }
     break;
 
   case 37:
-#line 205 "./src/frontend/parser/parser.ypp"
+#line 204 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def_list) = new compiler::Item_func_def_list(yyget_lineno()); (yyval.item_func_def_list)->add_arg((yyvsp[(1) - (1)].item_func_def_arg)); }
     break;
 
   case 40:
-#line 212 "./src/frontend/parser/parser.ypp"
+#line 211 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def_arg) = new compiler::Item_func_def_arg(yyget_lineno(), (yyvsp[(1) - (2)].btype), (yyvsp[(2) - (2)].item_ident)); }
     break;
 
   case 41:
-#line 215 "./src/frontend/parser/parser.ypp"
+#line 214 "./src/frontend/parser/parser.ypp"
     {
                                                             compiler::Item_ident_array* ident = new compiler::Item_ident_array(yyget_lineno(), (yyvsp[(2) - (4)].item_ident)->get_name());
                                                             ident->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1));
@@ -1959,112 +1958,112 @@ yyreduce:
     break;
 
   case 42:
-#line 220 "./src/frontend/parser/parser.ypp"
+#line 219 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_def_arg) = (yyvsp[(1) - (3)].item_func_def_arg); static_cast<compiler::Item_ident_array*>((yyval.item_func_def_arg)->get_identifier())->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1)); }
     break;
 
   case 43:
-#line 223 "./src/frontend/parser/parser.ypp"
+#line 222 "./src/frontend/parser/parser.ypp"
     { (yyval.item_ident) = new compiler::Item_ident(yyget_lineno(), *(yyvsp[(1) - (1)].raw_string)); }
     break;
 
   case 44:
-#line 226 "./src/frontend/parser/parser.ypp"
+#line 225 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal_array_init) = nullptr; /* NOT IMPLEMENTED YET. */}
     break;
 
   case 45:
-#line 229 "./src/frontend/parser/parser.ypp"
+#line 228 "./src/frontend/parser/parser.ypp"
     { (yyval.item_block) = new compiler::Item_block(yyget_lineno()); }
     break;
 
   case 46:
-#line 230 "./src/frontend/parser/parser.ypp"
+#line 229 "./src/frontend/parser/parser.ypp"
     { (yyval.item_block) = (yyvsp[(2) - (3)].item_block); }
     break;
 
   case 47:
-#line 233 "./src/frontend/parser/parser.ypp"
+#line 232 "./src/frontend/parser/parser.ypp"
     { (yyval.item_block) = new compiler::Item_block(yyget_lineno()); (yyval.item_block)->add_item((yyvsp[(1) - (1)].item_stmt)); }
     break;
 
   case 48:
-#line 234 "./src/frontend/parser/parser.ypp"
+#line 233 "./src/frontend/parser/parser.ypp"
     { (yyval.item_block) = (yyvsp[(1) - (2)].item_block); (yyval.item_block)->add_item((yyvsp[(2) - (2)].item_stmt)); }
     break;
 
   case 49:
-#line 237 "./src/frontend/parser/parser.ypp"
+#line 236 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = (yyvsp[(1) - (1)].item_stmt); }
     break;
 
   case 50:
-#line 238 "./src/frontend/parser/parser.ypp"
+#line 237 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = (yyvsp[(1) - (1)].item_stmt); }
     break;
 
   case 51:
-#line 241 "./src/frontend/parser/parser.ypp"
+#line 240 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = (yyvsp[(1) - (1)].item_stmt); }
     break;
 
   case 60:
-#line 252 "./src/frontend/parser/parser.ypp"
+#line 251 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_break(yyget_lineno()); }
     break;
 
   case 61:
-#line 255 "./src/frontend/parser/parser.ypp"
+#line 254 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_continue(yyget_lineno()); }
     break;
 
   case 62:
-#line 258 "./src/frontend/parser/parser.ypp"
+#line 257 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_return(yyget_lineno(), nullptr); }
     break;
 
   case 63:
-#line 259 "./src/frontend/parser/parser.ypp"
+#line 258 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_return(yyget_lineno(), (yyvsp[(2) - (3)].item_expr)); }
     break;
 
   case 64:
-#line 262 "./src/frontend/parser/parser.ypp"
+#line 261 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_eif(yyget_lineno(), (yyvsp[(3) - (5)].item_expr), (yyvsp[(5) - (5)].item_stmt), new compiler::Item_stmt_void(yyget_lineno())); }
     break;
 
   case 65:
-#line 263 "./src/frontend/parser/parser.ypp"
+#line 262 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_eif(yyget_lineno(), (yyvsp[(3) - (7)].item_expr), (yyvsp[(5) - (7)].item_stmt), (yyvsp[(7) - (7)].item_stmt)); }
     break;
 
   case 66:
-#line 266 "./src/frontend/parser/parser.ypp"
+#line 265 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_eval(yyget_lineno(), (yyvsp[(1) - (2)].item_expr)); }
     break;
 
   case 67:
-#line 267 "./src/frontend/parser/parser.ypp"
+#line 266 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_void(yyget_lineno()); }
     break;
 
   case 68:
-#line 270 "./src/frontend/parser/parser.ypp"
+#line 269 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_while(yyget_lineno(), (yyvsp[(3) - (5)].item_expr), (yyvsp[(5) - (5)].item_stmt)); }
     break;
 
   case 73:
-#line 279 "./src/frontend/parser/parser.ypp"
+#line 278 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = (yyvsp[(1) - (2)].item_stmt); }
     break;
 
   case 74:
-#line 282 "./src/frontend/parser/parser.ypp"
+#line 281 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_assign(yyget_lineno(), (yyvsp[(1) - (3)].item_ident), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 75:
-#line 283 "./src/frontend/parser/parser.ypp"
+#line 282 "./src/frontend/parser/parser.ypp"
     {
                                             compiler::Item_expr_binary* const expr = 
                                                 new compiler::Item_expr_binary(
@@ -2077,7 +2076,7 @@ yyreduce:
     break;
 
   case 76:
-#line 292 "./src/frontend/parser/parser.ypp"
+#line 291 "./src/frontend/parser/parser.ypp"
     {
                                             compiler::Item_expr_binary* const expr = 
                                                 new compiler::Item_expr_binary(
@@ -2090,218 +2089,218 @@ yyreduce:
     break;
 
   case 77:
-#line 301 "./src/frontend/parser/parser.ypp"
+#line 300 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_postfix(yyget_lineno(), (yyvsp[(2) - (2)].item_ident), compiler::binary_type::ADD_TYPE); }
     break;
 
   case 78:
-#line 302 "./src/frontend/parser/parser.ypp"
+#line 301 "./src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_postfix(yyget_lineno(), (yyvsp[(2) - (2)].item_ident), compiler::binary_type::SUB_TYPE); }
     break;
 
   case 80:
-#line 306 "./src/frontend/parser/parser.ypp"
+#line 305 "./src/frontend/parser/parser.ypp"
     { (yyval.item_ident) = (yyvsp[(1) - (1)].item_ident); }
     break;
 
   case 81:
-#line 309 "./src/frontend/parser/parser.ypp"
+#line 308 "./src/frontend/parser/parser.ypp"
     { (yyval.item_ident_array) = new compiler::Item_ident_array(yyget_lineno(), (yyvsp[(1) - (4)].item_ident)->get_name()); (yyval.item_ident_array)->add_shape((yyvsp[(3) - (4)].item_expr));}
     break;
 
   case 82:
-#line 310 "./src/frontend/parser/parser.ypp"
+#line 309 "./src/frontend/parser/parser.ypp"
     { (yyval.item_ident_array) = (yyvsp[(1) - (4)].item_ident_array); (yyval.item_ident_array)->add_shape((yyvsp[(3) - (4)].item_expr)); }
     break;
 
   case 84:
-#line 316 "./src/frontend/parser/parser.ypp"
+#line 315 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 85:
-#line 317 "./src/frontend/parser/parser.ypp"
+#line 316 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 87:
-#line 321 "./src/frontend/parser/parser.ypp"
+#line 320 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LAND_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 89:
-#line 325 "./src/frontend/parser/parser.ypp"
+#line 324 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::EQ_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 90:
-#line 326 "./src/frontend/parser/parser.ypp"
+#line 325 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::NEQ_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 92:
-#line 330 "./src/frontend/parser/parser.ypp"
+#line 329 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::GE_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 93:
-#line 331 "./src/frontend/parser/parser.ypp"
+#line 330 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LE_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 94:
-#line 332 "./src/frontend/parser/parser.ypp"
+#line 331 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::G_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 95:
-#line 333 "./src/frontend/parser/parser.ypp"
+#line 332 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::L_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 98:
-#line 341 "./src/frontend/parser/parser.ypp"
+#line 340 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 99:
-#line 342 "./src/frontend/parser/parser.ypp"
+#line 341 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 101:
-#line 346 "./src/frontend/parser/parser.ypp"
+#line 345 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITXOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 102:
-#line 347 "./src/frontend/parser/parser.ypp"
+#line 346 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITXOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 104:
-#line 351 "./src/frontend/parser/parser.ypp"
+#line 350 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 105:
-#line 352 "./src/frontend/parser/parser.ypp"
+#line 351 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 107:
-#line 356 "./src/frontend/parser/parser.ypp"
+#line 355 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::ADD_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 108:
-#line 357 "./src/frontend/parser/parser.ypp"
+#line 356 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::SUB_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 110:
-#line 361 "./src/frontend/parser/parser.ypp"
+#line 360 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::MUL_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 111:
-#line 362 "./src/frontend/parser/parser.ypp"
+#line 361 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::DIV_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 112:
-#line 363 "./src/frontend/parser/parser.ypp"
+#line 362 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::MOD_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 114:
-#line 367 "./src/frontend/parser/parser.ypp"
+#line 366 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UADD_TYPE, (yyvsp[(2) - (2)].item_expr)); }
     break;
 
   case 115:
-#line 368 "./src/frontend/parser/parser.ypp"
+#line 367 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UMINUS_TYPE, (yyvsp[(2) - (2)].item_expr)); }
     break;
 
   case 116:
-#line 369 "./src/frontend/parser/parser.ypp"
+#line 368 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::LNOT_TYPE, (yyvsp[(2) - (2)].item_expr)); }
     break;
 
   case 117:
-#line 370 "./src/frontend/parser/parser.ypp"
+#line 369 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::BITNEG_TYPE, (yyvsp[(2) - (2)].item_expr)); }
     break;
 
   case 120:
-#line 375 "./src/frontend/parser/parser.ypp"
+#line 374 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = (yyvsp[(2) - (3)].item_expr); }
     break;
 
   case 121:
-#line 376 "./src/frontend/parser/parser.ypp"
+#line 375 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = (yyvsp[(1) - (1)].item_expr); }
     break;
 
   case 122:
-#line 377 "./src/frontend/parser/parser.ypp"
+#line 376 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = (yyvsp[(1) - (1)].item_expr); }
     break;
 
   case 123:
-#line 378 "./src/frontend/parser/parser.ypp"
+#line 377 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = (yyvsp[(1) - (1)].item_expr); }
     break;
 
   case 124:
-#line 381 "./src/frontend/parser/parser.ypp"
+#line 380 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), (yyvsp[(1) - (1)].raw_number)); }
     break;
 
   case 125:
-#line 382 "./src/frontend/parser/parser.ypp"
+#line 381 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), (yyvsp[(1) - (1)].raw_number)); }
     break;
 
   case 126:
-#line 383 "./src/frontend/parser/parser.ypp"
+#line 382 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_real(yyget_lineno(), (yyvsp[(1) - (1)].raw_number)); }
     break;
 
   case 127:
-#line 384 "./src/frontend/parser/parser.ypp"
+#line 383 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_char(yyget_lineno(), (yyvsp[(1) - (1)].raw_char)); }
     break;
 
   case 128:
-#line 385 "./src/frontend/parser/parser.ypp"
+#line 384 "./src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_string(yyget_lineno(), *(yyvsp[(1) - (1)].raw_string)); }
     break;
 
   case 129:
-#line 388 "./src/frontend/parser/parser.ypp"
+#line 387 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_func_call(yyget_lineno(), (yyvsp[(1) - (3)].item_ident), new compiler::Item_func_call_list(yyget_lineno())); }
     break;
 
   case 130:
-#line 389 "./src/frontend/parser/parser.ypp"
+#line 388 "./src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_func_call(yyget_lineno(), (yyvsp[(1) - (4)].item_ident), (yyvsp[(3) - (4)].item_func_call_list)); }
     break;
 
   case 131:
-#line 392 "./src/frontend/parser/parser.ypp"
+#line 391 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_call_list) = (yyvsp[(1) - (3)].item_func_call_list); (yyvsp[(1) - (3)].item_func_call_list)->add_arg((yyvsp[(3) - (3)].item_expr)); }
     break;
 
   case 132:
-#line 393 "./src/frontend/parser/parser.ypp"
+#line 392 "./src/frontend/parser/parser.ypp"
     { (yyval.item_func_call_list) = new compiler::Item_func_call_list(yyget_lineno()); (yyval.item_func_call_list)->add_arg((yyvsp[(1) - (1)].item_expr)); }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2305 "./src/frontend/parser/parser.cc"
+#line 2304 "./src/frontend/parser/parser.cc"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2521,5 +2520,5 @@ yyreturn:
 }
 
 
-#line 396 "./src/frontend/parser/parser.ypp"
+#line 395 "./src/frontend/parser/parser.ypp"
 

@@ -17,6 +17,8 @@
 #ifndef UTILS_HH
 #define UTILS_HH
 
+#include <frontend/nodes/item_ident.hh>
+#include <frontend/symbol_table/symbol.hh>
 #include <common/types.hh>
 
 #include <string>

@@ -14,7 +14,6 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <common/config.hh>
 #include <runtime/runtime.hh>
 
 compiler::Command_parser::Command_parser(const int& argc, const char** argv)
@@ -25,16 +24,9 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
 
     options->custom_help("[INPUT FILE] [OTHER...]");
 
-    options->add_options("INPUT FILE")
-        ("s,source", "The location of all the input source files", cxxopts::value<std::vector<std::string>>());
+    options->add_options("INPUT FILE")("s,source", "The location of all the input source files", cxxopts::value<std::string>()->default_value("test/test.sy"));
 
-    options->add_options("OTHER")
-        ("c,compile", "Output the object file rather than executable", cxxopts::value<bool>()->default_value("false"))
-        ("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))
-        ("t,tree", "Print the abstract syntax tree", cxxopts::value<bool>()->default_value("false"))
-        ("o,outout", "The output file name", cxxopts::value<std::string>()->default_value("a.out"))
-        ("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))
-        ("h,help", "Get the guidance");
+    options->add_options("OTHER")("c,compile", "Output the object file rather than executable", cxxopts::value<bool>()->default_value("false"))("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))("t,tree", "Print the abstract syntax tree", cxxopts::value<bool>()->default_value("false"))("o,output", "The output file name", cxxopts::value<std::string>()->default_value("a.out"))("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))("h,help", "Get the guidance");
 }
 
 compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
@@ -42,7 +34,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     , debug_on(result["debug"].as<bool>())
     , print_ast(result["tree"].as<bool>())
     , output_file(std::ofstream(result["output"].as<std::string>(), std::ios::trunc | std::ios::out))
-    , input_file(std::ifstream(result["source"].as<std::string>(), std::ios::in))
+    , input_file(fopen(result["source"].as<std::string>().data(), "r"))
     , opt_level(result["optimize"].as<int>())
 {
     std::cout << "\033[4;90;107m Takanashi Compiler is running!! \033[0m" << std::endl;
@@ -51,6 +43,16 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
 void compiler::Compiler_runtime::run(void)
 {
     try {
+        yyset_in(input_file);
+        yyset_lineno(1);
+        yycolumn = 1;
+        yyparse(); // TODO: Throw custom exceptions.
+        yylex_destroy();
+
+        if (print_ast) {
+            output_file << root->print_result();
+            std::cout << root->print_result();
+        }
     } catch (const std::exception& e) {
         // Error handler.
         std::cerr << e.what() << std::endl;

@@ -6,7 +6,7 @@ YACC = yacc		# or bison
 INCLUDE = ./include
 SRC_DIR = ./src
 BUILD_DIR = ./build
-TARGET  = $(OBJ_DIR)/compiler.bin
+TARGET  = $(BUILD_DIR)/compiler.bin
 # Invoke shell command to find all source files recursively.
 SRC 	= $(shell find $(SRC_DIR) -regex ".*.cc")
 LEXER   = $(shell find $(SRC_DIR) -regex ".*.l")
@@ -15,7 +15,7 @@ OBJ 	= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
 
 CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror -O2 \
 			-Wno-nullability-completeness \
-			-Wno-register				  \
+			-Wno-register \
 			-Wno-sign-compare
 
 .phony: mk all clean
@@ -23,7 +23,7 @@ CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror -O2 \
 mk:
 ifeq ("$(wildcard $(BUILD_DIR))", "")
 # Create directories for object files.
-	@mkdir -p $(BUILD_DIR)/frontend/nodes $(BUILD_DIR)/frontend/ir\
+	@mkdir -p $(BUILD_DIR)/frontend/nodes $(BUILD_DIR)/frontend/ir \
 	 		  $(BUILD_DIR)/frontend/parser $(BUILD_DIR)/frontend/symbol_table
 	@mkdir -p $(BUILD_DIR)/backend 
 	@mkdir -p $(BUILD_DIR)/common
