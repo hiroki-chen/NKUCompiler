@@ -89,8 +89,7 @@
      DOT = 305,
      COMMA = 306,
      GE = 307,
-     LE = 308,
-     NE = 309
+     LE = 308
    };
 #endif
 /* Tokens.  */
@@ -145,14 +144,13 @@
 #define COMMA 306
 #define GE 307
 #define LE 308
-#define NE 309
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 58 "./src/frontend/parser/parser.ypp"
+#line 60 "./src/frontend/parser/parser.ypp"
 {
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
@@ -165,7 +163,7 @@ typedef union YYSTYPE
     compiler::Item_ident_array*         item_ident_array;
     compiler::Item_ident_pointer*       item_ident_pointer;
     compiler::Item_decl_array_init*     item_decl_array_init;
-    compiler::Item_literal_real*         item_decl_literal_real;
+    compiler::Item_literal*             item_literal;
     compiler::Item_literal_array_init*  item_literal_array_init;
     compiler::Item_decl_var*            item_decl_var;
     compiler::Item_decl_var_init*       item_decl_var_init;
@@ -175,9 +173,10 @@ typedef union YYSTYPE
     compiler::Item_block*               item_block;
     std::string*                        raw_string;
     double                              raw_number;
+    char                                raw_char;
 }
 /* Line 1529 of yacc.c.  */
-#line 181 "./src/frontend/parser/parser.hh"
+#line 180 "./src/frontend/parser/parser.hh"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

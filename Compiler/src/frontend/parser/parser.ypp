@@ -1,3 +1,5 @@
+%locations
+%error-verbose
 %{
     /*************************************************************
     parser.ypp
@@ -10,11 +12,11 @@
     **************************************************************/
     #include <common/config.hh>
     #include <common/types.hh>
+    #include <runtime/runtime.hh>
     #include <frontend/nodes/item_all.hh>
+    #include <frontend/parser/parser.hh>
     //#include <frontend/symbol_table.hh>
 
-    #include "test.hh"
-    
     #include <iostream>
     #include <fstream>
     #include <string>
@@ -22,6 +24,8 @@
 
     //extern compiler::Symbol_table symbol_table;
     extern uint32_t yylineno;
+
+    extern compiler::Compiler_runtime* compiler_runtime;
 
     extern int yylex(void);
     extern int yyget_lineno(void);
@@ -52,8 +56,6 @@
 
     extern FILE* yyin;
 %}
-%locations
-%error-verbose
 
 %union {
     compiler::basic_type                btype;
@@ -67,7 +69,7 @@
     compiler::Item_ident_array*         item_ident_array;
     compiler::Item_ident_pointer*       item_ident_pointer;
     compiler::Item_decl_array_init*     item_decl_array_init;
-    compiler::Item_literal_real*         item_decl_literal_real;
+    compiler::Item_literal*             item_literal;
     compiler::Item_literal_array_init*  item_literal_array_init;
     compiler::Item_decl_var*            item_decl_var;
     compiler::Item_decl_var_init*       item_decl_var_init;
@@ -77,6 +79,7 @@
     compiler::Item_block*               item_block;
     std::string*                        raw_string;
     double                              raw_number;
+    char                                raw_char;
 }
 
 %token          ID 
@@ -95,12 +98,19 @@
 %token          LBRACE RBRACE LPARENTHESIS RPARENTHESIS LSQUARE RSQUARE
 %token          SEMICOLON DOT COMMA
 
-%left COMMA
-%left ASSIGN
-%left EQ NE L LE G GE
-%left ADD MINUS
-%left MUL DIV MOD
-%left LOGIC_NOT
+// Priority.
+%left  COMMA
+%right ASSIGN
+%left  LOGIC_OR
+%left  LOGIC_AND
+%left  BIT_OR
+%left  BIT_XOR
+%left  BIT_AND
+%left  NEQ EQ
+%left  L LE G GE
+%left  ADD MINUS
+%left  MUL DIV MOD
+%right LOGIC_NOT
 
 // Type definition
 %type <btype> BType
@@ -117,16 +127,18 @@
 %type <item_ident_array> ArrayID ArrayItem
 %type <item_func_call_list> FunctionRParams
 %type <item_literal_array_init> ArrayInitVal ArrayInitValHelper
-%type <raw_string> ID
-%type <raw_number> NUMBER HEX DECIMAL OCTAL
+%type <item_literal> LITERAL
+%type <raw_string> ID STRING
+%type <raw_number> HEX DECIMAL OCTAL
+%type <raw_char> CHAR
 
 %start CompUnit
 %%
 
 CompUnit: CompUnit Decl         { $$->add_child($<item_decl>2); }
         | CompUnit FuncDef      { $$->add_child($<item_func_def>2); }
-        | Decl                  { $$ = new compiler::Item_root(yyget_lineno()); compiler::root = $$; $$->add_child($<item_decl>1); }
-        | FuncDef               { $$ = new compiler::Item_root(yyget_lineno()); compiler::root = $$; $$->add_child($<item_func_def>1); }
+        | Decl                  { $$ = new compiler::Item_root(yyget_lineno()); compiler_runtime->set_root($$); $$->add_child($<item_decl>1); }
+        | FuncDef               { $$ = new compiler::Item_root(yyget_lineno()); compiler_runtime->set_root($$); $$->add_child($<item_func_def>1); }
         ;
 
 Decl: VarDeclStmt
@@ -360,15 +372,17 @@ UnaryExp: ADD UnaryExp                        { $$ = new compiler::Item_expr_una
         | PrimaryExp
         ;
 
-PrimaryExp: LPARENTHESIS Exp RPARENTHESIS      { $$ = $2; }
+PrimaryExp: LPARENTHESIS Exp RPARENTHESIS           { $$ = $2; }
           | LVal                                    { $$ = $<item_expr>1; }
-          | NUMBER                                  { $$ = new compiler::Item_literal_real(yyget_lineno(), $1); }
+          | LITERAL                                  { $$ = $<item_expr>1; }
           | Assignment                              { $$ = $<item_expr>1; }
           ;
 
-NUMBER: HEX
-      | OCTAL
-      | DECIMAL
+LITERAL: HEX                                        { $$ = new compiler::Item_literal_int(yyget_lineno(), $1); }
+      | OCTAL                                       { $$ = new compiler::Item_literal_int(yyget_lineno(), $1); }
+      | DECIMAL                                     { $$ = new compiler::Item_literal_real(yyget_lineno(), $1); }
+      | CHAR                                        { $$ = new compiler::Item_literal_char(yyget_lineno(), $1); }
+      | STRING                                      { $$ = new compiler::Item_literal_string(yyget_lineno(), *$1); }
       ;
 
 FunctionCall: Ident LPARENTHESIS RPARENTHESIS                       { $$ = new compiler::Item_func_call(yyget_lineno(), $1, new compiler::Item_func_call_list(yyget_lineno())); }
