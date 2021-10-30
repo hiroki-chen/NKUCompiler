@@ -43,7 +43,7 @@ compiler::Symbol_table symbol_table;
 %}
 
 
-DECIMAL     [+-]?(([:digit:]+\.?[:digit:]*)|(\.[:digit:]+))
+DECIMAL     [+-]?([:digit:]+\.?[:digit:]*)|(\.[:digit:]+)
 OCTAL       0([1-7][0-7]*|0)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
@@ -130,11 +130,11 @@ CHAR        '\\?.'
 {STRING}     { yylval.raw_string = new std::string(yytext, yyleng); return STRING; }
 {DECIMAL}    { yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
 {OCTAL}      { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }
-{HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16));  return HEX; }
+{HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
 {LINE}       { yylineno ++; yycolumn = 1; }
 {EMPTY}      { ; }
 
-. { yyerror("Unknown character detected! Check your input again :("); yyterminate(); }
+. { printf("test: %s", yytext); yyerror("Unknown character detected! Check your input again :("); yyterminate(); }
 
 
 <<EOF>> { yyterminate(); }

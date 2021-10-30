@@ -22,6 +22,12 @@
 
 #include <fstream>
 
+extern int yyparse();
+extern int yylex_destroy();
+extern void yyset_lineno(int _line_number);
+extern int yycolumn;
+void yyset_in(FILE* _in_str);
+
 namespace compiler {
 /**
  * @brief Class for command line parser.
@@ -72,7 +78,7 @@ private:
 
     uint32_t opt_level = 0;
 
-    std::ifstream input_file;
+    FILE* input_file;
 
     std::ofstream output_file;
 

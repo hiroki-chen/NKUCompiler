@@ -1,31 +1,58 @@
 ## Basic Framework for Project Compiler
 
+* LAB5以后的作业直接在这里写吧。
+
 ### 设计目标
 * 纯C++实现；
 * 采用多态和虚函数实现抽象语法树（Abstract Syntax Tree）的构建；
 * 中间代码生成 （IR）；
 * 汇编代码生成；
+* 符号表查询
 
+### 食用方法
+* 在Unix系统中用`make`指令编译工程：
+```shell
+cd Compiler && make all CXX=<your compiler>;
+./build/compiler.bin -c -o ./output/output -s ./test/input.sy -t; # Command Line Parser :)
+```
+* 对于编译指令不熟悉的可以输入-h查看使用指南。
 
-### 项目布局（截止2021-10-23）
+* **目前只支持打印抽象语法树，而且还有BUG没有改完！** 样例输出：
+```
+Takanashi Compiler is running!! 
+
+ROOT: Node: Function Definition with return type int
+--Node: Identifier with name main
+--Node: Function Definition Argument List
+--Arguments
+
+--Node: Block
+--Node: Return statement
+--Node: Literal Numeric with value 3
+```
+
+* TODO: 做个输出的美化~
+
+### 项目布局（截止2021-10-30）
 ```
 ├── backup
 ├── include
 │   ├── common
 │   ├── frontend
 │   │   ├── nodes
+│   │   ├── parser
 │   │   └── symbol_table
 │   ├── ir
 │   └── runtime
-├── src
-│   ├── backend
-│   ├── frontend
-│   │   ├── ir
-│   │   ├── nodes
-│   │   ├── parser
-│   │   └── symbol_table
-│   └── runtime
-└── test
+└── src
+    ├── backend
+    ├── common
+    ├── frontend
+    │   ├── ir
+    │   ├── nodes
+    │   ├── parser
+    │   └── symbol_table
+    └── runtime
 ```
 
 ### 继承关系和几点说明
@@ -35,6 +62,7 @@
 * `Item_expr`继承自`Item`，基本上别的类都是从这里长出来的。
 * `Item_stmt`继承自`Item_expr`，代表表达式类型。
 * 为什么不把`Item_stmt`作为`Item`的子节点？那是因为`Item_stmt`包含`Item_expr`，但是如果`Item_expr`又是`item_stmt`的子节点的话，就会互相包含无穷无尽了。
+* `frontend`为前端分析所需要的源文件和头文件，而`backend`存储了汇编指令生成和中间代码优化等相关文件；`common`是一些通用的枚举类以及一些工具。
 
 ```
 Item -> Item_expr -> Item_expr_cond
@@ -72,5 +100,5 @@ Item -> Item_expr -> Item_expr_cond
 ```
 
 #### Prerequisites
-* C++标准默认为17，请使用支持C++17以上的编译器进行编译，已知可以在clang 12和GCC-11上运行。
+* C++标准默认为17，请使用支持C++17以上的编译器进行编译，已知可以在clang 12和GCC-11（需要链接到flex和yacc）上运行。
 * 采用了cxxopts库作为command line parser，具体实现已经放在了`src/runtime/runtime.cc`中了。

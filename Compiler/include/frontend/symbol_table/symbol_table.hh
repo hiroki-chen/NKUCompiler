@@ -25,13 +25,22 @@
 // TODO: Implement our symbol table according to LAB5.
 
 namespace compiler {
+/**
+ * @brief Class for symbol table.
+ * 
+ * @note Currently we do not take into consideration the storage of functions and structs.
+ * 
+ */
 typedef class Symbol_table {
 protected:
+    // The main table for entry storage.
     std::unordered_map<std::string, Symbol*> symbol_table;
 
     Symbol_table* parent_table;
 
     Symbol_table* child_table;
+
+    virtual bool exist(const std::string& name);
 
 public:
     Symbol_table() = default;
@@ -40,7 +49,7 @@ public:
 
     virtual Symbol* find_symbol(const std::string& name, const bool& recursive = true);
 
-    virtual bool add_symbol(Item_ident* const identifier);
+    virtual void add_symbol(const Item_stmt_decl* const declarations, const bool& is_const);
 } Symbol_table;
 } // namespace compiler
 

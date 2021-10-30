@@ -20,9 +20,14 @@
 #include <stdexcept>
 #include <string>
 
+// TODO: Add unimplemented exceptions.
 namespace compiler {
+/**
+ * @brief Maybe we could ignore the function \ref{yyerror} and implement our exception handlers.
+ * 
+ */
 typedef class parse_error : public std::exception {
-private:
+protected:
     const std::string information;
 
 public:
@@ -35,7 +40,7 @@ public:
 } parse_error;
 
 typedef class type_error : public std::exception {
-private:
+protected:
     const std::string information;
 
 public:
@@ -46,6 +51,32 @@ public:
 
     const char* what(void) const noexcept override { return information.data(); }
 } type_error;
+
+typedef class undeclared_symbol : public std::exception {
+protected:
+    const std::string information;
+
+public:
+    explicit undeclared_symbol(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what(void) const noexcept override { return information.data(); }
+} undeclared_symbol;
+
+typedef class redefined_symbol : public std::exception {
+protected:
+    const std::string information;
+
+public:
+    explicit redefined_symbol(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what(void) const noexcept override { return information.data(); }
+} redefined_symbol;
 } // namespace compiler
 
 #endif

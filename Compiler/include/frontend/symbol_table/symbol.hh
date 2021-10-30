@@ -34,10 +34,18 @@ protected:
 
     const symbol_type type;
 
+    bool is_const;
+
+    Item_literal* value;
+
 public:
     Symbol() = delete;
 
     Symbol(const std::string& name, const symbol_type& type);
+
+    virtual void set_value(Item_literal* const literal) { this->value = literal; }
+
+    virtual void set_const(const bool& is_const) { this->is_const = is_const; }
 
     virtual std::string get_name(void) const { return name; }
 

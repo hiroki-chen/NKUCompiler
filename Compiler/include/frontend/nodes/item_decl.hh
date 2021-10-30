@@ -17,10 +17,10 @@
 #ifndef ITEM_DECL_HH
 #define ITEM_DECL_HH
 
+#include <common/types.hh>
 #include <frontend/nodes/item.hh>
 #include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_stmt.hh>
-#include <common/types.hh>
 
 #include <memory>
 #include <vector>
@@ -32,12 +32,24 @@ namespace compiler {
  * 
  */
 typedef class Item_decl : public Item {
+protected:
+    const bool is_decl; // This differentiates between DEFINITION AND DECLARATION.
 public:
+    typedef enum decl_type {
+        VARIABLE,
+        ARRAY,
+        FUNCTION,
+        POINTER,
+    } decl_type;
     Item_decl() = delete;
 
-    Item_decl(const uint32_t& line_no);
+    Item_decl(const uint32_t& line_no, const bool& is_decl);
+
+    virtual bool get_is_decl(void) const { return is_decl; }
 
     virtual Item::type get_type(void) const override { return Item::type::DECLARE_ITEM; }
+
+    virtual Item_decl::decl_type get_decl_type(void) const = 0;
 
     virtual ~Item_decl() override = default;
 } Item_decl;
@@ -47,10 +59,13 @@ protected:
     std::vector<Item_decl*> declarations;
 
     const basic_type type;
+
 public:
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::DECL_STMT; }
 
     virtual void add_declaration(Item_decl* const declaration);
+
+    virtual std::vector<Item_decl*> get_declarataions(void) const { return declarations; }
 
     virtual std::string print_result(void) const override;
 
@@ -70,9 +85,13 @@ protected:
 public:
     Item_decl_var() = delete;
 
-    Item_decl_var(const uint32_t& line_no, Item_ident* const identifier);
+    Item_decl_var(const uint32_t& line_no, Item_ident* const identifier, const bool& is_decl = true);
 
     virtual std::string print_result(void) const override;
+
+    virtual Item_ident* get_identifier(void) const { return identifier; }
+
+    virtual Item_decl::decl_type get_decl_type(void) const override { return Item_decl::decl_type::VARIABLE; }
 
     virtual ~Item_decl_var() override = default;
 } Item_decl_var;
@@ -84,13 +103,14 @@ protected:
 public:
     Item_decl_pointer() = delete;
 
-    Item_decl_pointer(const uint32_t& line_no, Item_ident_pointer* const identifier);
+    Item_decl_pointer(const uint32_t& line_no, Item_ident_pointer* const identifier, const bool& is_decl = true);
+
+    virtual Item_decl::decl_type get_decl_type(void) const override { return Item_decl::decl_type::POINTER; }
 
     virtual std::string print_result(void) const override;
 
     virtual ~Item_decl_pointer() override = default;
 } Item_decl_pointer;
-
 
 /**
  * @brief Class for declaration of variables with initial value.
@@ -101,14 +121,17 @@ protected:
     Item_expr* const expression; // Init value.
 
     const bool is_const;
+
 public:
     virtual bool get_is_const(void) const { return is_const; }
+
+    virtual Item_expr* get_expression(void) const { return expression; }
 
     virtual std::string print_result(void) const override;
 
     Item_decl_var_init() = delete;
 
-    Item_decl_var_init(const uint32_t& line_no, Item_ident* const identifier, Item_expr* const expression, const bool& is_const);
+    Item_decl_var_init(const uint32_t& line_no, Item_ident* const identifier, Item_expr* const expression, const bool& is_const, const bool& is_decl = false);
 
     virtual ~Item_decl_var_init() override = default;
 } Item_decl_var_init;
@@ -124,7 +147,11 @@ protected:
 public:
     Item_decl_array() = delete;
 
-    Item_decl_array(const uint32_t& line_no, Item_ident_array* const identifier);
+    Item_decl_array(const uint32_t& line_no, Item_ident_array* const identifier, const bool& is_decl = true);
+
+    virtual Item_ident* get_identifier(void) const { return identifier; }
+
+    virtual Item_decl::decl_type get_decl_type(void) const override { return Item_decl::decl_type::ARRAY; }
 
     virtual std::string print_result(void) const override;
 
@@ -136,6 +163,7 @@ protected:
     const bool is_const;
 
     Item_literal_array_init* const init_value;
+
 public:
     virtual bool get_is_const(void) const { return is_const; }
 
@@ -145,7 +173,8 @@ public:
         const uint32_t& line_no,
         Item_ident_array* const identifier,
         Item_literal_array_init* const init_value,
-        const bool& is_const);
+        const bool& is_const,
+        const bool& is_decl = false);
 
     virtual std::string print_result(void) const override;
 
