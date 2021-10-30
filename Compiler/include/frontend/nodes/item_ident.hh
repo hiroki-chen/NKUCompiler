@@ -40,6 +40,8 @@ public:
     Item_ident() = delete;
 
     Item_ident(const uint32_t& line_no, const std::string& name);
+
+    virtual std::string print_result(void) const override;
 } Item_ident;
 
 /**
@@ -56,6 +58,8 @@ public:
     Item_ident_array() = delete;
 
     Item_ident_array(const uint32_t& line_no, const std::string& name);
+
+    virtual std::string print_result(void) const override;
 
     virtual ~Item_ident_array() override = default;
 } Item_ident_array;

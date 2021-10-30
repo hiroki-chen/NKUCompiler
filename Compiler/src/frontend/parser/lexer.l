@@ -9,9 +9,9 @@
 
     Defines regular expressions.
     **************************************************************/
-#include <frontend/symbol_table.hh>
+#include <frontend/symbol_table/symbol_table.hh>
 
-#include <yacc.hh>
+#include <frontend/parser/parser.hh>
 
 #include <iostream>
 #include <fstream>
@@ -48,7 +48,7 @@ LINE        ((\r\n)|\n|\r)
 EMPTY       [ \t]
 COMMENT     \/\/[^\n\r]+?(\n|\r|\n\r)
 MCOMMENT    (\/\*)(.|\n|\r)+?(\*\/)
-STRING      "[^"]*"
+STRING      \"[^\"]*\"
 
 %x          BLOCKCOMMENT
 

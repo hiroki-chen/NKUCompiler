@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <frontend/nodes/item_decl.hh>
+#include <sstream>
 
 compiler::Item_decl::Item_decl(const uint32_t& line_no)
     : Item(line_no)
@@ -70,4 +71,67 @@ compiler::Item_decl_array_init::Item_decl_array_init(
 void compiler::Item_stmt_decl::add_declaration(Item_decl* const declaration)
 {
     declarations.emplace_back(declaration);
+}
+
+std::string
+compiler::Item_stmt_decl::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Declaration" << std::endl;
+
+    for (auto item : declarations) {
+        oss << "--Declaration:" << item->print_result() << std::endl;
+    }
+    return oss.str();
+}
+
+std::string
+compiler::Item_decl_var::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Variable Declaration" << std::endl;
+    oss << "-- " << identifier->print_result() << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_decl_var_init::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Variale Declaration with initial value";
+    if (is_const == true) {
+        oss << " and is CONST" << std::endl;
+    }
+    oss << "--Initial value: " << std::endl
+        << expression->print_result() << std::endl;
+    
+    return oss.str();
+}
+
+std::string
+compiler::Item_decl_array::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Array Declaration" << std::endl;
+    oss << "-- " << identifier->print_result() << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_decl_array_init::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Array Declaration with initial value" << std::endl;
+    oss << "--Initial value: " << std::endl
+        << init_value->print_result() << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_decl_pointer::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Pointer Declaration" << std::endl;
+    oss << "--" << identifier->print_result();
+    return oss.str();
 }

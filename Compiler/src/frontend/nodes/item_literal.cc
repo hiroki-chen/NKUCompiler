@@ -15,6 +15,8 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <frontend/nodes/item_literal.hh>
+#include <sstream>
+#include <string>
 
 compiler::Item_literal::Item_literal(const uint32_t& line_no)
     : Item_expr(line_no)
@@ -55,4 +57,54 @@ compiler::Item_literal_array_init::Item_literal_array_init(
 void compiler::Item_literal_array_init::add_value(Item_literal_array_init* const value)
 {
     value_list.emplace_back(value);
+}
+
+std::string
+compiler::Item_literal_numeric::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Literal Numeric with value ";
+
+    switch (get_literal_type()) {
+    case Item_literal::literal_type::INT_TYPE: {
+        oss << int(value) << std::endl;
+        break;
+    }
+    case Item_literal::literal_type::CHAR_TYPE: {
+        oss << char(value) << std::endl;
+        break;
+    }
+    case Item_literal::literal_type::REAL_TYPE: {
+        oss << double(value) << std::endl;
+        break;
+    }
+    default: {
+        throw std::runtime_error("Wrong numeric type!");
+    }
+    }
+
+    return oss.str();
+}
+
+std::string
+compiler::Item_literal_string::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Literal String with value " << str << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_literal_array_init::print_result(void) const
+{
+    std::stringstream oss;
+    oss << "Node: Literal Array Init" << std::endl;
+    oss << "-- Expression:" << std::endl << expression->print_result() << std::endl;
+    oss << "-- Body:" << std::endl;
+
+    for (auto item : value_list) {
+        oss << item->print_result() << std::endl;
+    }
+
+    return oss.str();
 }

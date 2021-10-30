@@ -15,6 +15,8 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <frontend/nodes/item_stmt.hh>
+#include <string>
+#include <sstream>
 
 compiler::Item_stmt::Item_stmt(const uint32_t& line_no)
     : Item_expr(line_no)
@@ -75,18 +77,6 @@ compiler::Item_stmt_return::Item_stmt_return(const uint32_t& line_no, Item_expr*
 {
 }
 
-compiler::Item_stmt_for::Item_stmt_for(
-    const uint32_t& line_no,
-    Item_expr* const expr1,
-    Item_expr* const condition,
-    Item_expr* const expr2)
-    : Item_stmt(line_no)
-    , expr1(expr1)
-    , condition(condition)
-    , expr2(expr2)
-{
-}
-
 compiler::Item_stmt_postfix::Item_stmt_postfix(const uint32_t& line_no, Item_ident* const identifier, const binary_type& type)
     : Item_stmt(line_no)
     , identifier(identifier)
@@ -107,4 +97,102 @@ compiler::Item_stmt_void::Item_stmt_void(const uint32_t& line_no)
 void compiler::Item_block::add_item(Item_stmt* const statement)
 {
     statements.emplace_back(statement);
+}
+
+std::string
+compiler::Item_stmt_assign::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Assignment Statement" << std::endl;
+    oss << "--" << identifier->print_result() << std::endl;
+    oss << "--" << expression->print_result() << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_break::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Break Statement" << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_continue::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Continue Statement" << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_eif::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: If-else Statement" << std::endl;
+    oss << "-- Condition: " << std::endl << condition->print_result();
+    oss << "-- If branch: " << std::endl << if_branch->print_result();
+
+    // There could be no else statement at all.
+    if (else_branch != nullptr) {
+        oss << "-- Else branch: " << else_branch->print_result();
+    }
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_while::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: While Statement" << std::endl;
+    oss << "-- Condition: " << condition->print_result();
+    oss << "-- While body: " << statement->print_result();
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_postfix::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Postfix Statement with identifier" << identifier->print_result() << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_void::print_result(void) const
+{
+    return "Node: Empty Statement";
+}
+
+std::string
+compiler::Item_stmt_eval::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Eval Statement" << std::endl;
+    oss << "-- Expression body" << std::endl <<expression->print_result();
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_return::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Return statement" << std::endl;
+    if (expr != nullptr) {
+        oss << "--" << expr->print_result();
+    } else {
+        oss << "--VOID" << std::endl;
+    }
+    return oss.str();
+}
+
+std::string
+compiler::Item_block::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Block" << std::endl;
+    for (auto item : statements) {
+        oss << "--" << item->print_result();
+    }
+    return oss.str();
 }

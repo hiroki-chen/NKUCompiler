@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <frontend/nodes/item_expr.hh>
+#include <sstream>
 
 compiler::Item_expr::Item_expr(const uint32_t& line_no)
     : Item(line_no)
@@ -40,4 +41,32 @@ compiler::Item_expr_unary::Item_expr_unary(const uint32_t& line_no, const unary_
     , type(type)
     , expr(expr)
 {
+}
+
+std::string
+compiler::Item_expr_cond::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Conditional Expression" << std::endl;
+    oss << "--Expression: " << std::endl << expr->print_result() << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_expr_binary::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Binary Expression" << std::endl;
+    oss << "--Left Expression: " << std::endl << lhs->print_result() << std::endl;
+    oss << "--Right Expression: " << std::endl << rhs->print_result() << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_expr_unary::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Unary Expression" << std::endl;
+    oss << "--Expression: " << std::endl << expr->print_result() << std::endl;
+    return oss.str();
 }

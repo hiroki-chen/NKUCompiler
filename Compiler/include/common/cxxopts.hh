@@ -663,11 +663,11 @@ namespace cxxopts
           pdata += 2;
           if (isalnum(*pdata))
           {
-            argu_desc.arg_name.push_back(*pdata);
+            argu_desc.arg_name.emplace_back(*pdata);
             pdata += 1;
             while (isalnum(*pdata) || *pdata == '-' || *pdata == '_')
             {
-              argu_desc.arg_name.push_back(*pdata);
+              argu_desc.arg_name.emplace_back(*pdata);
               pdata += 1;
             }
             if (argu_desc.arg_name.length() > 1)
@@ -695,7 +695,7 @@ namespace cxxopts
           argu_desc.grouping = true;
           while (isalnum(*pdata))
           {
-            argu_desc.arg_name.push_back(*pdata);
+            argu_desc.arg_name.emplace_back(*pdata);
             pdata += 1;
           }
           matched = !argu_desc.arg_name.empty() && *pdata == '\0';
@@ -2243,7 +2243,7 @@ OptionParser::parse(int argc, const char* const* argv)
           {
             if (m_allow_unrecognised)
             {
-              unmatched.push_back(std::string("-") + s[i]);
+              unmatched.emplace_back(std::string("-") + s[i]);
               continue;
             }
             //error
@@ -2470,7 +2470,7 @@ Options::help_one_group(const std::string& g) const
 
     auto s = format_option(o);
     longest = (std::max)(longest, stringLength(s));
-    format.push_back(std::make_pair(s, String()));
+    format.emplace_back(std::make_pair(s, String()));
   }
   longest = (std::min)(longest, OPTION_LONGEST);
 
