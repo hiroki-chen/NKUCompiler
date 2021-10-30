@@ -42,14 +42,14 @@ uint32_t cur_pos    = 0;
 
 #endif
 %}
-DECIMAL     [1-9][0-9]*|0
+DECIMAL     [+-]?(\d+\.?[0-9]*|\.\d+)
 OCTAL       0([1-7][0-7]*|0)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
 LINE        ((\r\n)|\n|\r)
 EMPTY       [ \t]
 COMMENT     \/\/.*(\n|\r|\n\r)
-MCOMMENT    \/\*[^\*\/]*\*\/
+BEGIN       \/\*
 STRING      \"(\\.|[^"\\])*\"
 
 %x          BLOCKCOMMENT
@@ -453,7 +453,23 @@ STRING      \"(\\.|[^"\\])*\"
 
 {LINE} { line_count ++; cur_pos = 0; }
 
-{MCOMMENT} { output << "Multiline Comment" << std::endl; }
+{BEGIN} {
+    // Handles mutilline comment.
+    output << line_count << " " << cur_pos << ":\t" <<  "MULTILINE COMMENT\t\t\t\t" << std::endl;
+    char c;
+    while ((c = yyinput()) != 0) {
+        if (c == '\n') {
+            line_count ++;
+            cur_pos = 0;
+        } else if (c == '*') {
+            if ((c = yyinput()) == '/') {
+                break;
+            } else {
+                unput(c);
+            }
+        }
+    }
+}
 
 {COMMENT} {
     #ifdef ONLY_FOR_LEX

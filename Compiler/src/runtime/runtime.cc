@@ -25,33 +25,33 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
 
     options->custom_help("[INPUT FILE] [OTHER...]");
 
-    options->add_options("INPUT FILE")("source", "The location of all the input source files", cxxopts::value<std::vector<std::string>>());
+    options->add_options("INPUT FILE")
+        ("s,source", "The location of all the input source files", cxxopts::value<std::vector<std::string>>());
 
-    options->add_options("OTHER")("c,compile", "Output the object file rather than executable", cxxopts::value<std::string>()->implicit_value("implicit"))("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))("o,outout", "The output file name", cxxopts::value<std::string>()->default_value("a.out"))("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))("h,help", "Get the guidance");
+    options->add_options("OTHER")
+        ("c,compile", "Output the object file rather than executable", cxxopts::value<bool>()->default_value("false"))
+        ("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))
+        ("t,tree", "Print the abstract syntax tree", cxxopts::value<bool>()->default_value("false"))
+        ("o,outout", "The output file name", cxxopts::value<std::string>()->default_value("a.out"))
+        ("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))
+        ("h,help", "Get the guidance");
 }
 
 compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
+    : compile_on(result["compile"].as<bool>())
+    , debug_on(result["debug"].as<bool>())
+    , print_ast(result["tree"].as<bool>())
+    , output_file(std::ofstream(result["output"].as<std::string>(), std::ios::trunc | std::ios::out))
+    , input_file(std::ifstream(result["source"].as<std::string>(), std::ios::in))
+    , opt_level(result["optimize"].as<int>())
 {
-    if (result.count("compile")) {
-        compile_on = true;
-    }
-    if (result.count("debug")) {
-        debug_on = true;
-    }
-    if (result.count("optimize")) {
-        opt_level = result["optimize"].as<int>();
-    }
-    if (result.count("output")) {
-        const std::string file_name = result["output"].as<std::string>();
-        output_file = std::ofstream(file_name, std::ios::out);
-    }
+    std::cout << "\033[4;90;107m Takanashi Compiler is running!! \033[0m" << std::endl;
 }
 
 void compiler::Compiler_runtime::run(void)
 {
     try {
-
-    } catch (const std::runtime_error& e) {
+    } catch (const std::exception& e) {
         // Error handler.
         std::cerr << e.what() << std::endl;
     }

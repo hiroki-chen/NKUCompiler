@@ -17,6 +17,7 @@
 #ifndef RUNTIME_HH
 #define RUNTIME_HH
 
+#include <frontend/nodes/item.hh>
 #include <common/cxxopts.hh>
 
 #include <fstream>
@@ -65,7 +66,13 @@ private:
 
     bool debug_on = false;
 
+    bool print_ast = false;
+
+    Item_root* root = nullptr;
+
     uint32_t opt_level = 0;
+
+    std::ifstream input_file;
 
     std::ofstream output_file;
 
@@ -75,6 +82,10 @@ public:
     Compiler_runtime() = delete;
 
     Compiler_runtime(const cxxopts::ParseResult& result);
+
+    void set_root(Item_root* const root) { this->root = root; }
+
+    Item_root* get_root() { return root; }
 
     ~Compiler_runtime(); // Customized destructor. Should do some garbage cleanup.
 } Compiler_runtime;
