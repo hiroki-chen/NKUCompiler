@@ -18,6 +18,8 @@
 using compiler::Command_parser;
 using compiler::Compiler_runtime;
 
+Compiler_runtime* compiler_runtime;
+
 int main(int argc, const char** argv)
 {
     // std::cout << argv[1];
@@ -26,6 +28,6 @@ int main(int argc, const char** argv)
     parser->parse();
 
     // Then send the parsed result to the compiler runtime.
-    Compiler_runtime* const compiler = new Compiler_runtime(parser->get_result());
+    compiler_runtime = new Compiler_runtime(parser->get_result());
     return 0;
 }

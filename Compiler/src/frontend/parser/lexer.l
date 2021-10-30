@@ -22,6 +22,8 @@
 extern FILE* yyin;
 extern YYSTYPE yylval;
 
+extern void yyerror(const char* error_information);
+
 int yycolumn = 1;
 
 compiler::Symbol_table symbol_table;
@@ -41,7 +43,7 @@ compiler::Symbol_table symbol_table;
 %}
 
 
-DECIMAL     [+-]?(\d+\.?[0-9]*|\.\d+)
+DECIMAL     [+-]?(([:digit:]+\.?[:digit:]*)|(\.[:digit:]+))
 OCTAL       0([1-7][0-7]*|0)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
@@ -50,6 +52,7 @@ EMPTY       [ \t]
 COMMENT     \/\/[^\n\r]*(\n|\r|\n\r)
 BEGIN       \/\*
 STRING      \"[^\"]*\"
+CHAR        '\\?.'
 
 %%
 {COMMENT} { ; }
@@ -70,10 +73,66 @@ STRING      \"[^\"]*\"
     }
 }
 
-{ID}         { yylval.raw_string = new std::string(yytext, yyleng); }
-{DECIMAL}    { yylval.raw_number = std::stod(); }
+"int"        { return INT; }
+"double"     { return DOUBLE; }
+"float"      { return FLOAT; } 
+"char"       { return CHAR; }
+"void"       { return VOID; }
+
+"if"         { return IF; }
+"else"       { return ELSE; }
+"while"      { return WHILE; }
+"return"     { return RETURN; }
+"continue"   { return CONTINUE; }
+"break"      { return BREAK; }
+"for"        { return FOR; }
+"const"      { return CONST; }
+"struct"     { return STRUCT; }
+
+"["          { return LSQUARE; }
+"]"          { return RSQUARE; }
+"{"          { return LBRACE; }
+"}"          { return RBRACE; }
+"("          { return LPARENTHESIS; }
+")"          { return RPARENTHESIS; }
+";"          { return SEMICOLON; }
+"."          { return DOT; }
+","          { return COMMA; }
+
+"=="         { return EQ; }
+">="         { return GEQ; }
+"<="         { return LEQ; }
+"<"          { return L; }
+">"          { return G; }
+"!="         { return NEQ; }
+
+"="          { return ASSIGN; }
+
+"&&"         { return LOGIC_AND; }
+"||"         { return LOGIC_OR; }
+"!"          { return LOGIC_NOT; }
+
+"&"          { return BIT_AND; }
+"|"          { return BIT_OR; }
+"^"          { return BIT_XOR; }
+"~"          { return BIT_NEG; }
+
+"++"         { return INC; }
+"--"         { return DEC; }
+"+"          { return ADD; }
+"-"          { return MINUS; }
+"*"          { return MUL; }
+"/"          { return DIV; }
+"%"          { return MOD; }
+
+{ID}         { yylval.raw_string = new std::string(yytext, yyleng); return ID; }
+{CHAR}       { yylval.raw_char = *yytext; return CHAR; }
+{STRING}     { yylval.raw_string = new std::string(yytext, yyleng); return STRING; }
+{DECIMAL}    { yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
+{OCTAL}      { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }
+{HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16));  return HEX; }
 {LINE}       { yylineno ++; yycolumn = 1; }
-{EMPTY} ;
+{EMPTY}      { ; }
 
 . { yyerror("Unknown character detected! Check your input again :("); yyterminate(); }
 

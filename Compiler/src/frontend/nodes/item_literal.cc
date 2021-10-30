@@ -44,6 +44,12 @@ compiler::Item_literal_char::Item_literal_char(const uint32_t& line_no, const ch
 {
 }
 
+compiler::Item_literal_string::Item_literal_string(const uint32_t& line_no, const std::string& str)
+    : Item_literal(line_no)
+    , str(str)
+{
+}
+
 compiler::Item_literal_array_init::Item_literal_array_init(
     const uint32_t& line_no,
     Item_expr* const expression,
@@ -99,7 +105,8 @@ compiler::Item_literal_array_init::print_result(void) const
 {
     std::stringstream oss;
     oss << "Node: Literal Array Init" << std::endl;
-    oss << "-- Expression:" << std::endl << expression->print_result() << std::endl;
+    oss << "-- Expression:" << std::endl
+        << expression->print_result() << std::endl;
     oss << "-- Body:" << std::endl;
 
     for (auto item : value_list) {
