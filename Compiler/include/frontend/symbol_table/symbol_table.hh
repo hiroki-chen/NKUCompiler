@@ -22,6 +22,8 @@
 #include <vector>
 #include <unordered_map>
 
+// TODO: Implement our symbol table according to LAB5.
+
 namespace compiler {
 typedef class Symbol_table {
 protected:

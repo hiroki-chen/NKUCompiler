@@ -52,6 +52,8 @@ public:
 
     virtual void add_declaration(Item_decl* const declaration);
 
+    virtual std::string print_result(void) const override;
+
     Item_stmt_decl() = delete;
 
     Item_stmt_decl(const uint32_t& line_no, const basic_type& type);
@@ -70,6 +72,8 @@ public:
 
     Item_decl_var(const uint32_t& line_no, Item_ident* const identifier);
 
+    virtual std::string print_result(void) const override;
+
     virtual ~Item_decl_var() override = default;
 } Item_decl_var;
 
@@ -81,6 +85,8 @@ public:
     Item_decl_pointer() = delete;
 
     Item_decl_pointer(const uint32_t& line_no, Item_ident_pointer* const identifier);
+
+    virtual std::string print_result(void) const override;
 
     virtual ~Item_decl_pointer() override = default;
 } Item_decl_pointer;
@@ -97,6 +103,8 @@ protected:
     const bool is_const;
 public:
     virtual bool get_is_const(void) const { return is_const; }
+
+    virtual std::string print_result(void) const override;
 
     Item_decl_var_init() = delete;
 
@@ -118,6 +126,8 @@ public:
 
     Item_decl_array(const uint32_t& line_no, Item_ident_array* const identifier);
 
+    virtual std::string print_result(void) const override;
+
     virtual ~Item_decl_array() override = default;
 } Item_decl_array;
 
@@ -136,6 +146,8 @@ public:
         Item_ident_array* const identifier,
         Item_literal_array_init* const init_value,
         const bool& is_const);
+
+    virtual std::string print_result(void) const override;
 
     virtual ~Item_decl_array_init() override = default;
 } Item_decl_array_init;

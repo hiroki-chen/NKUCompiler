@@ -70,6 +70,8 @@ public:
 
     Item_expr_cond(const uint32_t& line_no, Item_expr* const expr);
 
+    virtual std::string print_result(void) const override;
+
     virtual ~Item_expr_cond() override = default;
 } Item_expr_cond;
 
@@ -94,6 +96,8 @@ public:
 
     Item_expr_binary(const uint32_t& line_no, const binary_type& type, Item_expr* const lhs, Item_expr* const rhs);
 
+    virtual std::string print_result(void) const override;
+
     virtual ~Item_expr_binary() override = default;
 } Item_expr_binary;
 
@@ -110,6 +114,8 @@ public:
     Item_expr_unary() = delete;
 
     Item_expr_unary(const uint32_t& line_no, const unary_type& type, Item_expr* const expr);
+
+    virtual std::string print_result(void) const override;
 
     virtual ~Item_expr_unary() override = default;
 } Item_expr_unary;

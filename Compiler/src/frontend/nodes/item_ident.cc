@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <frontend/nodes/item_ident.hh>
+#include <sstream>
 
 compiler::Item_ident::Item_ident(const uint32_t& line_no, const std::string& name)
     : Item_expr(line_no)
@@ -36,4 +37,25 @@ compiler::Item_ident_pointer::Item_ident_pointer(const uint32_t& line_no, const 
 void compiler::Item_ident_array::add_shape(Item_expr* const shape)
 {
     array_shape.emplace_back(shape);
+}
+
+// TODO: We need to lookup the symbol table and get its value :)
+std::string
+compiler::Item_ident::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Identifier with name " << name;
+    return oss.str();
+}
+
+std::string
+compiler::Item_ident_array::print_result(void) const
+{
+    std::ostringstream oss;
+    oss << "Node: Array Identifier with name " << name << ", and the shape is ";
+    for (auto item : array_shape) {
+        oss << item->print_result() << " "; // Each number is a dimension.
+    }
+    oss << std::endl;
+    return oss.str();
 }

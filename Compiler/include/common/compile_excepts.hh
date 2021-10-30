@@ -14,19 +14,38 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef UTILS_HH
-#define UTILS_HH
+#ifndef COMPILE_EXCEPTS_HH
+#define COMPILE_EXCEPTS_HH
 
-#include <common/types.hh>
-
+#include <stdexcept>
 #include <string>
 
 namespace compiler {
-std::string to_string(const compiler::basic_type& type);
+typedef class parse_error : public std::exception {
+private:
+    const std::string information;
 
-std::string to_string(const compiler::unary_type& type);
+public:
+    explicit parse_error(const char* information)
+        : information(information)
+    {
+    }
 
-std::string to_string(const compiler::binary_type& type);
+    const char* what(void) const noexcept override { return information.data(); }
+} parse_error;
+
+typedef class type_error : public std::exception {
+private:
+    const std::string information;
+
+public:
+    explicit type_error(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what(void) const noexcept override { return information.data(); }
+} type_error;
 } // namespace compiler
 
 #endif

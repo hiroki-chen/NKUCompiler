@@ -41,4 +41,5 @@ std::string compiler::Item_root::print_result(void) const
     for (uint32_t i = 0; i < children.size(); i++) {
         oss << children[i]->print_result() << std::endl;
     }
+    return oss.str();
 }

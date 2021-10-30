@@ -41,6 +41,8 @@ public:
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::CALL_LIST_TYPE; }
 
+    virtual std::string print_result(void) const override;
+
     Item_func_call_list() = delete;
 
     Item_func_call_list(const uint32_t& line_no);
@@ -57,9 +59,11 @@ protected:
 public:
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::FUNC_CALL_TYPE; }
 
-    virtual Item_ident* const get_identifier(void) const { return identifier; }
+    virtual Item_ident* get_identifier(void) const { return identifier; }
 
-    virtual Item_func_call_list* const get_call_list(void) const { return arguments; }
+    virtual Item_func_call_list* get_call_list(void) const { return arguments; }
+
+    virtual std::string print_result(void) const override;
 
     Item_func_call() = delete;
 
@@ -79,7 +83,9 @@ public:
 
     virtual basic_type get_arg_type(void) const { return type; }
 
-    virtual Item_ident* const get_identifier(void) const { return identifier; }
+    virtual Item_ident* get_identifier(void) const { return identifier; }
+
+    virtual std::string print_result(void) const override;
 
     Item_func_def_arg() = delete;
 
@@ -98,6 +104,8 @@ public:
     Item_func_def_list(const uint32_t& line_no);
 
     virtual void add_arg(Item_func_def_arg* const argument);
+
+    virtual std::string print_result(void) const override;
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::FUNC_DEF_LIST_TYPE; }
 
@@ -124,6 +132,8 @@ public:
         Item_ident* const identifier,
         Item_func_def_list* const parameter,
         Item_block* const func_body);
+
+    virtual std::string print_result(void) const override;
 
     virtual ~Item_func_def() override = default;
 } Item_func_def;
