@@ -99,7 +99,7 @@ compiler::Item_func_def_arg::print_result(const uint32_t& indent, const bool& le
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Function Definition Argument with type " << compiler::to_string(type);
+    oss << "Node: Function Definition Argument with type " << compiler::to_string(type) << std::endl;
     oss << identifier->print_result(indent + 2, true);
     return oss.str();
 }

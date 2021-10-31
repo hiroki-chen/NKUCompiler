@@ -19,6 +19,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <string>
 
 namespace compiler {
 /**

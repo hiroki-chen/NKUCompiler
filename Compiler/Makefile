@@ -13,11 +13,17 @@ LEXER   = $(shell find $(SRC_DIR) -regex ".*.l")
 PARSER	= $(shell find $(SRC_DIR) -regex ".*.ypp")
 OBJ 	= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
 
-CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror -O2 \
-			-Wno-nullability-completeness \
-			-Wno-register \
-			-Wno-sign-compare \
-			-Wno-unused-parameter
+ifeq ($(CXX), "clang++")
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror -O2 \
+				-Wno-sign-compare \
+				-Wno-unused-parameter
+else
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror -O2 \
+				-Wno-sign-compare \
+				-Wno-unused-parameter \
+				-Wno-nullability-completeness \
+				-Wno-register
+endif
 
 .phony: mk all clean
 
