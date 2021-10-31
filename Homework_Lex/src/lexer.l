@@ -29,7 +29,7 @@ extern std::ofstream output;
 //extern compiler::Symbol_table symbol_table;
 
 uint32_t word_count = 0;
-uint32_t line_count = 1;
+uint32_t line_count = 0;
 uint32_t cur_pos    = 0;
 
 // Preprocessors.
@@ -42,7 +42,7 @@ uint32_t cur_pos    = 0;
 
 #endif
 %}
-DECIMAL     [\+-]?([0-9]+\.?[0-9]*|\.[0-9]+)
+DECIMAL     ([0-9]+\.?[0-9]*|\.[0-9]+)
 OCTAL       0([1-7][0-7]*|0)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
