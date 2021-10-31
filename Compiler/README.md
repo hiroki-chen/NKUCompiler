@@ -19,16 +19,27 @@ cd Compiler && make all CXX=<your compiler>;
 
 * **目前只支持打印抽象语法树，而且还有BUG没有改完！** 样例输出：
 ```
-Takanashi Compiler is running!! 
-
-ROOT: Node: Function Definition with return type int
---Node: Identifier with name main
---Node: Function Definition Argument List
---Arguments
-
---Node: Block
---Node: Return statement
---Node: Literal Numeric with value 3
+ Takanashi Compiler is running!! 
+Program Root: 
+└──Node: Function Definition with return type void
+│  │  ├──Node: Identifier with name main
+│  │  ├──Node: Function Definition Argument List
+│  │  │  │  └──Node: Function Definition Argument with type int
+│  │  │  │  │  │  └──Node: Identifier with name a
+│  │  ├──Node: Block
+│  │  │  │  ├──Node: Continue Statement
+│  │  │  │  ├──Node: Return statement
+│  │  │  │  │  │  └──Node: Literal Numeric with value 1
+│  │  │  │  └──Node: If-else Statement
+│  │  │  │  │  │  ├──Node: Binary Expression with type Conditional_nonequal
+│  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Bitwise_or
+│  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 0
+│  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 5
+│  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 3
+│  │  │  │  │  │  ├──Node: Block
+│  │  │  │  │  │  │  │  └──Node: Break Statement
+│  │  │  │  │  │  └──Node: Block
+│  │  │  │  │  │  │  │  └──Node: Continue Statement
 ```
 
 * TODO: 做个输出的美化~
