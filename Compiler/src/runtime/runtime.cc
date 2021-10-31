@@ -33,7 +33,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     : compile_on(result["compile"].as<bool>())
     , debug_on(result["debug"].as<bool>())
     , print_ast(result["tree"].as<bool>())
-    , output_file(std::ofstream(result["output"].as<std::string>(), std::ios::trunc | std::ios::out))
+    , output_file(std::ofstream(result["output"].as<std::string>(), std::ios::out))
     , input_file(fopen(result["source"].as<std::string>().data(), "r"))
     , opt_level(result["optimize"].as<int>())
 {
@@ -46,10 +46,11 @@ void compiler::Compiler_runtime::run(void)
         yyset_in(input_file);
         yyset_lineno(1);
         yycolumn = 1;
-        yyparse(); // TODO: Throw custom exceptions.
+        yyparse();
         yylex_destroy();
 
         if (print_ast) {
+            // TODO: Check why output_file was accidentally truncated?
             output_file << root->print_result(0, false);
             std::cout << root->print_result(0, false);
         }

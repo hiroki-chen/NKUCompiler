@@ -95,7 +95,7 @@ compiler::Item_decl_var::print_result(const uint32_t& indent, const bool& leaf) 
 {
     std::ostringstream oss;
     oss << "Node: Variable Declaration" << std::endl;
-    oss << identifier->print_result(indent + 2, true) << std::endl;
+    oss << identifier->print_result(indent + 2, true);
     return oss.str();
 }
 
@@ -106,9 +106,11 @@ compiler::Item_decl_var_init::print_result(const uint32_t& indent, const bool& l
     print_indent(indent, leaf, oss);
     oss << "Node: Variale Declaration with initial value";
     if (is_const == true) {
-        oss << " and is CONST" << std::endl;
+        oss << " and is CONST";
     }
-    oss << expression->print_result(indent + 2, true) << std::endl;
+    oss << std::endl;
+    oss << identifier->print_result(indent + 2, false);
+    oss << expression->print_result(indent + 2, true);
     
     return oss.str();
 }
@@ -119,7 +121,7 @@ compiler::Item_decl_array::print_result(const uint32_t& indent, const bool& leaf
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
     oss << "Node: Array Declaration" << std::endl;
-    oss << identifier->print_result(indent + 2, true) << std::endl;
+    oss << identifier->print_result(indent + 2, true);
     return oss.str();
 }
 
@@ -129,7 +131,8 @@ compiler::Item_decl_array_init::print_result(const uint32_t& indent, const bool&
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
     oss << "Node: Array Declaration with initial value" << std::endl;
-    oss << init_value->print_result(indent + 2, true) << std::endl;
+    oss << identifier->print_result(indent + 2, false);
+    oss << init_value->print_result(indent + 2, true);
     return oss.str();
 }
 
