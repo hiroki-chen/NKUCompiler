@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <runtime/runtime.hh>
 
 compiler::Command_parser::Command_parser(const int& argc, const char** argv)

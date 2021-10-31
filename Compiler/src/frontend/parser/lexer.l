@@ -132,7 +132,7 @@ CHAR        '\\?.'
 "%"          { return MOD; }
 
 {ID}         { yylval.raw_string = new std::string(yytext, yyleng); return ID; }
-{CHAR}       { yylval.raw_char = *yytext; return CHAR; }
+{CHAR}       { yylval.raw_char = yytext[1]; return CHAR; }
 {STRING}     { yylval.raw_string = new std::string(yytext, yyleng); return STRING; }
 {EMPTY}      { ; }
 

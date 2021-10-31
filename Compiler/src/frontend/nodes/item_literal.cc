@@ -73,6 +73,7 @@ std::string
 compiler::Item_literal_numeric::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
     oss << "Node: Literal Numeric with value ";
 
@@ -101,6 +102,7 @@ std::string
 compiler::Item_literal_string::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     oss << "Node: Literal String with value "
         << termcolor::red << str << termcolor::reset << std::endl;
     return oss.str();

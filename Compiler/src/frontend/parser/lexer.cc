@@ -1174,7 +1174,7 @@ YY_RULE_SETUP
 case 53:
 YY_RULE_SETUP
 #line 135 "./src/frontend/parser/lexer.l"
-{ yylval.raw_char = *yytext; return CHAR; }
+{ yylval.raw_char = yytext[1]; return CHAR; }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */

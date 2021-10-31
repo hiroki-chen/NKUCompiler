@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/utils.hh>
 #include <frontend/nodes/item_decl.hh>
 #include <sstream>
@@ -103,10 +104,11 @@ std::string
 compiler::Item_decl_var_init::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
     oss << "Node: Variale Declaration with initial value";
     if (is_const == true) {
-        oss << " and is CONST";
+        oss << termcolor::bright_yellow << " and is CONST" << termcolor::reset;
     }
     oss << std::endl;
     oss << identifier->print_result(indent + 2, false);
