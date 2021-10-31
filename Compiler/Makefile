@@ -14,11 +14,11 @@ PARSER	= $(shell find $(SRC_DIR) -regex ".*.ypp")
 OBJ 	= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
 
 ifeq ($(CXX), "clang++")
-	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror -O2 \
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -g -Wextra -Werror -O2 \
 				-Wno-sign-compare \
 				-Wno-unused-parameter
 else
-	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror -O2 \
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -g -Wextra -Werror -O2 \
 				-Wno-sign-compare \
 				-Wno-unused-parameter \
 				-Wno-nullability-completeness \
