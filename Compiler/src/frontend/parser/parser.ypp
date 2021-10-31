@@ -212,6 +212,7 @@ FuncParam: FuncParamNormal
          ;
 
 FuncParamNormal: BType Ident       { $$ = new compiler::Item_func_def_arg(yyget_lineno(), $1, $2); }
+               | CONST BType Ident { $$ = new compiler::Item_func_def_arg(yyget_lineno(), $2, $3); }
                ;
 
 FuncParamArray: BType Ident LSQUARE RSQUARE                {

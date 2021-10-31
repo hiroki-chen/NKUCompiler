@@ -124,7 +124,7 @@ compiler::to_string(const compiler::binary_type& type)
 void compiler::print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os)
 {
     // Print indentation.
-    for (uint32_t i = 0; i < indent; i++) {
+    for (uint32_t i = 0; i < indent; i += 2) {
         os << "│  ";
     }
 
