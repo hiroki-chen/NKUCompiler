@@ -52,6 +52,7 @@ std::string
 compiler::Item_ident::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
     oss << "Node: Identifier with name "
         << termcolor::red << name << termcolor::reset << std::endl;
@@ -62,6 +63,7 @@ std::string
 compiler::Item_ident_func::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
     oss << "Node: Identifier Function with name "
         << termcolor::red << name << termcolor::reset << std::endl;
@@ -72,6 +74,7 @@ std::string
 compiler::Item_ident_array::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
     oss << "Node: Array Identifier with name "
         << termcolor::red << name << termcolor::reset << ", and the shape is " << std::endl;

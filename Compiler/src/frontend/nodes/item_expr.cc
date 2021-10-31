@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/utils.hh>
 #include <frontend/nodes/item_expr.hh>
 #include <sstream>
@@ -58,8 +59,11 @@ std::string
 compiler::Item_expr_binary::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
-    oss << "Node: Binary Expression with type " << compiler::to_string(get_binary_type()) << std::endl;
+    oss << "Node: Binary Expression with type "
+        << termcolor::bright_blue << compiler::to_string(get_binary_type()) << termcolor::reset
+        << std::endl;
     oss << lhs->print_result(indent + 2, false);
     oss << rhs->print_result(indent + 2, true);
     return oss.str();
@@ -69,8 +73,11 @@ std::string
 compiler::Item_expr_unary::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
-    oss << "Node: Unary Expression with type " << compiler::to_string(get_unary_type()) << std::endl;
+    oss << "Node: Unary Expression with type "
+        << termcolor::bright_blue << compiler::to_string(get_unary_type()) << termcolor::reset
+        << std::endl;
     oss << expr->print_result(indent + 2, false);
     return oss.str();
 }

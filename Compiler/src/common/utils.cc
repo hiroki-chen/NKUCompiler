@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <common/compile_excepts.hh>
+#include <common/termcolor.hh>
 #include <common/utils.hh>
 
 #include <iostream>
@@ -123,15 +124,16 @@ compiler::to_string(const compiler::binary_type& type)
 
 void compiler::print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os)
 {
+    termcolor::colorize(os);
     // Print indentation.
     for (uint32_t i = 0; i < indent; i += 2) {
-        os << "│  ";
+        os << termcolor::bright_green << "│  " << termcolor::reset;
     }
 
     // Print node.
     if (leaf) {
-        os << (std::string)"└──";
+        os << termcolor::bright_green << (std::string)"└──" << termcolor::reset;
     } else {
-        os << (std::string)"├──";
+        os << termcolor::bright_green << (std::string)"├──" << termcolor::reset;
     }
 }
