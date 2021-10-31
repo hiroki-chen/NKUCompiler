@@ -13,6 +13,8 @@ LEXER   = $(shell find $(SRC_DIR) -regex ".*.l")
 PARSER	= $(shell find $(SRC_DIR) -regex ".*.ypp")
 OBJ 	= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
 
+BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+
 ifeq ($(CXX), "clang++")
 	CXXFLAGS := -std=c++17 -I$(INCLUDE) -g -Wextra -Werror -O2 \
 				-Wno-sign-compare \
@@ -64,7 +66,7 @@ endif
 
 # You can push to the Git repository by make push.
 push:
-ifeq ("$(shell git rev-parse --abbrev-ref HEAD)", "main")
+ifeq ($(BRANCH), "main")
 	@printf "\033[4;31;107mYou are trying to push to main branch, stop.\033[0m\n"
 	@exit 1
 else
@@ -73,5 +75,6 @@ else
 	@read line; git commit -m "$$line";
 	@printf "Do you want to push to the branch \033[4;31;107m origin \033[0m ? [Y/n]\n"
 	@read line; if [ $$line = "n" ]; then echo aborting; exit 1 ; fi
-	@git push origin
+	@git push origin $(BRANCH)
+	@git push --mirror github
 endif
