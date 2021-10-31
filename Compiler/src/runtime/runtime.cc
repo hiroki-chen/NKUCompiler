@@ -34,11 +34,11 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     : compile_on(result["compile"].as<bool>())
     , debug_on(result["debug"].as<bool>())
     , print_ast(result["tree"].as<bool>())
-    , output_file(std::ofstream(result["output"].as<std::string>(), std::ios::out))
     , input_file(fopen(result["source"].as<std::string>().data(), "r"))
     , opt_level(result["optimize"].as<int>())
 {
-    std::cout << "\033[4;90;107m Takanashi Compiler is running!! \033[0m" << std::endl;
+    output_file.open(result["output"].as<std::string>(), std::ios::out);
+    std::cout << "\033[4;90;107mTakanashi Compiler is running!!\033[0m" << std::endl;
 }
 
 void compiler::Compiler_runtime::run(void)
@@ -46,14 +46,16 @@ void compiler::Compiler_runtime::run(void)
     try {
         yyset_in(input_file);
         yyset_lineno(1);
-        yycolumn = 1;
         yyparse();
         yylex_destroy();
 
         if (print_ast) {
             // TODO: Check why output_file was accidentally truncated?
-            output_file << root->print_result(0, false);
-            std::cout << root->print_result(0, false);
+            std::string res = root->print_result(0, false);
+            output_file << res;
+            output_file.flush();
+            std::cout << res;
+            std::cout.flush();
         }
     } catch (const std::exception& e) {
         // Error handler.

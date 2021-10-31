@@ -33,7 +33,6 @@ compiler::Symbol_table symbol_table;
                        yylloc.first_column = yycolumn;          \
                        for (char c : std::string(yytext)) {     \
                            if (c == '\n' || c == '\r') {        \
-                               yylineno++;                      \
                                yycolumn = 1;                    \
                            } else {                             \
                                yycolumn++;                      \
@@ -48,7 +47,7 @@ DECIMAL     [\+-]?([0-9]+\.?[0-9]*|\.[0-9]+)
 OCTAL       0([0-7]+)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
-EMPTY       [ \t]
+EMPTY       [ \t\n\r]+
 COMMENT     \/\/[^\n\r]*(\n|\r|\n\r)
 BEGIN       \/\*
 STRING      \"[^\"]*\"
