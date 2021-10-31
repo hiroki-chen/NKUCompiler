@@ -29,7 +29,7 @@ extern std::ofstream output;
 //extern compiler::Symbol_table symbol_table;
 
 uint32_t word_count = 0;
-uint32_t line_count = 0;
+uint32_t line_count = 1;
 uint32_t cur_pos    = 0;
 
 // Preprocessors.
