@@ -78,7 +78,7 @@ compiler::Item_func_call_list::print_result(const uint32_t& indent, const bool& 
     print_indent(indent, leaf, oss);
     oss << "Node: Function Call List" << std::endl;
     for (uint32_t i = 0; i < arguments.size(); i++) {
-        oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1) << std::endl;
+        oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1);
     }
     return oss.str();
 }
@@ -99,7 +99,7 @@ compiler::Item_func_def_arg::print_result(const uint32_t& indent, const bool& le
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Function Definition Argument with type " << compiler::to_string(type) << std::endl;
+    oss << "Node: Function Definition Argument with type " << compiler::to_string(type);
     oss << identifier->print_result(indent + 2, true);
     return oss.str();
 }

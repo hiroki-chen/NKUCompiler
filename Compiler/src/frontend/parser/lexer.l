@@ -31,8 +31,8 @@ compiler::Symbol_table symbol_table;
 
 #define YY_USER_ACTION yylloc.first_line = yylineno;            \
                        yylloc.first_column = yycolumn;          \
-                       for (auto i : std::string(yytext_ptr)) { \
-                           if (i == '\n' || i == '\r') {        \
+                       for (char c : std::string(yytext)) {     \
+                           if (c == '\n' || c == '\r') {        \
                                yylineno++;                      \
                                yycolumn = 1;                    \
                            } else {                             \
@@ -48,7 +48,6 @@ DECIMAL     [\+-]?([0-9]+\.?[0-9]*|\.[0-9]+)
 OCTAL       0([0-7]+)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
-LINE        ((\r\n)|\n|\r)
 EMPTY       [ \t]
 COMMENT     \/\/[^\n\r]*(\n|\r|\n\r)
 BEGIN       \/\*
@@ -135,7 +134,6 @@ CHAR        '\\?.'
 {ID}         { yylval.raw_string = new std::string(yytext, yyleng); return ID; }
 {CHAR}       { yylval.raw_char = *yytext; return CHAR; }
 {STRING}     { yylval.raw_string = new std::string(yytext, yyleng); return STRING; }
-{LINE}       { ; }
 {EMPTY}      { ; }
 
 . { 

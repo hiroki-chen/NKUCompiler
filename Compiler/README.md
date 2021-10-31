@@ -17,7 +17,23 @@ cd Compiler && make all CXX=<your compiler>;
 ```
 * 对于编译指令不熟悉的可以输入-h查看使用指南。
 
-* **目前只支持打印抽象语法树，而且还有BUG没有改完！** 样例输出：
+* **目前只支持打印抽象语法树，而且还有BUG没有改完！** 
+样例输入`test.sy`：
+```c++
+void main(int a) {
+    continue;
+    return 1;
+
+    if (~(false ^ 5) != !false) {
+        while (true) {
+            int a = 3 * 3 + 4 - b;
+        }
+    } else {
+        continue;
+    }
+}
+```
+样例输出：
 ```
  Takanashi Compiler is running!! 
 Program Root: 
@@ -32,12 +48,26 @@ Program Root:
 │  │  │  │  │  │  └──Node: Literal Numeric with value 1
 │  │  │  │  └──Node: If-else Statement
 │  │  │  │  │  │  ├──Node: Binary Expression with type Conditional_nonequal
-│  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Bitwise_or
+│  │  │  │  │  │  │  │  ├──Node: Unary Expression with type BIT_NEGATIVE
+│  │  │  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Bitwise_xor
+│  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 0
+│  │  │  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 5
+│  │  │  │  │  │  │  │  └──Node: Unary Expression with type LOGIC_NOT
 │  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 0
-│  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 5
-│  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 3
 │  │  │  │  │  │  ├──Node: Block
-│  │  │  │  │  │  │  │  └──Node: Break Statement
+│  │  │  │  │  │  │  │  └──Node: While Statement
+│  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 1
+│  │  │  │  │  │  │  │  │  │  └──Node: Block
+│  │  │  │  │  │  │  │  │  │  │  │  └──Node: Declaration
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Variale Declaration with initial value
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Identifier with name a
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Binary Expression with type Sub
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Add
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Mul
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 3
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 3
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 4
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Identifier with name b
 │  │  │  │  │  │  └──Node: Block
 │  │  │  │  │  │  │  │  └──Node: Continue Statement
 ```

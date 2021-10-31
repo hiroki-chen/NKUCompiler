@@ -74,10 +74,9 @@ compiler::Item_ident_array::print_result(const uint32_t& indent, const bool& lea
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
     oss << "Node: Array Identifier with name "
-        << termcolor::red << name << termcolor::reset << ", and the shape is ";
+        << termcolor::red << name << termcolor::reset << ", and the shape is " << std::endl;
     for (uint32_t i = 0; i < array_shape.size(); i++) {
-        oss << array_shape[i]->print_result(indent + 2, i == array_shape.size() - 1) << " "; // Each number is a dimension.
+        oss << array_shape[i]->print_result(indent + 2, i == array_shape.size() - 1); // Each number is a dimension.
     }
-    oss << std::endl;
     return oss.str();
 }
