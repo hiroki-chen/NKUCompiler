@@ -107,8 +107,8 @@ compiler::Item_stmt_assign::print_result(const uint32_t& indent, const bool& lea
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
     oss << "Node: Assignment Statement" << std::endl;
-    oss << identifier->print_result(indent + 2, true) << std::endl;
-    oss << expression->print_result(indent + 2, false) << std::endl;
+    oss << identifier->print_result(indent + 2, true);
+    oss << expression->print_result(indent + 2, false);
     return oss.str();
 }
 

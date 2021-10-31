@@ -43,7 +43,7 @@ compiler::Symbol_table symbol_table;
 %}
 
 
-DECIMAL     [\+-]?([0-9]+\.?[0-9]*|\.[0-9]+)
+DECIMAL     ([0-9]+\.?[0-9]*|\.[0-9]+)
 OCTAL       0([0-7]+)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
