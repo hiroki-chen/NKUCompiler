@@ -79,17 +79,19 @@
      CONTINUE = 295,
      CONST = 296,
      ASSIGN = 297,
-     LBRACE = 298,
-     RBRACE = 299,
-     LPARENTHESIS = 300,
-     RPARENTHESIS = 301,
-     LSQUARE = 302,
-     RSQUARE = 303,
-     SEMICOLON = 304,
-     DOT = 305,
-     COMMA = 306,
-     GE = 307,
-     LE = 308
+     TRUE = 298,
+     FALSE = 299,
+     LBRACE = 300,
+     RBRACE = 301,
+     LPARENTHESIS = 302,
+     RPARENTHESIS = 303,
+     LSQUARE = 304,
+     RSQUARE = 305,
+     SEMICOLON = 306,
+     DOT = 307,
+     COMMA = 308,
+     GE = 309,
+     LE = 310
    };
 #endif
 /* Tokens.  */
@@ -133,24 +135,26 @@
 #define CONTINUE 295
 #define CONST 296
 #define ASSIGN 297
-#define LBRACE 298
-#define RBRACE 299
-#define LPARENTHESIS 300
-#define RPARENTHESIS 301
-#define LSQUARE 302
-#define RSQUARE 303
-#define SEMICOLON 304
-#define DOT 305
-#define COMMA 306
-#define GE 307
-#define LE 308
+#define TRUE 298
+#define FALSE 299
+#define LBRACE 300
+#define RBRACE 301
+#define LPARENTHESIS 302
+#define RPARENTHESIS 303
+#define LSQUARE 304
+#define RSQUARE 305
+#define SEMICOLON 306
+#define DOT 307
+#define COMMA 308
+#define GE 309
+#define LE 310
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 59 "./src/frontend/parser/parser.ypp"
+#line 62 "./src/frontend/parser/parser.ypp"
 {
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
@@ -176,7 +180,7 @@ typedef union YYSTYPE
     char                                raw_char;
 }
 /* Line 1529 of yacc.c.  */
-#line 180 "./src/frontend/parser/parser.hh"
+#line 184 "./src/frontend/parser/parser.hh"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

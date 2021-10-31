@@ -73,7 +73,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::ASSIGN_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_stmt_assign() override = default;
 } Item_stmt_assign;
@@ -105,7 +105,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::EIF_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_stmt_eif() override = default;
 } Item_stmt_eif;
@@ -127,7 +127,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::WHILE_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_stmt_while() override = default;
 } Item_stmt_while;
@@ -144,7 +144,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::BREAK_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_stmt_break() override = default;
 } Item_stmt_break;
@@ -161,7 +161,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type() const override { return Item_stmt::stmt_type::CONTINUE_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_stmt_continue() override = default;
 } Item_stmt_continue;
@@ -181,7 +181,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::RETURN_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_stmt_return() override = default;
 } Item_stmt_return;
@@ -198,7 +198,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::VOID_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_stmt_void() override = default;
 } Item_stmt_void;
@@ -210,7 +210,7 @@ protected:
 public:
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::EVAL_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     Item_stmt_eval() = delete;
 
@@ -228,7 +228,7 @@ protected:
 public:
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::POSTFIX_STMT; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     Item_stmt_postfix() = delete;
 
@@ -254,7 +254,7 @@ public:
 
     virtual Item_stmt::stmt_type get_stmt_type() const override { return Item_stmt::stmt_type::BLOCK; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_block() override = default;
 } Item_block;

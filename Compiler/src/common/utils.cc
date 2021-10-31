@@ -17,6 +17,8 @@
 #include <common/compile_excepts.hh>
 #include <common/utils.hh>
 
+#include <iostream>
+
 std::string
 compiler::to_string(const compiler::basic_type& type)
 {
@@ -116,5 +118,20 @@ compiler::to_string(const compiler::binary_type& type)
 
     default:
         throw compiler::type_error("Unrecognized binary type!");
+    }
+}
+
+void compiler::print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os)
+{
+    // Print indentation.
+    for (uint32_t i = 0; i < indent; i++) {
+        os << "│  ";
+    }
+
+    // Print node.
+    if (leaf) {
+        os << (std::string)"└──";
+    } else {
+        os << (std::string)"├──";
     }
 }

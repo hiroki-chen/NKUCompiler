@@ -9,12 +9,13 @@
 
     Defines regular expressions.
     **************************************************************/
+#include <common/compile_excepts.hh>
 #include <frontend/symbol_table/symbol_table.hh>
-
 #include <frontend/parser/parser.hh>
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <stdexcept>
 #include <cstdint>
 #include <string>
@@ -43,8 +44,8 @@ compiler::Symbol_table symbol_table;
 %}
 
 
-DECIMAL     [+-]?([:digit:]+\.?[:digit:]*)|(\.[:digit:]+)
-OCTAL       0([1-7][0-7]*|0)
+DECIMAL     [\+-]?([0-9]+\.?[0-9]*|\.[0-9]+)
+OCTAL       0([0-7]+)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*
 LINE        ((\r\n)|\n|\r)
@@ -82,12 +83,18 @@ CHAR        '\\?.'
 "if"         { return IF; }
 "else"       { return ELSE; }
 "while"      { return WHILE; }
+"true"       { return TRUE; }
+"false"      { return FALSE; }
 "return"     { return RETURN; }
 "continue"   { return CONTINUE; }
 "break"      { return BREAK; }
 "for"        { return FOR; }
 "const"      { return CONST; }
 "struct"     { return STRUCT; }
+
+{HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
+{OCTAL}      { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }
+{DECIMAL}    { yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
 
 "["          { return LSQUARE; }
 "]"          { return RSQUARE; }
@@ -128,13 +135,14 @@ CHAR        '\\?.'
 {ID}         { yylval.raw_string = new std::string(yytext, yyleng); return ID; }
 {CHAR}       { yylval.raw_char = *yytext; return CHAR; }
 {STRING}     { yylval.raw_string = new std::string(yytext, yyleng); return STRING; }
-{DECIMAL}    { yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
-{OCTAL}      { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }
-{HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
-{LINE}       { yylineno ++; yycolumn = 1; }
+{LINE}       { ; }
 {EMPTY}      { ; }
 
-. { printf("test: %s", yytext); yyerror("Unknown character detected! Check your input again :("); yyterminate(); }
+. { 
+    std::ostringstream oss;
+    oss << "Error: Unknown character " << yytext;
+    throw compiler::unknown_character(oss.str());
+}
 
 
 <<EOF>> { yyterminate(); }

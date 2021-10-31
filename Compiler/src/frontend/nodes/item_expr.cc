@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/utils.hh>
 #include <frontend/nodes/item_expr.hh>
 #include <sstream>
 
@@ -44,29 +45,32 @@ compiler::Item_expr_unary::Item_expr_unary(const uint32_t& line_no, const unary_
 }
 
 std::string
-compiler::Item_expr_cond::print_result(void) const
+compiler::Item_expr_cond::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Conditional Expression" << std::endl;
-    oss << "--Expression: " << std::endl << expr->print_result() << std::endl;
+    oss << expr->print_result(indent + 2, true);
     return oss.str();
 }
 
 std::string
-compiler::Item_expr_binary::print_result(void) const
+compiler::Item_expr_binary::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    oss << "Node: Binary Expression" << std::endl;
-    oss << "--Left Expression: " << std::endl << lhs->print_result() << std::endl;
-    oss << "--Right Expression: " << std::endl << rhs->print_result() << std::endl;
+    print_indent(indent, leaf, oss);
+    oss << "Node: Binary Expression with type " << compiler::to_string(get_binary_type()) << std::endl;
+    oss << lhs->print_result(indent + 2, false);
+    oss << rhs->print_result(indent + 2, true);
     return oss.str();
 }
 
 std::string
-compiler::Item_expr_unary::print_result(void) const
+compiler::Item_expr_unary::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    oss << "Node: Unary Expression" << std::endl;
-    oss << "--Expression: " << std::endl << expr->print_result() << std::endl;
+    print_indent(indent, leaf, oss);
+    oss << "Node: Unary Expression with type " << compiler::to_string(get_unary_type()) << std::endl;
+    oss << expr->print_result(indent + 2, false);
     return oss.str();
 }

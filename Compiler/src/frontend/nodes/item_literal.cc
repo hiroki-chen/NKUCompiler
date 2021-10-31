@@ -14,7 +14,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/compile_excepts.hh>
+#include <common/termcolor.hh>
+#include <common/utils.hh>
 #include <frontend/nodes/item_literal.hh>
+
 #include <sstream>
 #include <string>
 
@@ -66,26 +70,27 @@ void compiler::Item_literal_array_init::add_value(Item_literal_array_init* const
 }
 
 std::string
-compiler::Item_literal_numeric::print_result(void) const
+compiler::Item_literal_numeric::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Literal Numeric with value ";
 
     switch (get_literal_type()) {
     case Item_literal::literal_type::INT_TYPE: {
-        oss << int(value) << std::endl;
+        oss << termcolor::red << int(value) << termcolor::reset << std::endl;
         break;
     }
     case Item_literal::literal_type::CHAR_TYPE: {
-        oss << char(value) << std::endl;
+        oss << termcolor::red << char(value) << termcolor::reset << std::endl;
         break;
     }
     case Item_literal::literal_type::REAL_TYPE: {
-        oss << double(value) << std::endl;
+        oss << termcolor::red << double(value) << termcolor::reset << std::endl;
         break;
     }
     default: {
-        throw std::runtime_error("Wrong numeric type!");
+        throw compiler::type_error("Wrong numeric type!");
     }
     }
 
@@ -93,24 +98,24 @@ compiler::Item_literal_numeric::print_result(void) const
 }
 
 std::string
-compiler::Item_literal_string::print_result(void) const
+compiler::Item_literal_string::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    oss << "Node: Literal String with value " << str << std::endl;
+    oss << "Node: Literal String with value "
+        << termcolor::red << str << termcolor::reset << std::endl;
     return oss.str();
 }
 
 std::string
-compiler::Item_literal_array_init::print_result(void) const
+compiler::Item_literal_array_init::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::stringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Literal Array Init" << std::endl;
-    oss << "-- Expression:" << std::endl
-        << expression->print_result() << std::endl;
-    oss << "-- Body:" << std::endl;
+    oss << expression->print_result(indent + 2, false) << std::endl;
 
-    for (auto item : value_list) {
-        oss << item->print_result() << std::endl;
+    for (uint32_t i = 0; i < value_list.size(); i++) {
+        oss << value_list[i]->print_result(indent + 2, i == value_list.size() - 1) ;
     }
 
     return oss.str();

@@ -67,7 +67,7 @@ public:
 
     virtual std::vector<Item_decl*> get_declarataions(void) const { return declarations; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     Item_stmt_decl() = delete;
 
@@ -87,7 +87,7 @@ public:
 
     Item_decl_var(const uint32_t& line_no, Item_ident* const identifier, const bool& is_decl = true);
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual Item_ident* get_identifier(void) const { return identifier; }
 
@@ -107,7 +107,7 @@ public:
 
     virtual Item_decl::decl_type get_decl_type(void) const override { return Item_decl::decl_type::POINTER; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_decl_pointer() override = default;
 } Item_decl_pointer;
@@ -127,7 +127,7 @@ public:
 
     virtual Item_expr* get_expression(void) const { return expression; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     Item_decl_var_init() = delete;
 
@@ -153,7 +153,7 @@ public:
 
     virtual Item_decl::decl_type get_decl_type(void) const override { return Item_decl::decl_type::ARRAY; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_decl_array() override = default;
 } Item_decl_array;
@@ -176,7 +176,7 @@ public:
         const bool& is_const,
         const bool& is_decl = false);
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_decl_array_init() override = default;
 } Item_decl_array_init;

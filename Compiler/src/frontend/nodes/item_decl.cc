@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/utils.hh>
 #include <frontend/nodes/item_decl.hh>
 #include <sstream>
 
@@ -77,64 +78,67 @@ void compiler::Item_stmt_decl::add_declaration(Item_decl* const declaration)
 }
 
 std::string
-compiler::Item_stmt_decl::print_result(void) const
+compiler::Item_stmt_decl::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Declaration" << std::endl;
 
-    for (auto item : declarations) {
-        oss << "--Declaration:" << item->print_result() << std::endl;
+    for (uint32_t i = 0; i < declarations.size(); i++) {
+        oss << declarations[i]->print_result(indent + 2, i == declarations.size() - 1);
     }
     return oss.str();
 }
 
 std::string
-compiler::Item_decl_var::print_result(void) const
+compiler::Item_decl_var::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
     oss << "Node: Variable Declaration" << std::endl;
-    oss << "-- " << identifier->print_result() << std::endl;
+    oss << identifier->print_result(indent + 2, true) << std::endl;
     return oss.str();
 }
 
 std::string
-compiler::Item_decl_var_init::print_result(void) const
+compiler::Item_decl_var_init::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Variale Declaration with initial value";
     if (is_const == true) {
         oss << " and is CONST" << std::endl;
     }
-    oss << "--Initial value: " << std::endl
-        << expression->print_result() << std::endl;
+    oss << expression->print_result(indent + 2, true) << std::endl;
     
     return oss.str();
 }
 
 std::string
-compiler::Item_decl_array::print_result(void) const
+compiler::Item_decl_array::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Array Declaration" << std::endl;
-    oss << "-- " << identifier->print_result() << std::endl;
+    oss << identifier->print_result(indent + 2, true) << std::endl;
     return oss.str();
 }
 
 std::string
-compiler::Item_decl_array_init::print_result(void) const
+compiler::Item_decl_array_init::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Array Declaration with initial value" << std::endl;
-    oss << "--Initial value: " << std::endl
-        << init_value->print_result() << std::endl;
+    oss << init_value->print_result(indent + 2, true) << std::endl;
     return oss.str();
 }
 
 std::string
-compiler::Item_decl_pointer::print_result(void) const
+compiler::Item_decl_pointer::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Pointer Declaration" << std::endl;
-    oss << "--" << identifier->print_result();
+    oss << identifier->print_result(indent + 2, true);
     return oss.str();
 }

@@ -50,7 +50,7 @@ public:
 
     virtual Item_ident::ident_type get_ident_type(void) const { return Item_ident::ident_type::VARIABLE; }
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 } Item_ident;
 
 /**
@@ -70,7 +70,7 @@ public:
 
     Item_ident_array(const uint32_t& line_no, const std::string& name);
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_ident_array() override = default;
 } Item_ident_array;
@@ -83,7 +83,7 @@ public:
 
     Item_ident_func(const uint32_t& line_no, const std::string& name);
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_ident_func() override = default;
 } Item_ident_func;
