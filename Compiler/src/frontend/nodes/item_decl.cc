@@ -95,6 +95,7 @@ std::string
 compiler::Item_decl_var::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Variable Declaration" << std::endl;
     oss << identifier->print_result(indent + 2, true);
     return oss.str();

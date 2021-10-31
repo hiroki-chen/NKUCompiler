@@ -25,9 +25,9 @@ else
 				-Wno-register
 endif
 
-.phony: mk all clean
+.phony: mk all clean push
 
-mk:
+mk: $(SRC_DIR)/frontend/parser/parser.cc $(SRC_DIR)/frontend/parser/lexer.cc
 ifeq ("$(wildcard $(BUILD_DIR))", "")
 # Create directories for object files.
 	@mkdir -p $(BUILD_DIR)/frontend/nodes $(BUILD_DIR)/frontend/ir \
@@ -36,10 +36,14 @@ ifeq ("$(wildcard $(BUILD_DIR))", "")
 	@mkdir -p $(BUILD_DIR)/common
 	@mkdir -p $(BUILD_DIR)/runtime
 endif
-# Create yacc and lex source files.
-	@printf "\033[4;90;107mPreparing necessary yacc and lex files...\033[0m\n"
+
+$(SRC_DIR)/frontend/parser/parser.cc: $(SRC_DIR)/frontend/parser/parser.ypp
+	@printf "\033[4;90;107mPreparing necessary yacc file...\033[0m\n"
 	$(YACC) -d -o $(SRC_DIR)/frontend/parser/parser.cc $(PARSER)
 	@mv $(SRC_DIR)/frontend/parser/parser.hh $(INCLUDE)/frontend/parser
+
+$(SRC_DIR)/parser/lexer.cc: $(SRC_DIR)/parser/lexer.l
+	@printf "\033[4;90;107mPreparing necessary lex file...\033[0m\n"
 	$(FLEX) -o $(SRC_DIR)/frontend/parser/lexer.cc $(LEXER)
 
 all: mk $(OBJ)
@@ -56,4 +60,15 @@ ifneq ("$(wildcard $(BUILD_DIR))", "")
 	@read line; if [ $$line = "n" ]; then echo aborting; exit 1 ; fi
 	@rm -rf $(BUILD_DIR)
 	@printf "\033[4;90;107mCleaned up the build path:)\033[0m\n"
+endif
+
+push:
+ifeq ("$(shell git rev-parse --abbrev-ref HEAD)", "main")
+	@printf "\033[4;31;107You are trying to push to main branch, stop.\n"
+	@exit 1
+else
+	@git add .
+	@echo "Enter some commit information.";
+	@read line; git commit -m $$line
+	@git push origin
 endif
