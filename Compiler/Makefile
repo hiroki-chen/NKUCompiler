@@ -64,11 +64,13 @@ endif
 
 push:
 ifeq ("$(shell git rev-parse --abbrev-ref HEAD)", "main")
-	@printf "\033[4;31;107You are trying to push to main branch, stop.\n"
+	@printf "\033[4;31;107mYou are trying to push to main branch, stop.\033[0m\n"
 	@exit 1
 else
 	@git add .
 	@echo "Enter some commit information.";
 	@read line; git commit -m $$line
+	@printf "Do you want to push to the branch \033[4;31;107m origin \033[0m ? [Y/n]\n"
+	@read line; if [ $$line = "n" ]; then echo aborting; exit 1 ; fi
 	@git push origin
 endif
