@@ -27,9 +27,9 @@ endif
 
 .phony: mk all clean push
 
+# Create directories for object files.
 mk: $(SRC_DIR)/frontend/parser/parser.cc $(SRC_DIR)/frontend/parser/lexer.cc
 ifeq ("$(wildcard $(BUILD_DIR))", "")
-# Create directories for object files.
 	@mkdir -p $(BUILD_DIR)/frontend/nodes $(BUILD_DIR)/frontend/ir \
 	 		  $(BUILD_DIR)/frontend/parser $(BUILD_DIR)/frontend/symbol_table
 	@mkdir -p $(BUILD_DIR)/backend 
@@ -49,19 +49,20 @@ $(SRC_DIR)/parser/lexer.cc: $(SRC_DIR)/parser/lexer.l
 all: mk $(OBJ)
 	$(CXX) -o $(TARGET) $(OBJ)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc
 # Compile to object files.
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+# Prompt warning to ensure remove.
 clean:
 ifneq ("$(wildcard $(BUILD_DIR))", "")
-# Prompt warning to ensure remove.
 	@echo "Do you want to remove build path? [Y/n]"
 	@read line; if [ $$line = "n" ]; then echo aborting; exit 1 ; fi
 	@rm -rf $(BUILD_DIR)
 	@printf "\033[4;90;107mCleaned up the build path:)\033[0m\n"
 endif
 
+# You can push to the Git repository by make push.
 push:
 ifeq ("$(shell git rev-parse --abbrev-ref HEAD)", "main")
 	@printf "\033[4;31;107mYou are trying to push to main branch, stop.\033[0m\n"
@@ -69,7 +70,7 @@ ifeq ("$(shell git rev-parse --abbrev-ref HEAD)", "main")
 else
 	@git add .
 	@echo "Enter some commit information.";
-	@read line; git commit -m $$line
+	@read line; git commit -m "$$line";
 	@printf "Do you want to push to the branch \033[4;31;107m origin \033[0m ? [Y/n]\n"
 	@read line; if [ $$line = "n" ]; then echo aborting; exit 1 ; fi
 	@git push origin
