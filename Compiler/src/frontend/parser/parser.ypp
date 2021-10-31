@@ -11,6 +11,7 @@
     Main tokenizer
     **************************************************************/
     #include <common/types.hh>
+    #include <common/compile_excepts.hh>
     #include <runtime/runtime.hh>
     #include <frontend/nodes/item_all.hh>
     #include <frontend/parser/parser.hh>
@@ -48,8 +49,10 @@
 
     void yyerror(const char* str)
     {
-        std::cerr << yylloc.first_line << ':'
-                  << yylloc.first_column << " : [ERROR]: " << str << std::endl;
+        std::ostringstream oss;
+        oss << "\033[1;31;490m" << yylloc.first_line << ':'
+            << yylloc.first_column << " : [ERROR]: " << str << "\033[0m" <<std::endl;
+        throw compiler::parse_error(oss.str());
         yylex_destroy();
     }
 
@@ -92,7 +95,7 @@
 // Types
 %token          INT DOUBLE FLOAT CHAR VOID STRUCT
 // Keywords
-%token          IF ELSE WHILE FOR RETURN BREAK CONTINUE CONST ASSIGN
+%token          IF ELSE WHILE FOR RETURN BREAK CONTINUE CONST ASSIGN TRUE FALSE
 // Other symbols
 %token          LBRACE RBRACE LPARENTHESIS RPARENTHESIS LSQUARE RSQUARE
 %token          SEMICOLON DOT COMMA
@@ -317,8 +320,8 @@ LOrExp: LAndExp LOGIC_OR LAndExp    { $$ = new compiler::Item_expr_binary(yyget_
       | LAndExp                    
       ;
 
-LAndExp: LAndExp LOGIC_AND EqExp    { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LAND_TYPE, $1, $3); }
-       | EqExp
+LAndExp: LAndExp LOGIC_AND BitExp    { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LAND_TYPE, $1, $3); }
+       | BitExp
        ;
 
 EqExp: RelExp EQ RelExp             { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::EQ_TYPE, $1, $3); }
@@ -347,9 +350,9 @@ BitXorExp: BitAndExp BIT_XOR BitAndExp        { $$ = new compiler::Item_expr_bin
         | BitAndExp
         ;
 
-BitAndExp: LOrExp BIT_AND LOrExp              { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
-         | BitAndExp BIT_AND LOrExp           { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
-         | LOrExp
+BitAndExp: EqExp BIT_AND EqExp              { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
+         | BitAndExp BIT_AND EqExp           { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
+         | EqExp
          ;
 
 AddExp: AddExp ADD MulExp                     { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::ADD_TYPE, $1, $3); }
@@ -382,6 +385,8 @@ LITERAL: HEX                                        { $$ = new compiler::Item_li
       | DECIMAL                                     { $$ = new compiler::Item_literal_real(yyget_lineno(), $1); }
       | CHAR                                        { $$ = new compiler::Item_literal_char(yyget_lineno(), $1); }
       | STRING                                      { $$ = new compiler::Item_literal_string(yyget_lineno(), *$1); }
+      | TRUE                                        { $$ = new compiler::Item_literal_int(yyget_lineno(), 1); }
+      | FALSE                                       { $$ = new compiler::Item_literal_int(yyget_lineno(), 0); }
       ;
 
 FunctionCall: Ident LPARENTHESIS RPARENTHESIS                       { $$ = new compiler::Item_func_call(yyget_lineno(), $1, new compiler::Item_func_call_list(yyget_lineno())); }

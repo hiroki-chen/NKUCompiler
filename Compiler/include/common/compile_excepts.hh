@@ -31,7 +31,7 @@ protected:
     const std::string information;
 
 public:
-    explicit parse_error(const char* information)
+    explicit parse_error(const std::string& information)
         : information(information)
     {
     }
@@ -77,6 +77,33 @@ public:
 
     const char* what(void) const noexcept override { return information.data(); }
 } redefined_symbol;
+
+typedef class unknown_character : public std::exception {
+protected:
+    const std::string information;
+
+public:
+    explicit unknown_character(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what(void) const noexcept override { return information.data(); }
+} unknown_character;
+
+
+typedef class unimplemented_error : public std::exception {
+protected:
+    const std::string information;
+
+public:
+    explicit unimplemented_error(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what(void) const noexcept override { return information.data(); }
+} unimplemented_error;
 } // namespace compiler
 
 #endif

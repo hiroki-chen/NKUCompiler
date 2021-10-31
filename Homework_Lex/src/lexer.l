@@ -42,7 +42,7 @@ uint32_t cur_pos    = 0;
 
 #endif
 %}
-DECIMAL     [+-]?([:digit:]+\.?[:digit:]*)|(\.[:digit:]+)
+DECIMAL     [\+-]?([0-9]+\.?[0-9]*|\.[0-9]+)
 OCTAL       0([1-7][0-7]*|0)
 HEX         (0x|0X)([0-9a-fA-F]+)
 ID          [[:alpha:]_][[:alpha:][:digit:]_]*

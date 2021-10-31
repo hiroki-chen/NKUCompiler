@@ -50,8 +50,8 @@ void compiler::Compiler_runtime::run(void)
         yylex_destroy();
 
         if (print_ast) {
-            output_file << root->print_result();
-            std::cout << root->print_result();
+            output_file << root->print_result(0, false);
+            std::cout << root->print_result(0, false);
         }
     } catch (const std::exception& e) {
         // Error handler.

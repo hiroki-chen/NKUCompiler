@@ -58,13 +58,13 @@ public:
     
     /**
      * @brief Prints the the parse result as an abstract syntax tree.
-     * @note This function will invoke all of its children's print_result() virtual function
+     * @note This function will invoke all of its children's print_result(indent + 2) virtual function
      *       until there is no child anymore.
      *       You should implement this function in each <b>final</b> class.
      * 
      * @return std::string 
      */
-    virtual std::string print_result(void) const = 0;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const = 0;
 
     virtual ~Item() = default;
 } Item;
@@ -82,7 +82,7 @@ public:
 
     Item_root(const uint32_t& line_no);
 
-    virtual std::string print_result(void) const override;
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_root() override = default;
 } Item_root;

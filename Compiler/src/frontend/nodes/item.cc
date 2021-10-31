@@ -14,10 +14,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <frontend/nodes/item.hh>
 
-#include <string>
 #include <sstream>
+#include <string>
 
 compiler::Item::Item(const uint32_t& line_no)
     : line_no(line_no)
@@ -34,12 +35,12 @@ void compiler::Item_root::add_child(Item* const child)
     children.emplace_back(child);
 }
 
-std::string compiler::Item_root::print_result(void) const
+std::string compiler::Item_root::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    oss << "ROOT: ";
+    oss << termcolor::red << "Program Root: " << termcolor::reset << std::endl;
     for (uint32_t i = 0; i < children.size(); i++) {
-        oss << children[i]->print_result() << std::endl;
+        oss << children[i]->print_result(indent, i == children.size() - 1);
     }
     return oss.str();
 }

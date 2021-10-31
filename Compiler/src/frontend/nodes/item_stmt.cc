@@ -14,9 +14,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/utils.hh>
 #include <frontend/nodes/item_stmt.hh>
-#include <string>
+
 #include <sstream>
+#include <string>
 
 compiler::Item_stmt::Item_stmt(const uint32_t& line_no)
     : Item_expr(line_no)
@@ -100,99 +102,111 @@ void compiler::Item_block::add_item(Item_stmt* const statement)
 }
 
 std::string
-compiler::Item_stmt_assign::print_result(void) const
+compiler::Item_stmt_assign::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Assignment Statement" << std::endl;
-    oss << "--" << identifier->print_result() << std::endl;
-    oss << "--" << expression->print_result() << std::endl;
+    oss << identifier->print_result(indent + 2, true) << std::endl;
+    oss << expression->print_result(indent + 2, false) << std::endl;
     return oss.str();
 }
 
 std::string
-compiler::Item_stmt_break::print_result(void) const
+compiler::Item_stmt_break::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Break Statement" << std::endl;
     return oss.str();
 }
 
 std::string
-compiler::Item_stmt_continue::print_result(void) const
+compiler::Item_stmt_continue::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Continue Statement" << std::endl;
     return oss.str();
 }
 
 std::string
-compiler::Item_stmt_eif::print_result(void) const
+compiler::Item_stmt_eif::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: If-else Statement" << std::endl;
-    oss << "-- Condition: " << std::endl << condition->print_result();
-    oss << "-- If branch: " << std::endl << if_branch->print_result();
+    oss << condition->print_result(indent + 2, false);
 
     // There could be no else statement at all.
     if (else_branch != nullptr) {
-        oss << "-- Else branch: " << else_branch->print_result();
-    }
-    return oss.str();
-}
-
-std::string
-compiler::Item_stmt_while::print_result(void) const
-{
-    std::ostringstream oss;
-    oss << "Node: While Statement" << std::endl;
-    oss << "-- Condition: " << condition->print_result();
-    oss << "-- While body: " << statement->print_result();
-    return oss.str();
-}
-
-std::string
-compiler::Item_stmt_postfix::print_result(void) const
-{
-    std::ostringstream oss;
-    oss << "Node: Postfix Statement with identifier" << identifier->print_result() << std::endl;
-    return oss.str();
-}
-
-std::string
-compiler::Item_stmt_void::print_result(void) const
-{
-    return "Node: Empty Statement";
-}
-
-std::string
-compiler::Item_stmt_eval::print_result(void) const
-{
-    std::ostringstream oss;
-    oss << "Node: Eval Statement" << std::endl;
-    oss << "-- Expression body" << std::endl <<expression->print_result();
-    return oss.str();
-}
-
-std::string
-compiler::Item_stmt_return::print_result(void) const
-{
-    std::ostringstream oss;
-    oss << "Node: Return statement" << std::endl;
-    if (expr != nullptr) {
-        oss << "--" << expr->print_result();
+        oss << if_branch->print_result(indent + 2, false);
+        oss << else_branch->print_result(indent + 2, true);
     } else {
-        oss << "--VOID" << std::endl;
+        oss << if_branch->print_result(indent + 2, true);
     }
     return oss.str();
 }
 
 std::string
-compiler::Item_block::print_result(void) const
+compiler::Item_stmt_while::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << "Node: While Statement" << std::endl;
+    oss << condition->print_result(indent + 2, false);
+    oss << statement->print_result(indent + 2, true);
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_postfix::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << "Node: Postfix Statement with identifier"
+        << identifier->print_result(indent + 2, true) << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_void::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << "Node: Empty Statement" << std::endl;
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_eval::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << "Node: Eval Statement" << std::endl;
+    oss << expression->print_result(indent + 2, true);
+    return oss.str();
+}
+
+std::string
+compiler::Item_stmt_return::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << "Node: Return statement" << std::endl;
+    oss << expr->print_result(indent + 2, true);
+
+    return oss.str();
+}
+
+std::string
+compiler::Item_block::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
     oss << "Node: Block" << std::endl;
-    for (auto item : statements) {
-        oss << "--" << item->print_result();
+    for (uint32_t i = 0; i < statements.size(); i++) {
+        oss << statements[i]->print_result(indent + 2, i == statements.size() - 1);
     }
     return oss.str();
 }
