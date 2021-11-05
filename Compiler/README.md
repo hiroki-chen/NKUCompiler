@@ -37,39 +37,39 @@ void main(int a) {
 ```
  Takanashi Compiler is running!! 
 Program Root: 
-└──Node: Function Definition with return type void
-│  │  ├──Node: Identifier with name main
-│  │  ├──Node: Function Definition Argument List
-│  │  │  │  └──Node: Function Definition Argument with type int
-│  │  │  │  │  │  └──Node: Identifier with name a
-│  │  ├──Node: Block
-│  │  │  │  ├──Node: Continue Statement
-│  │  │  │  ├──Node: Return statement
-│  │  │  │  │  │  └──Node: Literal Numeric with value 1
-│  │  │  │  └──Node: If-else Statement
-│  │  │  │  │  │  ├──Node: Binary Expression with type Conditional_nonequal
-│  │  │  │  │  │  │  │  ├──Node: Unary Expression with type BIT_NEGATIVE
-│  │  │  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Bitwise_xor
-│  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 0
-│  │  │  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 5
-│  │  │  │  │  │  │  │  └──Node: Unary Expression with type LOGIC_NOT
-│  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 0
-│  │  │  │  │  │  ├──Node: Block
-│  │  │  │  │  │  │  │  └──Node: While Statement
-│  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 1
-│  │  │  │  │  │  │  │  │  │  └──Node: Block
-│  │  │  │  │  │  │  │  │  │  │  │  └──Node: Declaration
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Variale Declaration with initial value
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Identifier with name a
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Binary Expression with type Sub
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Add
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Binary Expression with type Mul
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──Node: Literal Numeric with value 3
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 3
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Literal Numeric with value 4
-│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──Node: Identifier with name b
-│  │  │  │  │  │  └──Node: Block
-│  │  │  │  │  │  │  │  └──Node: Continue Statement
+└──\033[4;96;49mNode:\033[0m Function Definition with return type void
+│  │  ├──\033[4;96;49mNode:\033[0m Identifier with name main
+│  │  ├──\033[4;96;49mNode:\033[0m Function Definition Argument List
+│  │  │  │  └──\033[4;96;49mNode:\033[0m Function Definition Argument with type int
+│  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Identifier with name a
+│  │  ├──\033[4;96;49mNode:\033[0m Block
+│  │  │  │  ├──\033[4;96;49mNode:\033[0m Continue Statement
+│  │  │  │  ├──\033[4;96;49mNode:\033[0m Return statement
+│  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Literal Numeric with value 1
+│  │  │  │  └──\033[4;96;49mNode:\033[0m If-else Statement
+│  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Binary Expression with type Conditional_nonequal
+│  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Unary Expression with type BIT_NEGATIVE
+│  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Binary Expression with type Bitwise_xor
+│  │  │  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Literal Numeric with value 0
+│  │  │  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Literal Numeric with value 5
+│  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Unary Expression with type LOGIC_NOT
+│  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Literal Numeric with value 0
+│  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Block
+│  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m While Statement
+│  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Literal Numeric with value 1
+│  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Block
+│  │  │  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Declaration
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Variale Declaration with initial value
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Identifier with name a
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Binary Expression with type Sub
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Binary Expression with type Add
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Binary Expression with type Mul
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\033[4;96;49mNode:\033[0m Literal Numeric with value 3
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Literal Numeric with value 3
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Literal Numeric with value 4
+│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Identifier with name b
+│  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Block
+│  │  │  │  │  │  │  │  └──\033[4;96;49mNode:\033[0m Continue Statement
 ```
 
 * TODO: 做个输出的美化~

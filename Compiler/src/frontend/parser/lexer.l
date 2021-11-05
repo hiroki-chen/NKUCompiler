@@ -9,9 +9,9 @@
 
     Defines regular expressions.
     **************************************************************/
-#include <common/compile_excepts.hh>
-#include <frontend/symbol_table/symbol_table.hh>
+#include <frontend/nodes/item_all.hh>
 #include <frontend/parser/parser.hh>
+#include <common/compile_excepts.hh>
 
 #include <iostream>
 #include <fstream>
@@ -20,14 +20,8 @@
 #include <cstdint>
 #include <string>
 
-extern FILE* yyin;
-extern YYSTYPE yylval;
-
 extern void yyerror(const char* error_information);
-
 int yycolumn = 1;
-
-compiler::Symbol_table symbol_table;
 
 #define YY_USER_ACTION yylloc.first_line = yylineno;            \
                        yylloc.first_column = yycolumn;          \

@@ -49,6 +49,18 @@ compiler::Item_decl_pointer::Item_decl_pointer(const uint32_t& line_no, Item_ide
 {
 }
 
+compiler::Item_decl_pointer_init::Item_decl_pointer_init(
+    const uint32_t& line_no,
+    Item_ident_pointer* const identifier,
+    Item_expr* const expression,
+    const bool& is_const,
+    const bool& is_decl)
+    : Item_decl_pointer(line_no, identifier, is_decl)
+    , expression(expression)
+    , is_const(is_const)
+{
+}
+
 compiler::Item_decl_var_init::Item_decl_var_init(
     const uint32_t& line_no,
     Item_ident* const identifier,
@@ -83,7 +95,7 @@ compiler::Item_stmt_decl::print_result(const uint32_t& indent, const bool& leaf)
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Declaration" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Declaration" << std::endl;
 
     for (uint32_t i = 0; i < declarations.size(); i++) {
         oss << declarations[i]->print_result(indent + 2, i == declarations.size() - 1);
@@ -96,7 +108,7 @@ compiler::Item_decl_var::print_result(const uint32_t& indent, const bool& leaf) 
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Variable Declaration" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Variable Declaration" << std::endl;
     oss << identifier->print_result(indent + 2, true);
     return oss.str();
 }
@@ -107,14 +119,14 @@ compiler::Item_decl_var_init::print_result(const uint32_t& indent, const bool& l
     std::ostringstream oss;
     termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
-    oss << "Node: Variale Declaration with initial value";
+    oss << "\033[4;96;49mNode:\033[0m Variale Declaration with initial value";
     if (is_const == true) {
         oss << termcolor::bright_yellow << " and is CONST" << termcolor::reset;
     }
     oss << std::endl;
     oss << identifier->print_result(indent + 2, false);
     oss << expression->print_result(indent + 2, true);
-    
+
     return oss.str();
 }
 
@@ -123,7 +135,7 @@ compiler::Item_decl_array::print_result(const uint32_t& indent, const bool& leaf
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Array Declaration" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Array Declaration" << std::endl;
     oss << identifier->print_result(indent + 2, true);
     return oss.str();
 }
@@ -133,7 +145,7 @@ compiler::Item_decl_array_init::print_result(const uint32_t& indent, const bool&
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Array Declaration with initial value" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Array Declaration with initial value" << std::endl;
     oss << identifier->print_result(indent + 2, false);
     oss << init_value->print_result(indent + 2, true);
     return oss.str();
@@ -144,7 +156,22 @@ compiler::Item_decl_pointer::print_result(const uint32_t& indent, const bool& le
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Pointer Declaration" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Pointer Declaration" << std::endl;
     oss << identifier->print_result(indent + 2, true);
+    return oss.str();
+}
+
+std::string
+compiler::Item_decl_pointer_init::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << "\033[4;96;49mNode:\033[0m Pointer Declaration with initial value";
+    if (is_const == true) {
+        oss << termcolor::bright_yellow << " and is CONST" << termcolor::reset;
+    }
+    oss << std::endl;
+    oss << identifier->print_result(indent + 2, false);
+    oss << expression->print_result(indent + 2, true);
     return oss.str();
 }

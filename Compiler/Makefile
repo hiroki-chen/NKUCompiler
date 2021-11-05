@@ -1,21 +1,23 @@
 ############# DRAFT. 
-CXX = clang++
-FLEX = flex
-YACC = yacc		# or bison
+FLEX := flex
+YACC := yacc		# or bison
+UNIX := $(shell uname)
 
-INCLUDE = ./include
-SRC_DIR = ./src
-BUILD_DIR = ./build
-TARGET  = $(BUILD_DIR)/compiler.bin
+INCLUDE := ./include
+SRC_DIR := ./src
+BUILD_DIR := ./build
+TARGET  := $(BUILD_DIR)/compiler.bin
+SHARED  := $(BUILD_DIR)/shared/libruntime.so
 # Invoke shell command to find all source files recursively.
-SRC 	= $(shell find $(SRC_DIR) -regex ".*.cc")
-LEXER   = $(shell find $(SRC_DIR) -regex ".*.l")
-PARSER	= $(shell find $(SRC_DIR) -regex ".*.ypp")
-OBJ 	= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
+SRC 	:= $(shell find $(SRC_DIR) -regex ".*.cc")
+LEXER   := $(shell find $(SRC_DIR) -regex ".*.l")
+PARSER	:= $(shell find $(SRC_DIR) -regex ".*.ypp")
+OBJ 	:= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
+SOBJ    := $(patsubst $(BUILD_DIR)/rumtime/%.o, $(BUILD_DIR)/runtime/%.so, $(OBJ))
 
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
-ifeq ($(CXX), "clang++")
+ifeq ($(UNIX), "Linux")
 	CXXFLAGS := -std=c++17 -I$(INCLUDE) -g -Wextra -Werror -O2 \
 				-Wno-sign-compare \
 				-Wno-unused-parameter
@@ -27,33 +29,46 @@ else
 				-Wno-register
 endif
 
+LINK_FLAG := -shared -fPIC
+
 .phony: mk all clean push
 
 # Create directories for object files.
-mk: $(SRC_DIR)/frontend/parser/parser.cc $(SRC_DIR)/frontend/parser/lexer.cc
+mk:
 ifeq ("$(wildcard $(BUILD_DIR))", "")
 	@mkdir -p $(BUILD_DIR)/frontend/nodes $(BUILD_DIR)/frontend/ir \
 	 		  $(BUILD_DIR)/frontend/parser $(BUILD_DIR)/frontend/symbol_table
-	@mkdir -p $(BUILD_DIR)/backend 
+	@mkdir -p $(BUILD_DIR)/backend
 	@mkdir -p $(BUILD_DIR)/common
 	@mkdir -p $(BUILD_DIR)/runtime
+	@mkdir -p $(BUILD_DIR)/ir
+	@mkdir -p $(BUILD_DIR)/shared
 endif
 
-$(SRC_DIR)/frontend/parser/parser.cc: $(SRC_DIR)/frontend/parser/parser.ypp
-	@printf "\033[4;90;107mPreparing necessary yacc file...\033[0m\n"
-	$(YACC) -d -o $(SRC_DIR)/frontend/parser/parser.cc $(PARSER)
-	@mv $(SRC_DIR)/frontend/parser/parser.hh $(INCLUDE)/frontend/parser
+$(SHARED): $(SOBJ)
+	@$(CXX) $(LINK_FLAG) $^ -o $@
 
-$(SRC_DIR)/parser/lexer.cc: $(SRC_DIR)/parser/lexer.l
-	@printf "\033[4;90;107mPreparing necessary lex file...\033[0m\n"
-	$(FLEX) -o $(SRC_DIR)/frontend/parser/lexer.cc $(LEXER)
-
-all: mk $(OBJ)
-	$(CXX) -o $(TARGET) $(OBJ)
+$(TARGET): mk $(OBJ) $(SHARED)
+	@$(CXX) -o $(TARGET) $(OBJ) -L$(BUILD_DIR)/shared -lruntime
+	@echo "LINKER => $(TARGET)"
 
 # Compile to object files.
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	@echo "CXX => $@"
+
+$(SRC_DIR)/frontend/parser/parser.cc: $(SRC_DIR)/frontend/parser/parser.ypp
+	@printf "\033[4;90;107mPreparing necessary yacc file...\033[0m\n"
+	@$(YACC) -d -o $(SRC_DIR)/frontend/parser/parser.cc $(PARSER)
+	@echo "YACC => $@"
+	@mv $(SRC_DIR)/frontend/parser/parser.hh $(INCLUDE)/frontend/parser
+
+$(SRC_DIR)/frontend/parser/lexer.cc: $(SRC_DIR)/frontend/parser/lexer.l
+	@printf "\033[4;90;107mPreparing necessary lex file...\033[0m\n"
+	@$(FLEX) -o $(SRC_DIR)/frontend/parser/lexer.cc $(LEXER)
+	@echo "flex => $@"
+	
+all: $(TARGET)
 
 # Prompt warning to ensure remove.
 clean:

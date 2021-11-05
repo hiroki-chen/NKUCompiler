@@ -60,6 +60,12 @@ compiler::to_string(const compiler::unary_type& type)
     case UADD_TYPE:
         return "UNARY ADD";
 
+    case UDEREFER_TYPE:
+        return "UNARY DEREFERENCE";
+    
+    case UREF_TYPE:
+        return "UNARY REFERENCE";
+
     default:
         throw compiler::type_error("Unrecognized unary type!");
     }

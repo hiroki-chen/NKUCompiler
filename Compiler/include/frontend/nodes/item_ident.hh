@@ -94,14 +94,19 @@ public:
  */
 typedef class Item_ident_pointer final : public Item_ident {
 protected:
-    Item_expr* point_to;
+    // This should be similar as the array.
+    uint32_t shape;
 
 public:
     Item_ident_pointer() = delete;
 
-    Item_ident_pointer(const uint32_t& line_no, const std::string& name, Item_expr* point_to);
+    Item_ident_pointer(const uint32_t& line_no, const std::string& name);
 
-    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::FUNCTION; }
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+
+    virtual void add_shape(void) { shape++; } ;
+
+    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::POINTER; }
 
     virtual ~Item_ident_pointer() override = default;
 } Item_ident_pointer;

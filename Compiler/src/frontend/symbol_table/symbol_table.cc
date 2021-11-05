@@ -19,6 +19,11 @@
 
 #include <sstream>
 
+compiler::Symbol_table::Symbol_table(const uint32_t& uuid)
+    : uuid(uuid)
+{
+}
+
 compiler::Symbol* compiler::Symbol_table::find_symbol(const std::string& name, const bool& recursive)
 {
     // Iterate over the current table and the parent table.
@@ -45,7 +50,7 @@ compiler::Symbol* compiler::Symbol_table::find_symbol(const std::string& name, c
 
 bool compiler::Symbol_table::exist(const std::string& name)
 {
-    if (find_symbol(name) != nullptr) {
+    if (find_symbol(name, false) != nullptr) {
         std::ostringstream oss;
         oss << "Error: Symbol " << name << " is already defined! Redefinition shadows the previous definition.";
         throw compiler::redefined_symbol(oss.str());
@@ -54,19 +59,7 @@ bool compiler::Symbol_table::exist(const std::string& name)
     }
 }
 
-// TODO: Support other types of declarations.
-void compiler::Symbol_table::add_symbol(const Item_stmt_decl* const declarations, const bool& is_const)
+// TODO: Implement it.
+void compiler::Symbol_table::add_symbol(const std::string& name, Symbol* const symbol)
 {
-    for (auto declaration : declarations->get_declarataions()) {
-        // Case 1: Variables.
-        if (declaration->get_decl_type() == Item_decl::decl_type::VARIABLE) {
-            Item_decl_var* const variable = static_cast<Item_decl_var*>(declaration);
-            Item_ident* const identitifer = variable->get_identifier();
-
-            const std::string name = identitifer->get_name();
-            Symbol* const symbol = new Symbol(name, symbol_type::VAR_TYPE);
-            symbol->set_const(is_const);
-            symbol_table[name] = symbol;
-        }
-    }
 }

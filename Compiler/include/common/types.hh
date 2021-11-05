@@ -42,7 +42,9 @@ typedef enum unary_type {
     LNOT_TYPE,
     BITNEG_TYPE,
     UMINUS_TYPE,
-    UADD_TYPE
+    UADD_TYPE,
+    UDEREFER_TYPE,
+    UREF_TYPE,
 } unary_type;
 
 typedef enum basic_type {

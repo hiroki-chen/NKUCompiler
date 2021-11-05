@@ -19,12 +19,15 @@
 
 #include <frontend/symbol_table/symbol.hh>
 
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 // TODO: Implement our symbol table according to LAB5.
 
 namespace compiler {
+
+using symbol_table_type = std::unordered_map<std::string, Symbol*>;
+
 /**
  * @brief Class for symbol table.
  * 
@@ -33,8 +36,10 @@ namespace compiler {
  */
 typedef class Symbol_table {
 protected:
+    const uint32_t uuid;
+
     // The main table for entry storage.
-    std::unordered_map<std::string, Symbol*> symbol_table;
+    symbol_table_type symbol_table;
 
     Symbol_table* parent_table;
 
@@ -43,13 +48,23 @@ protected:
     virtual bool exist(const std::string& name);
 
 public:
-    Symbol_table() = default;
+    Symbol_table(const uint32_t& uuid);
 
-    virtual std::unordered_map<std::string, Symbol*> get_symbol_table(void) { return symbol_table; }
+    virtual uint32_t get_uuid(void) { return uuid; }
+
+    virtual symbol_table_type get_symbol_table(void) { return symbol_table; }
 
     virtual Symbol* find_symbol(const std::string& name, const bool& recursive = true);
 
-    virtual void add_symbol(const Item_stmt_decl* const declarations, const bool& is_const);
+    virtual void add_symbol(const std::string& name, Symbol* const symbol);
+
+    virtual void set_child(Symbol_table* const child) { child_table = child; }
+
+    virtual void set_parent(Symbol_table* const parent) { parent_table = parent; }
+
+    virtual Symbol_table* get_child(void) { return child_table; }
+
+    virtual Symbol_table* get_parent(void) { return parent_table; }
 } Symbol_table;
 } // namespace compiler
 
