@@ -1,8 +1,9 @@
-## Basic Framework for Project Compiler
+# Basic Framework for Project Compiler
 
 * LAB5以后的作业直接在这里写吧。
 
 ### 设计目标
+
 * 纯C++实现；
 * 采用多态和虚函数实现抽象语法树（Abstract Syntax Tree）的构建；
 * 中间代码生成 （IR）；
@@ -10,15 +11,19 @@
 * 符号表查询
 
 ### 食用方法
+
 * 在Unix系统中用`make`指令编译工程：
+
 ```shell
 cd Compiler && make all CXX=<your compiler>;
 ./build/compiler.bin -c -o ./output/output -s ./test/input.sy -t; # Command Line Parser :)
 ```
+
 * 对于编译指令不熟悉的可以输入-h查看使用指南。
 
-* **目前只支持打印抽象语法树，而且还有BUG没有改完！** 
+* **目前只支持打印抽象语法树，而且还有BUG没有改完！**
 样例输入`test.sy`：
+
 ```c++
 void main(int a) {
     continue;
@@ -33,8 +38,10 @@ void main(int a) {
     }
 }
 ```
+
 样例输出：
-```
+
+```s
  Takanashi Compiler is running!! 
 Program Root: 
 └──\033[4;96;49mNode:\033[0m Function Definition with return type void
@@ -74,10 +81,24 @@ Program Root:
 
 * TODO: 做个输出的美化~
 
-### 项目布局（截止2021-10-30）
-```
+### 项目布局（截止2021-10-5）
+
+```txt
+.
 ├── backup
+├── build
+│   ├── backend
+│   ├── common
+│   ├── frontend
+│   │   ├── ir
+│   │   ├── nodes
+│   │   ├── parser
+│   │   └── symbol_table
+│   ├── ir
+│   ├── runtime
+│   └── shared
 ├── include
+│   ├── backend
 │   ├── common
 │   ├── frontend
 │   │   ├── nodes
@@ -85,19 +106,22 @@ Program Root:
 │   │   └── symbol_table
 │   ├── ir
 │   └── runtime
-└── src
-    ├── backend
-    ├── common
-    ├── frontend
-    │   ├── ir
-    │   ├── nodes
-    │   ├── parser
-    │   └── symbol_table
-    └── runtime
+├── src
+│   ├── backend
+│   ├── common
+│   ├── frontend
+│   │   ├── nodes
+│   │   ├── parser
+│   │   └── symbol_table
+│   ├── ir
+│   └── runtime
+└── test
 ```
 
 ### 继承关系和几点说明
+
 🚧施工中🚧
+
 * 类和其文件名是一样的，想要找什么就直接去对应的文件里面找就行。
 * 所有节点的基类都是`Item`，而该类是抽象基类，请不要实例化，它只能通过指针的形式使用。
 * `Item_expr`继承自`Item`，基本上别的类都是从这里长出来的。
@@ -108,6 +132,7 @@ Program Root:
 ```
 Item -> Item_expr -> Item_expr_cond
                   -> Item_ident         -> Item_ident_array
+                                        -> Item_ident_pointer
 
                   -> Item_literal       -> Item_literal_numeric     -> Item_literal_int
                                                                     -> Item_literal_real
@@ -136,10 +161,12 @@ Item -> Item_expr -> Item_expr_cond
 
      -> Item_decl -> Item_decl_var      -> Item_decl_var_init
                   -> Item_decl_array    -> Item_decl_array_init
+                  -> Item_decl_pointer  -> Item_decl_pointer_init
 
      -> Item_func_def
 ```
 
 #### Prerequisites
+
 * C++标准默认为17，请使用支持C++17以上的编译器进行编译，已知可以在clang 12和GCC-11（需要链接到flex和yacc）上运行。
 * 采用了cxxopts库作为command line parser，具体实现已经放在了`src/runtime/runtime.cc`中了。
