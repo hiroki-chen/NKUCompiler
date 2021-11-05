@@ -92,4 +92,7 @@ else
 	@read line; if [ $$line = "n" ]; then echo aborting; exit 1 ; fi
 	@git push origin $(BRANCH)
 	@git push --mirror github
+	@git checkout main
+	@git merge $(BRANCH)
+	@git checkout $(BRANCH)
 endif
