@@ -575,9 +575,9 @@ char *yytext;
 
     Defines regular expressions.
     **************************************************************/
-#include <common/compile_excepts.hh>
-#include <frontend/symbol_table/symbol_table.hh>
+#include <frontend/nodes/item_all.hh>
 #include <frontend/parser/parser.hh>
+#include <common/compile_excepts.hh>
 
 #include <iostream>
 #include <fstream>
@@ -586,14 +586,8 @@ char *yytext;
 #include <cstdint>
 #include <string>
 
-extern FILE* yyin;
-extern YYSTYPE yylval;
-
 extern void yyerror(const char* error_information);
-
 int yycolumn = 1;
-
-compiler::Symbol_table symbol_table;
 
 #define YY_USER_ACTION yylloc.first_line = yylineno;            \
                        yylloc.first_column = yycolumn;          \
@@ -606,8 +600,8 @@ compiler::Symbol_table symbol_table;
                        }                                        \
                        yylloc.last_line = yylineno;             \
                        yylloc.last_column = yycolumn - 1;
-#line 609 "./src/frontend/parser/lexer.cc"
-#line 610 "./src/frontend/parser/lexer.cc"
+#line 603 "./src/frontend/parser/lexer.cc"
+#line 604 "./src/frontend/parser/lexer.cc"
 
 #define INITIAL 0
 
@@ -824,9 +818,9 @@ YY_DECL
 		}
 
 	{
-#line 56 "./src/frontend/parser/lexer.l"
+#line 50 "./src/frontend/parser/lexer.l"
 
-#line 829 "./src/frontend/parser/lexer.cc"
+#line 823 "./src/frontend/parser/lexer.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -896,12 +890,12 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 57 "./src/frontend/parser/lexer.l"
+#line 51 "./src/frontend/parser/lexer.l"
 { ; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 58 "./src/frontend/parser/lexer.l"
+#line 52 "./src/frontend/parser/lexer.l"
 {
     // Handles mutilline comment.
     char c;
@@ -921,274 +915,274 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 75 "./src/frontend/parser/lexer.l"
+#line 69 "./src/frontend/parser/lexer.l"
 { return INT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 76 "./src/frontend/parser/lexer.l"
+#line 70 "./src/frontend/parser/lexer.l"
 { return DOUBLE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 77 "./src/frontend/parser/lexer.l"
+#line 71 "./src/frontend/parser/lexer.l"
 { return FLOAT; } 
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 78 "./src/frontend/parser/lexer.l"
+#line 72 "./src/frontend/parser/lexer.l"
 { return CHAR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 79 "./src/frontend/parser/lexer.l"
+#line 73 "./src/frontend/parser/lexer.l"
 { return VOID; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 81 "./src/frontend/parser/lexer.l"
+#line 75 "./src/frontend/parser/lexer.l"
 { return IF; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 82 "./src/frontend/parser/lexer.l"
+#line 76 "./src/frontend/parser/lexer.l"
 { return ELSE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 83 "./src/frontend/parser/lexer.l"
+#line 77 "./src/frontend/parser/lexer.l"
 { return WHILE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 84 "./src/frontend/parser/lexer.l"
+#line 78 "./src/frontend/parser/lexer.l"
 { return TRUE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 85 "./src/frontend/parser/lexer.l"
+#line 79 "./src/frontend/parser/lexer.l"
 { return FALSE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 86 "./src/frontend/parser/lexer.l"
+#line 80 "./src/frontend/parser/lexer.l"
 { return RETURN; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 87 "./src/frontend/parser/lexer.l"
+#line 81 "./src/frontend/parser/lexer.l"
 { return CONTINUE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 88 "./src/frontend/parser/lexer.l"
+#line 82 "./src/frontend/parser/lexer.l"
 { return BREAK; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 89 "./src/frontend/parser/lexer.l"
+#line 83 "./src/frontend/parser/lexer.l"
 { return FOR; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 90 "./src/frontend/parser/lexer.l"
+#line 84 "./src/frontend/parser/lexer.l"
 { return CONST; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 91 "./src/frontend/parser/lexer.l"
+#line 85 "./src/frontend/parser/lexer.l"
 { return STRUCT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 93 "./src/frontend/parser/lexer.l"
+#line 87 "./src/frontend/parser/lexer.l"
 { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 94 "./src/frontend/parser/lexer.l"
+#line 88 "./src/frontend/parser/lexer.l"
 { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 95 "./src/frontend/parser/lexer.l"
+#line 89 "./src/frontend/parser/lexer.l"
 { yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 97 "./src/frontend/parser/lexer.l"
+#line 91 "./src/frontend/parser/lexer.l"
 { return LSQUARE; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 98 "./src/frontend/parser/lexer.l"
+#line 92 "./src/frontend/parser/lexer.l"
 { return RSQUARE; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 99 "./src/frontend/parser/lexer.l"
+#line 93 "./src/frontend/parser/lexer.l"
 { return LBRACE; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 100 "./src/frontend/parser/lexer.l"
+#line 94 "./src/frontend/parser/lexer.l"
 { return RBRACE; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 101 "./src/frontend/parser/lexer.l"
+#line 95 "./src/frontend/parser/lexer.l"
 { return LPARENTHESIS; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 102 "./src/frontend/parser/lexer.l"
+#line 96 "./src/frontend/parser/lexer.l"
 { return RPARENTHESIS; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 103 "./src/frontend/parser/lexer.l"
+#line 97 "./src/frontend/parser/lexer.l"
 { return SEMICOLON; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 104 "./src/frontend/parser/lexer.l"
+#line 98 "./src/frontend/parser/lexer.l"
 { return DOT; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 105 "./src/frontend/parser/lexer.l"
+#line 99 "./src/frontend/parser/lexer.l"
 { return COMMA; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 107 "./src/frontend/parser/lexer.l"
+#line 101 "./src/frontend/parser/lexer.l"
 { return EQ; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 108 "./src/frontend/parser/lexer.l"
+#line 102 "./src/frontend/parser/lexer.l"
 { return GEQ; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 109 "./src/frontend/parser/lexer.l"
+#line 103 "./src/frontend/parser/lexer.l"
 { return LEQ; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 110 "./src/frontend/parser/lexer.l"
+#line 104 "./src/frontend/parser/lexer.l"
 { return L; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 111 "./src/frontend/parser/lexer.l"
+#line 105 "./src/frontend/parser/lexer.l"
 { return G; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 112 "./src/frontend/parser/lexer.l"
+#line 106 "./src/frontend/parser/lexer.l"
 { return NEQ; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 114 "./src/frontend/parser/lexer.l"
+#line 108 "./src/frontend/parser/lexer.l"
 { return ASSIGN; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 116 "./src/frontend/parser/lexer.l"
+#line 110 "./src/frontend/parser/lexer.l"
 { return LOGIC_AND; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 117 "./src/frontend/parser/lexer.l"
+#line 111 "./src/frontend/parser/lexer.l"
 { return LOGIC_OR; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 118 "./src/frontend/parser/lexer.l"
+#line 112 "./src/frontend/parser/lexer.l"
 { return LOGIC_NOT; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 120 "./src/frontend/parser/lexer.l"
+#line 114 "./src/frontend/parser/lexer.l"
 { return BIT_AND; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 121 "./src/frontend/parser/lexer.l"
+#line 115 "./src/frontend/parser/lexer.l"
 { return BIT_OR; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 122 "./src/frontend/parser/lexer.l"
+#line 116 "./src/frontend/parser/lexer.l"
 { return BIT_XOR; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 123 "./src/frontend/parser/lexer.l"
+#line 117 "./src/frontend/parser/lexer.l"
 { return BIT_NEG; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 125 "./src/frontend/parser/lexer.l"
+#line 119 "./src/frontend/parser/lexer.l"
 { return INC; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 126 "./src/frontend/parser/lexer.l"
+#line 120 "./src/frontend/parser/lexer.l"
 { return DEC; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 127 "./src/frontend/parser/lexer.l"
+#line 121 "./src/frontend/parser/lexer.l"
 { return ADD; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 128 "./src/frontend/parser/lexer.l"
+#line 122 "./src/frontend/parser/lexer.l"
 { return MINUS; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 129 "./src/frontend/parser/lexer.l"
+#line 123 "./src/frontend/parser/lexer.l"
 { return MUL; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 130 "./src/frontend/parser/lexer.l"
+#line 124 "./src/frontend/parser/lexer.l"
 { return DIV; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 131 "./src/frontend/parser/lexer.l"
+#line 125 "./src/frontend/parser/lexer.l"
 { return MOD; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 133 "./src/frontend/parser/lexer.l"
+#line 127 "./src/frontend/parser/lexer.l"
 { yylval.raw_string = new std::string(yytext, yyleng); return ID; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 134 "./src/frontend/parser/lexer.l"
+#line 128 "./src/frontend/parser/lexer.l"
 { yylval.raw_char = yytext[1]; return CHAR; }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 135 "./src/frontend/parser/lexer.l"
+#line 129 "./src/frontend/parser/lexer.l"
 { yylval.raw_string = new std::string(yytext, yyleng); return STRING; }
 	YY_BREAK
 case 55:
 /* rule 55 can match eol */
 YY_RULE_SETUP
-#line 136 "./src/frontend/parser/lexer.l"
+#line 130 "./src/frontend/parser/lexer.l"
 { ; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 138 "./src/frontend/parser/lexer.l"
+#line 132 "./src/frontend/parser/lexer.l"
 { 
     std::ostringstream oss;
     oss << "Error: Unknown character " << yytext;
@@ -1196,15 +1190,15 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 145 "./src/frontend/parser/lexer.l"
+#line 139 "./src/frontend/parser/lexer.l"
 { yyterminate(); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 147 "./src/frontend/parser/lexer.l"
+#line 141 "./src/frontend/parser/lexer.l"
 ECHO;
 	YY_BREAK
-#line 1207 "./src/frontend/parser/lexer.cc"
+#line 1201 "./src/frontend/parser/lexer.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2219,5 +2213,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 147 "./src/frontend/parser/lexer.l"
+#line 141 "./src/frontend/parser/lexer.l"
 

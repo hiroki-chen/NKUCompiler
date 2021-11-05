@@ -14,22 +14,20 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef UTILS_HH
-#define UTILS_HH
+#ifndef IR_HH
+#define IR_HH
 
-#include <frontend/nodes/item_ident.hh>
-#include <common/types.hh>
+#include <vector>
 
-#include <string>
+namespace compiler::ir {
+/**
+ * @brief The class for IR (Intermediate Representation).
+ * 
+ */
+typedef class IR {
 
-namespace compiler {
-std::string to_string(const compiler::basic_type& type);
+} IR;
 
-std::string to_string(const compiler::unary_type& type);
-
-std::string to_string(const compiler::binary_type& type);
-
-void print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os);
-} // namespace compiler
+} // namespace compiler::ir
 
 #endif

@@ -106,7 +106,7 @@ compiler::Item_stmt_assign::print_result(const uint32_t& indent, const bool& lea
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Assignment Statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Assignment Statement" << std::endl;
     oss << identifier->print_result(indent + 2, true);
     oss << expression->print_result(indent + 2, false);
     return oss.str();
@@ -117,7 +117,7 @@ compiler::Item_stmt_break::print_result(const uint32_t& indent, const bool& leaf
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Break Statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Break Statement" << std::endl;
     return oss.str();
 }
 
@@ -126,7 +126,7 @@ compiler::Item_stmt_continue::print_result(const uint32_t& indent, const bool& l
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Continue Statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Continue Statement" << std::endl;
     return oss.str();
 }
 
@@ -135,7 +135,7 @@ compiler::Item_stmt_eif::print_result(const uint32_t& indent, const bool& leaf) 
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: If-else Statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m If-else Statement" << std::endl;
     oss << condition->print_result(indent + 2, false);
 
     // There could be no else statement at all.
@@ -153,7 +153,7 @@ compiler::Item_stmt_while::print_result(const uint32_t& indent, const bool& leaf
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: While Statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m While Statement" << std::endl;
     oss << condition->print_result(indent + 2, false);
     oss << statement->print_result(indent + 2, true);
     return oss.str();
@@ -164,7 +164,7 @@ compiler::Item_stmt_postfix::print_result(const uint32_t& indent, const bool& le
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Postfix Statement with identifier"
+    oss << "\033[4;96;49mNode:\033[0m Postfix Statement with identifier"
         << identifier->print_result(indent + 2, true) << std::endl;
     return oss.str();
 }
@@ -174,7 +174,7 @@ compiler::Item_stmt_void::print_result(const uint32_t& indent, const bool& leaf)
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Empty Statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Empty Statement" << std::endl;
     return oss.str();
 }
 
@@ -183,7 +183,7 @@ compiler::Item_stmt_eval::print_result(const uint32_t& indent, const bool& leaf)
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Eval Statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Eval Statement" << std::endl;
     oss << expression->print_result(indent + 2, true);
     return oss.str();
 }
@@ -193,7 +193,7 @@ compiler::Item_stmt_return::print_result(const uint32_t& indent, const bool& lea
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Return statement" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Return statement" << std::endl;
     oss << expr->print_result(indent + 2, true);
 
     return oss.str();
@@ -204,7 +204,7 @@ compiler::Item_block::print_result(const uint32_t& indent, const bool& leaf) con
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Block" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Block" << std::endl;
     for (uint32_t i = 0; i < statements.size(); i++) {
         oss << statements[i]->print_result(indent + 2, i == statements.size() - 1);
     }

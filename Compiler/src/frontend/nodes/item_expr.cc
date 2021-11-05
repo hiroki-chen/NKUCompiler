@@ -50,7 +50,7 @@ compiler::Item_expr_cond::print_result(const uint32_t& indent, const bool& leaf)
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Conditional Expression" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Conditional Expression" << std::endl;
     oss << expr->print_result(indent + 2, true);
     return oss.str();
 }
@@ -61,7 +61,7 @@ compiler::Item_expr_binary::print_result(const uint32_t& indent, const bool& lea
     std::ostringstream oss;
     termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
-    oss << "Node: Binary Expression with type "
+    oss << "\033[4;96;49mNode:\033[0m Binary Expression with type "
         << termcolor::bright_blue << compiler::to_string(get_binary_type()) << termcolor::reset
         << std::endl;
     oss << lhs->print_result(indent + 2, false);
@@ -75,7 +75,7 @@ compiler::Item_expr_unary::print_result(const uint32_t& indent, const bool& leaf
     std::ostringstream oss;
     termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
-    oss << "Node: Unary Expression with type "
+    oss << "\033[4;96;49mNode:\033[0m Unary Expression with type "
         << termcolor::bright_blue << compiler::to_string(get_unary_type()) << termcolor::reset
         << std::endl;
     oss << expr->print_result(indent + 2, false);

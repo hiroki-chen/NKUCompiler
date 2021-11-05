@@ -21,6 +21,9 @@
 #include <vector>
 #include <string>
 
+#include <ir/ir.hh>
+#include <ir/context.hh>
+
 namespace compiler {
 /**
  * @brief The most basic type for each node in the AST.
@@ -55,6 +58,8 @@ public:
 
     virtual Item::type get_type(void) const = 0;
 
+    //virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const { return; }
+
     virtual uint32_t get_line_no(void) const { return line_no; }
     
     /**
@@ -84,6 +89,9 @@ public:
     Item_root(const uint32_t& line_no);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+
+    // Root node cannot generate anything.
+    // virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const override { return; }
 
     virtual ~Item_root() override = default;
 } Item_root;

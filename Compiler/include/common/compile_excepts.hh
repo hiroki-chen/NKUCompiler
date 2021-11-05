@@ -20,7 +20,6 @@
 #include <stdexcept>
 #include <string>
 
-// TODO: Add unimplemented exceptions.
 namespace compiler {
 /**
  * @brief Maybe we could ignore the function \ref{yyerror} and implement our exception handlers.
@@ -91,6 +90,18 @@ public:
     const char* what(void) const noexcept override { return information.data(); }
 } unknown_character;
 
+typedef class fatal_error : public std::exception {
+protected:
+    const std::string information;
+
+public:
+    explicit fatal_error(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what() const noexcept override { return information.data(); }
+} fatal_error;
 
 typedef class unimplemented_error : public std::exception {
 protected:

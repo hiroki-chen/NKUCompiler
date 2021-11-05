@@ -75,7 +75,7 @@ compiler::Item_literal_numeric::print_result(const uint32_t& indent, const bool&
     std::ostringstream oss;
     termcolor::colorize(oss);
     print_indent(indent, leaf, oss);
-    oss << "Node: Literal Numeric with value ";
+    oss << "\033[4;96;49mNode:\033[0m Literal Numeric with value ";
 
     switch (get_literal_type()) {
     case Item_literal::literal_type::INT_TYPE: {
@@ -103,7 +103,7 @@ compiler::Item_literal_string::print_result(const uint32_t& indent, const bool& 
 {
     std::ostringstream oss;
     termcolor::colorize(oss);
-    oss << "Node: Literal String with value "
+    oss << "\033[4;96;49mNode:\033[0m Literal String with value "
         << termcolor::red << str << termcolor::reset << std::endl;
     return oss.str();
 }
@@ -113,7 +113,7 @@ compiler::Item_literal_array_init::print_result(const uint32_t& indent, const bo
 {
     std::stringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "Node: Literal Array Init" << std::endl;
+    oss << "\033[4;96;49mNode:\033[0m Literal Array Init" << std::endl;
     oss << expression->print_result(indent + 2, false) << std::endl;
 
     for (uint32_t i = 0; i < value_list.size(); i++) {

@@ -96,7 +96,7 @@ public:
     virtual ~Item_decl_var() override = default;
 } Item_decl_var;
 
-typedef class Item_decl_pointer final : public Item_decl {
+typedef class Item_decl_pointer : public Item_decl {
 protected:
     Item_ident_pointer* const identifier;
 
@@ -111,6 +111,27 @@ public:
 
     virtual ~Item_decl_pointer() override = default;
 } Item_decl_pointer;
+
+typedef class Item_decl_pointer_init final : public Item_decl_pointer {
+protected:
+    Item_expr* const expression; // Init value.
+
+    const bool is_const;
+
+public:
+    Item_decl_pointer_init() = delete;
+
+    Item_decl_pointer_init(const uint32_t& lineno, Item_ident_pointer* const identifier, Item_expr* const expression, const bool& is_const, const bool& is_decl = false);
+
+    virtual bool get_is_const(void) const { return is_const; }
+
+    virtual Item_expr* get_expression(void) const { return expression; }
+
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+
+    virtual ~Item_decl_pointer_init() override = default;
+
+} Item_decl_pointer_init;
 
 /**
  * @brief Class for declaration of variables with initial value.

@@ -15,7 +15,6 @@
     #include <runtime/runtime.hh>
     #include <frontend/nodes/item_all.hh>
     #include <frontend/parser/parser.hh>
-    //#include <frontend/symbol_table.hh>
 
     #include <iostream>
     #include <fstream>
@@ -24,14 +23,18 @@
 
     //extern compiler::Symbol_table symbol_table;
     extern uint32_t yylineno;
+    extern int yydebug;
 
     extern compiler::Compiler_runtime* compiler_runtime;
 
     extern int yylex(void);
     extern int yyget_lineno(void);
-    extern int yylex_destroy();
-    extern int yyparse(void);
+    extern int yylex_destroy(void);
 
+    #ifdef YYDEBUG
+    #undef YYDEBUG
+    #endif
+    #define YYDEBUG 1
     # define YYLLOC_DEFAULT(Cur, Rhs, N)                          \
     do {                                                          \
         if (N) {                                                  \
@@ -130,6 +133,7 @@
 %type <item_func_call_list> FunctionRParams
 %type <item_literal_array_init> ArrayInitVal ArrayInitValHelper
 %type <item_literal> LITERAL
+%type <item_ident_pointer> POINTER
 %type <raw_string> ID STRING
 %type <raw_number> HEX DECIMAL OCTAL
 %type <raw_char> CHAR
@@ -165,6 +169,7 @@ VarDecl: BType VarDef               { $$ = new compiler::Item_stmt_decl(yyget_li
 
 ConstDecl: CONST BType ConstDef      { $$ = new compiler::Item_stmt_decl(yyget_lineno(), $2); $$->add_declaration($3); }
          | ConstDecl COMMA ConstDef  { $$->add_declaration($3); }
+         | BType CONST ConstDef      { $$ = new compiler::Item_stmt_decl(yyget_lineno(), $1); $$->add_declaration($3); }
          ;
 
 VarDef: VarDefNormal
@@ -173,8 +178,14 @@ VarDef: VarDefNormal
 
 VarDefNormal: Ident ASSIGN Exp             { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, false); }
             | Ident                        { $$ = new compiler::Item_decl_var(yyget_lineno(), $1); }
+            | POINTER ASSIGN Exp           { $$ = new compiler::Item_decl_pointer_init(yyget_lineno(), $1, $3, false); }
+            | POINTER                      { $$ = new compiler::Item_decl_pointer(yyget_lineno(), $1); }
             ;
 
+POINTER: MUL ID                          { $$ = new compiler::Item_ident_pointer(yyget_lineno(), *$2); }
+       | MUL POINTER                     { $$ = $2; $2->add_shape(); }
+       ;
+       
 VarDefArray: ArrayID ASSIGN ArrayInitVal    { $$ = new compiler::Item_decl_array_init(yyget_lineno(), $1, $3, false); }
            | ArrayID                        { $$ = new compiler::Item_decl_array(yyget_lineno(), $1); }
            ;
@@ -192,6 +203,7 @@ ConstDef: ConstDefNormal
         ;
 
 ConstDefNormal: Ident ASSIGN Exp           { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, true); }
+              | POINTER ASSIGN Exp         { $$ = new compiler::Item_decl_pointer_init(yyget_lineno(), $1, $3, true); }
               ;
 
 ConstDefArray: ArrayID ASSIGN ArrayInitVal      { $$ = new compiler::Item_decl_array_init(yyget_lineno(), $1, $3, true); }
@@ -371,13 +383,15 @@ UnaryExp: ADD UnaryExp                        { $$ = new compiler::Item_expr_una
         | MINUS UnaryExp                      { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UMINUS_TYPE, $2); }
         | LOGIC_NOT UnaryExp                  { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::LNOT_TYPE, $2); }
         | BIT_NEG UnaryExp                    { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::BITNEG_TYPE, $2); }
+        | BIT_AND UnaryExp                    { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UREF_TYPE, $2); }
+        | MUL UnaryExp                        { $$ = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UDEREFER_TYPE, $2); }
         | FunctionCall
         | PrimaryExp
         ;
 
 PrimaryExp: LPARENTHESIS Exp RPARENTHESIS           { $$ = $2; }
           | LVal                                    { $$ = $<item_expr>1; }
-          | LITERAL                                  { $$ = $<item_expr>1; }
+          | LITERAL                                 { $$ = $<item_expr>1; }
           | Assignment                              { $$ = $<item_expr>1; }
           ;
 
@@ -397,5 +411,4 @@ FunctionCall: Ident LPARENTHESIS RPARENTHESIS                       { $$ = new c
 FunctionRParams: FunctionRParams COMMA BitExp               { $$ = $1; $1->add_arg($3); }
                | BitExp                                     { $$ = new compiler::Item_func_call_list(yyget_lineno()); $$->add_arg($1); }
                ;
-
 %%

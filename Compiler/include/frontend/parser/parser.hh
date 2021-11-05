@@ -154,7 +154,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 62 "./src/frontend/parser/parser.ypp"
+#line 65 "./src/frontend/parser/parser.ypp"
 {
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
