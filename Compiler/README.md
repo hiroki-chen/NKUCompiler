@@ -19,6 +19,8 @@ cd Compiler && make all CXX=<your compiler>;
 ./build/compiler.bin -c -o ./output/output -s ./test/input.sy -t; # Command Line Parser :)
 ```
 
+* 如果你指定了`-s`后面为目录，那么`-o`会被忽略，所有的输出都会存入`-s`指定目录下的`./output`目录。
+
 * 对于编译指令不熟悉的可以输入-h查看使用指南。
 
 * **目前只支持打印抽象语法树，而且还有BUG没有改完！**

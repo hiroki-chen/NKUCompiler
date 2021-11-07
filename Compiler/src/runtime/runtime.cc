@@ -19,6 +19,7 @@
 #include <common/utils.hh>
 #include <runtime/runtime.hh>
 
+#include <algorithm>
 /* For filesystem. */
 #include <experimental/filesystem>
 
@@ -39,6 +40,7 @@ std::vector<std::string> compiler::process_input(const std::string& input)
 
     filesystem::create_directory(input + "/output");
 
+    std::sort(files.begin(), files.end());
     return files;
 }
 
@@ -91,7 +93,8 @@ void compiler::Compiler_runtime::run(void)
             if (print_ast) {
                 if (!output_file.is_open()) {
                     std::ostringstream oss;
-                    oss << base_path << "/output/ast" << i;
+                    const std::string file = input_file[i].substr(input_file[i].find_last_of("/"));
+                    oss << base_path << "/output/" << file << ".ast";
                     output_file.open(oss.str(), std::ios::out);
                 }
                 std::string res = root->print_result(0, false);
