@@ -46,7 +46,7 @@ public:
 
     Item_ident() = delete;
 
-    Item_ident(const uint32_t& line_no, const std::string& name);
+    Item_ident(const uint32_t& lineno, const std::string& name);
 
     virtual Item_ident::ident_type get_ident_type(void) const { return Item_ident::ident_type::VARIABLE; }
 
@@ -68,7 +68,7 @@ public:
 
     Item_ident_array() = delete;
 
-    Item_ident_array(const uint32_t& line_no, const std::string& name);
+    Item_ident_array(const uint32_t& lineno, const std::string& name);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -81,7 +81,7 @@ public:
 
     Item_ident_func() = delete;
 
-    Item_ident_func(const uint32_t& line_no, const std::string& name);
+    Item_ident_func(const uint32_t& lineno, const std::string& name);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -100,7 +100,7 @@ protected:
 public:
     Item_ident_pointer() = delete;
 
-    Item_ident_pointer(const uint32_t& line_no, const std::string& name);
+    Item_ident_pointer(const uint32_t& lineno, const std::string& name);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 

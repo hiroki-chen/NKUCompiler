@@ -70,6 +70,7 @@
     compiler::Item_stmt_decl*           item_stmt_decl;
     compiler::Item_func_def*            item_func_def;
     compiler::Item_expr*                item_expr;
+    compiler::Item_expr_comma*          item_expr_comma;
     compiler::Item_ident*               item_ident;
     compiler::Item_ident_array*         item_ident_array;
     compiler::Item_ident_pointer*       item_ident_pointer;
@@ -128,6 +129,7 @@
 %type <item_func_def_arg> FuncParam FuncParamNormal FuncParamArray
 %type <item_decl> VarDef VarDefNormal VarDefArray ConstDef ConstDefNormal ConstDefArray
 %type <item_expr> Exp AddExp MulExp BitExp LOrExp LAndExp EqExp RelExp BitAndExp BitOrExp BitXorExp UnaryExp PrimaryExp FunctionCall
+%type <item_expr_comma> CommaExp
 %type <item_ident> Ident LVal
 %type <item_ident_array> ArrayID ArrayItem
 %type <item_func_call_list> FunctionRParams
@@ -238,7 +240,35 @@ FuncParamArray: BType Ident LSQUARE RSQUARE                {
 Ident: ID       { $$ = new compiler::Item_ident(yyget_lineno(), *$1); }
      ;
 
-ArrayInitValHelper: 'foo'   { $$ = nullptr; /* NOT IMPLEMENTED YET. */}
+ArrayInitValHelper: ArrayInitValHelper COMMA ArrayInitVal     { $$ = $1; $$->add_value($3); }
+                  | ArrayInitValHelper COMMA Exp              {
+                                                                $$ = $1;
+                                                                compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $3, false);
+                                                                $$->add_value(array_init);
+                                                              }
+                  | ArrayInitVal                              { $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); $$->add_value($1); }
+                  | LOrExp                                    {
+                                                                $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false);
+                                                                compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $1, true);
+                                                                $$->add_value(array_init); 
+                                                              }
+                  | LOrExp COMMA ArrayInitVal                 {
+                                                                $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false);
+                                                                compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $1, true);
+                                                                $$->add_value(array_init);
+                                                                $$->add_value($3);
+                                                              }
+                  | CommaExp                                  { 
+                                                                 $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); 
+                                                                 compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $1, true);
+                                                                 $$->add_value(array_init);
+                                                              }
+                  | CommaExp COMMA ArrayInitVal               {
+                                                                 $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); 
+                                                                 compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $1, true);
+                                                                 $$->add_value(array_init);
+                                                                 $$->add_value($3);
+                                                              }
                   ;
 
 BLOCK: LBRACE RBRACE                    { $$ = new compiler::Item_block(yyget_lineno()); }
@@ -326,6 +356,11 @@ ArrayItem: LVal LSQUARE Exp RSQUARE             { $$ = new compiler::Item_ident_
          ;
 
 Exp: LOrExp
+   | CommaExp
+   ;
+
+CommaExp: LOrExp COMMA LOrExp                   { $$ = new compiler::Item_expr_comma(yyget_lineno()); $$->add_expression($1); $$->add_expression($3); }
+        | CommaExp COMMA LOrExp                 { $$ = $1; $$->add_expression($3); }
         ;
 
 LOrExp: LAndExp LOGIC_OR LAndExp    { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LOR_TYPE, $1, $3); }
@@ -342,8 +377,8 @@ EqExp: RelExp EQ RelExp             { $$ = new compiler::Item_expr_binary(yyget_
      | RelExp
      ;
 
-RelExp: RelExp GE RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::GE_TYPE, $1, $3); }
-      | RelExp LE RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LE_TYPE, $1, $3); }
+RelExp: RelExp GEQ RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::GE_TYPE, $1, $3); }
+      | RelExp LEQ RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LE_TYPE, $1, $3); }
       | RelExp G RelExp          { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::G_TYPE, $1, $3); }
       | RelExp L RelExp          { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::L_TYPE, $1, $3); }
       | AddExp

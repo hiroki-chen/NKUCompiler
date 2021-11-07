@@ -20,24 +20,24 @@
 
 #include <sstream>
 
-compiler::Item_ident::Item_ident(const uint32_t& line_no, const std::string& name)
-    : Item_expr(line_no)
+compiler::Item_ident::Item_ident(const uint32_t& lineno, const std::string& name)
+    : Item_expr(lineno)
     , name(name)
 {
 }
 
-compiler::Item_ident_array::Item_ident_array(const uint32_t& line_no, const std::string& name)
-    : Item_ident(line_no, name)
+compiler::Item_ident_array::Item_ident_array(const uint32_t& lineno, const std::string& name)
+    : Item_ident(lineno, name)
 {
 }
 
-compiler::Item_ident_func::Item_ident_func(const uint32_t& line_no, const std::string& name)
-    : Item_ident(line_no, name)
+compiler::Item_ident_func::Item_ident_func(const uint32_t& lineno, const std::string& name)
+    : Item_ident(lineno, name)
 {
 }
 
-compiler::Item_ident_pointer::Item_ident_pointer(const uint32_t& line_no, const std::string& name)
-    : Item_ident(line_no, name)
+compiler::Item_ident_pointer::Item_ident_pointer(const uint32_t& lineno, const std::string& name)
+    : Item_ident(lineno, name)
     , shape(1)
 {
 }

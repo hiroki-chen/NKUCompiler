@@ -19,42 +19,42 @@
 #include <frontend/nodes/item_func.hh>
 #include <sstream>
 
-compiler::Item_func_call_list::Item_func_call_list(const uint32_t& line_no)
-    : Item_expr(line_no)
+compiler::Item_func_call_list::Item_func_call_list(const uint32_t& lineno)
+    : Item_expr(lineno)
 {
 }
 
 compiler::Item_func_call::Item_func_call(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_ident* const identifier,
     Item_func_call_list* const arguments)
-    : Item_expr(line_no)
+    : Item_expr(lineno)
     , identifier(identifier)
     , arguments(arguments)
 {
 }
 
 compiler::Item_func_def_arg::Item_func_def_arg(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     const basic_type& type,
     Item_ident* const identifier)
-    : Item_expr(line_no)
+    : Item_expr(lineno)
     , type(type)
     , identifier(identifier)
 {
 }
 
-compiler::Item_func_def_list::Item_func_def_list(const uint32_t& line_no)
-    : Item_expr(line_no)
+compiler::Item_func_def_list::Item_func_def_list(const uint32_t& lineno)
+    : Item_expr(lineno)
 {
 }
 
-compiler::Item_func_def::Item_func_def(const uint32_t& line_no,
+compiler::Item_func_def::Item_func_def(const uint32_t& lineno,
     const basic_type& return_type,
     Item_ident* const identifier,
     Item_func_def_list* const parameter,
     Item_block* const func_body)
-    : Item(line_no)
+    : Item(lineno)
     , return_type(return_type)
     , identifier(identifier)
     , parameter(parameter)

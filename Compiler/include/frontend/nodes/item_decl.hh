@@ -43,7 +43,7 @@ public:
     } decl_type;
     Item_decl() = delete;
 
-    Item_decl(const uint32_t& line_no, const bool& is_decl);
+    Item_decl(const uint32_t& lineno, const bool& is_decl);
 
     virtual bool get_is_decl(void) const { return is_decl; }
 
@@ -71,7 +71,7 @@ public:
 
     Item_stmt_decl() = delete;
 
-    Item_stmt_decl(const uint32_t& line_no, const basic_type& type);
+    Item_stmt_decl(const uint32_t& lineno, const basic_type& type);
 } Item_stmt_decl;
 
 /**
@@ -85,7 +85,7 @@ protected:
 public:
     Item_decl_var() = delete;
 
-    Item_decl_var(const uint32_t& line_no, Item_ident* const identifier, const bool& is_decl = true);
+    Item_decl_var(const uint32_t& lineno, Item_ident* const identifier, const bool& is_decl = true);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -103,7 +103,7 @@ protected:
 public:
     Item_decl_pointer() = delete;
 
-    Item_decl_pointer(const uint32_t& line_no, Item_ident_pointer* const identifier, const bool& is_decl = true);
+    Item_decl_pointer(const uint32_t& lineno, Item_ident_pointer* const identifier, const bool& is_decl = true);
 
     virtual Item_decl::decl_type get_decl_type(void) const override { return Item_decl::decl_type::POINTER; }
 
@@ -152,7 +152,7 @@ public:
 
     Item_decl_var_init() = delete;
 
-    Item_decl_var_init(const uint32_t& line_no, Item_ident* const identifier, Item_expr* const expression, const bool& is_const, const bool& is_decl = false);
+    Item_decl_var_init(const uint32_t& lineno, Item_ident* const identifier, Item_expr* const expression, const bool& is_const, const bool& is_decl = false);
 
     virtual ~Item_decl_var_init() override = default;
 } Item_decl_var_init;
@@ -168,7 +168,7 @@ protected:
 public:
     Item_decl_array() = delete;
 
-    Item_decl_array(const uint32_t& line_no, Item_ident_array* const identifier, const bool& is_decl = true);
+    Item_decl_array(const uint32_t& lineno, Item_ident_array* const identifier, const bool& is_decl = true);
 
     virtual Item_ident* get_identifier(void) const { return identifier; }
 
@@ -191,7 +191,7 @@ public:
     Item_decl_array_init() = delete;
 
     Item_decl_array_init(
-        const uint32_t& line_no,
+        const uint32_t& lineno,
         Item_ident_array* const identifier,
         Item_literal_array_init* const init_value,
         const bool& is_const,

@@ -20,33 +20,33 @@
 #include <sstream>
 #include <string>
 
-compiler::Item_stmt::Item_stmt(const uint32_t& line_no)
-    : Item_expr(line_no)
+compiler::Item_stmt::Item_stmt(const uint32_t& lineno)
+    : Item_expr(lineno)
 {
 }
 
 compiler::Item_stmt_assign::Item_stmt_assign(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_ident* const identifier,
     Item_expr* const expression)
-    : Item_stmt(line_no)
+    : Item_stmt(lineno)
     , identifier(identifier)
     , expression(expression)
 {
 }
 
-compiler::Item_stmt_eval::Item_stmt_eval(const uint32_t& line_no, Item_expr* const expression)
-    : Item_stmt(line_no)
+compiler::Item_stmt_eval::Item_stmt_eval(const uint32_t& lineno, Item_expr* const expression)
+    : Item_stmt(lineno)
     , expression(expression)
 {
 }
 
 compiler::Item_stmt_eif::Item_stmt_eif(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_expr* const condition,
     Item_stmt* const if_branch,
     Item_stmt* const else_branch)
-    : Item_stmt(line_no)
+    : Item_stmt(lineno)
     , condition(condition)
     , if_branch(if_branch)
     , else_branch(else_branch)
@@ -54,45 +54,45 @@ compiler::Item_stmt_eif::Item_stmt_eif(
 }
 
 compiler::Item_stmt_while::Item_stmt_while(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_expr* const condition,
     Item_stmt* const statement)
-    : Item_stmt(line_no)
+    : Item_stmt(lineno)
     , condition(condition)
     , statement(statement)
 {
 }
 
-compiler::Item_stmt_break::Item_stmt_break(const uint32_t& line_no)
-    : Item_stmt(line_no)
+compiler::Item_stmt_break::Item_stmt_break(const uint32_t& lineno)
+    : Item_stmt(lineno)
 {
 }
 
-compiler::Item_stmt_continue::Item_stmt_continue(const uint32_t& line_no)
-    : Item_stmt(line_no)
+compiler::Item_stmt_continue::Item_stmt_continue(const uint32_t& lineno)
+    : Item_stmt(lineno)
 {
 }
 
-compiler::Item_stmt_return::Item_stmt_return(const uint32_t& line_no, Item_expr* const expr)
-    : Item_stmt(line_no)
+compiler::Item_stmt_return::Item_stmt_return(const uint32_t& lineno, Item_expr* const expr)
+    : Item_stmt(lineno)
     , expr(expr)
 {
 }
 
-compiler::Item_stmt_postfix::Item_stmt_postfix(const uint32_t& line_no, Item_ident* const identifier, const binary_type& type)
-    : Item_stmt(line_no)
+compiler::Item_stmt_postfix::Item_stmt_postfix(const uint32_t& lineno, Item_ident* const identifier, const binary_type& type)
+    : Item_stmt(lineno)
     , identifier(identifier)
     , type(type)
 {
 }
 
-compiler::Item_block::Item_block(const uint32_t& line_no)
-    : Item_stmt(line_no)
+compiler::Item_block::Item_block(const uint32_t& lineno)
+    : Item_stmt(lineno)
 {
 }
 
-compiler::Item_stmt_void::Item_stmt_void(const uint32_t& line_no)
-    : Item_stmt(line_no)
+compiler::Item_stmt_void::Item_stmt_void(const uint32_t& lineno)
+    : Item_stmt(lineno)
 {
 }
 
@@ -194,7 +194,9 @@ compiler::Item_stmt_return::print_result(const uint32_t& indent, const bool& lea
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
     oss << "\033[4;96;49mNode:\033[0m Return statement" << std::endl;
-    oss << expr->print_result(indent + 2, true);
+    if (expr != nullptr) {
+        oss << expr->print_result(indent + 2, true);
+    }
 
     return oss.str();
 }

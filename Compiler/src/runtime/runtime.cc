@@ -25,15 +25,15 @@
 using namespace std::string_literals;
 using namespace std::experimental;
 
-std::vector<FILE*> compiler::process_input(const std::string& input)
+std::vector<std::string> compiler::process_input(const std::string& input)
 {
-    std::vector<FILE*> files;
+    std::vector<std::string> files;
 
     for (const auto& entry : filesystem::directory_iterator(input)) {
         const filesystem::path file_path = entry.path();
         if (file_path.extension().compare(".sy") == 0) {
             const std::string sy_name = file_path.string();
-            files.emplace_back(fopen(sy_name.data(), "r"));
+            files.emplace_back(sy_name);
         }
     }
 
@@ -72,7 +72,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
         base_path = input;
     } else {
         output_file.open(result["output"].as<std::string>(), std::ios::out);
-        input_file.emplace_back(fopen(input.data(), "r"));
+        input_file.emplace_back(input);
     }
 
     std::cout << "\033[4;90;107mTakanashi Compiler is running!!\033[0m" << std::endl;
@@ -82,7 +82,8 @@ void compiler::Compiler_runtime::run(void)
 {
     try {
         for (uint32_t i = 0; i < input_file.size(); i++) {
-            yyset_in(input_file[i]);
+            std::cout << "Reading " << input_file[i] << std::endl;
+            yyset_in(fopen(input_file[i].data(), "r"));
             yyset_lineno(1);
             yyparse();
             yylex_destroy();
@@ -97,8 +98,8 @@ void compiler::Compiler_runtime::run(void)
                 output_file << res;
                 output_file.flush();
                 output_file.close();
-                std::cout << res;
-                std::cout.flush();
+                //std::cout << res;
+                //std::cout.flush();
             }
         }
 

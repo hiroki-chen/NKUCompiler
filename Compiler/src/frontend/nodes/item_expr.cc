@@ -19,27 +19,32 @@
 #include <frontend/nodes/item_expr.hh>
 #include <sstream>
 
-compiler::Item_expr::Item_expr(const uint32_t& line_no)
-    : Item(line_no)
+compiler::Item_expr::Item_expr(const uint32_t& lineno)
+    : Item(lineno)
 {
 }
 
-compiler::Item_expr_cond::Item_expr_cond(const uint32_t& line_no, Item_expr* const item_expr)
-    : Item_expr(line_no)
+compiler::Item_expr_cond::Item_expr_cond(const uint32_t& lineno, Item_expr* const item_expr)
+    : Item_expr(lineno)
     , expr(item_expr)
 {
 }
 
-compiler::Item_expr_binary::Item_expr_binary(const uint32_t& line_no, const binary_type& type, Item_expr* const lhs, Item_expr* const rhs)
-    : Item_expr(line_no)
+compiler::Item_expr_comma::Item_expr_comma(const uint32_t& lineno)
+    : Item_expr(lineno)
+{
+}
+
+compiler::Item_expr_binary::Item_expr_binary(const uint32_t& lineno, const binary_type& type, Item_expr* const lhs, Item_expr* const rhs)
+    : Item_expr(lineno)
     , type(type)
     , lhs(lhs)
     , rhs(rhs)
 {
 }
 
-compiler::Item_expr_unary::Item_expr_unary(const uint32_t& line_no, const unary_type& type, Item_expr* const expr)
-    : Item_expr(line_no)
+compiler::Item_expr_unary::Item_expr_unary(const uint32_t& lineno, const unary_type& type, Item_expr* const expr)
+    : Item_expr(lineno)
     , type(type)
     , expr(expr)
 {
@@ -52,6 +57,18 @@ compiler::Item_expr_cond::print_result(const uint32_t& indent, const bool& leaf)
     print_indent(indent, leaf, oss);
     oss << "\033[4;96;49mNode:\033[0m Conditional Expression" << std::endl;
     oss << expr->print_result(indent + 2, true);
+    return oss.str();
+}
+
+std::string
+compiler::Item_expr_comma::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << "\033[4;96;49mNode:\033[0m Comma Expression" << std::endl;
+    for (uint32_t i = 0; i < expressions.size(); i++) {
+        oss << expressions[i]->print_result(indent + 2, i == expressions.size() - 1 ? true : false);
+    }
     return oss.str();
 }
 

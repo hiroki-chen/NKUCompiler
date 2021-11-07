@@ -44,7 +44,7 @@ public:
 
     Item_literal() = delete;
 
-    Item_literal(const uint32_t& line_no);
+    Item_literal(const uint32_t& lineno);
 
     virtual ~Item_literal() override = default;
 } Item_literal;
@@ -60,7 +60,7 @@ protected:
 public:
     Item_literal_numeric() = delete;
 
-    Item_literal_numeric(const uint32_t& line_no, const double& value);
+    Item_literal_numeric(const uint32_t& lineno, const double& value);
 
     virtual Item_literal::literal_type get_literal_type(void) const override = 0;
 
@@ -77,7 +77,7 @@ public:
 
     Item_literal_int() = delete;
 
-    Item_literal_int(const uint32_t& line_no, const int& value);
+    Item_literal_int(const uint32_t& lineno, const int& value);
 
     virtual ~Item_literal_int() override = default;
 } Item_literal_int;
@@ -92,7 +92,7 @@ public:
 
     Item_literal_real() = delete;
 
-    Item_literal_real(const uint32_t& line_no, const double& value);
+    Item_literal_real(const uint32_t& lineno, const double& value);
 
     virtual ~Item_literal_real() override = default;
 } Item_literal_real;
@@ -105,7 +105,7 @@ public:
 
     Item_literal_char() = delete;
 
-    Item_literal_char(const uint32_t& line_no, const char& value);
+    Item_literal_char(const uint32_t& lineno, const char& value);
 
     virtual ~Item_literal_char() override = default;
 } Item_literal_char;
@@ -121,7 +121,7 @@ public:
 
     Item_literal_string() = delete;
 
-    Item_literal_string(const uint32_t& line_no, const std::string& str);
+    Item_literal_string(const uint32_t& lineno, const std::string& str);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -147,7 +147,7 @@ public:
 
     Item_literal_array_init() = delete;
 
-    Item_literal_array_init(const uint32_t& line_no, Item_expr* const expression, const bool& is_numeric);
+    Item_literal_array_init(const uint32_t& lineno, Item_expr* const expression, const bool& is_numeric);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
