@@ -19,8 +19,8 @@
 
 #include <frontend/symbol_table/symbol.hh>
 
-#include <unordered_map>
 #include <list>
+#include <unordered_map>
 
 // TODO: Implement our symbol table according to LAB5.
 
@@ -28,7 +28,7 @@ namespace compiler {
 
 using symbol_table_type = std::unordered_map<std::string, Symbol*>;
 
-typedef class Symbol_block{
+typedef class Symbol_block {
 protected:
     symbol_table_type block;
 
@@ -36,7 +36,6 @@ public:
     virtual Symbol* find_symbol(const std::string& name);
     virtual void add_symbol(const std::string& name, Symbol* const symbol);
 } Symbol_block;
-
 
 /**
  * @brief Class for symbol table.
@@ -50,13 +49,17 @@ protected:
     std::list<Symbol_block*> symbol_table;
 
 public:
-    ~Symbol_table() { for(auto &cur : symbol_table) delete cur; }
+    virtual ~Symbol_table()
+    {
+        for (auto& cur : symbol_table)
+            delete cur;
+    }
 
-    virtual int get_top_scope_uuid() {return (int)symbol_table.size() - 1; }
+    virtual int get_top_scope_uuid() { return (int)symbol_table.size() - 1; }
 
     virtual int get_last_find_uuid(void) { return last_uuid; }
 
-    virtual Symbol_block* get_spec_block(int index);
+    virtual Symbol_block* get_spec_block(const uint32_t& index);
 
     virtual std::list<Symbol_block*> get_symbol_table(void) { return symbol_table; }
 
@@ -66,7 +69,11 @@ public:
 
     virtual void enter_scope() { symbol_table.push_front(new Symbol_block()); }
 
-    virtual void leave_scope() { delete (*symbol_table.begin()); symbol_table.pop_back(); }
+    virtual void leave_scope()
+    {
+        delete (*symbol_table.begin());
+        symbol_table.pop_back();
+    }
 } Symbol_table;
 } // namespace compiler
 
