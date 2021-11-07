@@ -15,6 +15,7 @@
     #include <runtime/runtime.hh>
     #include <frontend/nodes/item_all.hh>
     #include <frontend/parser/parser.hh>
+    #include <sylib.hh>
 
     #include <iostream>
     #include <fstream>
@@ -139,6 +140,9 @@
 %type <raw_string> ID STRING
 %type <raw_number> HEX DECIMAL OCTAL
 %type <raw_char> CHAR
+
+%precedence THEN
+%precedence ELSE
 
 %start CompUnit
 %%
@@ -304,7 +308,7 @@ ReturnStmt: RETURN SEMICOLON            { $$ = new compiler::Item_stmt_return(yy
           | RETURN Exp SEMICOLON        { $$ = new compiler::Item_stmt_return(yyget_lineno(), $2); }
           ;
 
-eIfStmt: IF LPARENTHESIS Exp RPARENTHESIS Stmt                 { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, new compiler::Item_stmt_void(yyget_lineno())); }
+eIfStmt: IF LPARENTHESIS Exp RPARENTHESIS Stmt %prec THEN      { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, new compiler::Item_stmt_void(yyget_lineno())); }
        | IF LPARENTHESIS Exp RPARENTHESIS Stmt ELSE Stmt       { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, $7); }
        ;
 
@@ -379,8 +383,8 @@ EqExp: RelExp EQ RelExp             { $$ = new compiler::Item_expr_binary(yyget_
 
 RelExp: RelExp GEQ RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::GE_TYPE, $1, $3); }
       | RelExp LEQ RelExp         { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LE_TYPE, $1, $3); }
-      | RelExp G RelExp          { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::G_TYPE, $1, $3); }
-      | RelExp L RelExp          { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::L_TYPE, $1, $3); }
+      | RelExp G RelExp           { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::G_TYPE, $1, $3); }
+      | RelExp L RelExp           { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::L_TYPE, $1, $3); }
       | AddExp
       ;
 
@@ -398,7 +402,7 @@ BitXorExp: BitAndExp BIT_XOR BitAndExp        { $$ = new compiler::Item_expr_bin
         | BitAndExp
         ;
 
-BitAndExp: EqExp BIT_AND EqExp              { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
+BitAndExp: EqExp BIT_AND EqExp               { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
          | BitAndExp BIT_AND EqExp           { $$ = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, $1, $3); }
          | EqExp
          ;
