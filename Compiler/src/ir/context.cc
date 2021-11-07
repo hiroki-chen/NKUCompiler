@@ -19,29 +19,21 @@
 
 compiler::ir::IRContext::IRContext()
 {
-    symbol_table = new Symbol_table(1ul);
+    symbol_table.enter_scope();
 }
 
 void compiler::ir::IRContext::enter_scope(void)
 {
-    if (symbol_table->get_uuid() == 0) {
+    if (symbol_table.get_top_scope_uuid() == -1) {
         throw fatal_error("Error: The global symbol table is not found!");
     }
-
-    // Set the correct relation between current and new symbol table.
-    Symbol_table* const child = new Symbol_table(symbol_table->get_uuid() + 1);
-    child->set_parent(symbol_table);
-    symbol_table->set_child(child);
-    symbol_table = symbol_table->get_child();
+    symbol_table.enter_scope();
 }
 
 void compiler::ir::IRContext::leave_scope(void)
 {
-    if (symbol_table->get_uuid() == 1) {
+    if (symbol_table.get_top_scope_uuid() == 0) {
         throw fatal_error("Error: The compiler is trying to leave the global scope!");
     }
-
-    symbol_table = symbol_table->get_parent();
-    // No longer needed.
-    delete symbol_table->get_child();
+    symbol_table.leave_scope();
 }

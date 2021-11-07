@@ -20,13 +20,23 @@
 #include <frontend/symbol_table/symbol.hh>
 
 #include <unordered_map>
-#include <vector>
+#include <list>
 
 // TODO: Implement our symbol table according to LAB5.
 
 namespace compiler {
 
 using symbol_table_type = std::unordered_map<std::string, Symbol*>;
+
+typedef class Symbol_block{
+protected:
+    symbol_table_type block;
+
+public:
+    virtual Symbol* find_symbol(const std::string& name);
+    virtual void add_symbol(const std::string& name, Symbol* const symbol);
+} Symbol_block;
+
 
 /**
  * @brief Class for symbol table.
@@ -36,35 +46,27 @@ using symbol_table_type = std::unordered_map<std::string, Symbol*>;
  */
 typedef class Symbol_table {
 protected:
-    const uint32_t uuid;
-
-    // The main table for entry storage.
-    symbol_table_type symbol_table;
-
-    Symbol_table* parent_table;
-
-    Symbol_table* child_table;
-
-    virtual bool exist(const std::string& name);
+    int last_uuid;
+    std::list<Symbol_block*> symbol_table;
 
 public:
-    Symbol_table(const uint32_t& uuid);
+    ~Symbol_table() { for(auto &cur : symbol_table) delete cur; }
 
-    virtual uint32_t get_uuid(void) { return uuid; }
+    virtual int get_top_scope_uuid() {return (int)symbol_table.size() - 1; }
 
-    virtual symbol_table_type get_symbol_table(void) { return symbol_table; }
+    virtual int get_last_find_uuid(void) { return last_uuid; }
 
-    virtual Symbol* find_symbol(const std::string& name, const bool& recursive = true);
+    virtual Symbol_block* get_spec_block(int index);
+
+    virtual std::list<Symbol_block*> get_symbol_table(void) { return symbol_table; }
+
+    virtual Symbol* find_symbol(const std::string& name);
 
     virtual void add_symbol(const std::string& name, Symbol* const symbol);
 
-    virtual void set_child(Symbol_table* const child) { child_table = child; }
+    virtual void enter_scope() { symbol_table.push_front(new Symbol_block()); }
 
-    virtual void set_parent(Symbol_table* const parent) { parent_table = parent; }
-
-    virtual Symbol_table* get_child(void) { return child_table; }
-
-    virtual Symbol_table* get_parent(void) { return parent_table; }
+    virtual void leave_scope() { delete (*symbol_table.begin()); symbol_table.pop_back(); }
 } Symbol_table;
 } // namespace compiler
 

@@ -33,7 +33,7 @@ namespace compiler::ir {
 typedef class IRContext {
 protected:
     // The context will always maintain the deepmost symbol table.
-    Symbol_table* symbol_table;
+    Symbol_table symbol_table;
 
     // Loop labels.
     std::stack<std::string> loop_label;
@@ -53,7 +53,7 @@ public:
     virtual void leave_scope(void);
 
     // The outside functions and variables may need symbol_table and invoke its interfaces.
-    Symbol_table* get_symbol_table(void) const { return symbol_table; }
+    Symbol_table get_symbol_table(void) const { return symbol_table; }
 } IRContext;
 } // namespace compiler::ir.
 

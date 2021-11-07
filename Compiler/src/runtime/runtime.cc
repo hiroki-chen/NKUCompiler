@@ -21,24 +21,23 @@
 
 #include <algorithm>
 /* For filesystem. */
-#include <experimental/filesystem>
+#include <filesystem>
 
 using namespace std::string_literals;
-using namespace std::experimental;
 
 std::vector<std::string> compiler::process_input(const std::string& input)
 {
     std::vector<std::string> files;
 
-    for (const auto& entry : filesystem::directory_iterator(input)) {
-        const filesystem::path file_path = entry.path();
+    for (const auto& entry : std::filesystem::directory_iterator(input)) {
+        const std::filesystem::path file_path = entry.path();
         if (file_path.extension().compare(".sy") == 0) {
             const std::string sy_name = file_path.string();
             files.emplace_back(sy_name);
         }
     }
 
-    filesystem::create_directory(input + "/output");
+    std::filesystem::create_directory(input + "/output");
 
     std::sort(files.begin(), files.end());
     return files;
