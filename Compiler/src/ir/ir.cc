@@ -14,24 +14,5 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef UTILS_HH
-#define UTILS_HH
+#include <ir/ir.hh>
 
-#include <frontend/nodes/item_ident.hh>
-#include <common/types.hh>
-
-#include <string>
-
-namespace compiler {
-std::string to_string(const compiler::basic_type& type);
-
-std::string to_string(const compiler::unary_type& type);
-
-std::string to_string(const compiler::binary_type& type);
-
-void print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os);
-
-bool is_dir(const std::string& file_path);
-} // namespace compiler
-
-#endif

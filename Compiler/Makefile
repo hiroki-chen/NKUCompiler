@@ -2,6 +2,7 @@
 FLEX := flex
 YACC := yacc		# or bison
 UNIX := $(shell uname)
+MODE = DEBUG
 
 INCLUDE := ./include
 SRC_DIR := ./src
@@ -13,23 +14,26 @@ SRC 	:= $(shell find $(SRC_DIR) -regex ".*.cc")
 LEXER   := $(shell find $(SRC_DIR) -regex ".*.l")
 PARSER	:= $(shell find $(SRC_DIR) -regex ".*.ypp")
 OBJ 	:= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
-SOBJ    := $(patsubst $(BUILD_DIR)/rumtime/%.o, $(BUILD_DIR)/runtime/%.so, $(OBJ))
 
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 ifeq ($(UNIX), "Linux")
-	CXXFLAGS := -std=c++17 -I$(INCLUDE) -g -Wextra -Werror -O2 \
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror \
 				-Wno-sign-compare \
 				-Wno-unused-parameter
 else
-	CXXFLAGS := -std=c++17 -I$(INCLUDE) -g -Wextra -Werror -O2 \
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror \
 				-Wno-sign-compare \
 				-Wno-unused-parameter \
 				-Wno-nullability-completeness \
 				-Wno-register
 endif
 
-LINK_FLAG := -shared -fPIC
+ifeq ($(MODE), "DEBUG")
+	CXXFLAGS += -O0 -g
+else
+	CXXFLAGS += -O2
+endif
 
 .phony: mk all clean push
 
@@ -45,12 +49,16 @@ ifeq ("$(wildcard $(BUILD_DIR))", "")
 	@mkdir -p $(BUILD_DIR)/shared
 endif
 
-$(SHARED): $(SOBJ)
-	@$(CXX) $(LINK_FLAG) $^ -o $@
+$(SHARED): $(BUILD_DIR)/runtime/runtime.o
+	@$(CXX) -shared $^ -o $@
 
 $(TARGET): mk $(OBJ) $(SHARED)
 	@$(CXX) -o $(TARGET) $(OBJ) -L$(BUILD_DIR)/shared -lruntime
 	@echo "LINKER => $(TARGET)"
+
+$(BUILD_DIR)/runtime/%.o: $(SRC_DIR)/runtime/%.cc
+	@$(CXX) $(CXXFLAGS) -fPIC -c $< -o $@
+	@echo "CXX => $@"
 
 # Compile to object files.
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc

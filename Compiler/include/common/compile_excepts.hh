@@ -103,6 +103,19 @@ public:
     const char* what() const noexcept override { return information.data(); }
 } fatal_error;
 
+typedef class file_not_found : public std::exception {
+protected:
+    const std::string information;
+
+public:
+    explicit file_not_found(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what() const noexcept override { return information.data(); }
+} file_not_found;
+
 typedef class unimplemented_error : public std::exception {
 protected:
     const std::string information;

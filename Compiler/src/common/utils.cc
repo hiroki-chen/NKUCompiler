@@ -17,6 +17,7 @@
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
 #include <common/utils.hh>
+#include <sys/stat.h>
 
 #include <iostream>
 
@@ -142,4 +143,17 @@ void compiler::print_indent(const uint32_t& indent, const bool& leaf, std::ostre
     } else {
         os << termcolor::bright_green << (std::string)"├──" << termcolor::reset;
     }
+}
+
+bool compiler::is_dir(const std::string& file_name)
+{
+    struct stat status;
+
+    if (stat(file_name.data(), &status) == 0) {
+        if (S_ISDIR(status.st_mode)) {
+            return true;
+        }
+    }
+    
+    return false;
 }
