@@ -1,4 +1,5 @@
-############# DRAFT. 
+############# DRAFT.
+CXX  := clang++
 FLEX := flex
 YACC := yacc		# or bison
 UNIX := $(shell uname)
@@ -8,7 +9,6 @@ INCLUDE := ./include
 SRC_DIR := ./src
 BUILD_DIR := ./build
 TARGET  := $(BUILD_DIR)/compiler.bin
-SHARED  := $(BUILD_DIR)/shared/libruntime.so
 # Invoke shell command to find all source files recursively.
 SRC 	:= $(shell find $(SRC_DIR) -regex ".*.cc")
 LEXER   := $(shell find $(SRC_DIR) -regex ".*.l")
@@ -28,6 +28,8 @@ else
 				-Wno-nullability-completeness \
 				-Wno-register
 endif
+
+LD_FLAG := -lstdc++fs
 
 ifeq ($(MODE), "DEBUG")
 	CXXFLAGS += -O0 -g
@@ -49,16 +51,9 @@ ifeq ("$(wildcard $(BUILD_DIR))", "")
 	@mkdir -p $(BUILD_DIR)/shared
 endif
 
-$(SHARED): $(BUILD_DIR)/runtime/runtime.o
-	@$(CXX) -shared $^ -o $@
-
-$(TARGET): mk $(OBJ) $(SHARED)
-	@$(CXX) -o $(TARGET) $(OBJ) -L$(BUILD_DIR)/shared -lruntime
+$(TARGET): mk $(OBJ)
+	$(CXX) -o $(TARGET) $(OBJ) $(LD_FLAG)
 	@echo "LINKER => $(TARGET)"
-
-$(BUILD_DIR)/runtime/%.o: $(SRC_DIR)/runtime/%.cc
-	@$(CXX) $(CXXFLAGS) -fPIC -c $< -o $@
-	@echo "CXX => $@"
 
 # Compile to object files.
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc
