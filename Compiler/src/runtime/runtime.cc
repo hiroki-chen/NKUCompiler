@@ -20,23 +20,24 @@
 #include <runtime/runtime.hh>
 
 /* For filesystem. */
-#include <filesystem>
+#include <experimental/filesystem>
 
 using namespace std::string_literals;
+using namespace std::experimental;
 
 std::vector<FILE*> compiler::process_input(const std::string& input)
 {
     std::vector<FILE*> files;
 
-    for (const auto& entry : std::filesystem::directory_iterator(input)) {
-        files.emplace_back(fopen(entry.path().data(), "r"));
+    for (const auto& entry : filesystem::directory_iterator(input)) {
+        const filesystem::path file_path = entry.path();
+        if (file_path.extension().compare(".sy") == 0) {
+            const std::string sy_name = file_path.string();
+            files.emplace_back(fopen(sy_name.data(), "r"));
+        }
     }
 
-    std::ostringstream oss;
-    oss << "mkdir -p " << input << "/output";
-    if (system(oss.str().data())) {
-        throw compiler::fatal_error("Cannot run the command.");
-    }
+    filesystem::create_directory(input + "/output");
 
     return files;
 }
