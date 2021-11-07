@@ -24,12 +24,16 @@ compiler::Symbol* compiler::Symbol_table::find_symbol(const std::string& name)
     // Iterate over the current table and the parent table.
     last_uuid = symbol_table.size() - 1;
     Symbol* result = nullptr;
-    for(auto & cur : symbol_table){
-        result = cur -> find_symbol(name);
-        if(result) break;
+    for (auto& cur : symbol_table) {
+        result = cur->find_symbol(name);
+        if (result != nullptr) {
+            break;
+        }
         last_uuid--;
     }
-    if(result) return result;
+    if (result != nullptr) {
+        return result;
+    }
 
     // Not found. Raise an error.
     std::ostringstream oss;
@@ -41,20 +45,22 @@ compiler::Symbol* compiler::Symbol_table::find_symbol(const std::string& name)
 // TODO: Implement it.
 void compiler::Symbol_table::add_symbol(const std::string& name, Symbol* const symbol)
 {
-    if(!symbol_table.size()) {
+    if (!symbol_table.size()) {
         throw compiler::fatal_error("Error: The global symbol table is not found!");
     }
-    (*symbol_table.begin()) -> add_symbol(name, symbol);
+    (*symbol_table.begin())->add_symbol(name, symbol);
 }
 
-compiler::Symbol_block* compiler::Symbol_table::get_spec_block(int index) 
+compiler::Symbol_block* compiler::Symbol_table::get_spec_block(const uint32_t& i)
 {
-    index = symbol_table.size() - index;
-    if(index <= 0) {
+    uint32_t index = symbol_table.size() - i;
+    if (index <= 0) {
         throw compiler::fatal_error("Error: The global symbol table is not found!");
     }
     auto iter = symbol_table.begin();
-    for(int i = 0;i < index;i++) iter++;
+    for (uint32_t i = 0; i < index; i++) {
+        iter++;
+    }
     return *iter;
 }
 
@@ -70,7 +76,7 @@ compiler::Symbol* compiler::Symbol_block::find_symbol(const std::string& name)
 
 void compiler::Symbol_block::add_symbol(const std::string& name, Symbol* const symbol)
 {
-    if(find_symbol(name)) {
+    if (find_symbol(name)) {
         throw compiler::redefined_symbol("Symbol " + name + " has been already defined.");
     } else {
         block[name] = symbol;

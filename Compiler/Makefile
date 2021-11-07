@@ -41,7 +41,6 @@ else
 endif
 
 .phony: mk all clean push
-
 # Create directories for object files.
 mk:
 ifeq ("$(wildcard $(BUILD_DIR))", "")
@@ -54,7 +53,7 @@ ifeq ("$(wildcard $(BUILD_DIR))", "")
 	@mkdir -p $(BUILD_DIR)/shared
 endif
 
-$(TARGET): mk $(OBJ) $(SYSY)
+$(TARGET): mk $(OBJ) $(SYSY) 
 	@$(CXX) -o $(TARGET) $(OBJ) $(LD_FLAG) 
 	@echo "LINKER => $(TARGET)"
 
