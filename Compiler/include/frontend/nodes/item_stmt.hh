@@ -44,7 +44,7 @@ public:
 
     Item_stmt() = delete;
 
-    Item_stmt(const uint32_t& line_no);
+    Item_stmt(const uint32_t& lineno);
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::STMT_TYPE; }
 
@@ -67,7 +67,7 @@ public:
     Item_stmt_assign() = delete;
 
     Item_stmt_assign(
-        const uint32_t& line_no,
+        const uint32_t& lineno,
         Item_ident* const identifier,
         Item_expr* const expression);
 
@@ -96,12 +96,12 @@ public:
     /**
      * @brief Construct a new Item_stmt_eif object
      * 
-     * @param line_no 
+     * @param lineno 
      * @param condition 
      * @param if_branch 
      * @param else_branch 
      */
-    Item_stmt_eif(const uint32_t& line_no, Item_expr* const condition, Item_stmt* const if_branch, Item_stmt* const else_branch);
+    Item_stmt_eif(const uint32_t& lineno, Item_expr* const condition, Item_stmt* const if_branch, Item_stmt* const else_branch);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::EIF_STMT; }
 
@@ -123,7 +123,7 @@ protected:
 public:
     Item_stmt_while() = delete;
 
-    Item_stmt_while(const uint32_t& line_no, Item_expr* const condition, Item_stmt* const statement);
+    Item_stmt_while(const uint32_t& lineno, Item_expr* const condition, Item_stmt* const statement);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::WHILE_STMT; }
 
@@ -140,7 +140,7 @@ typedef class Item_stmt_break final : public Item_stmt {
 public:
     Item_stmt_break() = delete;
 
-    Item_stmt_break(const uint32_t& line_no);
+    Item_stmt_break(const uint32_t& lineno);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::BREAK_STMT; }
 
@@ -157,7 +157,7 @@ typedef class Item_stmt_continue final : public Item_stmt {
 public:
     Item_stmt_continue() = delete;
 
-    Item_stmt_continue(const uint32_t& line_no);
+    Item_stmt_continue(const uint32_t& lineno);
 
     virtual Item_stmt::stmt_type get_stmt_type() const override { return Item_stmt::stmt_type::CONTINUE_STMT; }
 
@@ -177,7 +177,7 @@ protected:
 public:
     Item_stmt_return() = delete;
 
-    Item_stmt_return(const uint32_t& line_no, Item_expr* const expr = nullptr /* for void function, it can be null*/);
+    Item_stmt_return(const uint32_t& lineno, Item_expr* const expr = nullptr /* for void function, it can be null*/);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::RETURN_STMT; }
 
@@ -194,7 +194,7 @@ typedef class Item_stmt_void final : public Item_stmt {
 public:
     Item_stmt_void() = delete;
 
-    Item_stmt_void(const uint32_t& line_no);
+    Item_stmt_void(const uint32_t& lineno);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::VOID_STMT; }
 
@@ -214,7 +214,7 @@ public:
 
     Item_stmt_eval() = delete;
 
-    Item_stmt_eval(const uint32_t& line_no, Item_expr* const expression);
+    Item_stmt_eval(const uint32_t& lineno, Item_expr* const expression);
 
     virtual ~Item_stmt_eval() override = default;
 } Item_stmt_eval;
@@ -232,7 +232,7 @@ public:
 
     Item_stmt_postfix() = delete;
 
-    Item_stmt_postfix(const uint32_t& line_no, Item_ident* const identifier, const binary_type& type);
+    Item_stmt_postfix(const uint32_t& lineno, Item_ident* const identifier, const binary_type& type);
 
     virtual ~Item_stmt_postfix() override = default;
 } Item_stmt_postfix;
@@ -248,7 +248,7 @@ protected:
 public:
     Item_block() = delete;
 
-    Item_block(const uint32_t& line_no);
+    Item_block(const uint32_t& lineno);
 
     virtual void add_item(Item_stmt* const statement);
 

@@ -78,7 +78,7 @@ private:
 
     uint32_t opt_level = 0;
 
-    std::vector<FILE*> input_file;
+    std::vector<std::string> input_file;
 
     std::ofstream output_file;
 
@@ -98,7 +98,7 @@ public:
     ~Compiler_runtime(); // Customized destructor. Should do some garbage cleanup.
 } Compiler_runtime;
 
-std::vector<FILE*> process_input(const std::string& input);
+std::vector<std::string> process_input(const std::string& input);
 } // namespace compiler
 
 #endif

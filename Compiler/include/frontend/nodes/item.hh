@@ -33,7 +33,7 @@ namespace compiler {
  */
 typedef class Item {
 protected:
-    const uint32_t line_no;
+    const uint32_t lineno;
 
 public:
     /**
@@ -54,13 +54,13 @@ public:
 
     Item(const Item& item) = delete;
 
-    Item(const uint32_t& line_no);
+    Item(const uint32_t& lineno);
 
     virtual Item::type get_type(void) const = 0;
 
     //virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const { return; }
 
-    virtual uint32_t get_line_no(void) const { return line_no; }
+    virtual uint32_t get_lineno(void) const { return lineno; }
     
     /**
      * @brief Prints the the parse result as an abstract syntax tree.
@@ -86,7 +86,7 @@ public:
 
     Item_root() = delete;
 
-    Item_root(const uint32_t& line_no);
+    Item_root(const uint32_t& lineno);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 

@@ -20,13 +20,13 @@
 #include <sstream>
 #include <string>
 
-compiler::Item::Item(const uint32_t& line_no)
-    : line_no(line_no)
+compiler::Item::Item(const uint32_t& lineno)
+    : lineno(lineno)
 {
 }
 
-compiler::Item_root::Item_root(const uint32_t& line_no)
-    : Item(line_no)
+compiler::Item_root::Item_root(const uint32_t& lineno)
+    : Item(lineno)
 {
 }
 

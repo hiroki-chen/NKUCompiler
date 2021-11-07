@@ -45,7 +45,7 @@ public:
 
     Item_func_call_list() = delete;
 
-    Item_func_call_list(const uint32_t& line_no);
+    Item_func_call_list(const uint32_t& lineno);
 
     virtual ~Item_func_call_list() override = default;
 } Item_func_call_list;
@@ -67,7 +67,7 @@ public:
 
     Item_func_call() = delete;
 
-    Item_func_call(const uint32_t& line_no, Item_ident* const identifier, Item_func_call_list* const arguments);
+    Item_func_call(const uint32_t& lineno, Item_ident* const identifier, Item_func_call_list* const arguments);
 
     virtual ~Item_func_call() override = default;
 } Item_func_call;
@@ -89,7 +89,7 @@ public:
 
     Item_func_def_arg() = delete;
 
-    Item_func_def_arg(const uint32_t& line_no, const basic_type& type, Item_ident* const identifier);
+    Item_func_def_arg(const uint32_t& lineno, const basic_type& type, Item_ident* const identifier);
 
     virtual ~Item_func_def_arg() override = default;
 } Item_func_def_arg;
@@ -101,7 +101,7 @@ protected:
 public:
     Item_func_def_list() = delete;
 
-    Item_func_def_list(const uint32_t& line_no);
+    Item_func_def_list(const uint32_t& lineno);
 
     virtual void add_arg(Item_func_def_arg* const argument);
 
@@ -127,7 +127,7 @@ public:
 
     Item_func_def() = delete;
 
-    Item_func_def(const uint32_t& line_no,
+    Item_func_def(const uint32_t& lineno,
         const basic_type& return_type,
         Item_ident* const identifier,
         Item_func_def_list* const parameter,

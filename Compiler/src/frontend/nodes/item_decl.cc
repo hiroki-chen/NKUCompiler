@@ -19,67 +19,67 @@
 #include <frontend/nodes/item_decl.hh>
 #include <sstream>
 
-compiler::Item_decl::Item_decl(const uint32_t& line_no, const bool& is_decl)
-    : Item(line_no)
+compiler::Item_decl::Item_decl(const uint32_t& lineno, const bool& is_decl)
+    : Item(lineno)
     , is_decl(is_decl)
 {
 }
 
-compiler::Item_stmt_decl::Item_stmt_decl(const uint32_t& line_no, const basic_type& type)
-    : Item_stmt(line_no)
+compiler::Item_stmt_decl::Item_stmt_decl(const uint32_t& lineno, const basic_type& type)
+    : Item_stmt(lineno)
     , type(type)
 {
 }
 
-compiler::Item_decl_var::Item_decl_var(const uint32_t& line_no, Item_ident* const identifier, const bool& is_decl)
-    : Item_decl(line_no, is_decl)
+compiler::Item_decl_var::Item_decl_var(const uint32_t& lineno, Item_ident* const identifier, const bool& is_decl)
+    : Item_decl(lineno, is_decl)
     , identifier(identifier)
 {
 }
 
-compiler::Item_decl_array::Item_decl_array(const uint32_t& line_no, Item_ident_array* const identifier, const bool& is_decl)
-    : Item_decl(line_no, is_decl)
+compiler::Item_decl_array::Item_decl_array(const uint32_t& lineno, Item_ident_array* const identifier, const bool& is_decl)
+    : Item_decl(lineno, is_decl)
     , identifier(identifier)
 {
 }
 
-compiler::Item_decl_pointer::Item_decl_pointer(const uint32_t& line_no, Item_ident_pointer* const identifier, const bool& is_decl)
-    : Item_decl(line_no, is_decl)
+compiler::Item_decl_pointer::Item_decl_pointer(const uint32_t& lineno, Item_ident_pointer* const identifier, const bool& is_decl)
+    : Item_decl(lineno, is_decl)
     , identifier(identifier)
 {
 }
 
 compiler::Item_decl_pointer_init::Item_decl_pointer_init(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_ident_pointer* const identifier,
     Item_expr* const expression,
     const bool& is_const,
     const bool& is_decl)
-    : Item_decl_pointer(line_no, identifier, is_decl)
+    : Item_decl_pointer(lineno, identifier, is_decl)
     , expression(expression)
     , is_const(is_const)
 {
 }
 
 compiler::Item_decl_var_init::Item_decl_var_init(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_ident* const identifier,
     Item_expr* const expression,
     const bool& is_const,
     const bool& is_decl)
-    : Item_decl_var(line_no, identifier, is_decl)
+    : Item_decl_var(lineno, identifier, is_decl)
     , expression(expression)
     , is_const(is_const)
 {
 }
 
 compiler::Item_decl_array_init::Item_decl_array_init(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_ident_array* const identifier,
     Item_literal_array_init* const init_value,
     const bool& is_const,
     const bool& is_decl)
-    : Item_decl_array(line_no, identifier, is_decl)
+    : Item_decl_array(lineno, identifier, is_decl)
     , init_value(init_value)
     , is_const(is_const)
 {

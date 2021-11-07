@@ -22,43 +22,43 @@
 #include <sstream>
 #include <string>
 
-compiler::Item_literal::Item_literal(const uint32_t& line_no)
-    : Item_expr(line_no)
+compiler::Item_literal::Item_literal(const uint32_t& lineno)
+    : Item_expr(lineno)
 {
 }
 
-compiler::Item_literal_numeric::Item_literal_numeric(const uint32_t& line_no, const double& value)
-    : Item_literal(line_no)
+compiler::Item_literal_numeric::Item_literal_numeric(const uint32_t& lineno, const double& value)
+    : Item_literal(lineno)
     , value(value)
 {
 }
 
-compiler::Item_literal_int::Item_literal_int(const uint32_t& line_no, const int& value)
-    : Item_literal_numeric(line_no, (double)value)
+compiler::Item_literal_int::Item_literal_int(const uint32_t& lineno, const int& value)
+    : Item_literal_numeric(lineno, (double)value)
 {
 }
 
-compiler::Item_literal_real::Item_literal_real(const uint32_t& line_no, const double& value)
-    : Item_literal_numeric(line_no, (double)value)
+compiler::Item_literal_real::Item_literal_real(const uint32_t& lineno, const double& value)
+    : Item_literal_numeric(lineno, (double)value)
 {
 }
 
-compiler::Item_literal_char::Item_literal_char(const uint32_t& line_no, const char& value)
-    : Item_literal_numeric(line_no, (double)value)
+compiler::Item_literal_char::Item_literal_char(const uint32_t& lineno, const char& value)
+    : Item_literal_numeric(lineno, (double)value)
 {
 }
 
-compiler::Item_literal_string::Item_literal_string(const uint32_t& line_no, const std::string& str)
-    : Item_literal(line_no)
+compiler::Item_literal_string::Item_literal_string(const uint32_t& lineno, const std::string& str)
+    : Item_literal(lineno)
     , str(str)
 {
 }
 
 compiler::Item_literal_array_init::Item_literal_array_init(
-    const uint32_t& line_no,
+    const uint32_t& lineno,
     Item_expr* const expression,
     const bool& is_numeric)
-    : Item_literal(line_no)
+    : Item_literal(lineno)
     , expression(expression)
     , is_numeric(is_numeric)
 {
@@ -114,7 +114,10 @@ compiler::Item_literal_array_init::print_result(const uint32_t& indent, const bo
     std::stringstream oss;
     print_indent(indent, leaf, oss);
     oss << "\033[4;96;49mNode:\033[0m Literal Array Init" << std::endl;
-    oss << expression->print_result(indent + 2, false) << std::endl;
+    
+    if (expression != nullptr) {
+        oss << expression->print_result(indent + 2, false) << std::endl;
+    }
 
     for (uint32_t i = 0; i < value_list.size(); i++) {
         oss << value_list[i]->print_result(indent + 2, i == value_list.size() - 1) ;

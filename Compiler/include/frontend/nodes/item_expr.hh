@@ -17,8 +17,8 @@
 #ifndef ITEM_EXPR_HH
 #define ITEM_EXPR_HH
 
-#include <frontend/nodes/item.hh>
 #include <common/types.hh>
+#include <frontend/nodes/item.hh>
 
 namespace compiler {
 
@@ -33,6 +33,7 @@ public:
         UNARY_TYPE,
         BINARY_TYPE,
         COND_TYPE,
+        COMMA_TYPE,
         LITERAL_TYPE,
         IDENTIFIER_TYPE,
         CALL_LIST_TYPE,
@@ -44,7 +45,7 @@ public:
 
     Item_expr() = delete;
 
-    Item_expr(const uint32_t& line_no);
+    Item_expr(const uint32_t& lineno);
 
     virtual Item_expr::expr_type get_expr_type(void) const = 0;
 
@@ -68,12 +69,30 @@ public:
 
     Item_expr_cond() = delete;
 
-    Item_expr_cond(const uint32_t& line_no, Item_expr* const expr);
+    Item_expr_cond(const uint32_t& lineno, Item_expr* const expr);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_expr_cond() override = default;
 } Item_expr_cond;
+
+typedef class Item_expr_comma final : public Item_expr {
+protected:
+    std::vector<Item_expr*> expressions;
+
+public:
+    Item_expr_comma() = delete;
+
+    Item_expr_comma(const uint32_t& lineno);
+
+    virtual void add_expression(Item_expr* const expression) { expressions.emplace_back(expression); };
+
+    virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::COMMA_TYPE; }
+
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+
+    virtual ~Item_expr_comma() override = default;
+} Item_expr_comma;
 
 /**
  * @brief Class for binary expressions. 
@@ -86,15 +105,15 @@ protected:
     Item_expr* const lhs;
 
     Item_expr* const rhs;
-public:
 
+public:
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::BINARY_TYPE; }
 
     virtual binary_type get_binary_type(void) const { return type; }
 
     Item_expr_binary() = delete;
 
-    Item_expr_binary(const uint32_t& line_no, const binary_type& type, Item_expr* const lhs, Item_expr* const rhs);
+    Item_expr_binary(const uint32_t& lineno, const binary_type& type, Item_expr* const lhs, Item_expr* const rhs);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -106,6 +125,7 @@ protected:
     const unary_type type;
 
     Item_expr* const expr;
+
 public:
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::UNARY_TYPE; }
 
@@ -113,7 +133,7 @@ public:
 
     Item_expr_unary() = delete;
 
-    Item_expr_unary(const uint32_t& line_no, const unary_type& type, Item_expr* const expr);
+    Item_expr_unary(const uint32_t& lineno, const unary_type& type, Item_expr* const expr);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
