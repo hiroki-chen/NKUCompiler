@@ -32,6 +32,11 @@ std::string to_string(const compiler::binary_type& type);
 void print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os);
 
 bool is_dir(const std::string& file_path);
+
+// For the parser?
+void handle_lib_put(const std::string& func_name, const int& value);
+
+int handle_lib_get(const std::string& func_name);
 } // namespace compiler
 
 #endif

@@ -101,8 +101,6 @@ void compiler::Compiler_runtime::run(void)
                 output_file << res;
                 output_file.flush();
                 output_file.close();
-                //std::cout << res;
-                //std::cout.flush();
             }
         }
 

@@ -5,31 +5,34 @@ YACC := yacc		# or bison
 UNIX := $(shell uname)
 MODE = DEBUG
 
-INCLUDE := ./include
-SRC_DIR := ./src
+INCLUDE   := ./include
+SRC_DIR   := ./src
 BUILD_DIR := ./build
-TARGET  := $(BUILD_DIR)/compiler.bin
+LIB_DIR   := ./lib
+TARGET    := $(BUILD_DIR)/compiler.bin
 # Invoke shell command to find all source files recursively.
-SRC 	:= $(shell find $(SRC_DIR) -regex ".*.cc")
-LEXER   := $(shell find $(SRC_DIR) -regex ".*.l")
-PARSER	:= $(shell find $(SRC_DIR) -regex ".*.ypp")
-OBJ 	:= $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
+SRC 	  := $(shell find $(SRC_DIR) -regex ".*.cc")
+LEXER     := $(shell find $(SRC_DIR) -regex ".*.l")
+PARSER	  := $(shell find $(SRC_DIR) -regex ".*.ypp")
+OBJ 	  := $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
+SYSY      := $(LIB_DIR)/libsysy.so
 
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 ifeq ($(UNIX), "Linux")
-	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror \
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -I$(LIB_DIR) -Wextra -Werror \
 				-Wno-sign-compare \
 				-Wno-unused-parameter
 else
-	CXXFLAGS := -std=c++17 -I$(INCLUDE) -Wextra -Werror \
+	CXXFLAGS := -std=c++17 -I$(INCLUDE) -I$(LIB_DIR) -Wextra -Werror \
 				-Wno-sign-compare \
 				-Wno-unused-parameter \
 				-Wno-nullability-completeness \
 				-Wno-register
 endif
 
-LD_FLAG := -lstdc++fs
+# Load SysY runtime library.
+LD_FLAG := -Wl,-rpath=$(LIB_DIR) -lstdc++fs -L$(LIB_DIR) -lsysy
 
 ifeq ($(MODE), "DEBUG")
 	CXXFLAGS += -O0 -g
@@ -51,9 +54,18 @@ ifeq ("$(wildcard $(BUILD_DIR))", "")
 	@mkdir -p $(BUILD_DIR)/shared
 endif
 
-$(TARGET): mk $(OBJ)
-	$(CXX) -o $(TARGET) $(OBJ) $(LD_FLAG)
+$(TARGET): mk $(OBJ) $(SYSY)
+	@$(CXX) -o $(TARGET) $(OBJ) $(LD_FLAG) 
 	@echo "LINKER => $(TARGET)"
+
+# Create libsysy library
+$(SYSY): $(LIB_DIR)/sylib.o
+	@$(CXX) -shared $< -o $@
+	@echo "SHARED => $@"
+
+$(LIB_DIR)/sylib.o: $(LIB_DIR)/sylib.cc
+	@$(CXX) $(CXXFLAGS) -fPIC -c $< -o $@
+	@echo "CXX => $@"
 
 # Compile to object files.
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc
@@ -79,6 +91,7 @@ ifneq ("$(wildcard $(BUILD_DIR))", "")
 	@echo "Do you want to remove build path? [Y/n]"
 	@read line; if [ $$line = "n" ]; then echo aborting; exit 1 ; fi
 	@rm -rf $(BUILD_DIR)
+	@rm -rf ./test/functional/output
 	@printf "\033[4;90;107mCleaned up the build path:)\033[0m\n"
 endif
 

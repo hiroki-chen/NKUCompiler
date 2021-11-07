@@ -97,7 +97,8 @@ extern int yydebug;
     DOT = 307,
     COMMA = 308,
     LE = 309,
-    GE = 310
+    GE = 310,
+    THEN = 311
   };
 #endif
 /* Tokens.  */
@@ -154,13 +155,14 @@ extern int yydebug;
 #define COMMA 308
 #define LE 309
 #define GE 310
+#define THEN 311
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 65 "./src/frontend/parser/parser.ypp" /* yacc.c:1909  */
+#line 66 "./src/frontend/parser/parser.ypp" /* yacc.c:1909  */
 
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
@@ -186,7 +188,7 @@ union YYSTYPE
     double                              raw_number;
     char                                raw_char;
 
-#line 190 "./src/frontend/parser/parser.hh" /* yacc.c:1909  */
+#line 192 "./src/frontend/parser/parser.hh" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
