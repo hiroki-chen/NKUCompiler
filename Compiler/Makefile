@@ -3,7 +3,7 @@ CXX  := clang++
 FLEX := flex
 YACC := yacc		# or bison
 UNIX := $(shell uname)
-MODE = DEBUG
+MODE ?= DEBUG
 
 INCLUDE   := ./include
 SRC_DIR   := ./src
@@ -15,11 +15,13 @@ SRC 	  := $(shell find $(SRC_DIR) -regex ".*.cc")
 LEXER     := $(shell find $(SRC_DIR) -regex ".*.l")
 PARSER	  := $(shell find $(SRC_DIR) -regex ".*.ypp")
 OBJ 	  := $(patsubst $(SRC_DIR)/%.cc, $(BUILD_DIR)/%.o, $(SRC))
-SYSY      := $(LIB_DIR)/libsysy.so
+RUN_FILES := $(wildcard $(SRC_DIR)/runtime/*.cc)
+RUNTIME   := $(patsubst $(SRC_DIR)/runtime/%.cc, $(BUILD_DIR)/runtime/%.o, $(RUN_FILES))
+SHARED    := $(LIB_DIR)/libsysy.so $(LIB_DIR)/libruntime.so
 
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
-ifeq ($(UNIX), "Linux")
+ifneq ($(CXX), "clang++")
 	CXXFLAGS := -std=c++17 -I$(INCLUDE) -I$(LIB_DIR) -Wextra -Werror \
 				-Wno-sign-compare \
 				-Wno-unused-parameter
@@ -32,7 +34,7 @@ else
 endif
 
 # Load SysY runtime library.
-LD_FLAG := -Wl,-rpath=$(LIB_DIR) -lstdc++fs -L$(LIB_DIR) -lsysy
+LD_FLAG := -Wl,-rpath=$(LIB_DIR) -L$(LIB_DIR) -lstdc++fs  -lsysy -lruntime
 
 ifeq ($(MODE), "DEBUG")
 	CXXFLAGS += -O0 -g
@@ -53,16 +55,25 @@ ifeq ("$(wildcard $(BUILD_DIR))", "")
 	@mkdir -p $(BUILD_DIR)/shared
 endif
 
-$(TARGET): mk $(OBJ) $(SYSY) 
+$(TARGET): mk $(OBJ) $(SHARED) 
 	@$(CXX) -o $(TARGET) $(OBJ) $(LD_FLAG) 
 	@echo "LINKER => $(TARGET)"
 
 # Create libsysy library
-$(SYSY): $(LIB_DIR)/sylib.o
+$(LIB_DIR)/libsysy.so: $(LIB_DIR)/sylib.o
 	@$(CXX) -shared $< -o $@
 	@echo "SHARED => $@"
 
+$(LIB_DIR)/libruntime.so: $(RUNTIME)
+	@$(CXX) -shared $^ -o $@
+	@echo "SHARED => $@"
+
 $(LIB_DIR)/sylib.o: $(LIB_DIR)/sylib.cc
+	@$(CXX) $(CXXFLAGS) -fPIC -c $< -o $@
+	@echo "CXX => $@"
+
+# Compile runtime objects.
+$(BUILD_DIR)/runtime/%.o: $(SRC_DIR)/runtime/%.cc
 	@$(CXX) $(CXXFLAGS) -fPIC -c $< -o $@
 	@echo "CXX => $@"
 
@@ -83,6 +94,7 @@ $(SRC_DIR)/frontend/parser/lexer.cc: $(SRC_DIR)/frontend/parser/lexer.l
 	@echo "flex => $@"
 	
 all: $(TARGET)
+	@echo "Target built."
 
 # Prompt warning to ensure remove.
 clean:

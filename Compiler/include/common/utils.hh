@@ -20,7 +20,10 @@
 #include <frontend/nodes/item_ident.hh>
 #include <common/types.hh>
 
+#include <regex>
 #include <string>
+
+static const std::regex colorized_pattern(R"(\033\[.*?m)");
 
 namespace compiler {
 std::string to_string(const compiler::basic_type& type);

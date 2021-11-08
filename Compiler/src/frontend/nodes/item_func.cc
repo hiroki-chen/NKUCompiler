@@ -77,7 +77,7 @@ compiler::Item_func_call_list::print_result(const uint32_t& indent, const bool& 
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "\033[4;96;49mNode:\033[0m Function Call List" << std::endl;
+    oss << " Function Call List" << std::endl;
     for (uint32_t i = 0; i < arguments.size(); i++) {
         oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1);
     }
@@ -89,7 +89,7 @@ compiler::Item_func_call::print_result(const uint32_t& indent, const bool& leaf)
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "\033[4;96;49mNode:\033[0m Function Call" << std::endl;
+    oss << " Function Call" << std::endl;
     oss << identifier->print_result(indent + 2, false);
     oss << arguments->print_result(indent + 2, true);
     return oss.str();
@@ -99,9 +99,9 @@ std::string
 compiler::Item_func_def_arg::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    termcolor::colorize(oss);
+    
     print_indent(indent, leaf, oss);
-    oss << "\033[4;96;49mNode:\033[0m Function Definition Argument with type "
+    oss << " Function Definition Argument with type "
         << termcolor::bright_blue << compiler::to_string(type) << termcolor::reset
         << std::endl;
     oss << identifier->print_result(indent + 2, true);
@@ -113,7 +113,7 @@ compiler::Item_func_def_list::print_result(const uint32_t& indent, const bool& l
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "\033[4;96;49mNode:\033[0m Function Definition Argument List" << std::endl;
+    oss << " Function Definition Argument List" << std::endl;
     for (uint32_t i = 0; i < arguments.size(); i++) {
         oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1);
     }
@@ -125,7 +125,7 @@ compiler::Item_func_def::print_result(const uint32_t& indent, const bool& leaf) 
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "\033[4;96;49mNode:\033[0m Function Definition with return type "
+    oss << " Function Definition with return type "
         << termcolor::bright_blue << compiler::to_string(return_type) << termcolor::reset
         << std::endl;
     oss << identifier->print_result(indent + 2, false);

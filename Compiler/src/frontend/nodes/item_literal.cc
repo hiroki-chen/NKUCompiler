@@ -73,21 +73,21 @@ std::string
 compiler::Item_literal_numeric::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    termcolor::colorize(oss);
+    
     print_indent(indent, leaf, oss);
-    oss << "\033[4;96;49mNode:\033[0m Literal Numeric with value ";
+    oss << " Literal Numeric with value ";
 
     switch (get_literal_type()) {
     case Item_literal::literal_type::INT_TYPE: {
-        oss << termcolor::red << int(value) << termcolor::reset << std::endl;
+        oss << int(value) << termcolor::reset << std::endl;
         break;
     }
     case Item_literal::literal_type::CHAR_TYPE: {
-        oss << termcolor::red << char(value) << termcolor::reset << std::endl;
+        oss << char(value) << termcolor::reset << std::endl;
         break;
     }
     case Item_literal::literal_type::REAL_TYPE: {
-        oss << termcolor::red << double(value) << termcolor::reset << std::endl;
+        oss << double(value) << termcolor::reset << std::endl;
         break;
     }
     default: {
@@ -102,8 +102,8 @@ std::string
 compiler::Item_literal_string::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    termcolor::colorize(oss);
-    oss << "\033[4;96;49mNode:\033[0m Literal String with value "
+    
+    oss << " Literal String with value "
         << termcolor::red << str << termcolor::reset << std::endl;
     return oss.str();
 }
@@ -113,14 +113,14 @@ compiler::Item_literal_array_init::print_result(const uint32_t& indent, const bo
 {
     std::stringstream oss;
     print_indent(indent, leaf, oss);
-    oss << "\033[4;96;49mNode:\033[0m Literal Array Init" << std::endl;
-    
+    oss << " Literal Array Init" << std::endl;
+
     if (expression != nullptr) {
         oss << expression->print_result(indent + 2, false) << std::endl;
     }
 
     for (uint32_t i = 0; i < value_list.size(); i++) {
-        oss << value_list[i]->print_result(indent + 2, i == value_list.size() - 1) ;
+        oss << value_list[i]->print_result(indent + 2, i == value_list.size() - 1);
     }
 
     return oss.str();

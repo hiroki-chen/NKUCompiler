@@ -20,6 +20,7 @@
 #include <sys/stat.h>
 
 #include <iostream>
+#include <regex>
 
 std::string
 compiler::to_string(const compiler::basic_type& type)
@@ -131,7 +132,7 @@ compiler::to_string(const compiler::binary_type& type)
 
 void compiler::print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os)
 {
-    termcolor::colorize(os);
+    
     // Print indentation.
     for (uint32_t i = 0; i < indent; i += 2) {
         os << termcolor::bright_green << "│  " << termcolor::reset;
