@@ -12,11 +12,20 @@
 
 ### 食用方法
 
-* 在Unix系统中用`make`指令编译工程：
+* 在Unix系统中用`cmake`指令编译工程：
 
 ```shell
-cd Compiler && make all CXX=<your compiler>;
-./build/compiler.bin -c -o ./output/output -s ./test/input.sy -t; # Command Line Parser :)
+mkdir build
+cd build
+cmake ..
+make
+make install
+```
+
+测试的话，就直接
+
+```shell
+make test
 ```
 
 * 如果你指定了`-s`后面为目录，那么`-o`会被忽略，所有的输出都会存入`-s`指定目录下的`./output`目录。

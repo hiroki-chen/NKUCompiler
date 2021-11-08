@@ -167,6 +167,7 @@ BType: INT                      { $$ = compiler::basic_type::INT_TYPE; }
      | DOUBLE                   { $$ = compiler::basic_type::REAL_TYPE; }
      | FLOAT                    { $$ = compiler::basic_type::REAL_TYPE; }
      | CHAR                     { $$ = compiler::basic_type::CHAR_TYPE; }
+     | STRING                   { $$ = compiler::basic_type::STR_TYPE; }
      ;
 
 VarDecl: BType VarDef               { $$ = new compiler::Item_stmt_decl(yyget_lineno(), $1); $$->add_declaration($2); }

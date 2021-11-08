@@ -1,5 +1,6 @@
 backup
 build
+bin
 test
 .vscode
 .DS_Store
