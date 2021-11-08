@@ -9,6 +9,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Yacc and lex settings.
+find_package(BISON)
+find_package(FLEX)
+set(YACC_SRC "${PROJECT_SOURCE_DIR}/src/frontend/parser/parser.ypp")
+set(FLEX_SRC "${PROJECT_SOURCE_DIR}/src/frontend/parser/lexer.l")
+
 # Check the compiler
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(SUPPRESS_WARN_FLAGS "${SUPPRESS_WARN_FLAGS} -Wno-sign-compare \
@@ -24,13 +30,10 @@ if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
     message("In-source builds are not allowed.")
 endif ()
 
-# Add library runtime
-file(GLOB_RECURSE COMPILER_RUNTIME RELATIVE ${PROJECT_SOURCE_DIR} 
-    "src/runtime/*.cc"
-)
-add_library(runtime SHARED ${COMPILER_RUNTIME})
-set_target_properties(runtime PROPERTIES VERSION ${PROJECT_VERSION})
-target_include_directories(runtime PRIVATE include)
+# Output yacc and lex files.
+BISON_TARGET(yacc ${YACC_SRC} ${PROJECT_SOURCE_DIR}/src/frontend/parser/parser.cc)
+FLEX_TARGET(flex ${FLEX_SRC} ${PROJECT_SOURCE_DIR}/src/frontend/parser/lexer.cc)
+ADD_FLEX_BISON_DEPENDENCY(flex yacc)
 
 # Add library sysy
 file(GLOB_RECURSE SYSY RELATIVE ${PROJECT_SOURCE_DIR} 
@@ -48,10 +51,9 @@ file(GLOB_RECURSE COMPILER_SRC RELATIVE ${PROJECT_SOURCE_DIR}
 )
 
 find_library(SHARED_OBJECTS 
-      NAMES runtime sysy
+      NAMES sysy
       PATHS ${PROJECT_SOURCE_DIR}/lib)
 
-install(FILES ${PROJECT_BINARY_DIR}/libruntime.so ${PROJECT_BINARY_DIR}/libsysy.so DESTINATION ${PROJECT_SOURCE_DIR}/lib)
 install(FILES ${PROJECT_BINARY_DIR}/Takanashi_compiler DESTINATION ${PROJECT_SOURCE_DIR}/bin)
 add_executable(${PROJECT_NAME} ${COMPILER_SRC})
 target_include_directories(${PROJECT_NAME} PRIVATE include)
