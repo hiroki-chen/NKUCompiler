@@ -114,7 +114,7 @@
 %left  BIT_XOR
 %left  BIT_AND
 %left  NEQ EQ
-%left  L LE G GE
+%left  L LEQ G GEQ
 %left  ADD MINUS
 %left  MUL DIV MOD
 %right LOGIC_NOT
@@ -140,9 +140,6 @@
 %type <raw_string> ID STRING
 %type <raw_number> HEX DECIMAL OCTAL
 %type <raw_char> CHAR
-
-%precedence THEN
-%precedence ELSE
 
 %start CompUnit
 %%
@@ -309,7 +306,7 @@ ReturnStmt: RETURN SEMICOLON            { $$ = new compiler::Item_stmt_return(yy
           | RETURN Exp SEMICOLON        { $$ = new compiler::Item_stmt_return(yyget_lineno(), $2); }
           ;
 
-eIfStmt: IF LPARENTHESIS Exp RPARENTHESIS Stmt %prec THEN      { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, new compiler::Item_stmt_void(yyget_lineno())); }
+eIfStmt: IF LPARENTHESIS Exp RPARENTHESIS Stmt      { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, new compiler::Item_stmt_void(yyget_lineno())); }
        | IF LPARENTHESIS Exp RPARENTHESIS Stmt ELSE Stmt       { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, $7); }
        ;
 
@@ -361,7 +358,7 @@ ArrayItem: LVal LSQUARE Exp RSQUARE             { $$ = new compiler::Item_ident_
          ;
 
 Exp: LOrExp
-   | CommaExp
+   | CommaExp                                   { $$ = $<item_expr>1; }
    ;
 
 CommaExp: LOrExp COMMA LOrExp                   { $$ = new compiler::Item_expr_comma(yyget_lineno()); $$->add_expression($1); $$->add_expression($3); }
