@@ -38,8 +38,8 @@ void compiler::Item_root::add_child(Item* const child)
 std::string compiler::Item_root::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    termcolor::colorize(oss);
-    oss << termcolor::red << "Program Root: " << termcolor::reset << std::endl;
+    
+    oss  << "Program Root: " << termcolor::reset << std::endl;
     for (uint32_t i = 0; i < children.size(); i++) {
         oss << children[i]->print_result(indent, i == children.size() - 1);
     }

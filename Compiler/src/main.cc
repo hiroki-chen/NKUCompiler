@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <runtime/runtime.hh>
+#include <common/utils.hh>
 using compiler::Command_parser;
 using compiler::Compiler_runtime;
 
@@ -22,7 +23,6 @@ Compiler_runtime* compiler_runtime;
 
 int main(int argc, const char** argv)
 {
-    // std::cout << argv[1];
     // First parse the command line
     Command_parser* const parser = new Command_parser(argc, argv);
     parser->parse();
