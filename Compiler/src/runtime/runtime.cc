@@ -25,6 +25,12 @@
 
 using namespace std::string_literals;
 
+extern int yyparse();
+extern int yylex_destroy();
+extern void yyset_lineno(int _line_number);
+extern int yycolumn;
+extern void yyset_in(FILE* _in_str);
+
 std::vector<std::string> compiler::process_input(const std::string& input)
 {
     std::vector<std::string> files;

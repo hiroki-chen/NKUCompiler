@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
-# define YY_YY_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
+#ifndef YY_YY_HOME_CHB_COMPILATION_COMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
+# define YY_YY_HOME_CHB_COMPILATION_COMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -95,74 +95,16 @@ extern int yydebug;
     RSQUARE = 305,
     SEMICOLON = 306,
     DOT = 307,
-    COMMA = 308,
-    LE = 309,
-    GE = 310,
-    THEN = 311
+    COMMA = 308
   };
 #endif
-/* Tokens.  */
-#define ID 258
-#define ADD 259
-#define MINUS 260
-#define MUL 261
-#define DIV 262
-#define MOD 263
-#define INC 264
-#define DEC 265
-#define EQ 266
-#define NEQ 267
-#define GEQ 268
-#define LEQ 269
-#define G 270
-#define L 271
-#define BIT_AND 272
-#define BIT_OR 273
-#define BIT_XOR 274
-#define BIT_NEG 275
-#define LOGIC_AND 276
-#define LOGIC_OR 277
-#define LOGIC_NOT 278
-#define DECIMAL 279
-#define OCTAL 280
-#define HEX 281
-#define STRING 282
-#define INT 283
-#define DOUBLE 284
-#define FLOAT 285
-#define CHAR 286
-#define VOID 287
-#define STRUCT 288
-#define IF 289
-#define ELSE 290
-#define WHILE 291
-#define FOR 292
-#define RETURN 293
-#define BREAK 294
-#define CONTINUE 295
-#define CONST 296
-#define ASSIGN 297
-#define TRUE 298
-#define FALSE 299
-#define LBRACE 300
-#define RBRACE 301
-#define LPARENTHESIS 302
-#define RPARENTHESIS 303
-#define LSQUARE 304
-#define RSQUARE 305
-#define SEMICOLON 306
-#define DOT 307
-#define COMMA 308
-#define LE 309
-#define GE 310
-#define THEN 311
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 66 "./src/frontend/parser/parser.ypp" /* yacc.c:1909  */
+#line 66 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.ypp" /* yacc.c:1909  */
 
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
@@ -188,7 +130,7 @@ union YYSTYPE
     double                              raw_number;
     char                                raw_char;
 
-#line 192 "./src/frontend/parser/parser.hh" /* yacc.c:1909  */
+#line 134 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.hh" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -215,4 +157,4 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED  */
+#endif /* !YY_YY_HOME_CHB_COMPILATION_COMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED  */

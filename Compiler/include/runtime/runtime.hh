@@ -17,16 +17,10 @@
 #ifndef RUNTIME_HH
 #define RUNTIME_HH
 
-#include <frontend/nodes/item.hh>
 #include <common/cxxopts.hh>
+#include <frontend/nodes/item.hh>
 
 #include <fstream>
-
-extern int yyparse();
-extern int yylex_destroy();
-extern void yyset_lineno(int _line_number);
-extern int yycolumn;
-void yyset_in(FILE* _in_str);
 
 namespace compiler {
 /**
@@ -42,9 +36,10 @@ private:
     cxxopts::Options* options;
 
     cxxopts::ParseResult result;
+
 public:
     Command_parser() = delete;
-    
+
     /**
      * @brief Construct a new Command_parser object
      * 

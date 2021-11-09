@@ -8,6 +8,7 @@ project(Takanashi_compiler VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+# set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Yacc and lex settings.
 find_package(BISON)
@@ -35,6 +36,12 @@ BISON_TARGET(yacc ${YACC_SRC} ${PROJECT_SOURCE_DIR}/src/frontend/parser/parser.c
 FLEX_TARGET(flex ${FLEX_SRC} ${PROJECT_SOURCE_DIR}/src/frontend/parser/lexer.cc)
 ADD_FLEX_BISON_DEPENDENCY(flex yacc)
 
+add_custom_target(
+    header
+    COMMAND mv ${PROJECT_SOURCE_DIR}/src/frontend/parser/parser.hh ${PROJECT_SOURCE_DIR}/include/frontend/parser
+    DEPENDS ${PROJECT_SOURCE_DIR}/src/frontend/parser/parser.cc ${PROJECT_SOURCE_DIR}/src/frontend/parser/lexer.cc
+)
+
 # Add library sysy
 file(GLOB_RECURSE SYSY RELATIVE ${PROJECT_SOURCE_DIR} 
     "src/sylib.cc"
@@ -55,8 +62,10 @@ find_library(SHARED_OBJECTS
       PATHS ${PROJECT_SOURCE_DIR}/lib)
 
 install(FILES ${PROJECT_BINARY_DIR}/Takanashi_compiler DESTINATION ${PROJECT_SOURCE_DIR}/bin)
-add_executable(${PROJECT_NAME} ${COMPILER_SRC})
+add_executable(${PROJECT_NAME} ${COMPILER_SRC} ${BISON_yacc_OUTPUTS} ${FLEX_flex_OUTPUTS})
+
 target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_link_libraries(${PROJECT_NAME} l)
 
 # Run the test
 enable_testing()

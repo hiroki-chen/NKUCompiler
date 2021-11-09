@@ -85,6 +85,15 @@ compiler::Item_decl_array_init::Item_decl_array_init(
 {
 }
 
+compiler::Item_decl_struct::Item_decl_struct(
+    const uint32_t& lineno,
+    Item_ident* const identifier,
+    const bool& is_decl)
+    : Item_decl(lineno, is_decl)
+    , identifier(identifier)
+{
+}
+
 void compiler::Item_stmt_decl::add_declaration(Item_decl* const declaration)
 {
     declarations.emplace_back(declaration);
@@ -117,7 +126,7 @@ std::string
 compiler::Item_decl_var_init::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    
+
     print_indent(indent, leaf, oss);
     oss << " Variale Declaration with initial value";
     if (is_const == true) {
@@ -173,5 +182,18 @@ compiler::Item_decl_pointer_init::print_result(const uint32_t& indent, const boo
     oss << std::endl;
     oss << identifier->print_result(indent + 2, false);
     oss << expression->print_result(indent + 2, true);
+    return oss.str();
+}
+
+std::string
+compiler::Item_decl_struct::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << " Struct Declaration" << std::endl;
+    oss << identifier->print_result(indent + 2, false);
+    for (uint32_t i = 0; i < struct_body.size(); i++) {
+        oss << struct_body[i]->print_result(indent + 2, i == struct_body.size() - 1 ? true : false);
+    }
     return oss.str();
 }

@@ -110,15 +110,6 @@ public:
 
     virtual ~Item_ident_pointer() override = default;
 } Item_ident_pointer;
-
-/**
- * @brief Class for struct.
- * 
- */
-typedef class Item_ident_struct final : public Item_ident {
-protected:
-    std::vector<Item_ident*> things;
-} Item_ident_struct;
 } // namespace compiler
 
 #endif

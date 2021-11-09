@@ -124,11 +124,11 @@
 %type <item_block> BLOCK BlockItems
 %type <item_root> CompUnit
 %type <item_stmt> BlockItem Stmt ExpStmt AssignStmt Assignment eIfStmt ReturnStmt WhileStmt ForStmt BreakStmt ContinueStmt
-%type <item_stmt_decl> Decl ConstDecl VarDecl ConstDeclStmt VarDeclStmt
+%type <item_stmt_decl> Decl ConstDecl VarDecl StructDecl ConstDeclStmt VarDeclStmt StructDeclStmt
 %type <item_func_def> FuncDef
 %type <item_func_def_list> FuncDefList
 %type <item_func_def_arg> FuncParam FuncParamNormal FuncParamArray
-%type <item_decl> VarDef VarDefNormal VarDefArray ConstDef ConstDefNormal ConstDefArray
+%type <item_decl> VarDef VarDefNormal VarDefArray ConstDef ConstDefNormal ConstDefArray StructDef
 %type <item_expr> Exp AddExp MulExp BitExp LOrExp LAndExp EqExp RelExp BitAndExp BitOrExp BitXorExp UnaryExp PrimaryExp FunctionCall
 %type <item_expr_comma> CommaExp
 %type <item_ident> Ident LVal
@@ -152,7 +152,11 @@ CompUnit: CompUnit Decl         { $$->add_child($<item_decl>2); }
 
 Decl: VarDeclStmt
     | ConstDeclStmt
+    | StructDeclStmt
     ;
+
+StructDeclStmt: StructDecl SEMICOLON { $$ = $1; }
+              ;
 
 VarDeclStmt: VarDecl SEMICOLON { $$ = $1; }
            ;
@@ -175,6 +179,13 @@ ConstDecl: CONST BType ConstDef      { $$ = new compiler::Item_stmt_decl(yyget_l
          | ConstDecl COMMA ConstDef  { $$->add_declaration($3); }
          | BType CONST ConstDef      { $$ = new compiler::Item_stmt_decl(yyget_lineno(), $1); $$->add_declaration($3); }
          ;
+
+StructDecl: STRUCT StructDef           { $$ = new compiler::Item_stmt_decl(yyget_lineno(), compiler::basic_type::STRUCT); $$->add_declaration($2); }
+          | StructDecl COMMA StructDef { $$->add_declaration($3); }
+          ;
+
+StructDef: Ident                       { $$ = new compiler::Item_decl_struct(yyget_lineno(), $1, true); }
+         ;      
 
 VarDef: VarDefNormal
       | VarDefArray
