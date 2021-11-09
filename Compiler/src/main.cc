@@ -15,7 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <runtime/runtime.hh>
-#include <common/utils.hh>
+
 using compiler::Command_parser;
 using compiler::Compiler_runtime;
 
