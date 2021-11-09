@@ -52,7 +52,8 @@ typedef enum basic_type {
     INT_TYPE,
     REAL_TYPE,
     CHAR_TYPE,
-    STR_TYPE
+    STR_TYPE,
+    STRUCT
 } basic_type;
 
 typedef enum decl_type {
