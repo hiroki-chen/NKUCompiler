@@ -46,26 +46,55 @@ add_custom_target(
 file(GLOB_RECURSE SYSY RELATIVE ${PROJECT_SOURCE_DIR} 
     "src/sylib.cc"
 )
-add_library(sysy SHARED ${SYSY})
-set_target_properties(sysy PROPERTIES VERSION ${PROJECT_VERSION})
-target_include_directories(sysy PRIVATE include)
+
+file(GLOB_RECURSE UTILS RELATIVE ${PROJECT_SOURCE_DIR} 
+    "src/common/*.cc"
+)
+
+add_library(sysy_lib SHARED ${SYSY})
+set_target_properties(sysy_lib PROPERTIES VERSION ${PROJECT_VERSION})
+target_include_directories(sysy_lib PRIVATE include)
+add_library(utils_lib SHARED ${UTILS})
+set_target_properties(utils_lib PROPERTIES VERSION ${PROJECT_VERSION})
+target_include_directories(utils_lib PRIVATE include)
 
 # Add all files.
 file(GLOB_RECURSE COMPILER_SRC RELATIVE ${PROJECT_SOURCE_DIR} 
-    "src/**/*.cc"
-    "src/**/*.c"
+    "src/frontend/**/*.cc"
+    "src/frontend/**/*.c"
+    "src/backend/**/*.cc"
+    "src/backend/**/*.c"
+    "src/runtime/*.cc"
+    "src/runtime/*.c"
+    "src/ir/**/*.c"
+    "src/ir/**/*.cc"
     "src/main.cc"
 )
 
-find_library(SHARED_OBJECTS 
-      NAMES sysy
-      PATHS ${PROJECT_SOURCE_DIR}/lib)
-
 install(FILES ${PROJECT_BINARY_DIR}/Takanashi_compiler DESTINATION ${PROJECT_SOURCE_DIR}/bin)
-add_executable(${PROJECT_NAME} ${COMPILER_SRC} ${BISON_yacc_OUTPUTS} ${FLEX_flex_OUTPUTS})
+install (FILES ${PROJECT_BINARY_DIR}/libsysy.a DESTINATION ${PROJECT_SOURCE_DIR}/lib)
 
+# Project configurations
+link_directories(${PROJECT_SOURCE_DIR}/lib)
+add_executable(${PROJECT_NAME} ${COMPILER_SRC} ${BISON_yacc_OUTPUTS} ${FLEX_flex_OUTPUTS})
 target_include_directories(${PROJECT_NAME} PRIVATE include)
-target_link_libraries(${PROJECT_NAME} l)
+target_link_libraries(${PROJECT_NAME} l utils sysy)
+
+# Move file
+add_custom_command(
+        TARGET sysy_lib PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_BINARY_DIR}/libsysy.so
+        ${CMAKE_SOURCE_DIR}/lib
+)
+add_custom_command(
+        TARGET utils_lib PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_BINARY_DIR}/libutils.so
+        ${CMAKE_SOURCE_DIR}/lib
+)
+
+add_dependencies(${PROJECT_NAME} utils_lib sysy_lib)
 
 # Run the test
 enable_testing()
