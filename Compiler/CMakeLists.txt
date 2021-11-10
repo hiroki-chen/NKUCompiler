@@ -85,6 +85,6 @@ add_dependencies(${PROJECT_NAME} utils sysy header)
 enable_testing()
 add_test(
     test
-    ./${PROJECT_NAME} -t -s ../test/functional
+    ./${PROJECT_NAME} -t -s ../test/functional/test_struct.sy -o test.ast
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 )

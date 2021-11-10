@@ -194,6 +194,10 @@ compiler::Item_decl_struct::print_result(const uint32_t& indent, const bool& lea
     print_indent(indent, leaf, oss);
     oss << " Struct Declaration" << std::endl;
     oss << identifier->print_result(indent + 2, false);
-    oss << struct_body->print_result(indent + 2, true);
+    
+    if (struct_body != nullptr) {
+        oss << struct_body->print_result(indent + 2, true);
+    }
+
     return oss.str();
 }
