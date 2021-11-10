@@ -56,10 +56,12 @@ compiler::Item_stmt_eif::Item_stmt_eif(
 compiler::Item_stmt_while::Item_stmt_while(
     const uint32_t& lineno,
     Item_expr* const condition,
-    Item_stmt* const statement)
+    Item_stmt* const statement,
+    const bool& is_do_while)
     : Item_stmt(lineno)
     , condition(condition)
     , statement(statement)
+    , is_do_while(is_do_while)
 {
 }
 
@@ -153,7 +155,7 @@ compiler::Item_stmt_while::print_result(const uint32_t& indent, const bool& leaf
 {
     std::ostringstream oss;
     print_indent(indent, leaf, oss);
-    oss << " While Statement" << std::endl;
+    oss << (is_do_while ? "Do While Statement" : " While Statement") << std::endl;
     oss << condition->print_result(indent + 2, false);
     oss << statement->print_result(indent + 2, true);
     return oss.str();

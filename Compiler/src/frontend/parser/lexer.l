@@ -75,6 +75,7 @@ CHAR        '\\?.'
 
 "if"         { return IF; }
 "else"       { return ELSE; }
+"do"         { return DO; }
 "while"      { return WHILE; }
 "true"       { return TRUE; }
 "false"      { return FALSE; }

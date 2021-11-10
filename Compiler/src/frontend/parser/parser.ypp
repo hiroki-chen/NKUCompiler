@@ -101,7 +101,7 @@
 // Types
 %token          INT DOUBLE FLOAT CHAR VOID STRUCT_TOKEN
 // Keywords
-%token          IF ELSE WHILE FOR RETURN BREAK CONTINUE CONST ASSIGN TRUE FALSE
+%token          IF ELSE DO WHILE FOR RETURN BREAK CONTINUE CONST ASSIGN TRUE FALSE
 // Other symbols
 %token          LBRACE RBRACE LPARENTHESIS RPARENTHESIS LSQUARE RSQUARE
 %token          SEMICOLON DOT COMMA
@@ -335,7 +335,8 @@ ExpStmt: Exp SEMICOLON      { $$ = new compiler::Item_stmt_eval(yyget_lineno(), 
        | SEMICOLON          { $$ = new compiler::Item_stmt_void(yyget_lineno()); }
        ;
 
-WhileStmt:  WHILE LPARENTHESIS Exp RPARENTHESIS Stmt    { $$ = new compiler::Item_stmt_while(yyget_lineno(), $3, $5); }
+WhileStmt:  WHILE LPARENTHESIS Exp RPARENTHESIS Stmt                    { $$ = new compiler::Item_stmt_while(yyget_lineno(), $3, $5); }
+         |  DO BLOCK WHILE LPARENTHESIS Exp RPARENTHESIS SEMICOLON      { $$ = new compiler::Item_stmt_while(yyget_lineno(), $5, $2, true); }
          ;
 
 ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
