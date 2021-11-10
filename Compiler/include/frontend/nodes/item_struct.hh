@@ -14,18 +14,31 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_ALL_HH
-#define ITEM_ALL_HH
+#ifndef ITEM_STRUCT_HH
+#define ITEM_STRUCT_HH
 
-// A single header that includes all.
-
-#include <frontend/nodes/item.hh>
 #include <frontend/nodes/item_decl.hh>
-#include <frontend/nodes/item_expr.hh>
-#include <frontend/nodes/item_func.hh>
-#include <frontend/nodes/item_ident.hh>
-#include <frontend/nodes/item_literal.hh>
-#include <frontend/nodes/item_stmt.hh>
-#include <frontend/nodes/item_struct.hh>
+
+#include <vector>
+
+namespace compiler {
+typedef class Item_struct_body final : Item_stmt {
+protected:
+    std::vector<Item*> struct_body;
+
+public:
+    Item_struct_body() = delete;
+
+    Item_struct_body(const uint32_t& lineno);
+
+    virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::STRUCT_BODY; }
+
+    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+
+    virtual void add_body(Item* const item) { struct_body.emplace_back(item); }
+    
+    virtual ~Item_struct_body() override = default;
+} Item_struct_body;
+} // namespace compiler;
 
 #endif

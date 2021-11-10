@@ -40,6 +40,7 @@ public:
         EVAL_STMT,
         VOID_STMT,
         POSTFIX_STMT,
+        STRUCT_BODY,
     } stmt_type;
 
     Item_stmt() = delete;

@@ -83,7 +83,7 @@ CHAR        '\\?.'
 "break"      { return BREAK; }
 "for"        { return FOR; }
 "const"      { return CONST; }
-"struct"     { return STRUCT; }
+"STRUCT_TOKEN"     { return STRUCT_TOKEN; }
 
 {HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
 {OCTAL}      { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }

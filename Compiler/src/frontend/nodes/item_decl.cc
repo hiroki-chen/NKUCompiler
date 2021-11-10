@@ -88,9 +88,11 @@ compiler::Item_decl_array_init::Item_decl_array_init(
 compiler::Item_decl_struct::Item_decl_struct(
     const uint32_t& lineno,
     Item_ident* const identifier,
+    Item_struct_body* const struct_body,
     const bool& is_decl)
     : Item_decl(lineno, is_decl)
     , identifier(identifier)
+    , struct_body(struct_body)
 {
 }
 
@@ -192,8 +194,6 @@ compiler::Item_decl_struct::print_result(const uint32_t& indent, const bool& lea
     print_indent(indent, leaf, oss);
     oss << " Struct Declaration" << std::endl;
     oss << identifier->print_result(indent + 2, false);
-    for (uint32_t i = 0; i < struct_body.size(); i++) {
-        oss << struct_body[i]->print_result(indent + 2, i == struct_body.size() - 1 ? true : false);
-    }
+    oss << struct_body->print_result(indent + 2, true);
     return oss.str();
 }

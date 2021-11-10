@@ -14,18 +14,24 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_ALL_HH
-#define ITEM_ALL_HH
-
-// A single header that includes all.
-
-#include <frontend/nodes/item.hh>
-#include <frontend/nodes/item_decl.hh>
-#include <frontend/nodes/item_expr.hh>
-#include <frontend/nodes/item_func.hh>
-#include <frontend/nodes/item_ident.hh>
-#include <frontend/nodes/item_literal.hh>
-#include <frontend/nodes/item_stmt.hh>
+#include <common/utils.hh>
 #include <frontend/nodes/item_struct.hh>
 
-#endif
+#include <sstream>
+
+compiler::Item_struct_body::Item_struct_body(const uint32_t& lineno)
+    : Item_stmt(lineno)
+{
+}
+
+std::string
+compiler::Item_struct_body::print_result(const uint32_t& indent, const bool& leaf) const
+{
+    std::ostringstream oss;
+    print_indent(indent, leaf, oss);
+    oss << " Struct Body" << std::endl;
+    for (uint32_t i = 0; i < struct_body.size(); i++) {
+        oss << struct_body[i]->print_result(indent + 2, i == struct_body.size() - 1 ? true : false);
+    }
+    return oss.str();
+}

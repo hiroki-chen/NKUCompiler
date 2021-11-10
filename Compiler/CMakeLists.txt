@@ -51,12 +51,12 @@ file(GLOB_RECURSE UTILS RELATIVE ${PROJECT_SOURCE_DIR}
     "src/common/*.cc"
 )
 
-add_library(sysy_lib SHARED ${SYSY})
-set_target_properties(sysy_lib PROPERTIES VERSION ${PROJECT_VERSION})
-target_include_directories(sysy_lib PRIVATE include)
-add_library(utils_lib SHARED ${UTILS})
-set_target_properties(utils_lib PROPERTIES VERSION ${PROJECT_VERSION})
-target_include_directories(utils_lib PRIVATE include)
+add_library(sysy SHARED ${SYSY})
+set_target_properties(sysy PROPERTIES VERSION ${PROJECT_VERSION})
+target_include_directories(sysy PRIVATE include)
+add_library(utils SHARED ${UTILS})
+set_target_properties(utils PROPERTIES VERSION ${PROJECT_VERSION})
+target_include_directories(utils PRIVATE include)
 
 # Add all files.
 file(GLOB_RECURSE COMPILER_SRC RELATIVE ${PROJECT_SOURCE_DIR} 
@@ -72,7 +72,6 @@ file(GLOB_RECURSE COMPILER_SRC RELATIVE ${PROJECT_SOURCE_DIR}
 )
 
 install(FILES ${PROJECT_BINARY_DIR}/Takanashi_compiler DESTINATION ${PROJECT_SOURCE_DIR}/bin)
-install (FILES ${PROJECT_BINARY_DIR}/libsysy.a DESTINATION ${PROJECT_SOURCE_DIR}/lib)
 
 # Project configurations
 link_directories(${PROJECT_SOURCE_DIR}/lib)
@@ -80,21 +79,7 @@ add_executable(${PROJECT_NAME} ${COMPILER_SRC} ${BISON_yacc_OUTPUTS} ${FLEX_flex
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_link_libraries(${PROJECT_NAME} l utils sysy)
 
-# Move file
-add_custom_command(
-        TARGET sysy_lib PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_BINARY_DIR}/libsysy.so
-        ${CMAKE_SOURCE_DIR}/lib
-)
-add_custom_command(
-        TARGET utils_lib PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_BINARY_DIR}/libutils.so
-        ${CMAKE_SOURCE_DIR}/lib
-)
-
-add_dependencies(${PROJECT_NAME} utils_lib sysy_lib)
+add_dependencies(${PROJECT_NAME} utils sysy header)
 
 # Run the test
 enable_testing()
