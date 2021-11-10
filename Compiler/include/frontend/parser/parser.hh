@@ -75,27 +75,28 @@ extern int yydebug;
     FLOAT = 285,
     CHAR = 286,
     VOID = 287,
-    STRUCT = 288,
+    STRUCT_TOKEN = 288,
     IF = 289,
     ELSE = 290,
-    WHILE = 291,
-    FOR = 292,
-    RETURN = 293,
-    BREAK = 294,
-    CONTINUE = 295,
-    CONST = 296,
-    ASSIGN = 297,
-    TRUE = 298,
-    FALSE = 299,
-    LBRACE = 300,
-    RBRACE = 301,
-    LPARENTHESIS = 302,
-    RPARENTHESIS = 303,
-    LSQUARE = 304,
-    RSQUARE = 305,
-    SEMICOLON = 306,
-    DOT = 307,
-    COMMA = 308
+    DO = 291,
+    WHILE = 292,
+    FOR = 293,
+    RETURN = 294,
+    BREAK = 295,
+    CONTINUE = 296,
+    CONST = 297,
+    ASSIGN = 298,
+    TRUE = 299,
+    FALSE = 300,
+    LBRACE = 301,
+    RBRACE = 302,
+    LPARENTHESIS = 303,
+    RPARENTHESIS = 304,
+    LSQUARE = 305,
+    RSQUARE = 306,
+    SEMICOLON = 307,
+    DOT = 308,
+    COMMA = 309
   };
 #endif
 
@@ -126,11 +127,12 @@ union YYSTYPE
     compiler::Item_func_def_arg*        item_func_def_arg;
     compiler::Item_func_call_list*      item_func_call_list;
     compiler::Item_block*               item_block;
+    compiler::Item_struct_body*         item_struct_body;
     std::string*                        raw_string;
     double                              raw_number;
     char                                raw_char;
 
-#line 134 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.hh" /* yacc.c:1909  */
+#line 136 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.hh" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

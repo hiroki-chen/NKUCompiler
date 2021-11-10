@@ -40,6 +40,7 @@ public:
         EVAL_STMT,
         VOID_STMT,
         POSTFIX_STMT,
+        STRUCT_BODY,
     } stmt_type;
 
     Item_stmt() = delete;
@@ -120,10 +121,12 @@ protected:
 
     Item_stmt* const statement; // while body
 
+    const bool is_do_while;
+
 public:
     Item_stmt_while() = delete;
 
-    Item_stmt_while(const uint32_t& lineno, Item_expr* const condition, Item_stmt* const statement);
+    Item_stmt_while(const uint32_t& lineno, Item_expr* const condition, Item_stmt* const statement, const bool& is_do_while = false);
 
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::WHILE_STMT; }
 

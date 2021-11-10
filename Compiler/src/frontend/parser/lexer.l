@@ -75,6 +75,7 @@ CHAR        '\\?.'
 
 "if"         { return IF; }
 "else"       { return ELSE; }
+"do"         { return DO; }
 "while"      { return WHILE; }
 "true"       { return TRUE; }
 "false"      { return FALSE; }
@@ -83,7 +84,7 @@ CHAR        '\\?.'
 "break"      { return BREAK; }
 "for"        { return FOR; }
 "const"      { return CONST; }
-"struct"     { return STRUCT; }
+"struct"     { return STRUCT_TOKEN; }
 
 {HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
 {OCTAL}      { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }

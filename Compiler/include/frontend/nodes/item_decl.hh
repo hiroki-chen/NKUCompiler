@@ -21,13 +21,14 @@
 #include <frontend/nodes/item.hh>
 #include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_func.hh>
+#include <frontend/nodes/item_struct.hh>
 #include <frontend/nodes/item_stmt.hh>
 
 #include <memory>
 #include <vector>
 
 namespace compiler {
-
+class Item_struct_body;
 /**
  * @brief Class for declaration. BUT THIS NOT A DECLARE STATEMENT.
  * 
@@ -206,17 +207,14 @@ public:
 
 typedef class Item_decl_struct final : public Item_decl {
 protected:
-    std::vector<Item*> struct_body;
-
+    Item_struct_body* const struct_body;
     // Identifier
     Item_ident* const identifier;
 
 public:
     Item_decl_struct() = delete;
 
-    Item_decl_struct(const uint32_t& lineno, Item_ident* const identifier, const bool& is_decl = true);
-
-    virtual void add_body(Item* const item) { struct_body.emplace_back(item); };
+    Item_decl_struct(const uint32_t& lineno, Item_ident* const identifier, Item_struct_body* const struct_body, const bool& is_decl = true);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
