@@ -1,0 +1,328 @@
+\hypertarget{classcompiler_1_1_symbol__table}{}\doxysection{compiler\+::Symbol\+\_\+table Class Reference}
+\label{classcompiler_1_1_symbol__table}\index{compiler::Symbol\_table@{compiler::Symbol\_table}}
+
+
+A class for symbol table.  
+
+
+
+
+{\ttfamily \#include $<$symbol\+\_\+table.\+hh$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcompiler_1_1_symbol__table_a3de2c6e3d140c3e966256c5f541c0a08}{enter\+\_\+scope}} (void)
+\begin{DoxyCompactList}\small\item\em Called when a scope is entered. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcompiler_1_1_symbol__table_a644a2b2133987d2823381ddc5a6bb816}{leave\+\_\+scope}} (void)
+\begin{DoxyCompactList}\small\item\em Called when a scope is leaved. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcompiler_1_1_symbol__table_a94a2273c6d9b21df5c360206d14e1a02}{put}} (\mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const item)
+\begin{DoxyCompactList}\small\item\em Put an item into the symbol table in the current scope. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_symbol__table_aa3e887ab62bfe6ed059aee17f875a542}{get}} (const std\+::string \&name)
+\begin{DoxyCompactList}\small\item\em Find a symbol in each scope. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{classcompiler_1_1_symbol__table_a3c2d5dcb42a69619107bbe1712ed0571}{get\+\_\+current\+\_\+scope}} (void)
+\begin{DoxyCompactList}\small\item\em Get the current scope object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcompiler_1_1_symbol__table_a9b911791f4d8bc509a04ee3b1d6de0be}{Symbol\+\_\+table}} ()
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classcompiler_1_1_symbol__table}{Symbol\+\_\+table}} object. By default there is a global symbol table. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcompiler_1_1_symbol__table_ac5840e45736d5906f24c4aa5417d4eb2}{Symbol\+\_\+table}} (const \mbox{\hyperlink{classcompiler_1_1_symbol__table}{Symbol\+\_\+table}} \&\mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\+\_\+table}})=delete
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab464aacd27dc48d1f2db9392e9a413b4}{$\sim$\+Symbol\+\_\+table}} ()=default
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_symbol__table_a9d22648142c6745c206293feb2c407b9}{$\sim$\+Symbol\+\_\+table}} ()
+\item 
+virtual int \mbox{\hyperlink{classcompiler_1_1_symbol__table_a0b0ab365beb0730a0ab58cac8f225cc8}{get\+\_\+top\+\_\+scope\+\_\+uuid}} ()
+\item 
+virtual int \mbox{\hyperlink{classcompiler_1_1_symbol__table_a1a5e394b28e4eaa9057895d08647762e}{get\+\_\+last\+\_\+find\+\_\+uuid}} (void)
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_symbol__block}{Symbol\+\_\+block}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_symbol__table_a168453a0da34f997ad0d7b940893a184}{get\+\_\+spec\+\_\+block}} (const uint32\+\_\+t \&index)
+\item 
+virtual std\+::list$<$ \mbox{\hyperlink{classcompiler_1_1_symbol__block}{Symbol\+\_\+block}} $\ast$ $>$ \mbox{\hyperlink{classcompiler_1_1_symbol__table_a506b6d185c3011c75104f120787352f9}{get\+\_\+symbol\+\_\+table}} (void)
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_symbol__table_a6bc0f8b3a45d0f91b2221073f99a36bc}{find\+\_\+symbol}} (const std\+::string \&name)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_symbol__table_a146de85a487ab66c20709fff00cdf6b3}{add\+\_\+symbol}} (const std\+::string \&name, \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}} $\ast$const symbol)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab66e4b8748ad702eed73bab082127680}{enter\+\_\+scope}} ()
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_symbol__table_a149f0055cb88569f5e5eabcb6e1d637a}{leave\+\_\+scope}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::map$<$ std\+::string, \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$ $>$ $>$ \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\+\_\+table}}
+\begin{DoxyCompactList}\small\item\em The symbol table. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}{last\+\_\+uuid}}
+\item 
+std\+::list$<$ \mbox{\hyperlink{classcompiler_1_1_symbol__block}{Symbol\+\_\+block}} $\ast$ $>$ \mbox{\hyperlink{classcompiler_1_1_symbol__table_a751314c8a608431cde7a71e476c6fcfd}{symbol\+\_\+table}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class for symbol table. 
+
+Class for symbol table.
+
+\begin{DoxyVerb}   The scope will increment as left brace appears. Especially, 1 denotes the global scope.
+\end{DoxyVerb}
+
+
+\begin{DoxyNote}{Note}
+Currently we do not take into consideration the storage of functions and structs. 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8hh_source_l00033}{33}} of file \mbox{\hyperlink{backup_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a9b911791f4d8bc509a04ee3b1d6de0be}\label{classcompiler_1_1_symbol__table_a9b911791f4d8bc509a04ee3b1d6de0be}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!Symbol\_table@{Symbol\_table}}
+\index{Symbol\_table@{Symbol\_table}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{Symbol\_table()}{Symbol\_table()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Symbol\+\_\+table\+::\+Symbol\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classcompiler_1_1_symbol__table}{Symbol\+\_\+table}} object. By default there is a global symbol table. 
+
+
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8cc_source_l00021}{21}} of file \mbox{\hyperlink{backup_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_ac5840e45736d5906f24c4aa5417d4eb2}\label{classcompiler_1_1_symbol__table_ac5840e45736d5906f24c4aa5417d4eb2}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!Symbol\_table@{Symbol\_table}}
+\index{Symbol\_table@{Symbol\_table}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{Symbol\_table()}{Symbol\_table()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Symbol\+\_\+table\+::\+Symbol\+\_\+table (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classcompiler_1_1_symbol__table}{Symbol\+\_\+table}} \&}]{symbol\+\_\+table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_ab464aacd27dc48d1f2db9392e9a413b4}\label{classcompiler_1_1_symbol__table_ab464aacd27dc48d1f2db9392e9a413b4}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!````~Symbol\_table@{$\sim$Symbol\_table}}
+\index{````~Symbol\_table@{$\sim$Symbol\_table}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{$\sim$Symbol\_table()}{~Symbol\_table()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual compiler\+::\+Symbol\+\_\+table\+::$\sim$\+Symbol\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a9d22648142c6745c206293feb2c407b9}\label{classcompiler_1_1_symbol__table_a9d22648142c6745c206293feb2c407b9}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!````~Symbol\_table@{$\sim$Symbol\_table}}
+\index{````~Symbol\_table@{$\sim$Symbol\_table}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{$\sim$Symbol\_table()}{~Symbol\_table()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual compiler\+::\+Symbol\+\_\+table\+::$\sim$\+Symbol\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00052}{52}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a146de85a487ab66c20709fff00cdf6b3}\label{classcompiler_1_1_symbol__table_a146de85a487ab66c20709fff00cdf6b3}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!add\_symbol@{add\_symbol}}
+\index{add\_symbol@{add\_symbol}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{add\_symbol()}{add\_symbol()}}
+{\footnotesize\ttfamily void compiler\+::\+Symbol\+\_\+table\+::add\+\_\+symbol (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{\mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}} $\ast$const}]{symbol }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00046}{46}} of file \mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_ab66e4b8748ad702eed73bab082127680}\label{classcompiler_1_1_symbol__table_ab66e4b8748ad702eed73bab082127680}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!enter\_scope@{enter\_scope}}
+\index{enter\_scope@{enter\_scope}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{enter\_scope()}{enter\_scope()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Symbol\+\_\+table\+::enter\+\_\+scope (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00070}{70}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a3de2c6e3d140c3e966256c5f541c0a08}\label{classcompiler_1_1_symbol__table_a3de2c6e3d140c3e966256c5f541c0a08}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!enter\_scope@{enter\_scope}}
+\index{enter\_scope@{enter\_scope}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{enter\_scope()}{enter\_scope()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void compiler\+::\+Symbol\+\_\+table\+::enter\+\_\+scope (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Called when a scope is entered. 
+
+
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8cc_source_l00026}{26}} of file \mbox{\hyperlink{backup_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a6bc0f8b3a45d0f91b2221073f99a36bc}\label{classcompiler_1_1_symbol__table_a6bc0f8b3a45d0f91b2221073f99a36bc}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!find\_symbol@{find\_symbol}}
+\index{find\_symbol@{find\_symbol}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{find\_symbol()}{find\_symbol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_symbol}{compiler\+::\+Symbol}} $\ast$ compiler\+::\+Symbol\+\_\+table\+::find\+\_\+symbol (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00022}{22}} of file \mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_aa3e887ab62bfe6ed059aee17f875a542}\label{classcompiler_1_1_symbol__table_aa3e887ab62bfe6ed059aee17f875a542}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!get@{get}}
+\index{get@{get}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$ compiler\+::\+Symbol\+\_\+table\+::get (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Find a symbol in each scope. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Item\+\_\+ident$\ast$ 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8cc_source_l00050}{50}} of file \mbox{\hyperlink{backup_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a3c2d5dcb42a69619107bbe1712ed0571}\label{classcompiler_1_1_symbol__table_a3c2d5dcb42a69619107bbe1712ed0571}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!get\_current\_scope@{get\_current\_scope}}
+\index{get\_current\_scope@{get\_current\_scope}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{get\_current\_scope()}{get\_current\_scope()}}
+{\footnotesize\ttfamily uint32\+\_\+t compiler\+::\+Symbol\+\_\+table\+::get\+\_\+current\+\_\+scope (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the current scope object. 
+
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8hh_source_l00077}{77}} of file \mbox{\hyperlink{backup_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a1a5e394b28e4eaa9057895d08647762e}\label{classcompiler_1_1_symbol__table_a1a5e394b28e4eaa9057895d08647762e}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!get\_last\_find\_uuid@{get\_last\_find\_uuid}}
+\index{get\_last\_find\_uuid@{get\_last\_find\_uuid}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{get\_last\_find\_uuid()}{get\_last\_find\_uuid()}}
+{\footnotesize\ttfamily virtual int compiler\+::\+Symbol\+\_\+table\+::get\+\_\+last\+\_\+find\+\_\+uuid (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00060}{60}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a168453a0da34f997ad0d7b940893a184}\label{classcompiler_1_1_symbol__table_a168453a0da34f997ad0d7b940893a184}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!get\_spec\_block@{get\_spec\_block}}
+\index{get\_spec\_block@{get\_spec\_block}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{get\_spec\_block()}{get\_spec\_block()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_symbol__block}{compiler\+::\+Symbol\+\_\+block}} $\ast$ compiler\+::\+Symbol\+\_\+table\+::get\+\_\+spec\+\_\+block (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00054}{54}} of file \mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a506b6d185c3011c75104f120787352f9}\label{classcompiler_1_1_symbol__table_a506b6d185c3011c75104f120787352f9}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!get\_symbol\_table@{get\_symbol\_table}}
+\index{get\_symbol\_table@{get\_symbol\_table}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{get\_symbol\_table()}{get\_symbol\_table()}}
+{\footnotesize\ttfamily virtual std\+::list$<$ \mbox{\hyperlink{classcompiler_1_1_symbol__block}{Symbol\+\_\+block}} $\ast$ $>$ compiler\+::\+Symbol\+\_\+table\+::get\+\_\+symbol\+\_\+table (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00064}{64}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a0b0ab365beb0730a0ab58cac8f225cc8}\label{classcompiler_1_1_symbol__table_a0b0ab365beb0730a0ab58cac8f225cc8}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!get\_top\_scope\_uuid@{get\_top\_scope\_uuid}}
+\index{get\_top\_scope\_uuid@{get\_top\_scope\_uuid}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{get\_top\_scope\_uuid()}{get\_top\_scope\_uuid()}}
+{\footnotesize\ttfamily virtual int compiler\+::\+Symbol\+\_\+table\+::get\+\_\+top\+\_\+scope\+\_\+uuid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00058}{58}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a149f0055cb88569f5e5eabcb6e1d637a}\label{classcompiler_1_1_symbol__table_a149f0055cb88569f5e5eabcb6e1d637a}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!leave\_scope@{leave\_scope}}
+\index{leave\_scope@{leave\_scope}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{leave\_scope()}{leave\_scope()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Symbol\+\_\+table\+::leave\+\_\+scope (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00072}{72}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a644a2b2133987d2823381ddc5a6bb816}\label{classcompiler_1_1_symbol__table_a644a2b2133987d2823381ddc5a6bb816}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!leave\_scope@{leave\_scope}}
+\index{leave\_scope@{leave\_scope}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{leave\_scope()}{leave\_scope()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void compiler\+::\+Symbol\+\_\+table\+::leave\+\_\+scope (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Called when a scope is leaved. 
+
+
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8cc_source_l00031}{31}} of file \mbox{\hyperlink{backup_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a94a2273c6d9b21df5c360206d14e1a02}\label{classcompiler_1_1_symbol__table_a94a2273c6d9b21df5c360206d14e1a02}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!put@{put}}
+\index{put@{put}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily void compiler\+::\+Symbol\+\_\+table\+::put (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const}]{item }\end{DoxyParamCaption})}
+
+
+
+Put an item into the symbol table in the current scope. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8cc_source_l00040}{40}} of file \mbox{\hyperlink{backup_2symbol__table_8cc_source}{symbol\+\_\+table.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}\label{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!last\_uuid@{last\_uuid}}
+\index{last\_uuid@{last\_uuid}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{last\_uuid}{last\_uuid}}
+{\footnotesize\ttfamily int compiler\+::\+Symbol\+\_\+table\+::last\+\_\+uuid\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00048}{48}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}\label{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!symbol\_table@{symbol\_table}}
+\index{symbol\_table@{symbol\_table}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{symbol\_table}{symbol\_table}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::map$<$std\+::string, \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}}$\ast$$>$ $>$ compiler\+::\+Symbol\+\_\+table\+::symbol\+\_\+table\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The symbol table. 
+
+The lookup of the symbol table is implemented as a stack. (but not a std\+::stack because std\+::stack does not allow for traversal) You are only allowed to access the top of the stack. 
+
+Definition at line \mbox{\hyperlink{backup_2symbol__table_8hh_source_l00042}{42}} of file \mbox{\hyperlink{backup_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol__table_a751314c8a608431cde7a71e476c6fcfd}\label{classcompiler_1_1_symbol__table_a751314c8a608431cde7a71e476c6fcfd}} 
+\index{compiler::Symbol\_table@{compiler::Symbol\_table}!symbol\_table@{symbol\_table}}
+\index{symbol\_table@{symbol\_table}!compiler::Symbol\_table@{compiler::Symbol\_table}}
+\doxysubsubsection{\texorpdfstring{symbol\_table}{symbol\_table}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily std\+::list$<$\mbox{\hyperlink{classcompiler_1_1_symbol__block}{Symbol\+\_\+block}}$\ast$$>$ compiler\+::\+Symbol\+\_\+table\+::symbol\+\_\+table\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00049}{49}} of file \mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh_source}{symbol\+\_\+table.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+backup/\mbox{\hyperlink{backup_2symbol__table_8hh}{symbol\+\_\+table.\+hh}}\item 
+include/frontend/symbol\+\_\+table/\mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh}{symbol\+\_\+table.\+hh}}\item 
+backup/\mbox{\hyperlink{backup_2symbol__table_8cc}{symbol\+\_\+table.\+cc}}\item 
+src/frontend/symbol\+\_\+table/\mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc}{symbol\+\_\+table.\+cc}}\end{DoxyCompactItemize}

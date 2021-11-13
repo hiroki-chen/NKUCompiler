@@ -1,0 +1,80 @@
+\hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source}{}\doxysection{symbol\+\_\+table.\+hh}
+\label{include_2frontend_2symbol__table_2symbol__table_8hh_source}\index{include/frontend/symbol\_table/symbol\_table.hh@{include/frontend/symbol\_table/symbol\_table.hh}}
+\mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00017}00017 \textcolor{preprocessor}{\#ifndef SYMBOL\_TABLE\_HH}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00018}00018 \textcolor{preprocessor}{\#define SYMBOL\_TABLE\_HH}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00020}00020 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{symbol_8hh}{frontend/symbol\_table/symbol.hh}}>}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00022}00022 \textcolor{preprocessor}{\#include <list>}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00023}00023 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00025}00025 \textcolor{comment}{// TODO: Implement our symbol table according to LAB5.}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00027}00027 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacecompiler}{compiler}} \{}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00029}\mbox{\hyperlink{namespacecompiler_aa7fb2b62084a5b23f76371cc0e87fd9c}{00029}} \textcolor{keyword}{using} \mbox{\hyperlink{namespacecompiler_aa7fb2b62084a5b23f76371cc0e87fd9c}{symbol\_table\_type}} = std::unordered\_map<std::string, Symbol*>;}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00031}\mbox{\hyperlink{classcompiler_1_1_symbol__block}{00031}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1_symbol__block}{Symbol\_block}} \{}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00032}00032 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00033}\mbox{\hyperlink{classcompiler_1_1_symbol__block_a036a9888ec62209d833b81d15beee374}{00033}}     \mbox{\hyperlink{namespacecompiler_aa7fb2b62084a5b23f76371cc0e87fd9c}{symbol\_table\_type}} \mbox{\hyperlink{classcompiler_1_1_symbol__block_a036a9888ec62209d833b81d15beee374}{block}};}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00035}00035 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00036}00036     \textcolor{keyword}{virtual} \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}}* \mbox{\hyperlink{classcompiler_1_1_symbol__block_a38db7cccb37087209f2cf2232fa888d3}{find\_symbol}}(\textcolor{keyword}{const} std::string\& name);}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00037}00037     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_symbol__block_a96d9c54583210cfc0d7215ac9c448dca}{add\_symbol}}(\textcolor{keyword}{const} std::string\& name, \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}}* \textcolor{keyword}{const} symbol);}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00038}\mbox{\hyperlink{namespacecompiler_aa8b1d792b1bc84c943dd5ba8797460a3}{00038}} \} \mbox{\hyperlink{namespacecompiler_aa8b1d792b1bc84c943dd5ba8797460a3}{Symbol\_block}};}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00046}00046 \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{namespacecompiler_a8804148d474e1bab2e5ec33b58a200a4}{Symbol\_table}} \{}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00047}00047 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00048}\mbox{\hyperlink{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}{00048}}     \textcolor{keywordtype}{int} \mbox{\hyperlink{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}{last\_uuid}};}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00049}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a751314c8a608431cde7a71e476c6fcfd}{00049}}     std::list<Symbol\_block*> \mbox{\hyperlink{classcompiler_1_1_symbol__table_a751314c8a608431cde7a71e476c6fcfd}{symbol\_table}};}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00051}00051 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00052}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a9d22648142c6745c206293feb2c407b9}{00052}}     \textcolor{keyword}{virtual} \mbox{\hyperlink{classcompiler_1_1_symbol__table_a9d22648142c6745c206293feb2c407b9}{\string~Symbol\_table}}()}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00053}00053     \{}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00054}00054         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& cur : \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}})}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00055}00055             \textcolor{keyword}{delete} cur;}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00056}00056     \}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00058}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a0b0ab365beb0730a0ab58cac8f225cc8}{00058}}     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} \mbox{\hyperlink{classcompiler_1_1_symbol__table_a0b0ab365beb0730a0ab58cac8f225cc8}{get\_top\_scope\_uuid}}() \{ \textcolor{keywordflow}{return} (\textcolor{keywordtype}{int})\mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}}.size() -\/ 1; \}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00060}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a1a5e394b28e4eaa9057895d08647762e}{00060}}     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} \mbox{\hyperlink{classcompiler_1_1_symbol__table_a1a5e394b28e4eaa9057895d08647762e}{get\_last\_find\_uuid}}(\textcolor{keywordtype}{void}) \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}{last\_uuid}}; \}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00062}00062     \textcolor{keyword}{virtual} \mbox{\hyperlink{classcompiler_1_1_symbol__block}{Symbol\_block}}* \mbox{\hyperlink{classcompiler_1_1_symbol__table_a168453a0da34f997ad0d7b940893a184}{get\_spec\_block}}(\textcolor{keyword}{const} uint32\_t\& index);}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00064}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a506b6d185c3011c75104f120787352f9}{00064}}     \textcolor{keyword}{virtual} std::list<Symbol\_block*> \mbox{\hyperlink{classcompiler_1_1_symbol__table_a506b6d185c3011c75104f120787352f9}{get\_symbol\_table}}(\textcolor{keywordtype}{void}) \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}}; \}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00066}00066     \textcolor{keyword}{virtual} \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}}* \mbox{\hyperlink{classcompiler_1_1_symbol__table_a6bc0f8b3a45d0f91b2221073f99a36bc}{find\_symbol}}(\textcolor{keyword}{const} std::string\& name);}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00068}00068     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_symbol__table_a146de85a487ab66c20709fff00cdf6b3}{add\_symbol}}(\textcolor{keyword}{const} std::string\& name, \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}}* \textcolor{keyword}{const} symbol);}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00070}\mbox{\hyperlink{classcompiler_1_1_symbol__table_ab66e4b8748ad702eed73bab082127680}{00070}}     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab66e4b8748ad702eed73bab082127680}{enter\_scope}}() \{ \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}}.push\_front(\textcolor{keyword}{new} \mbox{\hyperlink{namespacecompiler_aa8b1d792b1bc84c943dd5ba8797460a3}{Symbol\_block}}()); \}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00072}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a149f0055cb88569f5e5eabcb6e1d637a}{00072}}     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_symbol__table_a149f0055cb88569f5e5eabcb6e1d637a}{leave\_scope}}()}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00073}00073     \{}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00074}00074         \textcolor{keyword}{delete} (*\mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}}.begin());}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00075}00075         \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}}.pop\_back();}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00076}00076     \}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00077}00077 \} \mbox{\hyperlink{namespacecompiler_a8804148d474e1bab2e5ec33b58a200a4}{Symbol\_table}};}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00078}00078 \} \textcolor{comment}{// namespace compiler}}
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{include_2frontend_2symbol__table_2symbol__table_8hh_source_l00080}00080 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

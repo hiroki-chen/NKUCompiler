@@ -1,0 +1,156 @@
+\hypertarget{classcompiler_1_1_item__ident__pointer}{}\doxysection{compiler\+::Item\+\_\+ident\+\_\+pointer Class Reference}
+\label{classcompiler_1_1_item__ident__pointer}\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+
+
+Class for pointers.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+ident.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+ident\+\_\+pointer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcompiler_1_1_item__ident__pointer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_acb17b136c1a1a29c33b66af0fc2f407a}{Item\+\_\+ident\+\_\+pointer}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_a4097c27c86a078cfa88c719d6129b952}{Item\+\_\+ident\+\_\+pointer}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, const std\+::string \&\mbox{\hyperlink{classcompiler_1_1_item__ident_a1a0770d3496d41dc40b18da57d12485e}{name}})
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_ae1fd14bec555a45a36a0a415eb87acbc}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_a08f75fc87463150e6ec6ed35e2762d04}{add\+\_\+shape}} (void)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_a3eba36396920bacd25b32abe2a2ca7e3}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{Item\+\_\+ident\+::ident\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_ac8b2f8afd842802010cdae96fb2f5152}{get\+\_\+ident\+\_\+type}} (void) const override
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_a49db355090ad7a46cd7dcecd66371a4c}{$\sim$\+Item\+\_\+ident\+\_\+pointer}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_a4e771913a1f30c9d2491fa5caccee300}{shape}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class for pointers. 
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00099}{99}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_acb17b136c1a1a29c33b66af0fc2f407a}\label{classcompiler_1_1_item__ident__pointer_acb17b136c1a1a29c33b66af0fc2f407a}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!Item\_ident\_pointer@{Item\_ident\_pointer}}
+\index{Item\_ident\_pointer@{Item\_ident\_pointer}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{Item\_ident\_pointer()}{Item\_ident\_pointer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::\+Item\+\_\+ident\+\_\+pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_a4097c27c86a078cfa88c719d6129b952}\label{classcompiler_1_1_item__ident__pointer_a4097c27c86a078cfa88c719d6129b952}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!Item\_ident\_pointer@{Item\_ident\_pointer}}
+\index{Item\_ident\_pointer@{Item\_ident\_pointer}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{Item\_ident\_pointer()}{Item\_ident\_pointer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::\+Item\+\_\+ident\+\_\+pointer (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__ident_8cc_source_l00039}{39}} of file \mbox{\hyperlink{item__ident_8cc_source}{item\+\_\+ident.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_a49db355090ad7a46cd7dcecd66371a4c}\label{classcompiler_1_1_item__ident__pointer_a49db355090ad7a46cd7dcecd66371a4c}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!````~Item\_ident\_pointer@{$\sim$Item\_ident\_pointer}}
+\index{````~Item\_ident\_pointer@{$\sim$Item\_ident\_pointer}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_ident\_pointer()}{~Item\_ident\_pointer()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::$\sim$\+Item\+\_\+ident\+\_\+pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_a08f75fc87463150e6ec6ed35e2762d04}\label{classcompiler_1_1_item__ident__pointer_a08f75fc87463150e6ec6ed35e2762d04}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!add\_shape@{add\_shape}}
+\index{add\_shape@{add\_shape}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{add\_shape()}{add\_shape()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::add\+\_\+shape (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00111}{111}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_a3eba36396920bacd25b32abe2a2ca7e3}\label{classcompiler_1_1_item__ident__pointer_a3eba36396920bacd25b32abe2a2ca7e3}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classcompiler_1_1_item__ident_a9b2740bdbfc4186bb684b262b54edaa8}{compiler\+::\+Item\+\_\+ident}}.
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00113}{113}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_ac8b2f8afd842802010cdae96fb2f5152}\label{classcompiler_1_1_item__ident__pointer_ac8b2f8afd842802010cdae96fb2f5152}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!get\_ident\_type@{get\_ident\_type}}
+\index{get\_ident\_type@{get\_ident\_type}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{get\_ident\_type()}{get\_ident\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{Item\+\_\+ident\+::ident\+\_\+type}} compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::get\+\_\+ident\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__ident_a73e9ccb6cb8da507ce948b75b76fa652}{compiler\+::\+Item\+\_\+ident}}.
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00115}{115}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_ae1fd14bec555a45a36a0a415eb87acbc}\label{classcompiler_1_1_item__ident__pointer_ae1fd14bec555a45a36a0a415eb87acbc}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classcompiler_1_1_item__ident_ada3d1ba098dce12b174089bd6d0c746e}{compiler\+::\+Item\+\_\+ident}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__ident_8cc_source_l00063}{63}} of file \mbox{\hyperlink{item__ident_8cc_source}{item\+\_\+ident.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident__pointer_a4e771913a1f30c9d2491fa5caccee300}\label{classcompiler_1_1_item__ident__pointer_a4e771913a1f30c9d2491fa5caccee300}} 
+\index{compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}!shape@{shape}}
+\index{shape@{shape}!compiler::Item\_ident\_pointer@{compiler::Item\_ident\_pointer}}
+\doxysubsubsection{\texorpdfstring{shape}{shape}}
+{\footnotesize\ttfamily uint32\+\_\+t compiler\+::\+Item\+\_\+ident\+\_\+pointer\+::shape\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00102}{102}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh}{item\+\_\+ident.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__ident_8cc}{item\+\_\+ident.\+cc}}\end{DoxyCompactItemize}

@@ -1,0 +1,170 @@
+\hypertarget{classcompiler_1_1_item__literal}{}\doxysection{compiler\+::Item\+\_\+literal Class Reference}
+\label{classcompiler_1_1_item__literal}\index{compiler::Item\_literal@{compiler::Item\_literal}}
+
+
+Class for literals.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+literal.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+literal\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.786325cm]{classcompiler_1_1_item__literal}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{literal\+\_\+type}} \{ \newline
+\mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa27e2d4eecfb17dbdd85c289966252598}{INT\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aaa4d9fc8c4e71372801f51c2863ce1c19}{REAL\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa031edbf36efa1559a787ea370266ee85}{CHAR\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa1f506c07153ebb565f22f08438fe29a6}{STRING\+\_\+\+TYPE}}
+, \newline
+\mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa6b6eb584672bf811ec67c821c101d6f3}{ARRAY\+\_\+\+INIT}}
+ \}
+\item 
+typedef enum \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{compiler\+::\+Item\+\_\+literal\+::literal\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__literal_a46b407b8631a0f5247ba25dde826ad08}{literal\+\_\+type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{Item\+\_\+literal\+::literal\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__literal_a821301dd64ceb06f14f234006140e1c6}{get\+\_\+literal\+\_\+type}} (void) const =0
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__literal_a31642609717127153787f03df424f6d5}{get\+\_\+expr\+\_\+type}} (void) const override
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__literal_ad3b77acc90c3e48b9615e6069d2f56b5}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__literal_a203dc611a5b3ea230c9eaa564bd95f32}{Item\+\_\+literal}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__literal_aafd9a36be2489836011ff5a7486d0304}{Item\+\_\+literal}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}})
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__literal_ab4b4a9e8287ce2ae897dff09e7e894ca}{$\sim$\+Item\+\_\+literal}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class for literals. 
+
+Definition at line \mbox{\hyperlink{item__literal_8hh_source_l00031}{31}} of file \mbox{\hyperlink{item__literal_8hh_source}{item\+\_\+literal.\+hh}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_a46b407b8631a0f5247ba25dde826ad08}\label{classcompiler_1_1_item__literal_a46b407b8631a0f5247ba25dde826ad08}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!literal\_type@{literal\_type}}
+\index{literal\_type@{literal\_type}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{literal\_type}{literal\_type}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{compiler\+::\+Item\+\_\+literal\+::literal\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{compiler\+::\+Item\+\_\+literal\+::literal\+\_\+type}}}
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}\label{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!literal\_type@{literal\_type}}
+\index{literal\_type@{literal\_type}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{literal\_type}{literal\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{compiler\+::\+Item\+\_\+literal\+::literal\+\_\+type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT\_TYPE@{INT\_TYPE}!compiler::Item\_literal@{compiler::Item\_literal}}\index{compiler::Item\_literal@{compiler::Item\_literal}!INT\_TYPE@{INT\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa27e2d4eecfb17dbdd85c289966252598}\label{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa27e2d4eecfb17dbdd85c289966252598}} 
+INT\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REAL\_TYPE@{REAL\_TYPE}!compiler::Item\_literal@{compiler::Item\_literal}}\index{compiler::Item\_literal@{compiler::Item\_literal}!REAL\_TYPE@{REAL\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aaa4d9fc8c4e71372801f51c2863ce1c19}\label{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aaa4d9fc8c4e71372801f51c2863ce1c19}} 
+REAL\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHAR\_TYPE@{CHAR\_TYPE}!compiler::Item\_literal@{compiler::Item\_literal}}\index{compiler::Item\_literal@{compiler::Item\_literal}!CHAR\_TYPE@{CHAR\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa031edbf36efa1559a787ea370266ee85}\label{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa031edbf36efa1559a787ea370266ee85}} 
+CHAR\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STRING\_TYPE@{STRING\_TYPE}!compiler::Item\_literal@{compiler::Item\_literal}}\index{compiler::Item\_literal@{compiler::Item\_literal}!STRING\_TYPE@{STRING\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa1f506c07153ebb565f22f08438fe29a6}\label{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa1f506c07153ebb565f22f08438fe29a6}} 
+STRING\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARRAY\_INIT@{ARRAY\_INIT}!compiler::Item\_literal@{compiler::Item\_literal}}\index{compiler::Item\_literal@{compiler::Item\_literal}!ARRAY\_INIT@{ARRAY\_INIT}}}\mbox{\Hypertarget{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa6b6eb584672bf811ec67c821c101d6f3}\label{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3aa6b6eb584672bf811ec67c821c101d6f3}} 
+ARRAY\+\_\+\+INIT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{item__literal_8hh_source_l00033}{33}} of file \mbox{\hyperlink{item__literal_8hh_source}{item\+\_\+literal.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_a203dc611a5b3ea230c9eaa564bd95f32}\label{classcompiler_1_1_item__literal_a203dc611a5b3ea230c9eaa564bd95f32}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!Item\_literal@{Item\_literal}}
+\index{Item\_literal@{Item\_literal}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{Item\_literal()}{Item\_literal()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+literal\+::\+Item\+\_\+literal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_aafd9a36be2489836011ff5a7486d0304}\label{classcompiler_1_1_item__literal_aafd9a36be2489836011ff5a7486d0304}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!Item\_literal@{Item\_literal}}
+\index{Item\_literal@{Item\_literal}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{Item\_literal()}{Item\_literal()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+literal\+::\+Item\+\_\+literal (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__literal_8cc_source_l00025}{25}} of file \mbox{\hyperlink{item__literal_8cc_source}{item\+\_\+literal.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_ab4b4a9e8287ce2ae897dff09e7e894ca}\label{classcompiler_1_1_item__literal_ab4b4a9e8287ce2ae897dff09e7e894ca}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!````~Item\_literal@{$\sim$Item\_literal}}
+\index{````~Item\_literal@{$\sim$Item\_literal}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_literal()}{~Item\_literal()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+literal\+::$\sim$\+Item\+\_\+literal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_ad3b77acc90c3e48b9615e6069d2f56b5}\label{classcompiler_1_1_item__literal_ad3b77acc90c3e48b9615e6069d2f56b5}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+literal\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a3f8c5680c933a83644090dd630068ddb}{compiler\+::\+Item\+\_\+literal\+\_\+numeric}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__int_abd57fe692823e2fcbcc97930cc5a1e6e}{compiler\+::\+Item\+\_\+literal\+\_\+int}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__real_a7a65e31ee9285b4a6775d45dcf247414}{compiler\+::\+Item\+\_\+literal\+\_\+real}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__char_a033c0f126938da80c3f2c0b61234f7e3}{compiler\+::\+Item\+\_\+literal\+\_\+char}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__string_ab342fb8f851b05cabf29dcbc127d338d}{compiler\+::\+Item\+\_\+literal\+\_\+string}}, and \mbox{\hyperlink{classcompiler_1_1_item__literal__array__init_a68cf68c595094c57c17337b94a5ea2a7}{compiler\+::\+Item\+\_\+literal\+\_\+array\+\_\+init}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__literal_8hh_source_l00045}{45}} of file \mbox{\hyperlink{item__literal_8hh_source}{item\+\_\+literal.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_a31642609717127153787f03df424f6d5}\label{classcompiler_1_1_item__literal_a31642609717127153787f03df424f6d5}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!get\_expr\_type@{get\_expr\_type}}
+\index{get\_expr\_type@{get\_expr\_type}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{get\_expr\_type()}{get\_expr\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} compiler\+::\+Item\+\_\+literal\+::get\+\_\+expr\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__expr_ad4b9d671701f636b81def21a83fc3950}{compiler\+::\+Item\+\_\+expr}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__literal_8hh_source_l00043}{43}} of file \mbox{\hyperlink{item__literal_8hh_source}{item\+\_\+literal.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal_a821301dd64ceb06f14f234006140e1c6}\label{classcompiler_1_1_item__literal_a821301dd64ceb06f14f234006140e1c6}} 
+\index{compiler::Item\_literal@{compiler::Item\_literal}!get\_literal\_type@{get\_literal\_type}}
+\index{get\_literal\_type@{get\_literal\_type}!compiler::Item\_literal@{compiler::Item\_literal}}
+\doxysubsubsection{\texorpdfstring{get\_literal\_type()}{get\_literal\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{Item\+\_\+literal\+::literal\+\_\+type}} compiler\+::\+Item\+\_\+literal\+::get\+\_\+literal\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classcompiler_1_1_item__literal__int_a3f1dacb67c385be798f2b3ea7379f36d}{compiler\+::\+Item\+\_\+literal\+\_\+int}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__real_a1d4883bf2b0679489c649d287cfc9003}{compiler\+::\+Item\+\_\+literal\+\_\+real}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__char_a17338f21d59d1489b5ca4d685d2cec46}{compiler\+::\+Item\+\_\+literal\+\_\+char}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__string_a4b84e853b1426e41fc21986ce10e5408}{compiler\+::\+Item\+\_\+literal\+\_\+string}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__array__init_a07f983fad37854b73dd20de46876951c}{compiler\+::\+Item\+\_\+literal\+\_\+array\+\_\+init}}, and \mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a3de9cd4f71fd1004cf460523ba4a8945}{compiler\+::\+Item\+\_\+literal\+\_\+numeric}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__literal_8hh}{item\+\_\+literal.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__literal_8cc}{item\+\_\+literal.\+cc}}\end{DoxyCompactItemize}

@@ -1,0 +1,203 @@
+
+\begin{DoxyItemize}
+\item LAB5以后的作业直接在这里写吧。
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysubsection{设计目标}\label{md__r_e_a_d_m_e_autotoc_md1}
+
+\begin{DoxyItemize}
+\item 纯\+C++实现；
+\item 采用多态和虚函数实现抽象语法树（\+Abstract Syntax Tree）的构建；
+\item 中间代码生成 （\+IR）；
+\item 汇编代码生成；
+\item 符号表查询
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysubsection{食用方法}\label{md__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item 在\+Unix系统中用{\ttfamily cmake}指令编译工程：
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{mkdir build}
+\DoxyCodeLine{cd build}
+\DoxyCodeLine{cmake ..}
+\DoxyCodeLine{make}
+\DoxyCodeLine{make install}
+
+\end{DoxyCode}
+
+
+测试的话，就直接
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make test}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item 如果你指定了{\ttfamily -\/s}后面为目录，那么{\ttfamily -\/o}会被忽略，所有的输出都会存入{\ttfamily -\/s}指定目录下的{\ttfamily ./output}目录。
+\item 对于编译指令不熟悉的可以输入-\/h查看使用指南。
+\item {\bfseries{目前只支持打印抽象语法树，而且还有\+BUG没有改完！}} 样例输入{\ttfamily test.\+sy}：
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{c++\}}
+\DoxyCodeLine{void main(int a) \{}
+\DoxyCodeLine{    continue;}
+\DoxyCodeLine{    return 1;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    if (\string~(false \string^ 5) != !false) \{}
+\DoxyCodeLine{        while (true) \{}
+\DoxyCodeLine{            int a = 3 * 3 + 4 -\/ b;}
+\DoxyCodeLine{        \}}
+\DoxyCodeLine{    \} else \{}
+\DoxyCodeLine{        continue;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+样例输出：
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ Takanashi Compiler is running!! }
+\DoxyCodeLine{Program Root: }
+\DoxyCodeLine{└──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Function Definition with return type void}
+\DoxyCodeLine{│  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Identifier with name main}
+\DoxyCodeLine{│  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Function Definition Argument List}
+\DoxyCodeLine{│  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Function Definition Argument with type int}
+\DoxyCodeLine{│  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Identifier with name a}
+\DoxyCodeLine{│  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Block}
+\DoxyCodeLine{│  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Continue Statement}
+\DoxyCodeLine{│  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Return statement}
+\DoxyCodeLine{│  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 1}
+\DoxyCodeLine{│  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m If-\/else Statement}
+\DoxyCodeLine{│  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Binary Expression with type Conditional\_nonequal}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Unary Expression with type BIT\_NEGATIVE}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Binary Expression with type Bitwise\_xor}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 0}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 5}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Unary Expression with type LOGIC\_NOT}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 0}
+\DoxyCodeLine{│  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Block}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m While Statement}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 1}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Block}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Declaration}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Variale Declaration with initial value}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Identifier with name a}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Binary Expression with type Sub}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Binary Expression with type Add}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Binary Expression with type Mul}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  ├──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 3}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 3}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Literal Numeric with value 4}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Identifier with name b}
+\DoxyCodeLine{│  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Block}
+\DoxyCodeLine{│  │  │  │  │  │  │  │  └──\(\backslash\)033[4;96;49mNode:\(\backslash\)033[0m Continue Statement}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item TODO\+: 做个输出的美化$\sim$
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{项目布局（截止2021-\/10-\/5）}\label{md__r_e_a_d_m_e_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{.}
+\DoxyCodeLine{├── backup}
+\DoxyCodeLine{├── build}
+\DoxyCodeLine{│   ├── backend}
+\DoxyCodeLine{│   ├── common}
+\DoxyCodeLine{│   ├── frontend}
+\DoxyCodeLine{│   │   ├── ir}
+\DoxyCodeLine{│   │   ├── nodes}
+\DoxyCodeLine{│   │   ├── parser}
+\DoxyCodeLine{│   │   └── symbol\_table}
+\DoxyCodeLine{│   ├── ir}
+\DoxyCodeLine{│   ├── runtime}
+\DoxyCodeLine{│   └── shared}
+\DoxyCodeLine{├── include}
+\DoxyCodeLine{│   ├── backend}
+\DoxyCodeLine{│   ├── common}
+\DoxyCodeLine{│   ├── frontend}
+\DoxyCodeLine{│   │   ├── nodes}
+\DoxyCodeLine{│   │   ├── parser}
+\DoxyCodeLine{│   │   └── symbol\_table}
+\DoxyCodeLine{│   ├── ir}
+\DoxyCodeLine{│   └── runtime}
+\DoxyCodeLine{├── src}
+\DoxyCodeLine{│   ├── backend}
+\DoxyCodeLine{│   ├── common}
+\DoxyCodeLine{│   ├── frontend}
+\DoxyCodeLine{│   │   ├── nodes}
+\DoxyCodeLine{│   │   ├── parser}
+\DoxyCodeLine{│   │   └── symbol\_table}
+\DoxyCodeLine{│   ├── ir}
+\DoxyCodeLine{│   └── runtime}
+\DoxyCodeLine{└── test}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{继承关系和几点说明}\label{md__r_e_a_d_m_e_autotoc_md4}
+🚧施工中🚧
+
+
+\begin{DoxyItemize}
+\item 类和其文件名是一样的，想要找什么就直接去对应的文件里面找就行。
+\item 所有节点的基类都是{\ttfamily Item}，而该类是抽象基类，请不要实例化，它只能通过指针的形式使用。
+\item {\ttfamily Item\+\_\+expr}继承自{\ttfamily Item}，基本上别的类都是从这里长出来的。
+\item {\ttfamily Item\+\_\+stmt}继承自{\ttfamily Item\+\_\+expr}，代表表达式类型。
+\item 为什么不把{\ttfamily Item\+\_\+stmt}作为{\ttfamily Item}的子节点？那是因为{\ttfamily Item\+\_\+stmt}包含{\ttfamily Item\+\_\+expr}，但是如果{\ttfamily Item\+\_\+expr}又是{\ttfamily item\+\_\+stmt}的子节点的话，就会互相包含无穷无尽了。
+\item {\ttfamily frontend}为前端分析所需要的源文件和头文件，而{\ttfamily backend}存储了汇编指令生成和中间代码优化等相关文件；{\ttfamily common}是一些通用的枚举类以及一些工具。
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Item -\/> Item\_expr -\/> Item\_expr\_cond}
+\DoxyCodeLine{                  -\/> Item\_ident         -\/> Item\_ident\_array}
+\DoxyCodeLine{                                        -\/> Item\_ident\_pointer}
+\DoxyCodeLine{}
+\DoxyCodeLine{                  -\/> Item\_literal       -\/> Item\_literal\_numeric     -\/> Item\_literal\_int}
+\DoxyCodeLine{                                                                    -\/> Item\_literal\_real}
+\DoxyCodeLine{                                                                    -\/> Item\_literal\_char}
+\DoxyCodeLine{                                        -\/> Item\_literal\_string}
+\DoxyCodeLine{                                        -\/> Item\_literal\_array\_init}
+\DoxyCodeLine{}
+\DoxyCodeLine{                  -\/> Item\_expr\_binary   -\/> Item\_expr\_add}
+\DoxyCodeLine{                                        -\/> Item\_expr\_sub}
+\DoxyCodeLine{                                        -\/> Item\_expr\_mul}
+\DoxyCodeLine{                                        -\/> Item\_expr\_div}
+\DoxyCodeLine{                                                }
+\DoxyCodeLine{                  -\/> Item\_stmt          -\/> Item\_block}
+\DoxyCodeLine{                                        -\/> Item\_stmt\_eif}
+\DoxyCodeLine{                                        -\/> Item\_stmt\_while}
+\DoxyCodeLine{                                        -\/> Item\_stmt\_for}
+\DoxyCodeLine{                                        -\/> Item\_stmt\_return}
+\DoxyCodeLine{                                        -\/> Item\_stmt\_break}
+\DoxyCodeLine{                                        -\/> Item\_stmt\_continue}
+\DoxyCodeLine{                                        -\/> Item\_stmt\_decl}
+\DoxyCodeLine{                 }
+\DoxyCodeLine{                 -\/> Item\_func\_def\_list}
+\DoxyCodeLine{                 -\/> Item\_func\_def\_arg}
+\DoxyCodeLine{                 -\/> Item\_func\_call}
+\DoxyCodeLine{                 -\/> Item\_func\_call\_list}
+\DoxyCodeLine{}
+\DoxyCodeLine{     -\/> Item\_decl -\/> Item\_decl\_var      -\/> Item\_decl\_var\_init}
+\DoxyCodeLine{                  -\/> Item\_decl\_array    -\/> Item\_decl\_array\_init}
+\DoxyCodeLine{                  -\/> Item\_decl\_pointer  -\/> Item\_decl\_pointer\_init}
+\DoxyCodeLine{}
+\DoxyCodeLine{     -\/> Item\_func\_def}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsubsection{Prerequisites}\label{md__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item C++标准默认为17，请使用支持\+C++17以上的编译器进行编译，已知可以在clang 12和\+GCC-\/11（需要链接到flex和yacc）上运行。
+\item 采用了cxxopts库作为command line parser，具体实现已经放在了{\ttfamily \mbox{\hyperlink{runtime_8cc}{src/runtime/runtime.\+cc}}}中了。 
+\end{DoxyItemize}

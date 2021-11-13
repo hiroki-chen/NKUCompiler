@@ -1,0 +1,287 @@
+\hypertarget{ir_8hh_source}{}\doxysection{ir.\+hh}
+\label{ir_8hh_source}\index{include/ir/ir.hh@{include/ir/ir.hh}}
+\mbox{\hyperlink{ir_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00017}00017 \textcolor{preprocessor}{\#ifndef IR\_HH}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00018}00018 \textcolor{preprocessor}{\#define IR\_HH}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00020}00020 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00021}00021 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00022}00022 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00023}00023 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00025}00025 \textcolor{preprocessor}{\#ifndef FORMAT}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00026}\mbox{\hyperlink{ir_8hh_a00e0d27085de736abbbc43c089fbf487}{00026}} \textcolor{preprocessor}{\#define FORMAT(output, str)                                 \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00027}00027 \textcolor{preprocessor}{    \{                                                       \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00028}00028 \textcolor{preprocessor}{        output << std::ios::left << std::setw(0x10) << str; \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00029}00029 \textcolor{preprocessor}{    \}}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00030}00030 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00032}00032 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacecompiler_1_1ir}{compiler::ir}} \{}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00037}00037 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char}* op\_name[42] \{}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00038}00038     \textcolor{stringliteral}{"{}NOP"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00039}00039     \textcolor{comment}{// Basic algorithmic operations}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00040}00040     \textcolor{stringliteral}{"{}IADD"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00041}00041     \textcolor{stringliteral}{"{}ISUB"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00042}00042     \textcolor{stringliteral}{"{}IMUL"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00043}00043     \textcolor{stringliteral}{"{}IDIV"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00044}00044     \textcolor{stringliteral}{"{}IMOD"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00046}00046     \textcolor{comment}{// For floats.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00047}00047     \textcolor{stringliteral}{"{}FADD"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00048}00048     \textcolor{stringliteral}{"{}FSUB"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00049}00049     \textcolor{stringliteral}{"{}FMUL"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00050}00050     \textcolor{stringliteral}{"{}FDIV"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00051}00051     \textcolor{stringliteral}{"{}FNEG"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00053}00053     \textcolor{comment}{// Assignment}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00054}00054     \textcolor{stringliteral}{"{}MOV"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00056}00056     \textcolor{comment}{// Function call}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00057}00057     \textcolor{stringliteral}{"{}CALL"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00058}00058     \textcolor{stringliteral}{"{}RET"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00060}00060     \textcolor{comment}{// Jump}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00061}00061     \textcolor{stringliteral}{"{}JMP"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00062}00062     \textcolor{stringliteral}{"{}JGE"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00063}00063     \textcolor{stringliteral}{"{}JLE"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00064}00064     \textcolor{stringliteral}{"{}JEQ"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00065}00065     \textcolor{stringliteral}{"{}JNE"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00066}00066     \textcolor{stringliteral}{"{}JLT"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00067}00067     \textcolor{stringliteral}{"{}JGT"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00069}00069     \textcolor{comment}{// Bit operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00070}00070     \textcolor{stringliteral}{"{}BAND"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00071}00071     \textcolor{stringliteral}{"{}BOR"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00072}00072     \textcolor{stringliteral}{"{}BXOR"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00073}00073     \textcolor{stringliteral}{"{}BNEG"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00074}00074     \textcolor{stringliteral}{"{}SHL"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00075}00075     \textcolor{stringliteral}{"{}LSHR"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00076}00076     \textcolor{stringliteral}{"{}ASHR"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00078}00078     \textcolor{comment}{// Logic operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00079}00079     \textcolor{stringliteral}{"{}LAND"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00080}00080     \textcolor{stringliteral}{"{}LOR"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00081}00081     \textcolor{stringliteral}{"{}LNOT"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00083}00083     \textcolor{comment}{// Relational operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00084}00084     \textcolor{stringliteral}{"{}CMP"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00086}00086     \textcolor{comment}{// Memory related operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00087}00087     \textcolor{stringliteral}{"{}LOAD"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00088}00088     \textcolor{stringliteral}{"{}STORE"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00089}00089     \textcolor{stringliteral}{"{}MALLOC"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00091}00091     \textcolor{comment}{// Delimiters.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00092}00092     \textcolor{stringliteral}{"{}BEGIN\_DATA"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00093}00093     \textcolor{stringliteral}{"{}END\_DATA"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00094}00094     \textcolor{stringliteral}{"{}BEGIN\_FUNC"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00095}00095     \textcolor{stringliteral}{"{}END\_FUNC"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00096}00096     \textcolor{stringliteral}{"{}BEGIN\_STRUCT"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00097}00097     \textcolor{stringliteral}{"{}END\_STRUCT"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00099}00099     \textcolor{comment}{// Jump labels.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00100}00100     \textcolor{stringliteral}{"{}LBL"{}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00101}00101 \};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00106}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{00106}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\_type}} \{}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00107}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe}{00107}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe}{NOP}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00108}00108     \textcolor{comment}{// Basic algorithmic operations}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00109}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b}{00109}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b}{IADD}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00110}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7}{00110}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7}{ISUB}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00111}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2}{00111}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2}{IMUL}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00112}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69}{00112}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69}{IDIV}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00113}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac00d3283905503d016f75323069b8393}{00113}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac00d3283905503d016f75323069b8393}{IMOD}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00115}00115     \textcolor{comment}{// For floats.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00116}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7d708eb8af8a38f4186b096a2acb9346}{00116}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7d708eb8af8a38f4186b096a2acb9346}{FADD}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00117}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99}{00117}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99}{FSUB}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00118}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e}{00118}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e}{FMUL}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00119}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa5e4104c1540b137c25a4dcf56d53f76}{00119}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa5e4104c1540b137c25a4dcf56d53f76}{FDIV}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00120}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a51178327a4b243620b43446a46ce98db}{00120}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a51178327a4b243620b43446a46ce98db}{FNEG}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00122}00122     \textcolor{comment}{// Assignment}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00123}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83}{00123}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83}{MOV}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00125}00125     \textcolor{comment}{// Function call}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00126}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568}{00126}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568}{CALL}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00127}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae438619da937d53d9c3aae1fbacbf1a0}{00127}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae438619da937d53d9c3aae1fbacbf1a0}{RET}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00129}00129     \textcolor{comment}{// Jump}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00130}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4}{00130}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4}{JMP}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00131}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8}{00131}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8}{JGE}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00132}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9}{00132}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9}{JLE}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00133}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6}{00133}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6}{JEQ}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00134}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff}{00134}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff}{JNE}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00135}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4}{00135}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4}{JLT}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00136}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5}{00136}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5}{JGT}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00138}00138     \textcolor{comment}{// Bit operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00139}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac}{00139}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac}{BAND}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00140}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f}{00140}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f}{BOR}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00141}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5}{00141}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5}{BXOR}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00142}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f}{00142}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f}{BNEG}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00143}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aee780aab6f2f86db39a4496c75f2c796}{00143}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aee780aab6f2f86db39a4496c75f2c796}{SHL}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00144}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4fd82151e64bbb7d538d390cc03ae830}{00144}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4fd82151e64bbb7d538d390cc03ae830}{LSHR}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00145}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326}{00145}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326}{ASHR}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00147}00147     \textcolor{comment}{// Logic operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00148}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b}{00148}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b}{LAND}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00149}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3b4e94d8fcb831b0b337dd4f7b6246ee}{00149}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3b4e94d8fcb831b0b337dd4f7b6246ee}{LOR}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00150}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4c3925b97622203ea43a941f812614de}{00150}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4c3925b97622203ea43a941f812614de}{LNOT}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00152}00152     \textcolor{comment}{// Relational operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00153}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1}{00153}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1}{CMP}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00155}00155     \textcolor{comment}{// Memory related operations.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00156}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3}{00156}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3}{LOAD}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00157}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07}{00157}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07}{STORE}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00158}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be}{00158}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be}{MALLOC}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00159}00159 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00160}00160     \textcolor{comment}{// Delimiters.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00161}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9}{00161}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9}{BEGIN\_DATA}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00162}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347}{00162}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347}{END\_DATA}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00163}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122}{00163}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122}{BEGIN\_FUNC}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00164}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4}{00164}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4}{END\_FUNC}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00165}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b}{00165}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b}{BEGIN\_STRUCT}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00166}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119}{00166}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119}{END\_STRUCT}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00168}00168     \textcolor{comment}{// Jump labels.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00169}\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9}{00169}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9}{LBL}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00170}\mbox{\hyperlink{namespacecompiler_1_1ir_a57bbb2a11665e7d64a6324d99c90fce1}{00170}} \} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\_type}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00171}00171 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00177}\mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{00177}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\_type}} \{}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00178}\mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222}{00178}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222}{i32}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00179}\mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513}{00179}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513}{i8}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00180}00180     \textcolor{comment}{// A little bit of complex...}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00181}\mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170}{00181}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170}{DB}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00182}\mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a}{00182}}     \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a}{FL}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00183}\mbox{\hyperlink{namespacecompiler_1_1ir_a8378a129107654aeb3ff06a8415164d9}{00183}} \} \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\_type}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00184}00184 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00189}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{00189}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}} \{}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00190}00190 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00191}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}{00191}}     \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\_type}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}{type}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00193}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}{00193}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}{identifier}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00195}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}{00195}}     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}{is\_ptr}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00197}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}{00197}}     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}{is\_var}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00199}00199     \textcolor{comment}{// We need to convert the value to hexical.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00200}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}{00200}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}{value}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00202}00202 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00203}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a98c7fbe9315a94e9d75e51f6f6fa707e}{00203}}     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a98c7fbe9315a94e9d75e51f6f6fa707e}{Operand}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00205}00205     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a98c7fbe9315a94e9d75e51f6f6fa707e}{Operand}}(}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00206}00206         \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\_type}}\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}{type}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00207}00207         \textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}{identifier}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00208}00208         \textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}{value}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00209}00209         \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}{is\_var}} = \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00210}00210         \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}{is\_ptr}} = \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00212}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ae7931fb159adcc42d5bb25bc90ab2eba}{00212}}     \textcolor{keyword}{virtual} \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\_type}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ae7931fb159adcc42d5bb25bc90ab2eba}{get\_type}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}{type}}; \}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00213}00213 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00214}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa9ded29518394172d7d71d17268817cc}{00214}}     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa9ded29518394172d7d71d17268817cc}{get\_is\_ptr}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}{is\_ptr}}; \}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00215}00215 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00216}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ad193c8ded516331cde2f78f52762376a}{00216}}     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ad193c8ded516331cde2f78f52762376a}{get\_is\_var}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}{is\_var}}; \}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00217}00217 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00218}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aad8de39596624f1c5279904e246a0130}{00218}}     \textcolor{keyword}{virtual} std::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aad8de39596624f1c5279904e246a0130}{get\_identifier}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}{identifier}}; \}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00220}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a751faf85146a7753ada218318285b7b2}{00220}}     \textcolor{keyword}{virtual} std::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a751faf85146a7753ada218318285b7b2}{get\_value}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}{value}}; \}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00221}00221 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00222}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ac9f1a2a2af04ff7ff312b1489df59f41}{00222}}     \textcolor{keyword}{virtual} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ac9f1a2a2af04ff7ff312b1489df59f41}{\string~Operand}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00223}\mbox{\hyperlink{namespacecompiler_1_1ir_ac2c75241ce64a3aa3640d9b002f956b8}{00223}} \} \mbox{\hyperlink{namespacecompiler_1_1ir_ac2c75241ce64a3aa3640d9b002f956b8}{Operand}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00224}00224 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00229}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{00229}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{Operand\_ptr}} final : \textcolor{keyword}{public} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}} \{}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00230}00230 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00231}00231     \textcolor{comment}{// How many aterisks it has.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00232}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_a979126e03f4ac42f59c869a08ee15dbd}{00232}}     \textcolor{keyword}{const} uint32\_t \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_a979126e03f4ac42f59c869a08ee15dbd}{shape}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00233}00233 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00234}00234 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00235}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_ad6eed9140fca81eec67f1083d077c0db}{00235}}     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_ad6eed9140fca81eec67f1083d077c0db}{Operand\_ptr}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00236}00236 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00237}00237     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_ad6eed9140fca81eec67f1083d077c0db}{Operand\_ptr}}(}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00238}00238         \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\_type}}\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}{type}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00239}00239         \textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}{identifier}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00240}00240         \textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}{value}},}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00241}00241         \textcolor{keyword}{const} uint32\_t\& \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_a979126e03f4ac42f59c869a08ee15dbd}{shape}});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00242}00242 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00243}\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_a8de7fb4ba3715d848f01e364841e0187}{00243}}     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr_a8de7fb4ba3715d848f01e364841e0187}{\string~Operand\_ptr}}() \textcolor{keyword}{override} = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00244}\mbox{\hyperlink{namespacecompiler_1_1ir_af4e784269e47ac5f8fcc2e6527b8c79e}{00244}} \} \mbox{\hyperlink{namespacecompiler_1_1ir_af4e784269e47ac5f8fcc2e6527b8c79e}{Operand\_ptr}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00265}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{00265}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}} final \{}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00266}00266 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00267}00267     \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\_type}} type;}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00268}00268 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00269}00269     \textcolor{keyword}{const} std::string label;}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00270}00270 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00271}00271     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_a;}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00272}00272     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_b;}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00273}00273     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_c;}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00274}00274     \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} dst;}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00275}00275 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00276}00276     uint32\_t lineno;}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00277}00277 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00278}00278     \textcolor{comment}{// void emit\_helper(decltype<compiler::ir::isvar> callback, const bool\& chained = true) const;}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00279}00279 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00289}00289     \textcolor{keywordtype}{bool} emit\_helper(std::function<\textcolor{keywordtype}{bool}(\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const})>\&\& callback, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& chained = \textcolor{keyword}{true}) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00290}00290 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00298}00298     \textcolor{keywordtype}{bool} emit\_helper(\textcolor{keyword}{decltype}(\&\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ad193c8ded516331cde2f78f52762376a}{Operand::get\_is\_var}})\&\& callback, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& chained = \textcolor{keyword}{true}) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00299}00299 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00307}00307     \textcolor{keywordtype}{void} walk\_ir(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const})>\&\& callback, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& chained = \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00308}00308 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00309}00309 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00310}00310     \textcolor{comment}{// Default constructor is definitely not allowed.}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00311}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_a110038524afefd162f2b839f563b6cd4}{00311}}     \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_a110038524afefd162f2b839f563b6cd4}{IR}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00312}00312 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00313}00313     \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_a110038524afefd162f2b839f563b6cd4}{IR}}(}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00314}00314         \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\_type}}\& operation,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00315}00315         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} dst,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00316}00316         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_a,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00317}00317         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_b,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00318}00318         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_c,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00319}00319         \textcolor{keyword}{const} std::string\& labal = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00320}00320 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00321}00321     \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_a110038524afefd162f2b839f563b6cd4}{IR}}(}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00322}00322         \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\_type}}\& operation,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00323}00323         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} dst,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00324}00324         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_a,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00325}00325         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_b,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00326}00326         \textcolor{keyword}{const} std::string\& labal = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00327}00327 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00328}00328     \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_a110038524afefd162f2b839f563b6cd4}{IR}}(}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00329}00329         \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\_type}}\& operation,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00330}00330         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} dst,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00331}00331         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} operand\_a,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00332}00332         \textcolor{keyword}{const} std::string\& label = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00333}00333 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00334}00334     \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_a110038524afefd162f2b839f563b6cd4}{IR}}(}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00335}00335         \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\_type}}\& operation,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00336}00336         \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}* \textcolor{keyword}{const} dst,}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00337}00337         \textcolor{keyword}{const} std::string\& label = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00338}00338 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00345}00345     \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_ab38b34d883093dbd500817df2d90ae58}{emit\_ir}}(std::ostream\& out = std::cout, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& verbose = \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00346}\mbox{\hyperlink{namespacecompiler_1_1ir_a5895fb59592f783972fd007adaea2dff}{00346}} \} \mbox{\hyperlink{namespacecompiler_1_1ir_a5895fb59592f783972fd007adaea2dff}{IR}};}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00347}00347 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00348}00348 \} \textcolor{comment}{// namespace compiler::ir}}
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00349}00349 }
+\DoxyCodeLine{\Hypertarget{ir_8hh_source_l00350}00350 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

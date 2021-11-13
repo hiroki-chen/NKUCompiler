@@ -1,0 +1,147 @@
+\hypertarget{classcompiler_1_1_item__expr__comma}{}\doxysection{compiler\+::Item\+\_\+expr\+\_\+comma Class Reference}
+\label{classcompiler_1_1_item__expr__comma}\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+
+
+{\ttfamily \#include $<$item\+\_\+expr.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+expr\+\_\+comma\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcompiler_1_1_item__expr__comma}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr__comma_a5c3c479e36cd7bd3d73c26dfd55c7f2e}{Item\+\_\+expr\+\_\+comma}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr__comma_a92755a5befb90d051b38a4749cbbd91b}{Item\+\_\+expr\+\_\+comma}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}})
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__expr__comma_a2be31a1d957461d6f034239293863953}{add\+\_\+expression}} (\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const expression)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__expr__comma_a8e65b13bf3a8caeb95510ba228491843}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__expr__comma_a59f3c20f1a796e86ddc202c0236b7894}{get\+\_\+expr\+\_\+type}} (void) const override
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__expr__comma_ad8af0ac45d3e0ffd5de6a8b1071d2b1d}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr__comma_abe9b2ea24b305b11f32b6288bcb4b350}{$\sim$\+Item\+\_\+expr\+\_\+comma}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$ $>$ \mbox{\hyperlink{classcompiler_1_1_item__expr__comma_a96e041fc3c33cb06deacd11ac7b911c7}{expressions}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00081}{81}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_a5c3c479e36cd7bd3d73c26dfd55c7f2e}\label{classcompiler_1_1_item__expr__comma_a5c3c479e36cd7bd3d73c26dfd55c7f2e}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!Item\_expr\_comma@{Item\_expr\_comma}}
+\index{Item\_expr\_comma@{Item\_expr\_comma}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{Item\_expr\_comma()}{Item\_expr\_comma()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+expr\+\_\+comma\+::\+Item\+\_\+expr\+\_\+comma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_a92755a5befb90d051b38a4749cbbd91b}\label{classcompiler_1_1_item__expr__comma_a92755a5befb90d051b38a4749cbbd91b}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!Item\_expr\_comma@{Item\_expr\_comma}}
+\index{Item\_expr\_comma@{Item\_expr\_comma}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{Item\_expr\_comma()}{Item\_expr\_comma()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+expr\+\_\+comma\+::\+Item\+\_\+expr\+\_\+comma (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8cc_source_l00033}{33}} of file \mbox{\hyperlink{item__expr_8cc_source}{item\+\_\+expr.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_abe9b2ea24b305b11f32b6288bcb4b350}\label{classcompiler_1_1_item__expr__comma_abe9b2ea24b305b11f32b6288bcb4b350}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!````~Item\_expr\_comma@{$\sim$Item\_expr\_comma}}
+\index{````~Item\_expr\_comma@{$\sim$Item\_expr\_comma}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_expr\_comma()}{~Item\_expr\_comma()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+expr\+\_\+comma\+::$\sim$\+Item\+\_\+expr\+\_\+comma (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_a2be31a1d957461d6f034239293863953}\label{classcompiler_1_1_item__expr__comma_a2be31a1d957461d6f034239293863953}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!add\_expression@{add\_expression}}
+\index{add\_expression@{add\_expression}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{add\_expression()}{add\_expression()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+expr\+\_\+comma\+::add\+\_\+expression (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const}]{expression }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00090}{90}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_a8e65b13bf3a8caeb95510ba228491843}\label{classcompiler_1_1_item__expr__comma_a8e65b13bf3a8caeb95510ba228491843}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+expr\+\_\+comma\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00092}{92}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_a59f3c20f1a796e86ddc202c0236b7894}\label{classcompiler_1_1_item__expr__comma_a59f3c20f1a796e86ddc202c0236b7894}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!get\_expr\_type@{get\_expr\_type}}
+\index{get\_expr\_type@{get\_expr\_type}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{get\_expr\_type()}{get\_expr\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} compiler\+::\+Item\+\_\+expr\+\_\+comma\+::get\+\_\+expr\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__expr_ad4b9d671701f636b81def21a83fc3950}{compiler\+::\+Item\+\_\+expr}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00094}{94}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_ad8af0ac45d3e0ffd5de6a8b1071d2b1d}\label{classcompiler_1_1_item__expr__comma_ad8af0ac45d3e0ffd5de6a8b1071d2b1d}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+expr\+\_\+comma\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8cc_source_l00064}{64}} of file \mbox{\hyperlink{item__expr_8cc_source}{item\+\_\+expr.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__comma_a96e041fc3c33cb06deacd11ac7b911c7}\label{classcompiler_1_1_item__expr__comma_a96e041fc3c33cb06deacd11ac7b911c7}} 
+\index{compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}!expressions@{expressions}}
+\index{expressions@{expressions}!compiler::Item\_expr\_comma@{compiler::Item\_expr\_comma}}
+\doxysubsubsection{\texorpdfstring{expressions}{expressions}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}}$\ast$$>$ compiler\+::\+Item\+\_\+expr\+\_\+comma\+::expressions\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00083}{83}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__expr_8hh}{item\+\_\+expr.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__expr_8cc}{item\+\_\+expr.\+cc}}\end{DoxyCompactItemize}

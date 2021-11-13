@@ -1,0 +1,547 @@
+\hypertarget{classcompiler_1_1_item__ident}{}\doxysection{compiler\+::Item\+\_\+ident Class Reference}
+\label{classcompiler_1_1_item__ident}\index{compiler::Item\_ident@{compiler::Item\_ident}}
+
+
+Class for identifiers.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+ident.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+ident\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=11.000000cm]{classcompiler_1_1_item__ident}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{ident\+\_\+type}} \{ \newline
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ab8f86f12de6afe9f0cda393560fcfa0a}{INT\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a8bd97c686475b782c7b8b3b99700f0e6}{REAL\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a303f8532e78d72a551b6c8073d6e9c0e}{CHAR\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a745cd4768414836d882a1fa8c1616bfe}{FUNC\+\_\+\+TYPE}}
+, \newline
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a49dffa456400fc4195ef13a50f2ca80a}{STRUCT\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a13325305ab55b75f63ecc7489c9c7878}{INT\+\_\+\+ARRAY\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ae44f52721fc14708e3b87ff04434e92b}{REAL\+\_\+\+ARRAY\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4aa2c13a4a3c45e3e301a4bacf6cf9ef0b}{CHAR\+\_\+\+ARRAY\+\_\+\+TYPE}}
+, \newline
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ada8679c69c3acf12e21b621e7ae6113b}{VARIABLE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a4568bc8275510a48be2011acef00f80e}{POINTER}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4acc2a5d8547c521d65f9b68352638b6c8}{ARRAY}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ace1a5676ecaa7937627bb0b65a81a64e}{FUNCTION}}
+ \}
+\begin{DoxyCompactList}\small\item\em The type of the identifier. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{ident\+\_\+type}} \{ \newline
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ab8f86f12de6afe9f0cda393560fcfa0a}{INT\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a8bd97c686475b782c7b8b3b99700f0e6}{REAL\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a303f8532e78d72a551b6c8073d6e9c0e}{CHAR\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a745cd4768414836d882a1fa8c1616bfe}{FUNC\+\_\+\+TYPE}}
+, \newline
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a49dffa456400fc4195ef13a50f2ca80a}{STRUCT\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a13325305ab55b75f63ecc7489c9c7878}{INT\+\_\+\+ARRAY\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ae44f52721fc14708e3b87ff04434e92b}{REAL\+\_\+\+ARRAY\+\_\+\+TYPE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4aa2c13a4a3c45e3e301a4bacf6cf9ef0b}{CHAR\+\_\+\+ARRAY\+\_\+\+TYPE}}
+, \newline
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ada8679c69c3acf12e21b621e7ae6113b}{VARIABLE}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a4568bc8275510a48be2011acef00f80e}{POINTER}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4acc2a5d8547c521d65f9b68352638b6c8}{ARRAY}}
+, \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ace1a5676ecaa7937627bb0b65a81a64e}{FUNCTION}}
+ \}
+\item 
+typedef enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a335a6988b62404d8179c34c7ebf1ec25}{ident\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em The type of the identifier. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a335a6988b62404d8179c34c7ebf1ec25}{ident\+\_\+type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{Item\+::type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a75f1a07c83108f805e5133b93dfa02b0}{get\+\_\+type}} (void) const override
+\begin{DoxyCompactList}\small\item\em Get the type object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a4f3457089209ab0e2b823c2f7c7481ef}{Item\+\_\+ident}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident_aec7e57d9f0f9adcdafada3e663931b86}{Item\+\_\+ident}} (const \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} \&idem\+\_\+ident)=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a4e801369463436c1d2259c89747f14d1}{Item\+\_\+ident}} (const uint32\+\_\+t \&line\+\_\+no, const std\+::string \&\mbox{\hyperlink{classcompiler_1_1_item__ident_a1a0770d3496d41dc40b18da57d12485e}{name}}, const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item__ident_adf367829dd0a91b68861b5b717c34fd9}{scope}})
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} object. \end{DoxyCompactList}\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__ident_ab982b5062091c50991c00282a091ca5b}{get\+\_\+name}} (void) const
+\begin{DoxyCompactList}\small\item\em Get the name object. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{Item\+\_\+ident\+::ident\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a73e9ccb6cb8da507ce948b75b76fa652}{get\+\_\+ident\+\_\+type}} (void) const =0
+\item 
+virtual char \mbox{\hyperlink{classcompiler_1_1_item__ident_ab0efe8e4353b5a56d9d6e777fc5fd030}{get\+\_\+char}} (void) const
+\item 
+virtual int \mbox{\hyperlink{classcompiler_1_1_item__ident_a345ad471a8bf510502238da8bce69a2d}{get\+\_\+int}} (void) const
+\item 
+virtual double \mbox{\hyperlink{classcompiler_1_1_item__ident_afd78add980fad9f5338db12d60049009}{get\+\_\+real}} (void) const
+\item 
+virtual char $\ast$ \mbox{\hyperlink{classcompiler_1_1_item__ident_ae873b6f8148b7b3de032a92d2e9f2ba6}{get\+\_\+c\+\_\+str}} (void) const
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__ident_a6dee566571a92ac0735e74cd79a2c5cb}{$\sim$\+Item\+\_\+ident}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} object. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a02bbb8b6248b4c5b993be56c12fca047}{get\+\_\+expr\+\_\+type}} (void) const override
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__ident_ab982b5062091c50991c00282a091ca5b}{get\+\_\+name}} (void) const
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__ident_a9b2740bdbfc4186bb684b262b54edaa8}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a4f3457089209ab0e2b823c2f7c7481ef}{Item\+\_\+ident}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident_a7b33f81f6aae9fc9d7a73abbd4cdf8f6}{Item\+\_\+ident}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, const std\+::string \&\mbox{\hyperlink{classcompiler_1_1_item__ident_a1a0770d3496d41dc40b18da57d12485e}{name}})
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{Item\+\_\+ident\+::ident\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a8b6476dccc63e7a774d97f37757bed31}{get\+\_\+ident\+\_\+type}} (void) const
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__ident_ada3d1ba098dce12b174089bd6d0c746e}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::string \mbox{\hyperlink{classcompiler_1_1_item__ident_a1a0770d3496d41dc40b18da57d12485e}{name}}
+\begin{DoxyCompactList}\small\item\em The symbol name. \end{DoxyCompactList}\item 
+const uint32\+\_\+t \mbox{\hyperlink{classcompiler_1_1_item__ident_adf367829dd0a91b68861b5b717c34fd9}{scope}}
+\begin{DoxyCompactList}\small\item\em In which scope does it reside. Identified by a unique number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for identifiers. 
+
+\begin{DoxyNote}{Note}
+THIS IS AN ABSTACT CLASS! DO NOT CREATE AN INSTANCE FROM IT. BUT IT IS OK WITH Idem\+\_\+ident $\ast$const item\+\_\+ident = new Idem\+\_\+int\+\_\+ident(...); 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00038}{38}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a335a6988b62404d8179c34c7ebf1ec25}\label{classcompiler_1_1_item__ident_a335a6988b62404d8179c34c7ebf1ec25}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!ident\_type@{ident\_type}}
+\index{ident\_type@{ident\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{ident\_type}{ident\_type}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}}}
+
+
+
+The type of the identifier. 
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a335a6988b62404d8179c34c7ebf1ec25}\label{classcompiler_1_1_item__ident_a335a6988b62404d8179c34c7ebf1ec25}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!ident\_type@{ident\_type}}
+\index{ident\_type@{ident\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{ident\_type}{ident\_type}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}}}
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!ident\_type@{ident\_type}}
+\index{ident\_type@{ident\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{ident\_type}{ident\_type}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}}}
+
+
+
+The type of the identifier. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT\_TYPE@{INT\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!INT\_TYPE@{INT\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ab8f86f12de6afe9f0cda393560fcfa0a}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ab8f86f12de6afe9f0cda393560fcfa0a}} 
+INT\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REAL\_TYPE@{REAL\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!REAL\_TYPE@{REAL\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a8bd97c686475b782c7b8b3b99700f0e6}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a8bd97c686475b782c7b8b3b99700f0e6}} 
+REAL\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHAR\_TYPE@{CHAR\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!CHAR\_TYPE@{CHAR\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a303f8532e78d72a551b6c8073d6e9c0e}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a303f8532e78d72a551b6c8073d6e9c0e}} 
+CHAR\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FUNC\_TYPE@{FUNC\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!FUNC\_TYPE@{FUNC\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a745cd4768414836d882a1fa8c1616bfe}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a745cd4768414836d882a1fa8c1616bfe}} 
+FUNC\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STRUCT\_TYPE@{STRUCT\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!STRUCT\_TYPE@{STRUCT\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a49dffa456400fc4195ef13a50f2ca80a}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a49dffa456400fc4195ef13a50f2ca80a}} 
+STRUCT\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT\_ARRAY\_TYPE@{INT\_ARRAY\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!INT\_ARRAY\_TYPE@{INT\_ARRAY\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a13325305ab55b75f63ecc7489c9c7878}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a13325305ab55b75f63ecc7489c9c7878}} 
+INT\+\_\+\+ARRAY\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REAL\_ARRAY\_TYPE@{REAL\_ARRAY\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!REAL\_ARRAY\_TYPE@{REAL\_ARRAY\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ae44f52721fc14708e3b87ff04434e92b}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ae44f52721fc14708e3b87ff04434e92b}} 
+REAL\+\_\+\+ARRAY\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHAR\_ARRAY\_TYPE@{CHAR\_ARRAY\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!CHAR\_ARRAY\_TYPE@{CHAR\_ARRAY\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4aa2c13a4a3c45e3e301a4bacf6cf9ef0b}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4aa2c13a4a3c45e3e301a4bacf6cf9ef0b}} 
+CHAR\+\_\+\+ARRAY\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VARIABLE@{VARIABLE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!VARIABLE@{VARIABLE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ada8679c69c3acf12e21b621e7ae6113b}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ada8679c69c3acf12e21b621e7ae6113b}} 
+VARIABLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POINTER@{POINTER}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!POINTER@{POINTER}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a4568bc8275510a48be2011acef00f80e}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a4568bc8275510a48be2011acef00f80e}} 
+POINTER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARRAY@{ARRAY}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!ARRAY@{ARRAY}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4acc2a5d8547c521d65f9b68352638b6c8}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4acc2a5d8547c521d65f9b68352638b6c8}} 
+ARRAY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FUNCTION@{FUNCTION}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!FUNCTION@{FUNCTION}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ace1a5676ecaa7937627bb0b65a81a64e}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ace1a5676ecaa7937627bb0b65a81a64e}} 
+FUNCTION&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00058}{58}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!ident\_type@{ident\_type}}
+\index{ident\_type@{ident\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{ident\_type}{ident\_type}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{compiler\+::\+Item\+\_\+ident\+::ident\+\_\+type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT\_TYPE@{INT\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!INT\_TYPE@{INT\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ab8f86f12de6afe9f0cda393560fcfa0a}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ab8f86f12de6afe9f0cda393560fcfa0a}} 
+INT\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REAL\_TYPE@{REAL\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!REAL\_TYPE@{REAL\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a8bd97c686475b782c7b8b3b99700f0e6}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a8bd97c686475b782c7b8b3b99700f0e6}} 
+REAL\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHAR\_TYPE@{CHAR\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!CHAR\_TYPE@{CHAR\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a303f8532e78d72a551b6c8073d6e9c0e}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a303f8532e78d72a551b6c8073d6e9c0e}} 
+CHAR\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FUNC\_TYPE@{FUNC\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!FUNC\_TYPE@{FUNC\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a745cd4768414836d882a1fa8c1616bfe}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a745cd4768414836d882a1fa8c1616bfe}} 
+FUNC\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STRUCT\_TYPE@{STRUCT\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!STRUCT\_TYPE@{STRUCT\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a49dffa456400fc4195ef13a50f2ca80a}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a49dffa456400fc4195ef13a50f2ca80a}} 
+STRUCT\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT\_ARRAY\_TYPE@{INT\_ARRAY\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!INT\_ARRAY\_TYPE@{INT\_ARRAY\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a13325305ab55b75f63ecc7489c9c7878}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a13325305ab55b75f63ecc7489c9c7878}} 
+INT\+\_\+\+ARRAY\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REAL\_ARRAY\_TYPE@{REAL\_ARRAY\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!REAL\_ARRAY\_TYPE@{REAL\_ARRAY\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ae44f52721fc14708e3b87ff04434e92b}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ae44f52721fc14708e3b87ff04434e92b}} 
+REAL\+\_\+\+ARRAY\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHAR\_ARRAY\_TYPE@{CHAR\_ARRAY\_TYPE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!CHAR\_ARRAY\_TYPE@{CHAR\_ARRAY\_TYPE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4aa2c13a4a3c45e3e301a4bacf6cf9ef0b}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4aa2c13a4a3c45e3e301a4bacf6cf9ef0b}} 
+CHAR\+\_\+\+ARRAY\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VARIABLE@{VARIABLE}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!VARIABLE@{VARIABLE}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ada8679c69c3acf12e21b621e7ae6113b}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ada8679c69c3acf12e21b621e7ae6113b}} 
+VARIABLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POINTER@{POINTER}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!POINTER@{POINTER}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a4568bc8275510a48be2011acef00f80e}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4a4568bc8275510a48be2011acef00f80e}} 
+POINTER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ARRAY@{ARRAY}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!ARRAY@{ARRAY}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4acc2a5d8547c521d65f9b68352638b6c8}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4acc2a5d8547c521d65f9b68352638b6c8}} 
+ARRAY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FUNCTION@{FUNCTION}!compiler::Item\_ident@{compiler::Item\_ident}}\index{compiler::Item\_ident@{compiler::Item\_ident}!FUNCTION@{FUNCTION}}}\mbox{\Hypertarget{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ace1a5676ecaa7937627bb0b65a81a64e}\label{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4ace1a5676ecaa7937627bb0b65a81a64e}} 
+FUNCTION&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00036}{36}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a4f3457089209ab0e2b823c2f7c7481ef}\label{classcompiler_1_1_item__ident_a4f3457089209ab0e2b823c2f7c7481ef}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!Item\_ident@{Item\_ident}}
+\index{Item\_ident@{Item\_ident}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{Item\_ident()}{Item\_ident()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+ident\+::\+Item\+\_\+ident (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_aec7e57d9f0f9adcdafada3e663931b86}\label{classcompiler_1_1_item__ident_aec7e57d9f0f9adcdafada3e663931b86}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!Item\_ident@{Item\_ident}}
+\index{Item\_ident@{Item\_ident}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{Item\_ident()}{Item\_ident()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+ident\+::\+Item\+\_\+ident (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} \&}]{idem\+\_\+ident }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a4e801369463436c1d2259c89747f14d1}\label{classcompiler_1_1_item__ident_a4e801369463436c1d2259c89747f14d1}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!Item\_ident@{Item\_ident}}
+\index{Item\_ident@{Item\_ident}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{Item\_ident()}{Item\_ident()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+ident\+::\+Item\+\_\+ident (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{line\+\_\+no,  }\item[{const std\+::string \&}]{name,  }\item[{const uint32\+\_\+t \&}]{scope }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line\+\_\+no} & The number of the current line. \\
+\hline
+{\em name} & The name of the symbol. \\
+\hline
+{\em scope} & The current scope. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a6dee566571a92ac0735e74cd79a2c5cb}\label{classcompiler_1_1_item__ident_a6dee566571a92ac0735e74cd79a2c5cb}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!````~Item\_ident@{$\sim$Item\_ident}}
+\index{````~Item\_ident@{$\sim$Item\_ident}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_ident()}{~Item\_ident()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+ident\+::$\sim$\+Item\+\_\+ident (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Destroy the \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} object. 
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a4f3457089209ab0e2b823c2f7c7481ef}\label{classcompiler_1_1_item__ident_a4f3457089209ab0e2b823c2f7c7481ef}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!Item\_ident@{Item\_ident}}
+\index{Item\_ident@{Item\_ident}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{Item\_ident()}{Item\_ident()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+ident\+::\+Item\+\_\+ident (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a7b33f81f6aae9fc9d7a73abbd4cdf8f6}\label{classcompiler_1_1_item__ident_a7b33f81f6aae9fc9d7a73abbd4cdf8f6}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!Item\_ident@{Item\_ident}}
+\index{Item\_ident@{Item\_ident}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{Item\_ident()}{Item\_ident()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+ident\+::\+Item\+\_\+ident (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__ident_8cc_source_l00023}{23}} of file \mbox{\hyperlink{item__ident_8cc_source}{item\+\_\+ident.\+cc}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a9b2740bdbfc4186bb684b262b54edaa8}\label{classcompiler_1_1_item__ident_a9b2740bdbfc4186bb684b262b54edaa8}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+ident\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__array_ad6aea617a7c90a6282b2adbc6ef1a060}{compiler\+::\+Item\+\_\+ident\+\_\+array}}, and \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_a3eba36396920bacd25b32abe2a2ca7e3}{compiler\+::\+Item\+\_\+ident\+\_\+pointer}}.
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00047}{47}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_ae873b6f8148b7b3de032a92d2e9f2ba6}\label{classcompiler_1_1_item__ident_ae873b6f8148b7b3de032a92d2e9f2ba6}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_c\_str@{get\_c\_str}}
+\index{get\_c\_str@{get\_c\_str}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_c\_str()}{get\_c\_str()}}
+{\footnotesize\ttfamily virtual char $\ast$ compiler\+::\+Item\+\_\+ident\+::get\+\_\+c\+\_\+str (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__str_a83d4b8c528f961fd07eaef8a31b6324d}{compiler\+::\+Item\+\_\+ident\+\_\+str}}.
+
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00109}{109}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_ab0efe8e4353b5a56d9d6e777fc5fd030}\label{classcompiler_1_1_item__ident_ab0efe8e4353b5a56d9d6e777fc5fd030}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_char@{get\_char}}
+\index{get\_char@{get\_char}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_char()}{get\_char()}}
+{\footnotesize\ttfamily virtual char compiler\+::\+Item\+\_\+ident\+::get\+\_\+char (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__char_a303903d1e3e0637742f034e58d32edca}{compiler\+::\+Item\+\_\+ident\+\_\+char}}.
+
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00103}{103}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a02bbb8b6248b4c5b993be56c12fca047}\label{classcompiler_1_1_item__ident_a02bbb8b6248b4c5b993be56c12fca047}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_expr\_type@{get\_expr\_type}}
+\index{get\_expr\_type@{get\_expr\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_expr\_type()}{get\_expr\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} compiler\+::\+Item\+\_\+ident\+::get\+\_\+expr\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__expr_ad4b9d671701f636b81def21a83fc3950}{compiler\+::\+Item\+\_\+expr}}.
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00043}{43}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a8b6476dccc63e7a774d97f37757bed31}\label{classcompiler_1_1_item__ident_a8b6476dccc63e7a774d97f37757bed31}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_ident\_type@{get\_ident\_type}}
+\index{get\_ident\_type@{get\_ident\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_ident\_type()}{get\_ident\_type()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{Item\+\_\+ident\+::ident\+\_\+type}} compiler\+::\+Item\+\_\+ident\+::get\+\_\+ident\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__int_adac0db5e815dd928795ffac8b4734eba}{compiler\+::\+Item\+\_\+ident\+\_\+int}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__real_a08029bcd997db5cf7294cabc5fdd3127}{compiler\+::\+Item\+\_\+ident\+\_\+real}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__char_aab776a95e12cca81432b53474c86393d}{compiler\+::\+Item\+\_\+ident\+\_\+char}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__str_affd2eb49ecb176ab7fe8476a63c14b50}{compiler\+::\+Item\+\_\+ident\+\_\+str}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__struct_a577fa1a78391e1a9964387b03e63b25f}{compiler\+::\+Item\+\_\+ident\+\_\+struct}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__array_af083abc715864e899fde24a49130a1bb}{compiler\+::\+Item\+\_\+ident\+\_\+array}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__func_a58d8f0a224d6331dd9df03e77c96ffcd}{compiler\+::\+Item\+\_\+ident\+\_\+func}}, and \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_ac8b2f8afd842802010cdae96fb2f5152}{compiler\+::\+Item\+\_\+ident\+\_\+pointer}}.
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00053}{53}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a73e9ccb6cb8da507ce948b75b76fa652}\label{classcompiler_1_1_item__ident_a73e9ccb6cb8da507ce948b75b76fa652}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_ident\_type@{get\_ident\_type}}
+\index{get\_ident\_type@{get\_ident\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_ident\_type()}{get\_ident\_type()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__ident_a00c3bb310e23a30e72adbdbc2f1aece4}{Item\+\_\+ident\+::ident\+\_\+type}} compiler\+::\+Item\+\_\+ident\+::get\+\_\+ident\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__int_adac0db5e815dd928795ffac8b4734eba}{compiler\+::\+Item\+\_\+ident\+\_\+int}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__real_a08029bcd997db5cf7294cabc5fdd3127}{compiler\+::\+Item\+\_\+ident\+\_\+real}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__char_aab776a95e12cca81432b53474c86393d}{compiler\+::\+Item\+\_\+ident\+\_\+char}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__str_affd2eb49ecb176ab7fe8476a63c14b50}{compiler\+::\+Item\+\_\+ident\+\_\+str}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__struct_a577fa1a78391e1a9964387b03e63b25f}{compiler\+::\+Item\+\_\+ident\+\_\+struct}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__array_af083abc715864e899fde24a49130a1bb}{compiler\+::\+Item\+\_\+ident\+\_\+array}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__func_a58d8f0a224d6331dd9df03e77c96ffcd}{compiler\+::\+Item\+\_\+ident\+\_\+func}}, and \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_ac8b2f8afd842802010cdae96fb2f5152}{compiler\+::\+Item\+\_\+ident\+\_\+pointer}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a345ad471a8bf510502238da8bce69a2d}\label{classcompiler_1_1_item__ident_a345ad471a8bf510502238da8bce69a2d}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_int@{get\_int}}
+\index{get\_int@{get\_int}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_int()}{get\_int()}}
+{\footnotesize\ttfamily virtual int compiler\+::\+Item\+\_\+ident\+::get\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__int_aa71622fcbb3069cdbeb4a0f6c9651ccc}{compiler\+::\+Item\+\_\+ident\+\_\+int}}.
+
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00105}{105}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_ab982b5062091c50991c00282a091ca5b}\label{classcompiler_1_1_item__ident_ab982b5062091c50991c00282a091ca5b}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual std\+::string compiler\+::\+Item\+\_\+ident\+::get\+\_\+name (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Get the name object. 
+
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00094}{94}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_ab982b5062091c50991c00282a091ca5b}\label{classcompiler_1_1_item__ident_ab982b5062091c50991c00282a091ca5b}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual std\+::string compiler\+::\+Item\+\_\+ident\+::get\+\_\+name (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source_l00045}{45}} of file \mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_afd78add980fad9f5338db12d60049009}\label{classcompiler_1_1_item__ident_afd78add980fad9f5338db12d60049009}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_real@{get\_real}}
+\index{get\_real@{get\_real}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_real()}{get\_real()}}
+{\footnotesize\ttfamily virtual double compiler\+::\+Item\+\_\+ident\+::get\+\_\+real (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__real_a7918027dce1ca1c9f07db33b6b754025}{compiler\+::\+Item\+\_\+ident\+\_\+real}}.
+
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00107}{107}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a75f1a07c83108f805e5133b93dfa02b0}\label{classcompiler_1_1_item__ident_a75f1a07c83108f805e5133b93dfa02b0}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!get\_type@{get\_type}}
+\index{get\_type@{get\_type}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{get\_type()}{get\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{Item\+::type}} compiler\+::\+Item\+\_\+ident\+::get\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Get the type object. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{Item\+::type}} 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classcompiler_1_1_item__expr_afb1a8bf0d879f45544c9e41800a36ae7}{compiler\+::\+Item\+\_\+expr}}.
+
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00074}{74}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_ada3d1ba098dce12b174089bd6d0c746e}\label{classcompiler_1_1_item__ident_ada3d1ba098dce12b174089bd6d0c746e}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+ident\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__ident__array_af5b63bdc0e4c4236922042cc8cb0c164}{compiler\+::\+Item\+\_\+ident\+\_\+array}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__func_ab828b443d9c3ddd421fc448f223f6781}{compiler\+::\+Item\+\_\+ident\+\_\+func}}, and \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer_ae1fd14bec555a45a36a0a415eb87acbc}{compiler\+::\+Item\+\_\+ident\+\_\+pointer}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__ident_8cc_source_l00052}{52}} of file \mbox{\hyperlink{item__ident_8cc_source}{item\+\_\+ident.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_a1a0770d3496d41dc40b18da57d12485e}\label{classcompiler_1_1_item__ident_a1a0770d3496d41dc40b18da57d12485e}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!name@{name}}
+\index{name@{name}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily const std\+::string compiler\+::\+Item\+\_\+ident\+::name\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The symbol name. 
+
+E.\+g.\+: int a = 3 =\texorpdfstring{$>$}{>} name = \char`\"{}a\char`\"{} 
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00045}{45}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__ident_adf367829dd0a91b68861b5b717c34fd9}\label{classcompiler_1_1_item__ident_adf367829dd0a91b68861b5b717c34fd9}} 
+\index{compiler::Item\_ident@{compiler::Item\_ident}!scope@{scope}}
+\index{scope@{scope}!compiler::Item\_ident@{compiler::Item\_ident}}
+\doxysubsubsection{\texorpdfstring{scope}{scope}}
+{\footnotesize\ttfamily const uint32\+\_\+t compiler\+::\+Item\+\_\+ident\+::scope\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+In which scope does it reside. Identified by a unique number. 
+
+
+
+Definition at line \mbox{\hyperlink{backup_2item__ident_8hh_source_l00051}{51}} of file \mbox{\hyperlink{backup_2item__ident_8hh_source}{item\+\_\+ident.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+backup/\mbox{\hyperlink{backup_2item__ident_8hh}{item\+\_\+ident.\+hh}}\item 
+include/frontend/nodes/\mbox{\hyperlink{include_2frontend_2nodes_2item__ident_8hh}{item\+\_\+ident.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__ident_8cc}{item\+\_\+ident.\+cc}}\end{DoxyCompactItemize}

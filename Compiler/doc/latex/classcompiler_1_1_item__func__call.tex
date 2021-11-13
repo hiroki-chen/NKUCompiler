@@ -1,0 +1,171 @@
+\hypertarget{classcompiler_1_1_item__func__call}{}\doxysection{compiler\+::Item\+\_\+func\+\_\+call Class Reference}
+\label{classcompiler_1_1_item__func__call}\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+
+
+{\ttfamily \#include $<$item\+\_\+func.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+func\+\_\+call\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcompiler_1_1_item__func__call}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__func__call_a93d8bd1ae2f7bab9762ef75430bbe3fe}{get\+\_\+expr\+\_\+type}} (void) const override
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_item__func__call_a73f8280b9eb7cccdf3915d905271d793}{get\+\_\+identifier}} (void) const
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__func__call_ad8fabda20b372b2a3f9838657dcf42fa}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__func__call__list}{Item\+\_\+func\+\_\+call\+\_\+list}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_item__func__call_a0660dd1c7af13cdb9291900f032a576d}{get\+\_\+call\+\_\+list}} (void) const
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__func__call_a851b26b057aef140f755ef5444d9e90a}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcompiler_1_1_item__func__call_a1f12fe998513e5cf8dc9352376fa90cf}{Item\+\_\+func\+\_\+call}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__func__call_ac00798b9a4b952343e0aa67ee94f5367}{Item\+\_\+func\+\_\+call}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__func__call_aa39bd21f5fa3c02b6056f84e8aa5a50f}{identifier}}, \mbox{\hyperlink{classcompiler_1_1_item__func__call__list}{Item\+\_\+func\+\_\+call\+\_\+list}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__func__call_a4a3f55822fa804d0eb4f882485e33684}{arguments}})
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__func__call_a83c99b742d5ec3bad87eabc4209ece95}{$\sim$\+Item\+\_\+func\+\_\+call}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__func__call_aa39bd21f5fa3c02b6056f84e8aa5a50f}{identifier}}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__func__call__list}{Item\+\_\+func\+\_\+call\+\_\+list}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__func__call_a4a3f55822fa804d0eb4f882485e33684}{arguments}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{item__func_8hh_source_l00055}{55}} of file \mbox{\hyperlink{item__func_8hh_source}{item\+\_\+func.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_a1f12fe998513e5cf8dc9352376fa90cf}\label{classcompiler_1_1_item__func__call_a1f12fe998513e5cf8dc9352376fa90cf}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!Item\_func\_call@{Item\_func\_call}}
+\index{Item\_func\_call@{Item\_func\_call}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{Item\_func\_call()}{Item\_func\_call()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+func\+\_\+call\+::\+Item\+\_\+func\+\_\+call (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_ac00798b9a4b952343e0aa67ee94f5367}\label{classcompiler_1_1_item__func__call_ac00798b9a4b952343e0aa67ee94f5367}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!Item\_func\_call@{Item\_func\_call}}
+\index{Item\_func\_call@{Item\_func\_call}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{Item\_func\_call()}{Item\_func\_call()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+func\+\_\+call\+::\+Item\+\_\+func\+\_\+call (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const}]{identifier,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__func__call__list}{Item\+\_\+func\+\_\+call\+\_\+list}} $\ast$const}]{arguments }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8cc_source_l00027}{27}} of file \mbox{\hyperlink{item__func_8cc_source}{item\+\_\+func.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_a83c99b742d5ec3bad87eabc4209ece95}\label{classcompiler_1_1_item__func__call_a83c99b742d5ec3bad87eabc4209ece95}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!````~Item\_func\_call@{$\sim$Item\_func\_call}}
+\index{````~Item\_func\_call@{$\sim$Item\_func\_call}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_func\_call()}{~Item\_func\_call()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+func\+\_\+call\+::$\sim$\+Item\+\_\+func\+\_\+call (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_ad8fabda20b372b2a3f9838657dcf42fa}\label{classcompiler_1_1_item__func__call_ad8fabda20b372b2a3f9838657dcf42fa}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+func\+\_\+call\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8hh_source_l00066}{66}} of file \mbox{\hyperlink{item__func_8hh_source}{item\+\_\+func.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_a0660dd1c7af13cdb9291900f032a576d}\label{classcompiler_1_1_item__func__call_a0660dd1c7af13cdb9291900f032a576d}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!get\_call\_list@{get\_call\_list}}
+\index{get\_call\_list@{get\_call\_list}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{get\_call\_list()}{get\_call\_list()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__func__call__list}{Item\+\_\+func\+\_\+call\+\_\+list}} $\ast$ compiler\+::\+Item\+\_\+func\+\_\+call\+::get\+\_\+call\+\_\+list (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8hh_source_l00068}{68}} of file \mbox{\hyperlink{item__func_8hh_source}{item\+\_\+func.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_a93d8bd1ae2f7bab9762ef75430bbe3fe}\label{classcompiler_1_1_item__func__call_a93d8bd1ae2f7bab9762ef75430bbe3fe}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!get\_expr\_type@{get\_expr\_type}}
+\index{get\_expr\_type@{get\_expr\_type}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{get\_expr\_type()}{get\_expr\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} compiler\+::\+Item\+\_\+func\+\_\+call\+::get\+\_\+expr\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__expr_ad4b9d671701f636b81def21a83fc3950}{compiler\+::\+Item\+\_\+expr}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8hh_source_l00062}{62}} of file \mbox{\hyperlink{item__func_8hh_source}{item\+\_\+func.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_a73f8280b9eb7cccdf3915d905271d793}\label{classcompiler_1_1_item__func__call_a73f8280b9eb7cccdf3915d905271d793}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!get\_identifier@{get\_identifier}}
+\index{get\_identifier@{get\_identifier}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{get\_identifier()}{get\_identifier()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$ compiler\+::\+Item\+\_\+func\+\_\+call\+::get\+\_\+identifier (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8hh_source_l00064}{64}} of file \mbox{\hyperlink{item__func_8hh_source}{item\+\_\+func.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_a851b26b057aef140f755ef5444d9e90a}\label{classcompiler_1_1_item__func__call_a851b26b057aef140f755ef5444d9e90a}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+func\+\_\+call\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8cc_source_l00088}{88}} of file \mbox{\hyperlink{item__func_8cc_source}{item\+\_\+func.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_a4a3f55822fa804d0eb4f882485e33684}\label{classcompiler_1_1_item__func__call_a4a3f55822fa804d0eb4f882485e33684}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!arguments@{arguments}}
+\index{arguments@{arguments}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{arguments}{arguments}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__func__call__list}{Item\+\_\+func\+\_\+call\+\_\+list}}$\ast$ const compiler\+::\+Item\+\_\+func\+\_\+call\+::arguments\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8hh_source_l00059}{59}} of file \mbox{\hyperlink{item__func_8hh_source}{item\+\_\+func.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__func__call_aa39bd21f5fa3c02b6056f84e8aa5a50f}\label{classcompiler_1_1_item__func__call_aa39bd21f5fa3c02b6056f84e8aa5a50f}} 
+\index{compiler::Item\_func\_call@{compiler::Item\_func\_call}!identifier@{identifier}}
+\index{identifier@{identifier}!compiler::Item\_func\_call@{compiler::Item\_func\_call}}
+\doxysubsubsection{\texorpdfstring{identifier}{identifier}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}}$\ast$ const compiler\+::\+Item\+\_\+func\+\_\+call\+::identifier\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__func_8hh_source_l00057}{57}} of file \mbox{\hyperlink{item__func_8hh_source}{item\+\_\+func.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__func_8hh}{item\+\_\+func.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__func_8cc}{item\+\_\+func.\+cc}}\end{DoxyCompactItemize}

@@ -1,0 +1,152 @@
+\hypertarget{classcompiler_1_1_item__block}{}\doxysection{compiler\+::Item\+\_\+block Class Reference}
+\label{classcompiler_1_1_item__block}\index{compiler::Item\_block@{compiler::Item\_block}}
+
+
+Class for block.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+stmt.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+block\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcompiler_1_1_item__block}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__block_ac543ad6636265df5741a962673eb7e47}{Item\+\_\+block}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__block_aa4d1868d69307fb43145c0ad1340b86c}{Item\+\_\+block}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}})
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__block_a672b0c2e5cfc9750c420dee66dea8ff0}{add\+\_\+item}} (\mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\+\_\+stmt}} $\ast$const statement)
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__stmt_a401c44703a990bf529393d90815c8501}{Item\+\_\+stmt\+::stmt\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__block_a7a79255e64c53f3a945cff9ec75c7880}{get\+\_\+stmt\+\_\+type}} () const override
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__block_ab1d745e6b2ec4db01cd8a344c5b4b307}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__block_a746c0a718199ef1ca37550b8be11f74d}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__block_ab2defe0d9dc5fdd5b80a0751c743dfc5}{$\sim$\+Item\+\_\+block}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\+\_\+stmt}} $\ast$ $>$ \mbox{\hyperlink{classcompiler_1_1_item__block_a135bf7016472a02c2ff8cb2c07db810f}{statements}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class for block. 
+
+Definition at line \mbox{\hyperlink{item__stmt_8hh_source_l00263}{263}} of file \mbox{\hyperlink{item__stmt_8hh_source}{item\+\_\+stmt.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__block_ac543ad6636265df5741a962673eb7e47}\label{classcompiler_1_1_item__block_ac543ad6636265df5741a962673eb7e47}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!Item\_block@{Item\_block}}
+\index{Item\_block@{Item\_block}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{Item\_block()}{Item\_block()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+block\+::\+Item\+\_\+block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__block_aa4d1868d69307fb43145c0ad1340b86c}\label{classcompiler_1_1_item__block_aa4d1868d69307fb43145c0ad1340b86c}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!Item\_block@{Item\_block}}
+\index{Item\_block@{Item\_block}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{Item\_block()}{Item\_block()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+block\+::\+Item\+\_\+block (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__stmt_8cc_source_l00091}{91}} of file \mbox{\hyperlink{item__stmt_8cc_source}{item\+\_\+stmt.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__block_ab2defe0d9dc5fdd5b80a0751c743dfc5}\label{classcompiler_1_1_item__block_ab2defe0d9dc5fdd5b80a0751c743dfc5}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!````~Item\_block@{$\sim$Item\_block}}
+\index{````~Item\_block@{$\sim$Item\_block}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_block()}{~Item\_block()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+block\+::$\sim$\+Item\+\_\+block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__block_a672b0c2e5cfc9750c420dee66dea8ff0}\label{classcompiler_1_1_item__block_a672b0c2e5cfc9750c420dee66dea8ff0}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!add\_item@{add\_item}}
+\index{add\_item@{add\_item}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{add\_item()}{add\_item()}}
+{\footnotesize\ttfamily void compiler\+::\+Item\+\_\+block\+::add\+\_\+item (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\+\_\+stmt}} $\ast$const}]{statement }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__stmt_8cc_source_l00101}{101}} of file \mbox{\hyperlink{item__stmt_8cc_source}{item\+\_\+stmt.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__block_ab1d745e6b2ec4db01cd8a344c5b4b307}\label{classcompiler_1_1_item__block_ab1d745e6b2ec4db01cd8a344c5b4b307}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+block\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__stmt_8hh_source_l00276}{276}} of file \mbox{\hyperlink{item__stmt_8hh_source}{item\+\_\+stmt.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__block_a7a79255e64c53f3a945cff9ec75c7880}\label{classcompiler_1_1_item__block_a7a79255e64c53f3a945cff9ec75c7880}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!get\_stmt\_type@{get\_stmt\_type}}
+\index{get\_stmt\_type@{get\_stmt\_type}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{get\_stmt\_type()}{get\_stmt\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__stmt_a401c44703a990bf529393d90815c8501}{Item\+\_\+stmt\+::stmt\+\_\+type}} compiler\+::\+Item\+\_\+block\+::get\+\_\+stmt\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__stmt_af2f890e4158e953a702ec7df64f5f4a8}{compiler\+::\+Item\+\_\+stmt}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__stmt_8hh_source_l00274}{274}} of file \mbox{\hyperlink{item__stmt_8hh_source}{item\+\_\+stmt.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__block_a746c0a718199ef1ca37550b8be11f74d}\label{classcompiler_1_1_item__block_a746c0a718199ef1ca37550b8be11f74d}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+block\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__stmt_8cc_source_l00207}{207}} of file \mbox{\hyperlink{item__stmt_8cc_source}{item\+\_\+stmt.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__block_a135bf7016472a02c2ff8cb2c07db810f}\label{classcompiler_1_1_item__block_a135bf7016472a02c2ff8cb2c07db810f}} 
+\index{compiler::Item\_block@{compiler::Item\_block}!statements@{statements}}
+\index{statements@{statements}!compiler::Item\_block@{compiler::Item\_block}}
+\doxysubsubsection{\texorpdfstring{statements}{statements}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\+\_\+stmt}}$\ast$$>$ compiler\+::\+Item\+\_\+block\+::statements\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__stmt_8hh_source_l00265}{265}} of file \mbox{\hyperlink{item__stmt_8hh_source}{item\+\_\+stmt.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__stmt_8hh}{item\+\_\+stmt.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__stmt_8cc}{item\+\_\+stmt.\+cc}}\end{DoxyCompactItemize}

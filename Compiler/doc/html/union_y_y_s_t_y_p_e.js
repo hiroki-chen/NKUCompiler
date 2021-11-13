@@ -1,0 +1,27 @@
+var union_y_y_s_t_y_p_e =
+[
+    [ "btype", "union_y_y_s_t_y_p_e.html#a32fd74fd6adbbb14ef4aa132dd1da796", null ],
+    [ "item_block", "union_y_y_s_t_y_p_e.html#a4a9e4abbebabee3ab02304afb18bf1ae", null ],
+    [ "item_decl", "union_y_y_s_t_y_p_e.html#a311682a88286d27e15e740584a27ec25", null ],
+    [ "item_decl_array_init", "union_y_y_s_t_y_p_e.html#a4212f8165c0d48cc46ea21ab120b488c", null ],
+    [ "item_decl_var", "union_y_y_s_t_y_p_e.html#a3249397d4164a19b5790f7e998a69786", null ],
+    [ "item_decl_var_init", "union_y_y_s_t_y_p_e.html#ae743e0e9ada00f49143def69cb99aa51", null ],
+    [ "item_expr", "union_y_y_s_t_y_p_e.html#a3348c62238a4ed325cd558241b2e0972", null ],
+    [ "item_expr_comma", "union_y_y_s_t_y_p_e.html#acfc8fd082894d5294c535791d7b07d60", null ],
+    [ "item_func_call_list", "union_y_y_s_t_y_p_e.html#a892a05d387f1be4b63d5c40373cedc00", null ],
+    [ "item_func_def", "union_y_y_s_t_y_p_e.html#a67f4dcbe38dcdade4c531580135c5110", null ],
+    [ "item_func_def_arg", "union_y_y_s_t_y_p_e.html#ac0e9ef466faf0323721b4d4a3558a4e0", null ],
+    [ "item_func_def_list", "union_y_y_s_t_y_p_e.html#a3fb4040b01768c572a7ac04fb0b7b21e", null ],
+    [ "item_ident", "union_y_y_s_t_y_p_e.html#aeb9d35b305f44874c36687bf9be5d52e", null ],
+    [ "item_ident_array", "union_y_y_s_t_y_p_e.html#ae4a99e1d484d8d74ed3b559656f7bf0e", null ],
+    [ "item_ident_pointer", "union_y_y_s_t_y_p_e.html#ac0f4d43e3958d62e98039b11e77c0224", null ],
+    [ "item_literal", "union_y_y_s_t_y_p_e.html#a52a68442abda1a394874e2fbd892898d", null ],
+    [ "item_literal_array_init", "union_y_y_s_t_y_p_e.html#ae98abbbf485a4754f69e407affe0802d", null ],
+    [ "item_root", "union_y_y_s_t_y_p_e.html#aea7cc2bcaf0cf6ce3412539c3b46c67b", null ],
+    [ "item_stmt", "union_y_y_s_t_y_p_e.html#ac82467b75e714b9ad263fe6fa1137ffa", null ],
+    [ "item_stmt_decl", "union_y_y_s_t_y_p_e.html#a41cb5fbfed7b6133ce469c7ef28ee1a6", null ],
+    [ "item_struct_body", "union_y_y_s_t_y_p_e.html#ab15c24170dbbd7b6d339b30fa8214e95", null ],
+    [ "raw_char", "union_y_y_s_t_y_p_e.html#a245698dd8fec84455b60cc00e7e14388", null ],
+    [ "raw_number", "union_y_y_s_t_y_p_e.html#a50c01ed7556b105e9d7cf2a9c288198e", null ],
+    [ "raw_string", "union_y_y_s_t_y_p_e.html#a1527ad544c0da209c8ea8fc002635948", null ]
+];

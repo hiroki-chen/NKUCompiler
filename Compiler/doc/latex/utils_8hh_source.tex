@@ -1,0 +1,48 @@
+\hypertarget{utils_8hh_source}{}\doxysection{utils.\+hh}
+\label{utils_8hh_source}\index{include/common/utils.hh@{include/common/utils.hh}}
+\mbox{\hyperlink{utils_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00017}00017 \textcolor{preprocessor}{\#ifndef UTILS\_HH}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00018}00018 \textcolor{preprocessor}{\#define UTILS\_HH}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00020}00020 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{types_8hh}{common/types.hh}}>}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00022}00022 \textcolor{preprocessor}{\#include <regex>}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00023}00023 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00025}00025 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacecompiler}{compiler}} \{}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00026}00026 std::string \mbox{\hyperlink{namespacecompiler_a9e9379084949204a943d0a187e15a83f}{to\_string}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679c}{compiler::basic\_type}}\& type);}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00028}00028 std::string \mbox{\hyperlink{namespacecompiler_a9e9379084949204a943d0a187e15a83f}{to\_string}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145}{compiler::unary\_type}}\& type);}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00030}00030 std::string \mbox{\hyperlink{namespacecompiler_a9e9379084949204a943d0a187e15a83f}{to\_string}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{compiler::binary\_type}}\& type);}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00039}00039 \textcolor{keywordtype}{void} \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf, std::ostream\& os);}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00049}00049 \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespacecompiler_a669b4a7b1c78cf69bcbc75c0123b6cfb}{is\_dir}}(\textcolor{keyword}{const} std::string\& file\_path);}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00051}00051 \textcolor{comment}{// For the parser?}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00052}\mbox{\hyperlink{namespacecompiler_a6fe0a06d805218f1fd5e9ad21080249b}{00052}} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespacecompiler_a6fe0a06d805218f1fd5e9ad21080249b}{handle\_lib\_put}}(\textcolor{keyword}{const} std::string\& func\_name, \textcolor{keyword}{const} \textcolor{keywordtype}{int}\& \mbox{\hyperlink{namespacecxxopts_a6b58e451713ebbf12866c1cd8e0a66ab}{value}});}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00054}\mbox{\hyperlink{namespacecompiler_aab58b91278e04bd47f08daff5fd391a8}{00054}} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacecompiler_aab58b91278e04bd47f08daff5fd391a8}{handle\_lib\_get}}(\textcolor{keyword}{const} std::string\& func\_name);}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00055}00055 \} \textcolor{comment}{// namespace compiler}}
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{utils_8hh_source_l00057}00057 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

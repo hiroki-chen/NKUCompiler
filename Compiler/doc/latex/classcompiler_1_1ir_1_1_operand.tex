@@ -1,0 +1,193 @@
+\hypertarget{classcompiler_1_1ir_1_1_operand}{}\doxysection{compiler\+::ir\+::Operand Class Reference}
+\label{classcompiler_1_1ir_1_1_operand}\index{compiler::ir::Operand@{compiler::ir::Operand}}
+
+
+Base class for operand in the \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}.  
+
+
+
+
+{\ttfamily \#include $<$ir.\+hh$>$}
+
+Inheritance diagram for compiler\+::ir\+::Operand\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcompiler_1_1ir_1_1_operand}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a98c7fbe9315a94e9d75e51f6f6fa707e}{Operand}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a4cea32aeaffcba546e28a3eb9086fee6}{Operand}} (const \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\+\_\+type}} \&\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}{type}}, const std\+::string \&\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}{identifier}}, const std\+::string \&\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}{value}}, const bool \&\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}{is\+\_\+var}}=true, const bool \&\mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}{is\+\_\+ptr}}=false)
+\item 
+virtual \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ae7931fb159adcc42d5bb25bc90ab2eba}{get\+\_\+type}} (void) const
+\item 
+virtual bool \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa9ded29518394172d7d71d17268817cc}{get\+\_\+is\+\_\+ptr}} (void) const
+\item 
+virtual bool \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ad193c8ded516331cde2f78f52762376a}{get\+\_\+is\+\_\+var}} (void) const
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aad8de39596624f1c5279904e246a0130}{get\+\_\+identifier}} (void) const
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a751faf85146a7753ada218318285b7b2}{get\+\_\+value}} (void) const
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_ac9f1a2a2af04ff7ff312b1489df59f41}{$\sim$\+Operand}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}{type}}
+\item 
+const std\+::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}{identifier}}
+\item 
+const bool \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}{is\+\_\+ptr}}
+\item 
+const bool \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}{is\+\_\+var}}
+\item 
+const std\+::string \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}{value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for operand in the \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}. 
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00189}{189}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_a98c7fbe9315a94e9d75e51f6f6fa707e}\label{classcompiler_1_1ir_1_1_operand_a98c7fbe9315a94e9d75e51f6f6fa707e}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!Operand@{Operand}}
+\index{Operand@{Operand}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{Operand()}{Operand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::ir\+::\+Operand\+::\+Operand (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_a4cea32aeaffcba546e28a3eb9086fee6}\label{classcompiler_1_1ir_1_1_operand_a4cea32aeaffcba546e28a3eb9086fee6}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!Operand@{Operand}}
+\index{Operand@{Operand}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{Operand()}{Operand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::ir\+::\+Operand\+::\+Operand (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\+\_\+type}} \&}]{type,  }\item[{const std\+::string \&}]{identifier,  }\item[{const std\+::string \&}]{value,  }\item[{const bool \&}]{is\+\_\+var = {\ttfamily true},  }\item[{const bool \&}]{is\+\_\+ptr = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8cc_source_l00022}{22}} of file \mbox{\hyperlink{ir_8cc_source}{ir.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_ac9f1a2a2af04ff7ff312b1489df59f41}\label{classcompiler_1_1ir_1_1_operand_ac9f1a2a2af04ff7ff312b1489df59f41}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!````~Operand@{$\sim$Operand}}
+\index{````~Operand@{$\sim$Operand}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{$\sim$Operand()}{~Operand()}}
+{\footnotesize\ttfamily virtual compiler\+::ir\+::\+Operand\+::$\sim$\+Operand (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_aad8de39596624f1c5279904e246a0130}\label{classcompiler_1_1ir_1_1_operand_aad8de39596624f1c5279904e246a0130}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!get\_identifier@{get\_identifier}}
+\index{get\_identifier@{get\_identifier}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{get\_identifier()}{get\_identifier()}}
+{\footnotesize\ttfamily virtual std\+::string compiler\+::ir\+::\+Operand\+::get\+\_\+identifier (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00218}{218}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_aa9ded29518394172d7d71d17268817cc}\label{classcompiler_1_1ir_1_1_operand_aa9ded29518394172d7d71d17268817cc}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!get\_is\_ptr@{get\_is\_ptr}}
+\index{get\_is\_ptr@{get\_is\_ptr}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{get\_is\_ptr()}{get\_is\_ptr()}}
+{\footnotesize\ttfamily virtual bool compiler\+::ir\+::\+Operand\+::get\+\_\+is\+\_\+ptr (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00214}{214}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_ad193c8ded516331cde2f78f52762376a}\label{classcompiler_1_1ir_1_1_operand_ad193c8ded516331cde2f78f52762376a}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!get\_is\_var@{get\_is\_var}}
+\index{get\_is\_var@{get\_is\_var}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{get\_is\_var()}{get\_is\_var()}}
+{\footnotesize\ttfamily virtual bool compiler\+::ir\+::\+Operand\+::get\+\_\+is\+\_\+var (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00216}{216}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_ae7931fb159adcc42d5bb25bc90ab2eba}\label{classcompiler_1_1ir_1_1_operand_ae7931fb159adcc42d5bb25bc90ab2eba}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!get\_type@{get\_type}}
+\index{get\_type@{get\_type}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{get\_type()}{get\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\+\_\+type}} compiler\+::ir\+::\+Operand\+::get\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00212}{212}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_a751faf85146a7753ada218318285b7b2}\label{classcompiler_1_1ir_1_1_operand_a751faf85146a7753ada218318285b7b2}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!get\_value@{get\_value}}
+\index{get\_value@{get\_value}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{get\_value()}{get\_value()}}
+{\footnotesize\ttfamily virtual std\+::string compiler\+::ir\+::\+Operand\+::get\+\_\+value (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00220}{220}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}\label{classcompiler_1_1ir_1_1_operand_a7dfc0f5a6e039ef1674ffd693ae77a3c}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!identifier@{identifier}}
+\index{identifier@{identifier}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{identifier}{identifier}}
+{\footnotesize\ttfamily const std\+::string compiler\+::ir\+::\+Operand\+::identifier\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00193}{193}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}\label{classcompiler_1_1ir_1_1_operand_adb82fe1707731658d198beef1cc986e6}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!is\_ptr@{is\_ptr}}
+\index{is\_ptr@{is\_ptr}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{is\_ptr}{is\_ptr}}
+{\footnotesize\ttfamily const bool compiler\+::ir\+::\+Operand\+::is\+\_\+ptr\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00195}{195}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}\label{classcompiler_1_1ir_1_1_operand_a953a71abee991c5f1866d5af8b4c1b66}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!is\_var@{is\_var}}
+\index{is\_var@{is\_var}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{is\_var}{is\_var}}
+{\footnotesize\ttfamily const bool compiler\+::ir\+::\+Operand\+::is\+\_\+var\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00197}{197}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}\label{classcompiler_1_1ir_1_1_operand_aa1a53f27dd9c09930d72efcc8c91cd37}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!type@{type}}
+\index{type@{type}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\+\_\+type}} compiler\+::ir\+::\+Operand\+::type\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00191}{191}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}\label{classcompiler_1_1ir_1_1_operand_aa68dd9cc1730ba9ee346aefd53dc3d3d}} 
+\index{compiler::ir::Operand@{compiler::ir::Operand}!value@{value}}
+\index{value@{value}!compiler::ir::Operand@{compiler::ir::Operand}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily const std\+::string compiler\+::ir\+::\+Operand\+::value\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00200}{200}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/ir/\mbox{\hyperlink{ir_8hh}{ir.\+hh}}\item 
+src/ir/\mbox{\hyperlink{ir_8cc}{ir.\+cc}}\end{DoxyCompactItemize}

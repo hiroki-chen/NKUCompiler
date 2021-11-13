@@ -1,0 +1,209 @@
+\hypertarget{lexer_8l_source}{}\doxysection{lexer.\+l}
+\label{lexer_8l_source}\index{src/frontend/parser/lexer.l@{src/frontend/parser/lexer.l}}
+\mbox{\hyperlink{lexer_8l}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00001}00001 \%option noyywrap}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00002}00002 \%option yylineno}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00003}00003 \%\{}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00004}00004 \textcolor{comment}{    /*************************************************************}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00005}00005 \textcolor{comment}{    expr.l}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00006}00006 \textcolor{comment}{    LEX FILE}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00007}00007 \textcolor{comment}{    Date: 2021/10/18}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00008}00008 \textcolor{comment}{    Haobin Chen (@Aoyamahiroki) <etyyuiope@gmail.com>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00009}00009 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00010}00010 \textcolor{comment}{    Defines regular expressions.}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00011}00011 \textcolor{comment}{    **************************************************************/}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00012}00012 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{item__all_8hh}{frontend/nodes/item\_all.hh}}>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00013}00013 \textcolor{preprocessor}{\#include <frontend/parser/parser.hh>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00014}00014 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{compile__excepts_8hh}{common/compile\_excepts.hh}}>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00016}00016 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00017}00017 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00018}00018 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00019}00019 \textcolor{preprocessor}{\#include <stdexcept>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00020}00020 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00021}00021 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00023}00023 \textcolor{keyword}{extern} \textcolor{keywordtype}{void} \mbox{\hyperlink{lexer_8l_af932de05a4ac700aa69272b24672032c}{yyerror}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* error\_information);}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00024}\mbox{\hyperlink{lexer_8l_ad07414281701fc1288df7325c7d52b01}{00024}} \textcolor{keywordtype}{int} \mbox{\hyperlink{lexer_8l_ad07414281701fc1288df7325c7d52b01}{yycolumn}} = 1;}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00026}\mbox{\hyperlink{lexer_8l_a6198b2fcf96178b24ad4efff2a3debb0}{00026}} \textcolor{preprocessor}{\#define YY\_USER\_ACTION yylloc.first\_line = yylineno;            \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00027}00027 \textcolor{preprocessor}{                       yylloc.first\_column = yycolumn;          \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00028}00028 \textcolor{preprocessor}{                       for (char c : std::string(yytext)) \{     \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00029}00029 \textcolor{preprocessor}{                           if (c == '\(\backslash\)n' || c == '\(\backslash\)r') \{        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00030}00030 \textcolor{preprocessor}{                               yycolumn = 1;                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00031}00031 \textcolor{preprocessor}{                           \} else \{                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00032}00032 \textcolor{preprocessor}{                               yycolumn++;                      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00033}00033 \textcolor{preprocessor}{                           \}                                    \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00034}00034 \textcolor{preprocessor}{                       \}                                        \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00035}00035 \textcolor{preprocessor}{                       yylloc.last\_line = yylineno;             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00036}00036 \textcolor{preprocessor}{                       yylloc.last\_column = yycolumn -\/ 1;}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00037}00037 \%\}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00040}00040 DECIMAL     ([0-\/9]+\(\backslash\).?[0-\/9]*|\(\backslash\).[0-\/9]+)}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00041}00041 OCTAL       0([0-\/7]+)}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00042}00042 HEX         (0x|0X)([0-\/9a-\/fA-\/F]+)}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00043}00043 ID          [[:alpha:]\_][[:alpha:][:digit:]\_]*}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00044}00044 EMPTY       [ \(\backslash\)t\(\backslash\)n\(\backslash\)r]+}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00045}00045 COMMENT     \(\backslash\)/\(\backslash\)/[\string^\(\backslash\)n\(\backslash\)r]*(\(\backslash\)n|\(\backslash\)r|\(\backslash\)n\(\backslash\)r)}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00046}00046 BEGIN       \(\backslash\)/\(\backslash\)*}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00047}00047 STRING      \(\backslash\)"{}[\string^\(\backslash\)"{}]*\(\backslash\)"{}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00048}00048 CHAR        '\(\backslash\)\(\backslash\)?.'}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00050}\mbox{\hyperlink{lexer_8cc_a9a7bd1b3d14701eb97c03f3ef34deff1}{00050}} \%\%}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00051}00051 \textcolor{stringliteral}{\{COMMENT\}} \{ ; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00052}00052 \textcolor{stringliteral}{\{BEGIN\}} \{}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00053}00053     \textcolor{comment}{// Handles mutilline comment.}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00054}00054     \textcolor{keywordtype}{char} c;}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00055}00055     \textcolor{keywordflow}{while} ((c = yyinput()) != 0) \{}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00056}00056         \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)n'}) \{}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00057}00057             \mbox{\hyperlink{lexer_8cc_a5e36364965360da7b7cdfc2188e0af84}{yylineno}} ++;}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00058}00058             \mbox{\hyperlink{lexer_8l_ad07414281701fc1288df7325c7d52b01}{yycolumn}} = 1;}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00059}00059         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'*'}) \{}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00060}00060             \textcolor{keywordflow}{if} ((c = yyinput()) == \textcolor{charliteral}{'/'}) \{}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00061}00061                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00062}00062             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00063}00063                 \mbox{\hyperlink{lexer_8cc_a448a4e9041a09588332733c6846c770c}{unput}}(c);}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00064}00064             \}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00065}00065         \}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00066}00066     \}}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00067}00067 \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00069}00069 \textcolor{stringliteral}{"{}int"{}}        \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_afeeffe52c8fd59db7c61cf8b02042dbf}{INT}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00070}00070 \textcolor{stringliteral}{"{}double"{}}     \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a8747af38b86aa2bbcda2f1b1aa0888c2}{DOUBLE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00071}00071 \textcolor{stringliteral}{"{}float"{}}      \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ae8690abbffa85934d64d545920e2b108}{FLOAT}}; \} }
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00072}00072 \textcolor{stringliteral}{"{}char"{}}       \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a35cd67ba7bb0db8105eb6267467535d7}{CHAR}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00073}00073 \textcolor{stringliteral}{"{}void"{}}       \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a7f319bfc2492a2136964194204e7a8cf}{VOID}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00074}00074 \textcolor{stringliteral}{"{}string"{}}     \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a0f4d394a3ab4e09bff60f714c66dc5ee}{STRING}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00076}00076 \textcolor{stringliteral}{"{}if"{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ac138c68a0709c57bc5f7567abc1558eb}{IF}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00077}00077 \textcolor{stringliteral}{"{}else"{}}       \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a0a70ee0cbf5b1738be4c9463c529ce72}{ELSE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00078}00078 \textcolor{stringliteral}{"{}do"{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a89f8701562ac09bf5c1e58516124c500}{DO}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00079}00079 \textcolor{stringliteral}{"{}while"{}}      \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a4e6edb897a7a0bb16aa6d80aef24326a}{WHILE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00080}00080 \textcolor{stringliteral}{"{}true"{}}       \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00081}00081 \textcolor{stringliteral}{"{}false"{}}      \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00082}00082 \textcolor{stringliteral}{"{}return"{}}     \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a6a0e6b80dd3d5ca395cf58151749f5e2}{RETURN}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00083}00083 \textcolor{stringliteral}{"{}continue"{}}   \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ab711666ad09d7f6c0b91576525ea158e}{CONTINUE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00084}00084 \textcolor{stringliteral}{"{}break"{}}      \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_abe022c8f09db1f0680a92293523f25dd}{BREAK}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00085}00085 \textcolor{stringliteral}{"{}for"{}}        \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a6634515171060cf2f7afd70a96cb9bde}{FOR}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00086}00086 \textcolor{stringliteral}{"{}const"{}}      \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a0c33b494a68ce28497e7ce8e5e95feff}{CONST}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00087}00087 \textcolor{stringliteral}{"{}struct"{}}     \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_af186fc3cd0dbc39f8d276a9fd87e7b47}{STRUCT\_TOKEN}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00089}00089 \textcolor{stringliteral}{\{HEX\}}        \{ \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a539b86ee4bb46824a194f22eb69903d9}{yylval}}.\mbox{\hyperlink{union_y_y_s_t_y_p_e_a50c01ed7556b105e9d7cf2a9c288198e}{raw\_number}} = double(std::stoi(std::string(\mbox{\hyperlink{lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}}, \mbox{\hyperlink{lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}), \textcolor{keyword}{nullptr}, 16)); \textcolor{keywordflow}{return} \mbox{\hyperlink{_c_make_c_x_x_compiler_id_8cpp_a46d5d95daa1bef867bd0179594310ed5}{HEX}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00090}00090 \textcolor{stringliteral}{\{OCTAL\}}      \{ \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a539b86ee4bb46824a194f22eb69903d9}{yylval}}.\mbox{\hyperlink{union_y_y_s_t_y_p_e_a50c01ed7556b105e9d7cf2a9c288198e}{raw\_number}} = double(std::stoi(std::string(\mbox{\hyperlink{lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}}, \mbox{\hyperlink{lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}), \textcolor{keyword}{nullptr}, 8)); \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a5cd8b22af5187daa3d34709d3b516851}{OCTAL}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00091}00091 \textcolor{stringliteral}{\{DECIMAL\}}    \{ \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a539b86ee4bb46824a194f22eb69903d9}{yylval}}.\mbox{\hyperlink{union_y_y_s_t_y_p_e_a50c01ed7556b105e9d7cf2a9c288198e}{raw\_number}} = std::stod(std::string(\mbox{\hyperlink{lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}}, \mbox{\hyperlink{lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}})); \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a7c2d2b121faf048e9623df797612378c}{DECIMAL}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00093}00093 \textcolor{stringliteral}{"{}["{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aaee610b6c2961459d7115cf914ed07a3}{LSQUARE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00094}00094 \textcolor{stringliteral}{"{}]"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a64f356928983026a43472b99d0973f8c}{RSQUARE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00095}00095 \textcolor{stringliteral}{"{}\{"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_af078bec81516d407fe17fc7cb8b355ac}{LBRACE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00096}00096 \textcolor{stringliteral}{"{}\}"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a301875c1e1858bdc810760f25fcd02d2}{RBRACE}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00097}00097 \textcolor{stringliteral}{"{}("{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_af33b856143ac84f8b9c1758b5ace15ba}{LPARENTHESIS}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00098}00098 \textcolor{stringliteral}{"{})"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ade35bd857616614d0a053b74965ac5a9}{RPARENTHESIS}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00099}00099 \textcolor{stringliteral}{"{};"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ae6402f35ea263d89cb367e0ab2b0f278}{SEMICOLON}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00100}00100 \textcolor{stringliteral}{"{}."{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a8a5043e7ab655e37e903ffbd8b95d6b2}{DOT}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00101}00101 \textcolor{stringliteral}{"{},"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aa2f49001be13949a16a57e6c99ab00ad}{COMMA}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00103}00103 \textcolor{stringliteral}{"{}=="{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_abaab8d42f075ee8ddc9b70951d3fd6cd}{EQ}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00104}00104 \textcolor{stringliteral}{"{}>="{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aa3f6df19cd1472f7600ebaf78a8d9fb8}{GEQ}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00105}00105 \textcolor{stringliteral}{"{}<="{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a09a442c77eb5aa8256ff65117f529e18}{LEQ}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00106}00106 \textcolor{stringliteral}{"{}<"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aa73214aa5f2f94f63d90bb4e3d99fe53}{L}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00107}00107 \textcolor{stringliteral}{"{}>"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aed9ea78689ecce0b7264c02c7f8a9a54}{G}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00108}00108 \textcolor{stringliteral}{"{}!="{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a2b6ba3ea1fe3e8cc970ad05cd05d703b}{NEQ}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00110}00110 \textcolor{stringliteral}{"{}="{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a507a000ab685ee51fa68ac8c35833efe}{ASSIGN}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00112}00112 \textcolor{stringliteral}{"{}\&\&"{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a5afe054f3014ed4ea8f49dc728eb5538}{LOGIC\_AND}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00113}00113 \textcolor{stringliteral}{"{}||"{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ad059c607786d83cdfa32174593090bf1}{LOGIC\_OR}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00114}00114 \textcolor{stringliteral}{"{}!"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a0be3ab8e3ac37162b16551ba42b06aba}{LOGIC\_NOT}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00116}00116 \textcolor{stringliteral}{"{}\&"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ae5f62ce7db1befe3bcae9311fa5f6267}{BIT\_AND}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00117}00117 \textcolor{stringliteral}{"{}|"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a4a86c92e3da9750fd6e3517fa7565504}{BIT\_OR}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00118}00118 \textcolor{stringliteral}{"{}\string^"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a72ac2986a95d9ed99fb3a9e51876254c}{BIT\_XOR}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00119}00119 \textcolor{stringliteral}{"{}\string~"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ad9311cb5d9adce01684adcaa5255a2b8}{BIT\_NEG}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00121}00121 \textcolor{stringliteral}{"{}++"{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_af735670d9b1cd3dfa2d927db387f7123}{INC}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00122}00122 \textcolor{stringliteral}{"{}-\/-\/"{}}         \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{_c_make_c_x_x_compiler_id_8cpp_ad1280362da42492bbc11aa78cbf776ad}{DEC}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00123}00123 \textcolor{stringliteral}{"{}+"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a97fe5470fb1ac167c713671655ff3e52}{ADD}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00124}00124 \textcolor{stringliteral}{"{}-\/"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a5381a445a1e4bdc36460151d82eed95a}{MINUS}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00125}00125 \textcolor{stringliteral}{"{}*"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_ab7aff04ad21c86032dee3b2012ad6126}{MUL}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00126}00126 \textcolor{stringliteral}{"{}/"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a8295e0aed07a8923d8363ce46c7b08e2}{DIV}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00127}00127 \textcolor{stringliteral}{"{}\%"{}}          \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_aca7d5718ab8c38506adb3bef2469b319}{MOD}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00129}00129 \textcolor{stringliteral}{\{ID\}}         \{ \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a539b86ee4bb46824a194f22eb69903d9}{yylval}}.\mbox{\hyperlink{union_y_y_s_t_y_p_e_a1527ad544c0da209c8ea8fc002635948}{raw\_string}} = \textcolor{keyword}{new} std::string(\mbox{\hyperlink{lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}}, \mbox{\hyperlink{lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}); \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a77ceac8d6af195fe72f95f6afd87c45e}{ID}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00130}00130 \textcolor{stringliteral}{\{CHAR\}}       \{ \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a539b86ee4bb46824a194f22eb69903d9}{yylval}}.\mbox{\hyperlink{union_y_y_s_t_y_p_e_a245698dd8fec84455b60cc00e7e14388}{raw\_char}} = \mbox{\hyperlink{lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}}[1]; \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a35cd67ba7bb0db8105eb6267467535d7}{CHAR}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00131}00131 \textcolor{stringliteral}{\{STRING\}}     \{ \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a539b86ee4bb46824a194f22eb69903d9}{yylval}}.\mbox{\hyperlink{union_y_y_s_t_y_p_e_a1527ad544c0da209c8ea8fc002635948}{raw\_string}} = \textcolor{keyword}{new} std::string(\mbox{\hyperlink{lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}}, \mbox{\hyperlink{lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}); \textcolor{keywordflow}{return} \mbox{\hyperlink{include_2frontend_2parser_2parser_8hh_a0f4d394a3ab4e09bff60f714c66dc5ee}{STRING}}; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00132}00132 \textcolor{stringliteral}{\{EMPTY\}}      \{ ; \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00134}00134 \textcolor{stringliteral}{.} \{ }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00135}00135     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00136}00136     oss << \textcolor{stringliteral}{"{}Error: Unknown character "{}} << \mbox{\hyperlink{lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}};}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00137}00137     \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_ab0ce49c5b5ca1c764de368abd03aa4e8}{compiler::unknown\_character}}(oss.str());}
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00138}00138 \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00141}00141 \textcolor{stringliteral}{<<EOF>>} \{ \mbox{\hyperlink{lexer_8cc_ac3286b18a2e91b4571b97df96a118e84}{yyterminate}}(); \}}
+
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00142}00142 }
+\DoxyCodeLine{\Hypertarget{lexer_8l_source_l00143}00143 }
+
+\end{DoxyCode}

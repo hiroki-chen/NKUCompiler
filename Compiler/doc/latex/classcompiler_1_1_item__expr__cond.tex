@@ -1,0 +1,140 @@
+\hypertarget{classcompiler_1_1_item__expr__cond}{}\doxysection{compiler\+::Item\+\_\+expr\+\_\+cond Class Reference}
+\label{classcompiler_1_1_item__expr__cond}\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+
+
+Class for conditional expressions.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+expr.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+expr\+\_\+cond\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcompiler_1_1_item__expr__cond}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__expr__cond_ae2e62605704a5cf7a3f789345aa23b05}{get\+\_\+expr\+\_\+type}} (void) const override
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr__cond_ac6775d53890ab169a096fdbeccfa1ba6}{Item\+\_\+expr\+\_\+cond}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr__cond_a5b8054e28e7aa5fea9d692566f28e9a5}{Item\+\_\+expr\+\_\+cond}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__expr__cond_a9e2ce36d423561359d18b084c5086308}{expr}})
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__expr__cond_a04300c00cca4ae483eb9f0ddbf269824}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__expr__cond_af6b5ad6f0cb21e6955ba54913141546d}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr__cond_a9d505ff6872be6fd07e8ce1fb9a858ca}{$\sim$\+Item\+\_\+expr\+\_\+cond}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__expr__cond_a9e2ce36d423561359d18b084c5086308}{expr}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class for conditional expressions. 
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00063}{63}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__cond_ac6775d53890ab169a096fdbeccfa1ba6}\label{classcompiler_1_1_item__expr__cond_ac6775d53890ab169a096fdbeccfa1ba6}} 
+\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}!Item\_expr\_cond@{Item\_expr\_cond}}
+\index{Item\_expr\_cond@{Item\_expr\_cond}!compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+\doxysubsubsection{\texorpdfstring{Item\_expr\_cond()}{Item\_expr\_cond()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+expr\+\_\+cond\+::\+Item\+\_\+expr\+\_\+cond (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__cond_a5b8054e28e7aa5fea9d692566f28e9a5}\label{classcompiler_1_1_item__expr__cond_a5b8054e28e7aa5fea9d692566f28e9a5}} 
+\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}!Item\_expr\_cond@{Item\_expr\_cond}}
+\index{Item\_expr\_cond@{Item\_expr\_cond}!compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+\doxysubsubsection{\texorpdfstring{Item\_expr\_cond()}{Item\_expr\_cond()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+expr\+\_\+cond\+::\+Item\+\_\+expr\+\_\+cond (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const}]{expr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8cc_source_l00027}{27}} of file \mbox{\hyperlink{item__expr_8cc_source}{item\+\_\+expr.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__cond_a9d505ff6872be6fd07e8ce1fb9a858ca}\label{classcompiler_1_1_item__expr__cond_a9d505ff6872be6fd07e8ce1fb9a858ca}} 
+\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}!````~Item\_expr\_cond@{$\sim$Item\_expr\_cond}}
+\index{````~Item\_expr\_cond@{$\sim$Item\_expr\_cond}!compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_expr\_cond()}{~Item\_expr\_cond()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+expr\+\_\+cond\+::$\sim$\+Item\+\_\+expr\+\_\+cond (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__cond_a04300c00cca4ae483eb9f0ddbf269824}\label{classcompiler_1_1_item__expr__cond_a04300c00cca4ae483eb9f0ddbf269824}} 
+\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+expr\+\_\+cond\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00074}{74}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__cond_ae2e62605704a5cf7a3f789345aa23b05}\label{classcompiler_1_1_item__expr__cond_ae2e62605704a5cf7a3f789345aa23b05}} 
+\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}!get\_expr\_type@{get\_expr\_type}}
+\index{get\_expr\_type@{get\_expr\_type}!compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+\doxysubsubsection{\texorpdfstring{get\_expr\_type()}{get\_expr\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} compiler\+::\+Item\+\_\+expr\+\_\+cond\+::get\+\_\+expr\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__expr_ad4b9d671701f636b81def21a83fc3950}{compiler\+::\+Item\+\_\+expr}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00068}{68}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__cond_af6b5ad6f0cb21e6955ba54913141546d}\label{classcompiler_1_1_item__expr__cond_af6b5ad6f0cb21e6955ba54913141546d}} 
+\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+expr\+\_\+cond\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8cc_source_l00054}{54}} of file \mbox{\hyperlink{item__expr_8cc_source}{item\+\_\+expr.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__cond_a9e2ce36d423561359d18b084c5086308}\label{classcompiler_1_1_item__expr__cond_a9e2ce36d423561359d18b084c5086308}} 
+\index{compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}!expr@{expr}}
+\index{expr@{expr}!compiler::Item\_expr\_cond@{compiler::Item\_expr\_cond}}
+\doxysubsubsection{\texorpdfstring{expr}{expr}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}}$\ast$ const compiler\+::\+Item\+\_\+expr\+\_\+cond\+::expr\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00065}{65}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__expr_8hh}{item\+\_\+expr.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__expr_8cc}{item\+\_\+expr.\+cc}}\end{DoxyCompactItemize}

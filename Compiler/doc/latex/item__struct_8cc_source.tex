@@ -1,0 +1,43 @@
+\hypertarget{item__struct_8cc_source}{}\doxysection{item\+\_\+struct.\+cc}
+\label{item__struct_8cc_source}\index{src/frontend/nodes/item\_struct.cc@{src/frontend/nodes/item\_struct.cc}}
+\mbox{\hyperlink{item__struct_8cc}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00017}00017 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{utils_8hh}{common/utils.hh}}>}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00018}00018 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{item__struct_8hh}{frontend/nodes/item\_struct.hh}}>}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00020}00020 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00022}\mbox{\hyperlink{classcompiler_1_1_item__struct__body_a4ffcf4f9a44a5a945e2a2a17ddd14fb2}{00022}} \mbox{\hyperlink{classcompiler_1_1_item__struct__body_aaa200b8eb4049e7718c498d2453bda0b}{compiler::Item\_struct\_body::Item\_struct\_body}}(\textcolor{keyword}{const} uint32\_t\& lineno)}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00023}00023     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00024}00024 \{}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00025}00025 \}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00027}00027 std::string}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00028}\mbox{\hyperlink{classcompiler_1_1_item__struct__body_ad5b249b09ef5c18317f878b609e94a00}{00028}} \mbox{\hyperlink{classcompiler_1_1_item__struct__body_ad5b249b09ef5c18317f878b609e94a00}{compiler::Item\_struct\_body::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00029}00029 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00030}00030     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00031}00031     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00032}00032     oss << \textcolor{stringliteral}{"{} Struct Body"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00033}00033     \textcolor{keywordflow}{for} (uint32\_t i = 0; i < struct\_body.size(); i++) \{}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00034}00034         oss << struct\_body[i]-\/>print\_result(indent + 2, i == struct\_body.size() -\/ 1 ? \textcolor{keyword}{true} : \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00035}00035     \}}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00036}00036     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__struct_8cc_source_l00037}00037 \}}
+
+\end{DoxyCode}

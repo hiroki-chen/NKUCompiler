@@ -40,7 +40,7 @@ public:
      * @brief Defines the type of the item.
      * 
      * Basically, there is a super node called <b>Program</b> node, which is defined as a root node of
-     * the whole AST. Expr, Decl, and Func_def are derived from the \ref{compiler::Item_root} node.
+     * the whole AST. Expr, Decl, and Func_def are derived from the compiler::Item_root node.
      * 
      */
     typedef enum type {

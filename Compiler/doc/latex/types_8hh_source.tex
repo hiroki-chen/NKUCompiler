@@ -1,0 +1,80 @@
+\hypertarget{types_8hh_source}{}\doxysection{types.\+hh}
+\label{types_8hh_source}\index{include/common/types.hh@{include/common/types.hh}}
+\mbox{\hyperlink{types_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00017}00017 \textcolor{preprocessor}{\#ifndef TYPES\_HH}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00018}00018 \textcolor{preprocessor}{\#define TYPES\_HH}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00020}00020 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacecompiler}{compiler}} \{}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00022}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{00022}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\_type}} \{}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00023}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba7196cccebff2f93fd032f1c8d5bebeb2}{00023}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba7196cccebff2f93fd032f1c8d5bebeb2}{ADD\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00024}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba68e14726383229d9b5e0564b45ce7e20}{00024}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba68e14726383229d9b5e0564b45ce7e20}{SUB\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00025}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaced2a0518526d6e5fc95bb7fc84e801b}{00025}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaced2a0518526d6e5fc95bb7fc84e801b}{MUL\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00026}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba3753a2230d4868a3fe3b4095cce6a7a5}{00026}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba3753a2230d4868a3fe3b4095cce6a7a5}{DIV\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00027}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba02a6e21d394512b2c233ea05c5f4cd34}{00027}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba02a6e21d394512b2c233ea05c5f4cd34}{MOD\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00028}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebabcc0afcb166ba85333e4a7f3b869119a}{00028}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebabcc0afcb166ba85333e4a7f3b869119a}{BITOR\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00029}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba8e61d2f1faa152566234a65c6383f4fe}{00029}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba8e61d2f1faa152566234a65c6383f4fe}{BITAND\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00030}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba1e943bcfa59f23d5068dc869ce00ab7a}{00030}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba1e943bcfa59f23d5068dc869ce00ab7a}{BITXOR\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00031}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaf9c8d82d0ecec526c23af4231323caac}{00031}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaf9c8d82d0ecec526c23af4231323caac}{EQ\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00032}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba1eeb8be1cc5eb757b10474588fe7d9e2}{00032}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba1eeb8be1cc5eb757b10474588fe7d9e2}{NEQ\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00033}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba7d57b7f419fc0e040f3065d9bf7020d8}{00033}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba7d57b7f419fc0e040f3065d9bf7020d8}{G\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00034}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebafd81cd307809655ddb70b4f5b1c4f877}{00034}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebafd81cd307809655ddb70b4f5b1c4f877}{L\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00035}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba0bb54315f5d241f15a62109d08255638}{00035}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba0bb54315f5d241f15a62109d08255638}{GE\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00036}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaa98b0edcb4909b76e7ef81ae881c6331}{00036}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaa98b0edcb4909b76e7ef81ae881c6331}{LE\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00037}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba2def45237954b344a0add32cc9f2b1d0}{00037}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba2def45237954b344a0add32cc9f2b1d0}{LOR\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00038}\mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebac05d4bed4e41e4cadff5555345de9fa4}{00038}}     \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebac05d4bed4e41e4cadff5555345de9fa4}{LAND\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00039}\mbox{\hyperlink{namespacecompiler_a5197cb6073931cf173bc1d60bddc1797}{00039}} \} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\_type}};}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00041}\mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145}{00041}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145}{unary\_type}} \{}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00042}\mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a0dfcaad662be095c1aacd4086b9bf568}{00042}}     \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a0dfcaad662be095c1aacd4086b9bf568}{LNOT\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00043}\mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a7b4fb7e62914b4540108b79f4169a657}{00043}}     \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a7b4fb7e62914b4540108b79f4169a657}{BITNEG\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00044}\mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145ac72b6f0f4fcaeaa196443e3df0cc5cef}{00044}}     \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145ac72b6f0f4fcaeaa196443e3df0cc5cef}{UMINUS\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00045}\mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a8d29b27b81ace4c00bfc4a26d8919884}{00045}}     \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a8d29b27b81ace4c00bfc4a26d8919884}{UADD\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00046}\mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a5ab7b9414ce68a9e8a2fa24be04305c9}{00046}}     \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a5ab7b9414ce68a9e8a2fa24be04305c9}{UDEREFER\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00047}\mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145ae2e8a8a8681a227bfc03aca7fb742068}{00047}}     \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145ae2e8a8a8681a227bfc03aca7fb742068}{UREF\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00048}\mbox{\hyperlink{namespacecompiler_a4129c892fa8f80773c0e9d4e491babda}{00048}} \} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145}{unary\_type}};}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00050}\mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679c}{00050}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679c}{basic\_type}} \{}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00051}\mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca20110368c693ba4cdc8bd3e0f76c2944}{00051}}     \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca20110368c693ba4cdc8bd3e0f76c2944}{VOID\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00052}\mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca4b39e84849cccef7d23386263e9c9c69}{00052}}     \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca4b39e84849cccef7d23386263e9c9c69}{INT\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00053}\mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca98892b74a1babe0bdf3d649d106b1aa1}{00053}}     \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca98892b74a1babe0bdf3d649d106b1aa1}{REAL\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00054}\mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca400ed42594ad1bba92a4ccef730843ac}{00054}}     \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca400ed42594ad1bba92a4ccef730843ac}{CHAR\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00055}\mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca090a9a0626c8d57c419c5fcaf6f1505a}{00055}}     \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca090a9a0626c8d57c419c5fcaf6f1505a}{STR\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00056}00056     \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679cae1c19210f8249e2655044b8f295d2cae}{STRUCT}}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00057}\mbox{\hyperlink{namespacecompiler_a314232a179682d2ed0bbdeabad4728d6}{00057}} \} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679c}{basic\_type}};}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00059}\mbox{\hyperlink{namespacecompiler_a70683183d067b3e669aab61bd5c06351}{00059}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \mbox{\hyperlink{namespacecompiler_a70683183d067b3e669aab61bd5c06351}{decl\_type}} \{}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00060}\mbox{\hyperlink{namespacecompiler_a70683183d067b3e669aab61bd5c06351aecf5c84309b8395ccc1e793d2744301d}{00060}}     \mbox{\hyperlink{namespacecompiler_a70683183d067b3e669aab61bd5c06351aecf5c84309b8395ccc1e793d2744301d}{VAR\_DECL}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00061}\mbox{\hyperlink{namespacecompiler_a70683183d067b3e669aab61bd5c06351a8f5ad6659b10ce6d9e6be123bbaf6aa5}{00061}}     \mbox{\hyperlink{namespacecompiler_a70683183d067b3e669aab61bd5c06351a8f5ad6659b10ce6d9e6be123bbaf6aa5}{CONST\_DECL}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00062}\mbox{\hyperlink{namespacecompiler_a2d0993e29c3d89fc12525df510db53bf}{00062}} \} \mbox{\hyperlink{namespacecompiler_a70683183d067b3e669aab61bd5c06351}{decl\_type}};}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00064}\mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{00064}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\_type}} \{}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00065}\mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4af521ac2d65b94a2b6528d4f957cbe455}{00065}}     \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4af521ac2d65b94a2b6528d4f957cbe455}{VAR\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00066}\mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a6187457fdfb1ba6b27f890cb2e0058d6}{00066}}     \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a6187457fdfb1ba6b27f890cb2e0058d6}{FUNC\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00067}\mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a126b9395a26014c8b451acd280e9d954}{00067}}     \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a126b9395a26014c8b451acd280e9d954}{POINTER\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00068}\mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a1fed8940d2bfd2d78c17b290e4b8805c}{00068}}     \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a1fed8940d2bfd2d78c17b290e4b8805c}{ARRAY\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00069}\mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a7a1bf4f580d9819067b1a8d772be0f79}{00069}}     \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4a7a1bf4f580d9819067b1a8d772be0f79}{STRUCT\_TYPE}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00070}\mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4ac1009dd02c534a0fb092e33a58d7c853}{00070}}     \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4ac1009dd02c534a0fb092e33a58d7c853}{UNDEFINED}},}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00071}\mbox{\hyperlink{namespacecompiler_a46971f6aa1a82f70d8918d37f8d6f7e6}{00071}} \} \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\_type}};}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00072}00072 \} \textcolor{comment}{// namespace compiler}}
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{types_8hh_source_l00074}00074 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
