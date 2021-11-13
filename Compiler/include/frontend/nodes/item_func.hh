@@ -39,6 +39,8 @@ public:
 
     virtual std::vector<Item_expr*> get_arguments(void) const { return arguments; }
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::CALL_LIST_TYPE; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
@@ -60,6 +62,8 @@ public:
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::FUNC_CALL_TYPE; }
 
     virtual Item_ident* get_identifier(void) const { return identifier; }
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual Item_func_call_list* get_call_list(void) const { return arguments; }
 
@@ -83,6 +87,8 @@ public:
 
     virtual basic_type get_arg_type(void) const { return type; }
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual Item_ident* get_identifier(void) const { return identifier; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
@@ -104,6 +110,8 @@ public:
     Item_func_def_list(const uint32_t& lineno);
 
     virtual void add_arg(Item_func_def_arg* const argument);
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -134,6 +142,8 @@ public:
         Item_block* const func_body);
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual ~Item_func_def() override = default;
 } Item_func_def;

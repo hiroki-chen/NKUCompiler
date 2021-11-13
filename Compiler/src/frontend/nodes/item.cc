@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <common/termcolor.hh>
+#include <common/compile_excepts.hh>
 #include <frontend/nodes/item.hh>
 
 #include <sstream>
@@ -38,10 +39,15 @@ void compiler::Item_root::add_child(Item* const child)
 std::string compiler::Item_root::print_result(const uint32_t& indent, const bool& leaf) const
 {
     std::ostringstream oss;
-    
-    oss  << "Program Root: " << termcolor::reset << std::endl;
+
+    oss << "Program Root: " << termcolor::reset << std::endl;
     for (uint32_t i = 0; i < children.size(); i++) {
         oss << children[i]->print_result(indent, i == children.size() - 1);
     }
     return oss.str();
+}
+
+void compiler::Item_root::generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const
+{
+    throw compiler::unsupported_operation("No IR for compiler::Item_root type!");
 }

@@ -28,6 +28,89 @@ typedef class IR {
 
 } IR;
 
+/**
+ * @brief Defines different operations.
+ * 
+ */
+typedef enum op_type {
+    NOP,
+    // Basic algorithmic operations
+    IADD,
+    ISUB,
+    IMUL,
+    IDIV,
+    IMOD,
+
+    // For floats.
+    FADD,
+    FSUB,
+    FMUL,
+    FDIV,
+    FNEG,
+
+    // Assignment
+    MOV,
+
+    // Function call
+    CALL,
+    RET,
+
+    // Jump
+    JMP,
+    JGE,
+    JLE,
+    JEQ,
+    JNE,
+    JLT,
+    JGT,
+
+    // Bit operations.
+    BAND,
+    BOR,
+    BXOR,
+    BNEG,
+    SHL,
+    LSHR,
+    ASHR,
+
+    // Logic operations.
+    LAND,
+    LOR,
+    LNOT,
+
+    // Relational operations.
+    CMP,
+
+    // Memory related operations.
+    LOAD,
+    STORE,
+    MALLOC,
+
+    // Delimiters.
+    BEGIN_DATA,
+    END_DATA,
+    BEGIN_FUNC,
+    END_FUNC,
+    BEGIN_STRUCT,
+    END_STRUCT,
+
+    // Jump labels.
+    LBL,
+} op_type;
+
+/**
+ * @brief Defines different variable types.
+ * 
+ * i32 => 32-bit variables. int, unsigned int.
+ */
+typedef enum var_type {
+    i32,
+    i8,
+    // A little bit of complex...
+    DB,
+    FL,
+} var_type;
+
 } // namespace compiler::ir
 
 #endif
