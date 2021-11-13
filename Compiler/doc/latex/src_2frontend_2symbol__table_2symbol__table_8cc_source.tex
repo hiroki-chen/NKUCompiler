@@ -1,0 +1,90 @@
+\hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source}{}\doxysection{symbol\+\_\+table.\+cc}
+\label{src_2frontend_2symbol__table_2symbol__table_8cc_source}\index{src/frontend/symbol\_table/symbol\_table.cc@{src/frontend/symbol\_table/symbol\_table.cc}}
+\mbox{\hyperlink{src_2frontend_2symbol__table_2symbol__table_8cc}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00017}00017 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{compile__excepts_8hh}{common/compile\_excepts.hh}}>}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00018}00018 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh}{frontend/symbol\_table/symbol\_table.hh}}>}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00020}00020 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00022}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a6bc0f8b3a45d0f91b2221073f99a36bc}{00022}} \mbox{\hyperlink{classcompiler_1_1_symbol}{compiler::Symbol}}* \mbox{\hyperlink{classcompiler_1_1_symbol__table_a6bc0f8b3a45d0f91b2221073f99a36bc}{compiler::Symbol\_table::find\_symbol}}(\textcolor{keyword}{const} std::string\& name)}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00023}00023 \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00024}00024     \textcolor{comment}{// Iterate over the current table and the parent table.}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00025}00025     \mbox{\hyperlink{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}{last\_uuid}} = \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}}.size() -\/ 1;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00026}00026     \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}}* result = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00027}00027     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& cur : \mbox{\hyperlink{classcompiler_1_1_symbol__table_ab4ce25c0e19b8fa4a672ec0e1cd1661d}{symbol\_table}}) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00028}00028         result = cur-\/>find\_symbol(name);}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00029}00029         \textcolor{keywordflow}{if} (result != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00030}00030             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00031}00031         \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00032}00032         \mbox{\hyperlink{classcompiler_1_1_symbol__table_ac3816c5a3a63d68296e6545dd3d00385}{last\_uuid}}-\/-\/;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00033}00033     \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00034}00034     \textcolor{keywordflow}{if} (result != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00035}00035         \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00036}00036     \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00038}00038     \textcolor{comment}{// Not found. Raise an error.}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00039}00039     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00040}00040     oss << \textcolor{stringliteral}{"{}Error: Symbol "{}} << name << \textcolor{stringliteral}{"{} is not declaraed."{}};}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00041}00041     \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_a63757d294960574ab620a1b65c898d3b}{compiler::undeclared\_symbol}}(oss.str());}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00042}00042     \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00043}00043 \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00045}00045 \textcolor{comment}{// TODO: Implement it.}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00046}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a146de85a487ab66c20709fff00cdf6b3}{00046}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_symbol__table_a146de85a487ab66c20709fff00cdf6b3}{compiler::Symbol\_table::add\_symbol}}(\textcolor{keyword}{const} std::string\& name, \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}}* \textcolor{keyword}{const} symbol)}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00047}00047 \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00048}00048     \textcolor{keywordflow}{if} (!symbol\_table.size()) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00049}00049         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_a39eff1ab66c342c99e171998c8433273}{compiler::fatal\_error}}(\textcolor{stringliteral}{"{}Error: The global symbol table is not found!"{}});}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00050}00050     \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00051}00051     (*symbol\_table.begin())-\/>add\_symbol(name, symbol);}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00052}00052 \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00054}\mbox{\hyperlink{classcompiler_1_1_symbol__table_a168453a0da34f997ad0d7b940893a184}{00054}} \mbox{\hyperlink{classcompiler_1_1_symbol__block}{compiler::Symbol\_block}}* \mbox{\hyperlink{classcompiler_1_1_symbol__table_a168453a0da34f997ad0d7b940893a184}{compiler::Symbol\_table::get\_spec\_block}}(\textcolor{keyword}{const} uint32\_t\& i)}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00055}00055 \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00056}00056     uint32\_t index = symbol\_table.size() -\/ i;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00057}00057     \textcolor{keywordflow}{if} (index <= 0) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00058}00058         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_a39eff1ab66c342c99e171998c8433273}{compiler::fatal\_error}}(\textcolor{stringliteral}{"{}Error: The global symbol table is not found!"{}});}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00059}00059     \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00060}00060     \textcolor{keyword}{auto} iter = symbol\_table.begin();}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00061}00061     \textcolor{keywordflow}{for} (uint32\_t i = 0; i < index; i++) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00062}00062         iter++;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00063}00063     \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00064}00064     \textcolor{keywordflow}{return} *iter;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00065}00065 \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00067}\mbox{\hyperlink{classcompiler_1_1_symbol__block_a38db7cccb37087209f2cf2232fa888d3}{00067}} \mbox{\hyperlink{classcompiler_1_1_symbol}{compiler::Symbol}}* \mbox{\hyperlink{classcompiler_1_1_symbol__block_a38db7cccb37087209f2cf2232fa888d3}{compiler::Symbol\_block::find\_symbol}}(\textcolor{keyword}{const} std::string\& name)}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00068}00068 \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00069}00069     \textcolor{keyword}{auto} iter = block.find(name);}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00070}00070     \textcolor{keywordflow}{if} (iter != block.end()) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00071}00071         \textcolor{keywordflow}{return} iter-\/>second;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00072}00072     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00073}00073         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00074}00074     \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00075}00075 \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00077}\mbox{\hyperlink{classcompiler_1_1_symbol__block_a96d9c54583210cfc0d7215ac9c448dca}{00077}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_symbol__block_a96d9c54583210cfc0d7215ac9c448dca}{compiler::Symbol\_block::add\_symbol}}(\textcolor{keyword}{const} std::string\& name, \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}}* \textcolor{keyword}{const} symbol)}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00078}00078 \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00079}00079     \textcolor{keywordflow}{if} (find\_symbol(name)) \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00080}00080         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_af31882b52c1aaa9f1e50b8ca2111f4fe}{compiler::redefined\_symbol}}(\textcolor{stringliteral}{"{}Symbol "{}} + name + \textcolor{stringliteral}{"{} has been already defined."{}});}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00081}00081     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00082}00082         block[name] = symbol;}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00083}00083     \}}
+\DoxyCodeLine{\Hypertarget{src_2frontend_2symbol__table_2symbol__table_8cc_source_l00084}00084 \}}
+
+\end{DoxyCode}

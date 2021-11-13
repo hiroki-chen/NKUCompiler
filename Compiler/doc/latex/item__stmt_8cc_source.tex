@@ -1,0 +1,222 @@
+\hypertarget{item__stmt_8cc_source}{}\doxysection{item\+\_\+stmt.\+cc}
+\label{item__stmt_8cc_source}\index{src/frontend/nodes/item\_stmt.cc@{src/frontend/nodes/item\_stmt.cc}}
+\mbox{\hyperlink{item__stmt_8cc}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00017}00017 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{utils_8hh}{common/utils.hh}}>}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00018}00018 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{item__stmt_8hh}{frontend/nodes/item\_stmt.hh}}>}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00020}00020 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00021}00021 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00023}\mbox{\hyperlink{classcompiler_1_1_item__stmt_a43d9c98edd0496471d930cd07129cca6}{00023}} \mbox{\hyperlink{classcompiler_1_1_item__stmt_aacf54d96f2b876797405eb18f9f6865f}{compiler::Item\_stmt::Item\_stmt}}(\textcolor{keyword}{const} uint32\_t\& lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00024}00024     : \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\_expr}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00025}00025 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00026}00026 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00028}\mbox{\hyperlink{classcompiler_1_1_item__stmt__assign_a062e5b5597d9cf8b476fd8aad785f2a6}{00028}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__assign_aec423bbc9aaaafaa15522fb0e7222a10}{compiler::Item\_stmt\_assign::Item\_stmt\_assign}}(}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00029}00029     \textcolor{keyword}{const} uint32\_t\& lineno,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00030}00030     \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\_ident}}* \textcolor{keyword}{const} identifier,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00031}00031     \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\_expr}}* \textcolor{keyword}{const} expression)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00032}00032     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00033}00033     , identifier(identifier)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00034}00034     , expression(expression)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00035}00035 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00036}00036 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00038}\mbox{\hyperlink{classcompiler_1_1_item__stmt__eval_ab5c8a7a1bf0d84b5db08e6a79b9e8c1a}{00038}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__eval_aad2341f73ed7a4b265c13e6877e54ca3}{compiler::Item\_stmt\_eval::Item\_stmt\_eval}}(\textcolor{keyword}{const} uint32\_t\& lineno, \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\_expr}}* \textcolor{keyword}{const} expression)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00039}00039     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00040}00040     , expression(expression)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00041}00041 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00042}00042 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00044}\mbox{\hyperlink{classcompiler_1_1_item__stmt__eif_a26d7437dec62b907e43aabb931feb534}{00044}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__eif_a35dc9199ba096828b2189cc7bd099015}{compiler::Item\_stmt\_eif::Item\_stmt\_eif}}(}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00045}00045     \textcolor{keyword}{const} uint32\_t\& lineno,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00046}00046     \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\_expr}}* \textcolor{keyword}{const} condition,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00047}00047     \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}* \textcolor{keyword}{const} if\_branch,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00048}00048     \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}* \textcolor{keyword}{const} else\_branch)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00049}00049     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00050}00050     , condition(condition)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00051}00051     , if\_branch(if\_branch)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00052}00052     , else\_branch(else\_branch)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00053}00053 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00054}00054 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00056}\mbox{\hyperlink{classcompiler_1_1_item__stmt__while_add2cf75966d2ee131ea5f57809309b64}{00056}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__while_a120bdfc6200cba114a3b858ad8a4268a}{compiler::Item\_stmt\_while::Item\_stmt\_while}}(}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00057}00057     \textcolor{keyword}{const} uint32\_t\& lineno,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00058}00058     \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\_expr}}* \textcolor{keyword}{const} condition,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00059}00059     \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}* \textcolor{keyword}{const} statement,}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00060}00060     \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& is\_do\_while)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00061}00061     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00062}00062     , condition(condition)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00063}00063     , statement(statement)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00064}00064     , is\_do\_while(is\_do\_while)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00065}00065 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00066}00066 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00068}\mbox{\hyperlink{classcompiler_1_1_item__stmt__break_a4efa961f04529c85d0850b89b4747d04}{00068}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__break_a571903eea443c19aec733de72f8252f7}{compiler::Item\_stmt\_break::Item\_stmt\_break}}(\textcolor{keyword}{const} uint32\_t\& lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00069}00069     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00070}00070 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00071}00071 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00073}\mbox{\hyperlink{classcompiler_1_1_item__stmt__continue_a5bf56fa882ba26b6c3ff29fab39f4268}{00073}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__continue_af70fac06b3d4f49b0cd2f9dd8d234577}{compiler::Item\_stmt\_continue::Item\_stmt\_continue}}(\textcolor{keyword}{const} uint32\_t\& lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00074}00074     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00075}00075 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00076}00076 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00078}\mbox{\hyperlink{classcompiler_1_1_item__stmt__return_ad4f3affffa85b36bf8f609945d95da96}{00078}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__return_a0787aac33c37f1a81c9182901d731928}{compiler::Item\_stmt\_return::Item\_stmt\_return}}(\textcolor{keyword}{const} uint32\_t\& lineno, \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\_expr}}* \textcolor{keyword}{const} expr)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00079}00079     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00080}00080     , expr(expr)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00081}00081 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00082}00082 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00084}\mbox{\hyperlink{classcompiler_1_1_item__stmt__postfix_a82af7317e28fd68e86d1ecd9d3a67ef7}{00084}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__postfix_a5c6e2fea97fdf2fccd3d41407dce20a1}{compiler::Item\_stmt\_postfix::Item\_stmt\_postfix}}(\textcolor{keyword}{const} uint32\_t\& lineno, \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\_ident}}* \textcolor{keyword}{const} identifier, \textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\_type}}\& \mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{type}})}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00085}00085     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00086}00086     , identifier(identifier)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00087}00087     , \mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{type}}(\mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{type}})}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00088}00088 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00089}00089 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00091}\mbox{\hyperlink{classcompiler_1_1_item__block_aa4d1868d69307fb43145c0ad1340b86c}{00091}} \mbox{\hyperlink{classcompiler_1_1_item__block_ac543ad6636265df5741a962673eb7e47}{compiler::Item\_block::Item\_block}}(\textcolor{keyword}{const} uint32\_t\& lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00092}00092     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00093}00093 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00094}00094 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00096}\mbox{\hyperlink{classcompiler_1_1_item__stmt__void_a2ca1d8391e3a71790a60d636a6f3475a}{00096}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__void_a9b5f457c0a001c0bc35e8e01d8360757}{compiler::Item\_stmt\_void::Item\_stmt\_void}}(\textcolor{keyword}{const} uint32\_t\& lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00097}00097     : \mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}(lineno)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00098}00098 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00099}00099 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00101}\mbox{\hyperlink{classcompiler_1_1_item__block_a672b0c2e5cfc9750c420dee66dea8ff0}{00101}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_item__block_a672b0c2e5cfc9750c420dee66dea8ff0}{compiler::Item\_block::add\_item}}(\mbox{\hyperlink{classcompiler_1_1_item__stmt}{Item\_stmt}}* \textcolor{keyword}{const} statement)}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00102}00102 \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00103}00103     statements.emplace\_back(statement);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00104}00104 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00106}00106 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00107}\mbox{\hyperlink{classcompiler_1_1_item__stmt__assign_a5792af60643017ad420b734feff72a59}{00107}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__assign_a5792af60643017ad420b734feff72a59}{compiler::Item\_stmt\_assign::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00108}00108 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00109}00109     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00110}00110     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00111}00111     oss << \textcolor{stringliteral}{"{} Assignment Statement"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00112}00112     oss << identifier-\/>print\_result(indent + 2, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00113}00113     oss << expression-\/>print\_result(indent + 2, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00114}00114     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00115}00115 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00117}00117 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00118}\mbox{\hyperlink{classcompiler_1_1_item__stmt__break_a20e941e14f5860c6c8f7bf1d24b53fd1}{00118}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__break_a20e941e14f5860c6c8f7bf1d24b53fd1}{compiler::Item\_stmt\_break::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00119}00119 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00120}00120     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00121}00121     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00122}00122     oss << \textcolor{stringliteral}{"{} Break Statement"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00123}00123     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00124}00124 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00126}00126 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00127}\mbox{\hyperlink{classcompiler_1_1_item__stmt__continue_aa49a2d670e99ca1c12919d8e7cc6392d}{00127}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__continue_aa49a2d670e99ca1c12919d8e7cc6392d}{compiler::Item\_stmt\_continue::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00128}00128 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00129}00129     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00130}00130     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00131}00131     oss << \textcolor{stringliteral}{"{} Continue Statement"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00132}00132     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00133}00133 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00135}00135 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00136}\mbox{\hyperlink{classcompiler_1_1_item__stmt__eif_ab3600c9c4de9e9ce0de8af17d740729f}{00136}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__eif_ab3600c9c4de9e9ce0de8af17d740729f}{compiler::Item\_stmt\_eif::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00137}00137 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00138}00138     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00139}00139     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00140}00140     oss << \textcolor{stringliteral}{"{} If-\/else Statement"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00141}00141     oss << condition-\/>print\_result(indent + 2, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00142}00142 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00143}00143     \textcolor{comment}{// There could be no else statement at all.}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00144}00144     \textcolor{keywordflow}{if} (else\_branch != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00145}00145         oss << if\_branch-\/>print\_result(indent + 2, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00146}00146         oss << else\_branch-\/>print\_result(indent + 2, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00147}00147     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00148}00148         oss << if\_branch-\/>print\_result(indent + 2, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00149}00149     \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00150}00150     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00151}00151 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00152}00152 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00153}00153 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00154}\mbox{\hyperlink{classcompiler_1_1_item__stmt__while_a346d124ff2105381d2f61d5de81dcbb4}{00154}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__while_a346d124ff2105381d2f61d5de81dcbb4}{compiler::Item\_stmt\_while::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00155}00155 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00156}00156     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00157}00157     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00158}00158     oss << (is\_do\_while ? \textcolor{stringliteral}{"{}Do While Statement"{}} : \textcolor{stringliteral}{"{} While Statement"{}}) << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00159}00159     oss << condition-\/>print\_result(indent + 2, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00160}00160     oss << statement-\/>print\_result(indent + 2, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00161}00161     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00162}00162 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00164}00164 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00165}\mbox{\hyperlink{classcompiler_1_1_item__stmt__postfix_a3de3b0c112c83e5667080700598830b6}{00165}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__postfix_a3de3b0c112c83e5667080700598830b6}{compiler::Item\_stmt\_postfix::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00166}00166 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00167}00167     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00168}00168     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00169}00169     oss << \textcolor{stringliteral}{"{} Postfix Statement with identifier"{}}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00170}00170         << identifier-\/>print\_result(indent + 2, \textcolor{keyword}{true}) << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00171}00171     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00172}00172 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00174}00174 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00175}\mbox{\hyperlink{classcompiler_1_1_item__stmt__void_a68837e303402d2543f19fafd800a5401}{00175}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__void_a68837e303402d2543f19fafd800a5401}{compiler::Item\_stmt\_void::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00176}00176 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00177}00177     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00178}00178     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00179}00179     oss << \textcolor{stringliteral}{"{} Empty Statement"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00180}00180     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00181}00181 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00182}00182 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00183}00183 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00184}\mbox{\hyperlink{classcompiler_1_1_item__stmt__eval_a25c389d254d612eb8bf396d9ce6c88a0}{00184}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__eval_a25c389d254d612eb8bf396d9ce6c88a0}{compiler::Item\_stmt\_eval::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00185}00185 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00186}00186     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00187}00187     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00188}00188     oss << \textcolor{stringliteral}{"{} Eval Statement"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00189}00189     oss << expression-\/>print\_result(indent + 2, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00190}00190     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00191}00191 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00193}00193 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00194}\mbox{\hyperlink{classcompiler_1_1_item__stmt__return_a53ca27555ce8dad539ccb5dcfbe7541b}{00194}} \mbox{\hyperlink{classcompiler_1_1_item__stmt__return_a53ca27555ce8dad539ccb5dcfbe7541b}{compiler::Item\_stmt\_return::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00195}00195 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00196}00196     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00197}00197     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00198}00198     oss << \textcolor{stringliteral}{"{} Return statement"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00199}00199     \textcolor{keywordflow}{if} (expr != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00200}00200         oss << expr-\/>print\_result(indent + 2, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00201}00201     \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00202}00202 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00203}00203     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00204}00204 \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00205}00205 }
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00206}00206 std::string}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00207}\mbox{\hyperlink{classcompiler_1_1_item__block_a746c0a718199ef1ca37550b8be11f74d}{00207}} \mbox{\hyperlink{classcompiler_1_1_item__block_a746c0a718199ef1ca37550b8be11f74d}{compiler::Item\_block::print\_result}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00208}00208 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00209}00209     std::ostringstream oss;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00210}00210     \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{print\_indent}}(indent, leaf, oss);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00211}00211     oss << \textcolor{stringliteral}{"{} Block"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00212}00212     \textcolor{keywordflow}{for} (uint32\_t i = 0; i < statements.size(); i++) \{}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00213}00213         oss << statements[i]-\/>print\_result(indent + 2, i == statements.size() -\/ 1);}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00214}00214     \}}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00215}00215     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{\Hypertarget{item__stmt_8cc_source_l00216}00216 \}}
+
+\end{DoxyCode}

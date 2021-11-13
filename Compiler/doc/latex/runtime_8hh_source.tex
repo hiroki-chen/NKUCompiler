@@ -1,0 +1,89 @@
+\hypertarget{runtime_8hh_source}{}\doxysection{runtime.\+hh}
+\label{runtime_8hh_source}\index{include/runtime/runtime.hh@{include/runtime/runtime.hh}}
+\mbox{\hyperlink{runtime_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00017}00017 \textcolor{preprocessor}{\#ifndef RUNTIME\_HH}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00018}00018 \textcolor{preprocessor}{\#define RUNTIME\_HH}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00020}00020 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cxxopts_8hh}{common/cxxopts.hh}}>}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00021}00021 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{item_8hh}{frontend/nodes/item.hh}}>}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00023}00023 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00025}00025 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacecompiler}{compiler}} \{}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00030}\mbox{\hyperlink{classcompiler_1_1_command__parser}{00030}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1_command__parser}{Command\_parser}} final \{}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00031}00031 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00032}00032     \textcolor{keyword}{const} \textcolor{keywordtype}{int} argc;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00034}00034     \textcolor{keyword}{const} \textcolor{keywordtype}{char}** argv;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00036}00036     \mbox{\hyperlink{classcxxopts_1_1_options}{cxxopts::Options}}* options;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00038}00038     \mbox{\hyperlink{classcxxopts_1_1_parse_result}{cxxopts::ParseResult}} result;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00040}00040 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00041}\mbox{\hyperlink{classcompiler_1_1_command__parser_a07da2702415b53efc86eb6fd7f9e86f5}{00041}}     \mbox{\hyperlink{classcompiler_1_1_command__parser_a07da2702415b53efc86eb6fd7f9e86f5}{Command\_parser}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00049}00049     \mbox{\hyperlink{classcompiler_1_1_command__parser_a07da2702415b53efc86eb6fd7f9e86f5}{Command\_parser}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int}\& argc, \textcolor{keyword}{const} \textcolor{keywordtype}{char}** argv);}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00055}00055     \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_command__parser_ae725b12b2416c58409d1d08872404f65}{parse}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00057}\mbox{\hyperlink{classcompiler_1_1_command__parser_af87397ab1d0d9cf21cc7177d0b4550f8}{00057}}     \mbox{\hyperlink{classcxxopts_1_1_parse_result}{cxxopts::ParseResult}} \mbox{\hyperlink{classcompiler_1_1_command__parser_af87397ab1d0d9cf21cc7177d0b4550f8}{get\_result}}(\textcolor{keywordtype}{void}) \{ \textcolor{keywordflow}{return} result; \};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00058}\mbox{\hyperlink{namespacecompiler_a301d31765cbb89fb9b8f1998eba0b408}{00058}} \} \mbox{\hyperlink{namespacecompiler_a301d31765cbb89fb9b8f1998eba0b408}{Command\_parser}};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00064}\mbox{\hyperlink{classcompiler_1_1_compiler__runtime}{00064}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1_compiler__runtime}{Compiler\_runtime}} \{}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00065}00065 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00066}00066     \textcolor{keywordtype}{bool} compile\_on = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00068}00068     \textcolor{keywordtype}{bool} debug\_on = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00070}00070     \textcolor{keywordtype}{bool} print\_ast = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00072}00072     \textcolor{keywordtype}{bool} generate\_ir = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00074}00074     \mbox{\hyperlink{classcompiler_1_1_item__root}{Item\_root}}* root = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00076}00076     uint32\_t opt\_level = 0;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00078}00078     std::vector<std::string> input\_file;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00080}00080     std::ofstream output\_file;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00082}00082     std::string base\_path;}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00084}00084 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00085}00085     \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_compiler__runtime_ace8975a4a327d2b4a69e929a0c015873}{run}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00087}\mbox{\hyperlink{classcompiler_1_1_compiler__runtime_a6e41d58ad5f2e3bc61e43838693c5693}{00087}}     \mbox{\hyperlink{classcompiler_1_1_compiler__runtime_a6e41d58ad5f2e3bc61e43838693c5693}{Compiler\_runtime}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00089}00089     \mbox{\hyperlink{classcompiler_1_1_compiler__runtime_a6e41d58ad5f2e3bc61e43838693c5693}{Compiler\_runtime}}(\textcolor{keyword}{const} \mbox{\hyperlink{classcxxopts_1_1_parse_result}{cxxopts::ParseResult}}\& result);}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00091}\mbox{\hyperlink{classcompiler_1_1_compiler__runtime_a3c0434a59cc4c47a680198b53b8e1dc4}{00091}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1_compiler__runtime_a3c0434a59cc4c47a680198b53b8e1dc4}{set\_root}}(\mbox{\hyperlink{classcompiler_1_1_item__root}{Item\_root}}* \textcolor{keyword}{const} root) \{ this-\/>root = root; \}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00093}\mbox{\hyperlink{classcompiler_1_1_compiler__runtime_a75acd52653bee389411c93fec18f7618}{00093}}     \mbox{\hyperlink{classcompiler_1_1_item__root}{Item\_root}}* \mbox{\hyperlink{classcompiler_1_1_compiler__runtime_a75acd52653bee389411c93fec18f7618}{get\_root}}() \{ \textcolor{keywordflow}{return} root; \}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00095}\mbox{\hyperlink{classcompiler_1_1_compiler__runtime_acf1f0be4fac5068b6971aa9a2c3a88af}{00095}}     \mbox{\hyperlink{classcompiler_1_1_compiler__runtime_acf1f0be4fac5068b6971aa9a2c3a88af}{\string~Compiler\_runtime}}(); \textcolor{comment}{// Customized destructor. Should do some garbage cleanup.}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00096}\mbox{\hyperlink{namespacecompiler_ae5e4a8fdb6fb183d3562986e41e708cb}{00096}} \} \mbox{\hyperlink{namespacecompiler_ae5e4a8fdb6fb183d3562986e41e708cb}{Compiler\_runtime}};}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00098}00098 std::vector<std::string> \mbox{\hyperlink{namespacecompiler_ace19f0378f105a9a7c96ee30661e74ff}{process\_input}}(\textcolor{keyword}{const} std::string\& input);}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00099}00099 \} \textcolor{comment}{// namespace compiler}}
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{runtime_8hh_source_l00101}00101 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

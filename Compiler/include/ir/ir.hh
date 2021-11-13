@@ -22,12 +22,83 @@
 #include <string>
 #include <vector>
 
-namespace compiler {
-// Avoid circular includes.
-class Item;
-} // namespace compiler
+#ifndef FORMAT
+#define FORMAT(output, str)                                 \
+    {                                                       \
+        output << std::ios::left << std::setw(0x10) << str; \
+    }
+#endif
 
 namespace compiler::ir {
+/**
+ * @brief Look-up table for enum type compiler::ir::op_type.
+ * 
+ */
+static const char* op_name[42] {
+    "NOP",
+    // Basic algorithmic operations
+    "IADD",
+    "ISUB",
+    "IMUL",
+    "IDIV",
+    "IMOD",
+
+    // For floats.
+    "FADD",
+    "FSUB",
+    "FMUL",
+    "FDIV",
+    "FNEG",
+
+    // Assignment
+    "MOV",
+
+    // Function call
+    "CALL",
+    "RET",
+
+    // Jump
+    "JMP",
+    "JGE",
+    "JLE",
+    "JEQ",
+    "JNE",
+    "JLT",
+    "JGT",
+
+    // Bit operations.
+    "BAND",
+    "BOR",
+    "BXOR",
+    "BNEG",
+    "SHL",
+    "LSHR",
+    "ASHR",
+
+    // Logic operations.
+    "LAND",
+    "LOR",
+    "LNOT",
+
+    // Relational operations.
+    "CMP",
+
+    // Memory related operations.
+    "LOAD",
+    "STORE",
+    "MALLOC",
+
+    // Delimiters.
+    "BEGIN_DATA",
+    "END_DATA",
+    "BEGIN_FUNC",
+    "END_FUNC",
+    "BEGIN_STRUCT",
+    "END_STRUCT",
+
+    // Jump labels.
+    "LBL",
+};
 /**
  * @brief Defines different operations.
  * 
@@ -148,7 +219,7 @@ public:
 
     virtual std::string get_value(void) const { return value; }
 
-    virtual ~Operand();
+    virtual ~Operand() = default;
 } Operand;
 
 /**
@@ -168,6 +239,8 @@ public:
         const std::string& identifier,
         const std::string& value,
         const uint32_t& shape);
+
+    ~Operand_ptr() override = default;
 } Operand_ptr;
 
 /**
@@ -179,13 +252,13 @@ public:
  * ALLOC i32, align 8.
  * 
  * @note LOGIC EXPLAINED
- *       When an IR instance is created from the AST, we should call \ref{compiler::ir::IR::generate_ir}
+ *       When an compiler::IR instance is created from the AST, we should call compiler::ir::IR::walk_ir()
  *       function to generate the string as follows:
- *       1. Create a lambda function that can be passed to \ref{compiler::ir::IR::walk_ir}
+ *       1. Create a lambda function that can be passed to compiler::ir::IR::walk_ir()
  *          that does some job with current operation;
- *       2. The function \ref{compiler::ir::IR::walk_ir} will iterate through each operands,
- *          and because each operand can be another instance of IR, we need to dig into the operand,
- *          where callback function comes to help.
+ *       2. The function compiler::ir::IR::walk_ir() will iterate through each operands,
+ *          and because each operand can be another instance of compiler::ir::IR, we need to dig into the   
+ *          operand, where callback function comes to help.
  *       3. The callback will call each operand with callback again until it reaches a deepmost level:
  *          the raw operand that we can ensure whether it is chained to the caller or not.
  */
@@ -214,7 +287,6 @@ private:
      * @return is_chained
      */
     bool emit_helper(std::function<bool(Operand* const)>&& callback, const bool& chained = true) const;
-    
 
     /**
      * @brief Call get_is_var().
@@ -267,11 +339,10 @@ public:
     /**
      * @brief Emit the IR.
      * 
-     * @param item The current syntax tree node
      * @param out 
      * @param verbose 
      */
-    void emit_ir(Item* const item, std::ostream& out = std::cout, const bool& verbose = false);
+    void emit_ir(std::ostream& out = std::cout, const bool& verbose = false);
 } IR;
 
 } // namespace compiler::ir

@@ -22,8 +22,6 @@
 #include <regex>
 #include <string>
 
-static const std::regex colorized_pattern(R"(\033\[.*?m)");
-
 namespace compiler {
 std::string to_string(const compiler::basic_type& type);
 
@@ -31,8 +29,23 @@ std::string to_string(const compiler::unary_type& type);
 
 std::string to_string(const compiler::binary_type& type);
 
+/**
+ * @brief Print indentation for each node in the AST.
+ * 
+ * @param indent 
+ * @param leaf 
+ * @param os 
+ */
 void print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os);
 
+/**
+ * @brief Checks whether a given file path is a directory.
+ * @note std::filesystem is a must.
+ * 
+ * @param file_path 
+ * @return true 
+ * @return false 
+ */
 bool is_dir(const std::string& file_path);
 
 // For the parser?

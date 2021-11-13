@@ -66,8 +66,8 @@ file(GLOB_RECURSE COMPILER_SRC RELATIVE ${PROJECT_SOURCE_DIR}
     "src/backend/**/*.c"
     "src/runtime/*.cc"
     "src/runtime/*.c"
-    "src/ir/**/*.c"
-    "src/ir/**/*.cc"
+    "src/ir/*.c"
+    "src/ir/*.cc"
     "src/main.cc"
 )
 

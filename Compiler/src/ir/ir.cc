@@ -17,6 +17,8 @@
 #include <frontend/nodes/item.hh>
 #include <ir/ir.hh>
 
+#include <iomanip>
+
 compiler::ir::Operand::Operand(
     const var_type& type,
     const std::string& identifier,
@@ -62,7 +64,7 @@ compiler::ir::IR::IR(
     Operand* const dst,
     Operand* const operand_a,
     Operand* const operand_b,
-    const std::string& labal)
+    const std::string& label)
     : type(operation)
     , dst(dst)
     , operand_a(operand_a)
@@ -76,7 +78,7 @@ compiler::ir::IR::IR(
     const op_type& operation,
     Operand* const dst,
     Operand* const operand_a,
-    const std::string& label = "")
+    const std::string& label)
     : type(operation)
     , dst(dst)
     , operand_a(operand_a)
@@ -89,7 +91,7 @@ compiler::ir::IR::IR(
 compiler::ir::IR::IR(
     const op_type& operation,
     Operand* const dst,
-    const std::string& label = "")
+    const std::string& label)
     : type(operation)
     , dst(dst)
     , operand_a(nullptr)
@@ -99,11 +101,12 @@ compiler::ir::IR::IR(
 {
 }
 
-void compiler::ir::IR::emit_ir(Item* const item, std::ostream& output, const bool& verbose)
+void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose)
 {
-    lineno = item->get_lineno();
+    // Wrap std::ostream in a macro.
+    FORMAT(output, op_name[type]);
 
-    // Emit IR of each operand.
+    // Emit IR of each operand. Deepmost callee.
     auto lambda_walk_ir = [&](Operand* const operand) {
         if (operand == nullptr) {
             output << "\t" << label;
@@ -115,7 +118,7 @@ void compiler::ir::IR::emit_ir(Item* const item, std::ostream& output, const boo
                << "\t" << label << std::endl;
     };
 
-    walk_ir(lambda_walk_ir, true);
+    walk_ir(lambda_walk_ir);
 }
 
 void compiler::ir::IR::walk_ir(std::function<void(Operand* const)>&& callback, const bool& chained)
@@ -139,7 +142,8 @@ bool compiler::ir::IR::emit_helper(
 
 bool compiler::ir::IR::emit_helper(
     std::function<bool(Operand* const operand)>&& callback,
-    const bool& chained = true) const
+    const bool& chained) const
 {
+    // This callback function is what we created in function walk_ir and the latter one is created in iterate_operand.
     return (chained && callback(dst)) || callback(operand_a) || callback(operand_b) || callback(operand_c);
 }

@@ -1,0 +1,156 @@
+\hypertarget{classcompiler_1_1_item__decl__var}{}\doxysection{compiler\+::Item\+\_\+decl\+\_\+var Class Reference}
+\label{classcompiler_1_1_item__decl__var}\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+
+
+Class for declaraction of variables.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+decl.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+decl\+\_\+var\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcompiler_1_1_item__decl__var}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__decl__var_add382735acda3e064268951bf63f1698}{Item\+\_\+decl\+\_\+var}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__decl__var_a5e2509d4785a30df95df26175f10462c}{Item\+\_\+decl\+\_\+var}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__decl__var_a419e786472ef416fc6ecb49a4d5c8da5}{identifier}}, const bool \&\mbox{\hyperlink{classcompiler_1_1_item__decl_a97837789929f3deff51acb8e56297163}{is\+\_\+decl}}=true)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__decl__var_a587c0670f9cb743df040ce44b0852103}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__decl__var_a2a0fa32c6b377f18c5c3948374ec5180}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_item__decl__var_a63de37957d08958ea8804621fc7e7552}{get\+\_\+identifier}} (void) const
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__decl_a1698d483f04719bbf7184bbccf0d92e7}{Item\+\_\+decl\+::decl\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__decl__var_aa1ba8c080b3ab4589bee3c980280b5e5}{get\+\_\+decl\+\_\+type}} (void) const override
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__decl__var_a9a7657d694bd3a9928ee1c01fe1ca978}{$\sim$\+Item\+\_\+decl\+\_\+var}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__decl__var_a419e786472ef416fc6ecb49a4d5c8da5}{identifier}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class for declaraction of variables. 
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00086}{86}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_add382735acda3e064268951bf63f1698}\label{classcompiler_1_1_item__decl__var_add382735acda3e064268951bf63f1698}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!Item\_decl\_var@{Item\_decl\_var}}
+\index{Item\_decl\_var@{Item\_decl\_var}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{Item\_decl\_var()}{Item\_decl\_var()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+decl\+\_\+var\+::\+Item\+\_\+decl\+\_\+var (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_a5e2509d4785a30df95df26175f10462c}\label{classcompiler_1_1_item__decl__var_a5e2509d4785a30df95df26175f10462c}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!Item\_decl\_var@{Item\_decl\_var}}
+\index{Item\_decl\_var@{Item\_decl\_var}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{Item\_decl\_var()}{Item\_decl\_var()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+decl\+\_\+var\+::\+Item\+\_\+decl\+\_\+var (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$const}]{identifier,  }\item[{const bool \&}]{is\+\_\+decl = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8cc_source_l00034}{34}} of file \mbox{\hyperlink{item__decl_8cc_source}{item\+\_\+decl.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_a9a7657d694bd3a9928ee1c01fe1ca978}\label{classcompiler_1_1_item__decl__var_a9a7657d694bd3a9928ee1c01fe1ca978}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!````~Item\_decl\_var@{$\sim$Item\_decl\_var}}
+\index{````~Item\_decl\_var@{$\sim$Item\_decl\_var}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_decl\_var()}{~Item\_decl\_var()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+decl\+\_\+var\+::$\sim$\+Item\+\_\+decl\+\_\+var (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_a587c0670f9cb743df040ce44b0852103}\label{classcompiler_1_1_item__decl__var_a587c0670f9cb743df040ce44b0852103}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+decl\+\_\+var\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00095}{95}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_aa1ba8c080b3ab4589bee3c980280b5e5}\label{classcompiler_1_1_item__decl__var_aa1ba8c080b3ab4589bee3c980280b5e5}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!get\_decl\_type@{get\_decl\_type}}
+\index{get\_decl\_type@{get\_decl\_type}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{get\_decl\_type()}{get\_decl\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__decl_a1698d483f04719bbf7184bbccf0d92e7}{Item\+\_\+decl\+::decl\+\_\+type}} compiler\+::\+Item\+\_\+decl\+\_\+var\+::get\+\_\+decl\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__decl_ae80ef5f36fcb62a117d497a9972c2cf7}{compiler\+::\+Item\+\_\+decl}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00101}{101}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_a63de37957d08958ea8804621fc7e7552}\label{classcompiler_1_1_item__decl__var_a63de37957d08958ea8804621fc7e7552}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!get\_identifier@{get\_identifier}}
+\index{get\_identifier@{get\_identifier}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{get\_identifier()}{get\_identifier()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}} $\ast$ compiler\+::\+Item\+\_\+decl\+\_\+var\+::get\+\_\+identifier (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00099}{99}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_a2a0fa32c6b377f18c5c3948374ec5180}\label{classcompiler_1_1_item__decl__var_a2a0fa32c6b377f18c5c3948374ec5180}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+decl\+\_\+var\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__decl__var__init_a40c7ec9ff9b8cc0525f56c4f124b8760}{compiler\+::\+Item\+\_\+decl\+\_\+var\+\_\+init}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8cc_source_l00118}{118}} of file \mbox{\hyperlink{item__decl_8cc_source}{item\+\_\+decl.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__var_a419e786472ef416fc6ecb49a4d5c8da5}\label{classcompiler_1_1_item__decl__var_a419e786472ef416fc6ecb49a4d5c8da5}} 
+\index{compiler::Item\_decl\_var@{compiler::Item\_decl\_var}!identifier@{identifier}}
+\index{identifier@{identifier}!compiler::Item\_decl\_var@{compiler::Item\_decl\_var}}
+\doxysubsubsection{\texorpdfstring{identifier}{identifier}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__ident}{Item\+\_\+ident}}$\ast$ const compiler\+::\+Item\+\_\+decl\+\_\+var\+::identifier\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00088}{88}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__decl_8hh}{item\+\_\+decl.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__decl_8cc}{item\+\_\+decl.\+cc}}\end{DoxyCompactItemize}

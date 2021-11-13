@@ -22,7 +22,7 @@
 
 namespace compiler {
 /**
- * @brief Maybe we could ignore the function \ref{yyerror} and implement our exception handlers.
+ * @brief Maybe we could ignore the function yyerror and implement our exception handlers.
  * 
  */
 typedef class parse_error : public std::exception {

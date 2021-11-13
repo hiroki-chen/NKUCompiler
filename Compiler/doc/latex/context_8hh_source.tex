@@ -1,0 +1,50 @@
+\hypertarget{context_8hh_source}{}\doxysection{context.\+hh}
+\label{context_8hh_source}\index{include/ir/context.hh@{include/ir/context.hh}}
+\mbox{\hyperlink{context_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00017}00017 \textcolor{preprocessor}{\#ifndef CONTEXT\_HH}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00018}00018 \textcolor{preprocessor}{\#define CONTEXT\_HH}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00020}00020 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{include_2frontend_2symbol__table_2symbol__table_8hh}{frontend/symbol\_table/symbol\_table.hh}}>}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00022}00022 \textcolor{preprocessor}{\#include <stack>}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00024}\mbox{\hyperlink{namespacecompiler_1_1ir}{00024}} \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacecompiler_1_1ir}{compiler::ir}} \{}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00033}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{00033}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{IRContext}} \{}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00034}00034 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00035}00035     \textcolor{comment}{// The context will always maintain the deepmost symbol table.}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00036}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_af354ea29320f65707b66eb03aeb74992}{00036}}     \mbox{\hyperlink{classcompiler_1_1_symbol__table}{Symbol\_table}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_af354ea29320f65707b66eb03aeb74992}{symbol\_table}};}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00038}00038     \textcolor{comment}{// Loop labels.}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00039}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_a97fb01f9a5fee84b9d7104b4413e08b5}{00039}}     std::stack<std::string> \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_a97fb01f9a5fee84b9d7104b4413e08b5}{loop\_label}};}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00040}00040 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00041}00041     \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_ae739d94aa93631c45009d3ff5dc320ef}{IRContext}}();}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00047}00047     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_abc42fa06f474d4cde72a21cbef3094a0}{enter\_scope}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00053}00053     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_abb824b392d1066cae6ef419dd98e3db3}{leave\_scope}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00055}00055     \textcolor{comment}{// The outside functions and variables may need symbol\_table and invoke its interfaces.}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00056}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_a1d8eda1d037fc55a4952e889f8bd1fc0}{00056}}     \mbox{\hyperlink{classcompiler_1_1_symbol__table}{Symbol\_table}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_a1d8eda1d037fc55a4952e889f8bd1fc0}{get\_symbol\_table}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_af354ea29320f65707b66eb03aeb74992}{symbol\_table}}; \}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00057}\mbox{\hyperlink{namespacecompiler_1_1ir_a97d2f94a80ee437d5054b480117d3ba9}{00057}} \} \mbox{\hyperlink{namespacecompiler_1_1ir_a97d2f94a80ee437d5054b480117d3ba9}{IRContext}};}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00058}00058 \} \textcolor{comment}{// namespace compiler::ir.}}
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{context_8hh_source_l00060}00060 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

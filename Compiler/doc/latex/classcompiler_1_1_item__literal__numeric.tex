@@ -1,0 +1,148 @@
+\hypertarget{classcompiler_1_1_item__literal__numeric}{}\doxysection{compiler\+::Item\+\_\+literal\+\_\+numeric Class Reference}
+\label{classcompiler_1_1_item__literal__numeric}\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+
+
+Class for basic numbers. INT/\+DOUBLE/\+CHAR.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+literal.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+literal\+\_\+numeric\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{classcompiler_1_1_item__literal__numeric}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_af5cafe38c44f3d74398104adf8298347}{Item\+\_\+literal\+\_\+numeric}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a75b18d45938398b8a26c076215ea40e9}{Item\+\_\+literal\+\_\+numeric}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, const double \&\mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a1d136dbcfb2966f54c39724af0990b0c}{value}})
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a3f8c5680c933a83644090dd630068ddb}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{Item\+\_\+literal\+::literal\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a3de9cd4f71fd1004cf460523ba4a8945}{get\+\_\+literal\+\_\+type}} (void) const override=0
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a3a66eba5224e5bcd478e0e7d199cf914}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a07a2b6e913f5baec73180fed2a321938}{$\sim$\+Item\+\_\+literal\+\_\+numeric}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{classcompiler_1_1_item__literal__numeric_a1d136dbcfb2966f54c39724af0990b0c}{value}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class for basic numbers. INT/\+DOUBLE/\+CHAR. 
+
+Definition at line \mbox{\hyperlink{item__literal_8hh_source_l00058}{58}} of file \mbox{\hyperlink{item__literal_8hh_source}{item\+\_\+literal.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__literal__numeric_af5cafe38c44f3d74398104adf8298347}\label{classcompiler_1_1_item__literal__numeric_af5cafe38c44f3d74398104adf8298347}} 
+\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}!Item\_literal\_numeric@{Item\_literal\_numeric}}
+\index{Item\_literal\_numeric@{Item\_literal\_numeric}!compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+\doxysubsubsection{\texorpdfstring{Item\_literal\_numeric()}{Item\_literal\_numeric()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+literal\+\_\+numeric\+::\+Item\+\_\+literal\+\_\+numeric (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal__numeric_a75b18d45938398b8a26c076215ea40e9}\label{classcompiler_1_1_item__literal__numeric_a75b18d45938398b8a26c076215ea40e9}} 
+\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}!Item\_literal\_numeric@{Item\_literal\_numeric}}
+\index{Item\_literal\_numeric@{Item\_literal\_numeric}!compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+\doxysubsubsection{\texorpdfstring{Item\_literal\_numeric()}{Item\_literal\_numeric()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+literal\+\_\+numeric\+::\+Item\+\_\+literal\+\_\+numeric (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{const double \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__literal_8cc_source_l00030}{30}} of file \mbox{\hyperlink{item__literal_8cc_source}{item\+\_\+literal.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal__numeric_a07a2b6e913f5baec73180fed2a321938}\label{classcompiler_1_1_item__literal__numeric_a07a2b6e913f5baec73180fed2a321938}} 
+\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}!````~Item\_literal\_numeric@{$\sim$Item\_literal\_numeric}}
+\index{````~Item\_literal\_numeric@{$\sim$Item\_literal\_numeric}!compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_literal\_numeric()}{~Item\_literal\_numeric()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+literal\+\_\+numeric\+::$\sim$\+Item\+\_\+literal\+\_\+numeric (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__literal__numeric_a3f8c5680c933a83644090dd630068ddb}\label{classcompiler_1_1_item__literal__numeric_a3f8c5680c933a83644090dd630068ddb}} 
+\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+literal\+\_\+numeric\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classcompiler_1_1_item__literal_ad3b77acc90c3e48b9615e6069d2f56b5}{compiler\+::\+Item\+\_\+literal}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_item__literal__int_abd57fe692823e2fcbcc97930cc5a1e6e}{compiler\+::\+Item\+\_\+literal\+\_\+int}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__real_a7a65e31ee9285b4a6775d45dcf247414}{compiler\+::\+Item\+\_\+literal\+\_\+real}}, and \mbox{\hyperlink{classcompiler_1_1_item__literal__char_a033c0f126938da80c3f2c0b61234f7e3}{compiler\+::\+Item\+\_\+literal\+\_\+char}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__literal_8hh_source_l00067}{67}} of file \mbox{\hyperlink{item__literal_8hh_source}{item\+\_\+literal.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal__numeric_a3de9cd4f71fd1004cf460523ba4a8945}\label{classcompiler_1_1_item__literal__numeric_a3de9cd4f71fd1004cf460523ba4a8945}} 
+\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}!get\_literal\_type@{get\_literal\_type}}
+\index{get\_literal\_type@{get\_literal\_type}!compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+\doxysubsubsection{\texorpdfstring{get\_literal\_type()}{get\_literal\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__literal_a2709666dfba2e132d03c1d7660591a3a}{Item\+\_\+literal\+::literal\+\_\+type}} compiler\+::\+Item\+\_\+literal\+\_\+numeric\+::get\+\_\+literal\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [pure virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__literal_a821301dd64ceb06f14f234006140e1c6}{compiler\+::\+Item\+\_\+literal}}.
+
+
+
+Implemented in \mbox{\hyperlink{classcompiler_1_1_item__literal__int_a3f1dacb67c385be798f2b3ea7379f36d}{compiler\+::\+Item\+\_\+literal\+\_\+int}}, \mbox{\hyperlink{classcompiler_1_1_item__literal__real_a1d4883bf2b0679489c649d287cfc9003}{compiler\+::\+Item\+\_\+literal\+\_\+real}}, and \mbox{\hyperlink{classcompiler_1_1_item__literal__char_a17338f21d59d1489b5ca4d685d2cec46}{compiler\+::\+Item\+\_\+literal\+\_\+char}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__literal__numeric_a3a66eba5224e5bcd478e0e7d199cf914}\label{classcompiler_1_1_item__literal__numeric_a3a66eba5224e5bcd478e0e7d199cf914}} 
+\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+literal\+\_\+numeric\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__literal_8cc_source_l00073}{73}} of file \mbox{\hyperlink{item__literal_8cc_source}{item\+\_\+literal.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__literal__numeric_a1d136dbcfb2966f54c39724af0990b0c}\label{classcompiler_1_1_item__literal__numeric_a1d136dbcfb2966f54c39724af0990b0c}} 
+\index{compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}!value@{value}}
+\index{value@{value}!compiler::Item\_literal\_numeric@{compiler::Item\_literal\_numeric}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily const double compiler\+::\+Item\+\_\+literal\+\_\+numeric\+::value\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__literal_8hh_source_l00060}{60}} of file \mbox{\hyperlink{item__literal_8hh_source}{item\+\_\+literal.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__literal_8hh}{item\+\_\+literal.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__literal_8cc}{item\+\_\+literal.\+cc}}\end{DoxyCompactItemize}

@@ -1,0 +1,155 @@
+\hypertarget{classcompiler_1_1_item__decl__pointer__init}{}\doxysection{compiler\+::Item\+\_\+decl\+\_\+pointer\+\_\+init Class Reference}
+\label{classcompiler_1_1_item__decl__pointer__init}\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+
+
+{\ttfamily \#include $<$item\+\_\+decl.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+decl\+\_\+pointer\+\_\+init\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classcompiler_1_1_item__decl__pointer__init}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_ab41cef5dc2087242481aa82ffa8d5a60}{Item\+\_\+decl\+\_\+pointer\+\_\+init}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_a68794c4f29b602decb75c7fdfeb2e5ca}{Item\+\_\+decl\+\_\+pointer\+\_\+init}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, \mbox{\hyperlink{classcompiler_1_1_item__ident__pointer}{Item\+\_\+ident\+\_\+pointer}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer_a51541863bb0609d151eda2df5e83a867}{identifier}}, \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_ac9c52df36b2333ff29ddc42cf24f5fab}{expression}}, const bool \&\mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_a73e6dc6d7801f8a9b56465024d4810bb}{is\+\_\+const}}, const bool \&\mbox{\hyperlink{classcompiler_1_1_item__decl_a97837789929f3deff51acb8e56297163}{is\+\_\+decl}}=false)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_a7a42d4d624b5ee45e6edb35c9bca0a2e}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+virtual bool \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_acd75b3840bc791054e5992de89d62799}{get\+\_\+is\+\_\+const}} (void) const
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_a36355e9c9ad3023a5e512764dbe8c43f}{get\+\_\+expression}} (void) const
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_ae88699c0719b2776ebd710b03f3fd2b4}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_a30bfc83eb69a12c9e36d1b9d2a445b79}{$\sim$\+Item\+\_\+decl\+\_\+pointer\+\_\+init}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_ac9c52df36b2333ff29ddc42cf24f5fab}{expression}}
+\item 
+const bool \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer__init_a73e6dc6d7801f8a9b56465024d4810bb}{is\+\_\+const}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00122}{122}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_ab41cef5dc2087242481aa82ffa8d5a60}\label{classcompiler_1_1_item__decl__pointer__init_ab41cef5dc2087242481aa82ffa8d5a60}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!Item\_decl\_pointer\_init@{Item\_decl\_pointer\_init}}
+\index{Item\_decl\_pointer\_init@{Item\_decl\_pointer\_init}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{Item\_decl\_pointer\_init()}{Item\_decl\_pointer\_init()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_a68794c4f29b602decb75c7fdfeb2e5ca}\label{classcompiler_1_1_item__decl__pointer__init_a68794c4f29b602decb75c7fdfeb2e5ca}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!Item\_decl\_pointer\_init@{Item\_decl\_pointer\_init}}
+\index{Item\_decl\_pointer\_init@{Item\_decl\_pointer\_init}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{Item\_decl\_pointer\_init()}{Item\_decl\_pointer\_init()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__ident__pointer}{Item\+\_\+ident\+\_\+pointer}} $\ast$const}]{identifier,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const}]{expression,  }\item[{const bool \&}]{is\+\_\+const,  }\item[{const bool \&}]{is\+\_\+decl = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8cc_source_l00052}{52}} of file \mbox{\hyperlink{item__decl_8cc_source}{item\+\_\+decl.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_a30bfc83eb69a12c9e36d1b9d2a445b79}\label{classcompiler_1_1_item__decl__pointer__init_a30bfc83eb69a12c9e36d1b9d2a445b79}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!````~Item\_decl\_pointer\_init@{$\sim$Item\_decl\_pointer\_init}}
+\index{````~Item\_decl\_pointer\_init@{$\sim$Item\_decl\_pointer\_init}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_decl\_pointer\_init()}{~Item\_decl\_pointer\_init()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::$\sim$\+Item\+\_\+decl\+\_\+pointer\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_a7a42d4d624b5ee45e6edb35c9bca0a2e}\label{classcompiler_1_1_item__decl__pointer__init_a7a42d4d624b5ee45e6edb35c9bca0a2e}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00133}{133}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_a36355e9c9ad3023a5e512764dbe8c43f}\label{classcompiler_1_1_item__decl__pointer__init_a36355e9c9ad3023a5e512764dbe8c43f}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!get\_expression@{get\_expression}}
+\index{get\_expression@{get\_expression}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{get\_expression()}{get\_expression()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$ compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::get\+\_\+expression (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00137}{137}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_acd75b3840bc791054e5992de89d62799}\label{classcompiler_1_1_item__decl__pointer__init_acd75b3840bc791054e5992de89d62799}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!get\_is\_const@{get\_is\_const}}
+\index{get\_is\_const@{get\_is\_const}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{get\_is\_const()}{get\_is\_const()}}
+{\footnotesize\ttfamily virtual bool compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::get\+\_\+is\+\_\+const (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00135}{135}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_ae88699c0719b2776ebd710b03f3fd2b4}\label{classcompiler_1_1_item__decl__pointer__init_ae88699c0719b2776ebd710b03f3fd2b4}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classcompiler_1_1_item__decl__pointer_a0fa123e278953616eab547414831fa4a}{compiler\+::\+Item\+\_\+decl\+\_\+pointer}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8cc_source_l00176}{176}} of file \mbox{\hyperlink{item__decl_8cc_source}{item\+\_\+decl.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_ac9c52df36b2333ff29ddc42cf24f5fab}\label{classcompiler_1_1_item__decl__pointer__init_ac9c52df36b2333ff29ddc42cf24f5fab}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!expression@{expression}}
+\index{expression@{expression}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{expression}{expression}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}}$\ast$ const compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::expression\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00124}{124}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__decl__pointer__init_a73e6dc6d7801f8a9b56465024d4810bb}\label{classcompiler_1_1_item__decl__pointer__init_a73e6dc6d7801f8a9b56465024d4810bb}} 
+\index{compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}!is\_const@{is\_const}}
+\index{is\_const@{is\_const}!compiler::Item\_decl\_pointer\_init@{compiler::Item\_decl\_pointer\_init}}
+\doxysubsubsection{\texorpdfstring{is\_const}{is\_const}}
+{\footnotesize\ttfamily const bool compiler\+::\+Item\+\_\+decl\+\_\+pointer\+\_\+init\+::is\+\_\+const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__decl_8hh_source_l00126}{126}} of file \mbox{\hyperlink{item__decl_8hh_source}{item\+\_\+decl.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__decl_8hh}{item\+\_\+decl.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__decl_8cc}{item\+\_\+decl.\+cc}}\end{DoxyCompactItemize}

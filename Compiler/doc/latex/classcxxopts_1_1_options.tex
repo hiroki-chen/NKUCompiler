@@ -1,0 +1,256 @@
+\hypertarget{classcxxopts_1_1_options}{}\doxysection{cxxopts\+::Options Class Reference}
+\label{classcxxopts_1_1_options}\index{cxxopts::Options@{cxxopts::Options}}
+
+
+{\ttfamily \#include $<$cxxopts.\+hh$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_options_ab73d569871f0a8ae1ba9be77397fab5e}{Options}} (std\+::string program, std\+::string help\+\_\+string=\char`\"{}\char`\"{})
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& \mbox{\hyperlink{classcxxopts_1_1_options_af7d13089d919a6fee89b90372c11252f}{positional\+\_\+help}} (std\+::string help\+\_\+text)
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& \mbox{\hyperlink{classcxxopts_1_1_options_ad9b7503fbb631a4c30d949d4a7c317f6}{custom\+\_\+help}} (std\+::string help\+\_\+text)
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& \mbox{\hyperlink{classcxxopts_1_1_options_a60dc8a681dcfe6bbe051a272187eaa01}{show\+\_\+positional\+\_\+help}} ()
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& \mbox{\hyperlink{classcxxopts_1_1_options_a9adcc723d37ae463b10a248200515d15}{allow\+\_\+unrecognised\+\_\+options}} ()
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& \mbox{\hyperlink{classcxxopts_1_1_options_a491f557e100e7cc56623527066225abf}{set\+\_\+width}} (size\+\_\+t width)
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& \mbox{\hyperlink{classcxxopts_1_1_options_a938a9a0d9d9bdcaa0ed4e4196a6504b4}{set\+\_\+tab\+\_\+expansion}} (bool expansion=true)
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_parse_result}{Parse\+Result}} \mbox{\hyperlink{classcxxopts_1_1_options_a3e740564cc4c991078f1451e1fcd082b}{parse}} (int argc, const char $\ast$const $\ast$argv)
+\item 
+\mbox{\hyperlink{classcxxopts_1_1_option_adder}{Option\+Adder}} \mbox{\hyperlink{classcxxopts_1_1_options_a8c4fcf551295cde940a1a60012b3e9b6}{add\+\_\+options}} (std\+::string group=\char`\"{}\char`\"{})
+\item 
+void \mbox{\hyperlink{classcxxopts_1_1_options_a95878aa582f2ed8e0a2b73e735eb287d}{add\+\_\+options}} (const std\+::string \&group, std\+::initializer\+\_\+list$<$ \mbox{\hyperlink{structcxxopts_1_1_option}{Option}} $>$ options)
+\item 
+void \mbox{\hyperlink{classcxxopts_1_1_options_ac698adfe5b5ca50d36017a52b27fb828}{add\+\_\+option}} (const std\+::string \&group, const \mbox{\hyperlink{structcxxopts_1_1_option}{Option}} \&option)
+\item 
+void \mbox{\hyperlink{classcxxopts_1_1_options_af6a920c65d1a22140278b8f2637f8930}{add\+\_\+option}} (const std\+::string \&group, const std\+::string \&s, const std\+::string \&l, std\+::string desc, const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{classcxxopts_1_1_value}{Value}} $>$ \&\mbox{\hyperlink{namespacecxxopts_a6b58e451713ebbf12866c1cd8e0a66ab}{value}}, std\+::string arg\+\_\+help)
+\item 
+void \mbox{\hyperlink{classcxxopts_1_1_options_a08d69938b38f43d9bc534ec3b60e672b}{parse\+\_\+positional}} (std\+::string option)
+\item 
+void \mbox{\hyperlink{classcxxopts_1_1_options_a9078209209185ac59cb6b293558919da}{parse\+\_\+positional}} (std\+::vector$<$ std\+::string $>$ options)
+\item 
+void \mbox{\hyperlink{classcxxopts_1_1_options_a21ddde716cb71a6ba1b7943e313a3398}{parse\+\_\+positional}} (std\+::initializer\+\_\+list$<$ std\+::string $>$ options)
+\item 
+{\footnotesize template$<$typename Iterator $>$ }\\void \mbox{\hyperlink{classcxxopts_1_1_options_a2e7b51be5b760aab92134268812f2042}{parse\+\_\+positional}} (Iterator begin, Iterator end)
+\item 
+std\+::string \mbox{\hyperlink{classcxxopts_1_1_options_a7392b09071f42ed45dea85738af965b4}{help}} (const std\+::vector$<$ std\+::string $>$ \&\mbox{\hyperlink{classcxxopts_1_1_options_a86dce378e2f277514653394952715021}{groups}}=\{\}) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classcxxopts_1_1_options_a86dce378e2f277514653394952715021}{groups}} () const
+\item 
+const \mbox{\hyperlink{structcxxopts_1_1_help_group_details}{Help\+Group\+Details}} \& \mbox{\hyperlink{classcxxopts_1_1_options_ab5ebc9a3f07419d8b5a58d55c9929f09}{group\+\_\+help}} (const std\+::string \&group) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01616}{1616}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcxxopts_1_1_options_ab73d569871f0a8ae1ba9be77397fab5e}\label{classcxxopts_1_1_options_ab73d569871f0a8ae1ba9be77397fab5e}} 
+\index{cxxopts::Options@{cxxopts::Options}!Options@{Options}}
+\index{Options@{Options}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{Options()}{Options()}}
+{\footnotesize\ttfamily cxxopts\+::\+Options\+::\+Options (\begin{DoxyParamCaption}\item[{std\+::string}]{program,  }\item[{std\+::string}]{help\+\_\+string = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01620}{1620}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcxxopts_1_1_options_ac698adfe5b5ca50d36017a52b27fb828}\label{classcxxopts_1_1_options_ac698adfe5b5ca50d36017a52b27fb828}} 
+\index{cxxopts::Options@{cxxopts::Options}!add\_option@{add\_option}}
+\index{add\_option@{add\_option}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{add\_option()}{add\_option()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void cxxopts\+::\+Options\+::add\+\_\+option (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{group,  }\item[{const \mbox{\hyperlink{structcxxopts_1_1_option}{Option}} \&}]{option }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02374}{2374}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_af6a920c65d1a22140278b8f2637f8930}\label{classcxxopts_1_1_options_af6a920c65d1a22140278b8f2637f8930}} 
+\index{cxxopts::Options@{cxxopts::Options}!add\_option@{add\_option}}
+\index{add\_option@{add\_option}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{add\_option()}{add\_option()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void cxxopts\+::\+Options\+::add\+\_\+option (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{group,  }\item[{const std\+::string \&}]{s,  }\item[{const std\+::string \&}]{l,  }\item[{std\+::string}]{desc,  }\item[{const std\+::shared\+\_\+ptr$<$ const \mbox{\hyperlink{classcxxopts_1_1_value}{Value}} $>$ \&}]{value,  }\item[{std\+::string}]{arg\+\_\+help }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02385}{2385}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a95878aa582f2ed8e0a2b73e735eb287d}\label{classcxxopts_1_1_options_a95878aa582f2ed8e0a2b73e735eb287d}} 
+\index{cxxopts::Options@{cxxopts::Options}!add\_options@{add\_options}}
+\index{add\_options@{add\_options}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{add\_options()}{add\_options()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void cxxopts\+::\+Options\+::add\+\_\+options (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{group,  }\item[{std\+::initializer\+\_\+list$<$ \mbox{\hyperlink{structcxxopts_1_1_option}{Option}} $>$}]{options }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01981}{1981}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a8c4fcf551295cde940a1a60012b3e9b6}\label{classcxxopts_1_1_options_a8c4fcf551295cde940a1a60012b3e9b6}} 
+\index{cxxopts::Options@{cxxopts::Options}!add\_options@{add\_options}}
+\index{add\_options@{add\_options}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{add\_options()}{add\_options()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_option_adder}{Option\+Adder}} cxxopts\+::\+Options\+::add\+\_\+options (\begin{DoxyParamCaption}\item[{std\+::string}]{group = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01996}{1996}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a9adcc723d37ae463b10a248200515d15}\label{classcxxopts_1_1_options_a9adcc723d37ae463b10a248200515d15}} 
+\index{cxxopts::Options@{cxxopts::Options}!allow\_unrecognised\_options@{allow\_unrecognised\_options}}
+\index{allow\_unrecognised\_options@{allow\_unrecognised\_options}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{allow\_unrecognised\_options()}{allow\_unrecognised\_options()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& cxxopts\+::\+Options\+::allow\+\_\+unrecognised\+\_\+options (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01655}{1655}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_ad9b7503fbb631a4c30d949d4a7c317f6}\label{classcxxopts_1_1_options_ad9b7503fbb631a4c30d949d4a7c317f6}} 
+\index{cxxopts::Options@{cxxopts::Options}!custom\_help@{custom\_help}}
+\index{custom\_help@{custom\_help}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{custom\_help()}{custom\_help()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& cxxopts\+::\+Options\+::custom\+\_\+help (\begin{DoxyParamCaption}\item[{std\+::string}]{help\+\_\+text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01641}{1641}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_ab5ebc9a3f07419d8b5a58d55c9929f09}\label{classcxxopts_1_1_options_ab5ebc9a3f07419d8b5a58d55c9929f09}} 
+\index{cxxopts::Options@{cxxopts::Options}!group\_help@{group\_help}}
+\index{group\_help@{group\_help}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{group\_help()}{group\_help()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structcxxopts_1_1_help_group_details}{Help\+Group\+Details}} \& cxxopts\+::\+Options\+::group\+\_\+help (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{group }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02604}{2604}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a86dce378e2f277514653394952715021}\label{classcxxopts_1_1_options_a86dce378e2f277514653394952715021}} 
+\index{cxxopts::Options@{cxxopts::Options}!groups@{groups}}
+\index{groups@{groups}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{groups()}{groups()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ cxxopts\+::\+Options\+::groups (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02585}{2585}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a7392b09071f42ed45dea85738af965b4}\label{classcxxopts_1_1_options_a7392b09071f42ed45dea85738af965b4}} 
+\index{cxxopts::Options@{cxxopts::Options}!help@{help}}
+\index{help@{help}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{help()}{help()}}
+{\footnotesize\ttfamily std\+::string cxxopts\+::\+Options\+::help (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::string $>$ \&}]{groups = {\ttfamily \{\}} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02560}{2560}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a3e740564cc4c991078f1451e1fcd082b}\label{classcxxopts_1_1_options_a3e740564cc4c991078f1451e1fcd082b}} 
+\index{cxxopts::Options@{cxxopts::Options}!parse@{parse}}
+\index{parse@{parse}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_parse_result}{Parse\+Result}} cxxopts\+::\+Options\+::parse (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{const char $\ast$const $\ast$}]{argv }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02180}{2180}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a2e7b51be5b760aab92134268812f2042}\label{classcxxopts_1_1_options_a2e7b51be5b760aab92134268812f2042}} 
+\index{cxxopts::Options@{cxxopts::Options}!parse\_positional@{parse\_positional}}
+\index{parse\_positional@{parse\_positional}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{parse\_positional()}{parse\_positional()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename Iterator $>$ \\
+void cxxopts\+::\+Options\+::parse\+\_\+positional (\begin{DoxyParamCaption}\item[{Iterator}]{begin,  }\item[{Iterator}]{end }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01718}{1718}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a21ddde716cb71a6ba1b7943e313a3398}\label{classcxxopts_1_1_options_a21ddde716cb71a6ba1b7943e313a3398}} 
+\index{cxxopts::Options@{cxxopts::Options}!parse\_positional@{parse\_positional}}
+\index{parse\_positional@{parse\_positional}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{parse\_positional()}{parse\_positional()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void cxxopts\+::\+Options\+::parse\+\_\+positional (\begin{DoxyParamCaption}\item[{std\+::initializer\+\_\+list$<$ std\+::string $>$}]{options }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02173}{2173}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a08d69938b38f43d9bc534ec3b60e672b}\label{classcxxopts_1_1_options_a08d69938b38f43d9bc534ec3b60e672b}} 
+\index{cxxopts::Options@{cxxopts::Options}!parse\_positional@{parse\_positional}}
+\index{parse\_positional@{parse\_positional}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{parse\_positional()}{parse\_positional()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void cxxopts\+::\+Options\+::parse\+\_\+positional (\begin{DoxyParamCaption}\item[{std\+::string}]{option }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02157}{2157}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a9078209209185ac59cb6b293558919da}\label{classcxxopts_1_1_options_a9078209209185ac59cb6b293558919da}} 
+\index{cxxopts::Options@{cxxopts::Options}!parse\_positional@{parse\_positional}}
+\index{parse\_positional@{parse\_positional}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{parse\_positional()}{parse\_positional()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void cxxopts\+::\+Options\+::parse\+\_\+positional (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$}]{options }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l02164}{2164}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_af7d13089d919a6fee89b90372c11252f}\label{classcxxopts_1_1_options_af7d13089d919a6fee89b90372c11252f}} 
+\index{cxxopts::Options@{cxxopts::Options}!positional\_help@{positional\_help}}
+\index{positional\_help@{positional\_help}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{positional\_help()}{positional\_help()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& cxxopts\+::\+Options\+::positional\+\_\+help (\begin{DoxyParamCaption}\item[{std\+::string}]{help\+\_\+text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01634}{1634}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a938a9a0d9d9bdcaa0ed4e4196a6504b4}\label{classcxxopts_1_1_options_a938a9a0d9d9bdcaa0ed4e4196a6504b4}} 
+\index{cxxopts::Options@{cxxopts::Options}!set\_tab\_expansion@{set\_tab\_expansion}}
+\index{set\_tab\_expansion@{set\_tab\_expansion}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{set\_tab\_expansion()}{set\_tab\_expansion()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& cxxopts\+::\+Options\+::set\+\_\+tab\+\_\+expansion (\begin{DoxyParamCaption}\item[{bool}]{expansion = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01669}{1669}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a491f557e100e7cc56623527066225abf}\label{classcxxopts_1_1_options_a491f557e100e7cc56623527066225abf}} 
+\index{cxxopts::Options@{cxxopts::Options}!set\_width@{set\_width}}
+\index{set\_width@{set\_width}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{set\_width()}{set\_width()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& cxxopts\+::\+Options\+::set\+\_\+width (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{width }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01662}{1662}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+\mbox{\Hypertarget{classcxxopts_1_1_options_a60dc8a681dcfe6bbe051a272187eaa01}\label{classcxxopts_1_1_options_a60dc8a681dcfe6bbe051a272187eaa01}} 
+\index{cxxopts::Options@{cxxopts::Options}!show\_positional\_help@{show\_positional\_help}}
+\index{show\_positional\_help@{show\_positional\_help}!cxxopts::Options@{cxxopts::Options}}
+\doxysubsubsection{\texorpdfstring{show\_positional\_help()}{show\_positional\_help()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcxxopts_1_1_options}{Options}} \& cxxopts\+::\+Options\+::show\+\_\+positional\+\_\+help (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cxxopts_8hh_source_l01648}{1648}} of file \mbox{\hyperlink{cxxopts_8hh_source}{cxxopts.\+hh}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/common/\mbox{\hyperlink{cxxopts_8hh}{cxxopts.\+hh}}\end{DoxyCompactItemize}

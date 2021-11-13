@@ -1,0 +1,124 @@
+\hypertarget{ir_8hh}{}\doxysection{include/ir/ir.hh File Reference}
+\label{ir_8hh}\index{include/ir/ir.hh@{include/ir/ir.hh}}
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{compiler\+::ir\+::\+Operand}}
+\begin{DoxyCompactList}\small\item\em Base class for operand in the \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{compiler\+::ir\+::\+Operand\+\_\+ptr}}
+\begin{DoxyCompactList}\small\item\em Class for pointer types. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}}
+\begin{DoxyCompactList}\small\item\em The class for \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}} (Intermediate Representation). Some representation notations are taken from LLVM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecompiler}{compiler}}
+\item 
+namespace \mbox{\hyperlink{namespacecompiler_1_1ir}{compiler\+::ir}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ir_8hh_a00e0d27085de736abbbc43c089fbf487}{FORMAT}}(output,  str)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{compiler\+::ir\+::op\+\_\+type}} \mbox{\hyperlink{namespacecompiler_1_1ir_a57bbb2a11665e7d64a6324d99c90fce1}{compiler\+::ir\+::op\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Defines different operations. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{compiler\+::ir\+::var\+\_\+type}} \mbox{\hyperlink{namespacecompiler_1_1ir_a8378a129107654aeb3ff06a8415164d9}{compiler\+::ir\+::var\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Defines different variable types. \end{DoxyCompactList}\item 
+typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{compiler\+::ir\+::\+Operand}} \mbox{\hyperlink{namespacecompiler_1_1ir_ac2c75241ce64a3aa3640d9b002f956b8}{compiler\+::ir\+::\+Operand}}
+\begin{DoxyCompactList}\small\item\em Base class for operand in the \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{compiler\+::ir\+::\+Operand\+\_\+ptr}} \mbox{\hyperlink{namespacecompiler_1_1ir_af4e784269e47ac5f8fcc2e6527b8c79e}{compiler\+::ir\+::\+Operand\+\_\+ptr}}
+\begin{DoxyCompactList}\small\item\em Class for pointer types. \end{DoxyCompactList}\item 
+typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} \mbox{\hyperlink{namespacecompiler_1_1ir_a5895fb59592f783972fd007adaea2dff}{compiler\+::ir\+::\+IR}}
+\begin{DoxyCompactList}\small\item\em The class for \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}} (Intermediate Representation). Some representation notations are taken from LLVM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{compiler\+::ir\+::op\+\_\+type}} \{ \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe}{compiler\+::ir\+::\+NOP}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b}{compiler\+::ir\+::\+IADD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7}{compiler\+::ir\+::\+ISUB}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2}{compiler\+::ir\+::\+IMUL}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69}{compiler\+::ir\+::\+IDIV}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac00d3283905503d016f75323069b8393}{compiler\+::ir\+::\+IMOD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7d708eb8af8a38f4186b096a2acb9346}{compiler\+::ir\+::\+FADD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99}{compiler\+::ir\+::\+FSUB}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e}{compiler\+::ir\+::\+FMUL}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa5e4104c1540b137c25a4dcf56d53f76}{compiler\+::ir\+::\+FDIV}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a51178327a4b243620b43446a46ce98db}{compiler\+::ir\+::\+FNEG}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83}{compiler\+::ir\+::\+MOV}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568}{compiler\+::ir\+::\+CALL}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae438619da937d53d9c3aae1fbacbf1a0}{compiler\+::ir\+::\+RET}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4}{compiler\+::ir\+::\+JMP}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8}{compiler\+::ir\+::\+JGE}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9}{compiler\+::ir\+::\+JLE}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6}{compiler\+::ir\+::\+JEQ}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff}{compiler\+::ir\+::\+JNE}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4}{compiler\+::ir\+::\+JLT}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5}{compiler\+::ir\+::\+JGT}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac}{compiler\+::ir\+::\+BAND}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f}{compiler\+::ir\+::\+BOR}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5}{compiler\+::ir\+::\+BXOR}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f}{compiler\+::ir\+::\+BNEG}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aee780aab6f2f86db39a4496c75f2c796}{compiler\+::ir\+::\+SHL}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4fd82151e64bbb7d538d390cc03ae830}{compiler\+::ir\+::\+LSHR}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326}{compiler\+::ir\+::\+ASHR}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b}{compiler\+::ir\+::\+LAND}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3b4e94d8fcb831b0b337dd4f7b6246ee}{compiler\+::ir\+::\+LOR}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4c3925b97622203ea43a941f812614de}{compiler\+::ir\+::\+LNOT}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1}{compiler\+::ir\+::\+CMP}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3}{compiler\+::ir\+::\+LOAD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07}{compiler\+::ir\+::\+STORE}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be}{compiler\+::ir\+::\+MALLOC}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9}{compiler\+::ir\+::\+BEGIN\+\_\+\+DATA}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347}{compiler\+::ir\+::\+END\+\_\+\+DATA}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122}{compiler\+::ir\+::\+BEGIN\+\_\+\+FUNC}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4}{compiler\+::ir\+::\+END\+\_\+\+FUNC}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b}{compiler\+::ir\+::\+BEGIN\+\_\+\+STRUCT}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119}{compiler\+::ir\+::\+END\+\_\+\+STRUCT}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9}{compiler\+::ir\+::\+LBL}}
+ \}
+\begin{DoxyCompactList}\small\item\em Defines different operations. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{compiler\+::ir\+::var\+\_\+type}} \{ \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222}{compiler\+::ir\+::i32}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513}{compiler\+::ir\+::i8}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170}{compiler\+::ir\+::\+DB}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a}{compiler\+::ir\+::\+FL}}
+ \}
+\begin{DoxyCompactList}\small\item\em Defines different variable types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{ir_8hh_a00e0d27085de736abbbc43c089fbf487}\label{ir_8hh_a00e0d27085de736abbbc43c089fbf487}} 
+\index{ir.hh@{ir.hh}!FORMAT@{FORMAT}}
+\index{FORMAT@{FORMAT}!ir.hh@{ir.hh}}
+\doxysubsubsection{\texorpdfstring{FORMAT}{FORMAT}}
+{\footnotesize\ttfamily \#define FORMAT(\begin{DoxyParamCaption}\item[{}]{output,  }\item[{}]{str }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \{                                                       \(\backslash\)}
+\DoxyCodeLine{        output << std::ios::left << std::setw(0x10) << str; \(\backslash\)}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00026}{26}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+

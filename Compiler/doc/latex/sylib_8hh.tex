@@ -1,0 +1,271 @@
+\hypertarget{sylib_8hh}{}\doxysection{include/sylib.hh File Reference}
+\label{sylib_8hh}\index{include/sylib.hh@{include/sylib.hh}}
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{sylib_8hh_aa8191a6f54cb9ba2dc69045c7cd6e18e}{putf}}(fmt, ...)~printf(fmt, \+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{sylib_8hh_a1ae44be32b91395ffad43cfd468a1941}{starttime}}()~\mbox{\hyperlink{sylib_8cc_a80ccf5f2a8ac626c8b2d384d4954296c}{\+\_\+sysy\+\_\+starttime}}(\+\_\+\+\_\+\+LINE\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{sylib_8hh_a2dacd169c113eda0c22e08d262d3a1a0}{stoptime}}()~\mbox{\hyperlink{sylib_8cc_af93c3599b763956ce68889441d0fbefb}{\+\_\+sysy\+\_\+stoptime}}(\+\_\+\+\_\+\+LINE\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}~1024
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{sylib_8hh_ad72402ea229efa5c0c1ab4518ebe4a24}{getint}} ()
+\item 
+int \mbox{\hyperlink{sylib_8hh_a160f6d2893bb6b89ab3ad5d863c20e3d}{getch}} ()
+\item 
+int \mbox{\hyperlink{sylib_8hh_a3b2e3894e4a6f05036cc4ca5e0a793ad}{getarray}} (int a\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{sylib_8hh_ab31ebfaa4017fcc0a41a0bb5a10e7f76}{putint}} (int a)
+\item 
+void \mbox{\hyperlink{sylib_8hh_a1268eaa9b4c0bd960fca08705bf24c7b}{putch}} (int a)
+\item 
+void \mbox{\hyperlink{sylib_8hh_aca3bbf3c0ce8e500c57669dd38cf08ac}{putarray}} (int n, int a\mbox{[}$\,$\mbox{]})
+\item 
+\mbox{\hyperlink{sylib_8hh_a83358c6078caad76da1250c01a65fa6f}{\+\_\+\+\_\+attribute}} ((constructor)) void before\+\_\+main()
+\item 
+\mbox{\hyperlink{sylib_8hh_a9022799ea77dc9dbb9ed331b77a61e3a}{\+\_\+\+\_\+attribute}} ((destructor)) void after\+\_\+main()
+\item 
+void \mbox{\hyperlink{sylib_8hh_a80ccf5f2a8ac626c8b2d384d4954296c}{\+\_\+sysy\+\_\+starttime}} (int lineno)
+\item 
+void \mbox{\hyperlink{sylib_8hh_af93c3599b763956ce68889441d0fbefb}{\+\_\+sysy\+\_\+stoptime}} (int lineno)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct timeval \+\_\+sysy\+\_\+start \mbox{\hyperlink{sylib_8hh_a902760f5ff175c5533b9ec54499c66b7}{\+\_\+sysy\+\_\+end}}
+\item 
+int \mbox{\hyperlink{sylib_8hh_ad3042f38cf8ecd889eaf6d8a1c5b2347}{\+\_\+sysy\+\_\+l1}} \mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}
+\item 
+int \mbox{\hyperlink{sylib_8hh_abb8885e598fcb393d753f95b60330e3e}{\+\_\+sysy\+\_\+l2}} \mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}
+\item 
+int \mbox{\hyperlink{sylib_8hh_a7df75eb9a6717153aa6587c192ce4a10}{\+\_\+sysy\+\_\+h}} \mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}
+\item 
+int \mbox{\hyperlink{sylib_8hh_ae67fddf51d467121ee8bd236812198d4}{\+\_\+sysy\+\_\+m}} \mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}
+\item 
+int \mbox{\hyperlink{sylib_8hh_af0055d90623be162e5a7021b053f1f79}{\+\_\+sysy\+\_\+s}} \mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}
+\item 
+int \mbox{\hyperlink{sylib_8hh_ab0984ad9be3451b56ab77d123cd9758e}{\+\_\+sysy\+\_\+us}} \mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}
+\item 
+int \mbox{\hyperlink{sylib_8hh_a247ffc641d329c227b58b35b10fafba9}{\+\_\+sysy\+\_\+idx}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}\label{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}} 
+\index{sylib.hh@{sylib.hh}!\_SYSY\_N@{\_SYSY\_N}}
+\index{\_SYSY\_N@{\_SYSY\_N}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_SYSY\_N}{\_SYSY\_N}}
+{\footnotesize\ttfamily \#define \+\_\+\+SYSY\+\_\+N~1024}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00015}{15}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_aa8191a6f54cb9ba2dc69045c7cd6e18e}\label{sylib_8hh_aa8191a6f54cb9ba2dc69045c7cd6e18e}} 
+\index{sylib.hh@{sylib.hh}!putf@{putf}}
+\index{putf@{putf}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{putf}{putf}}
+{\footnotesize\ttfamily \#define putf(\begin{DoxyParamCaption}\item[{}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})~printf(fmt, \+\_\+\+\_\+\+VA\+\_\+\+ARGS\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00010}{10}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_a1ae44be32b91395ffad43cfd468a1941}\label{sylib_8hh_a1ae44be32b91395ffad43cfd468a1941}} 
+\index{sylib.hh@{sylib.hh}!starttime@{starttime}}
+\index{starttime@{starttime}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{starttime}{starttime}}
+{\footnotesize\ttfamily \#define starttime(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{sylib_8cc_a80ccf5f2a8ac626c8b2d384d4954296c}{\+\_\+sysy\+\_\+starttime}}(\+\_\+\+\_\+\+LINE\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00013}{13}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_a2dacd169c113eda0c22e08d262d3a1a0}\label{sylib_8hh_a2dacd169c113eda0c22e08d262d3a1a0}} 
+\index{sylib.hh@{sylib.hh}!stoptime@{stoptime}}
+\index{stoptime@{stoptime}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{stoptime}{stoptime}}
+{\footnotesize\ttfamily \#define stoptime(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{sylib_8cc_af93c3599b763956ce68889441d0fbefb}{\+\_\+sysy\+\_\+stoptime}}(\+\_\+\+\_\+\+LINE\+\_\+\+\_\+)}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00014}{14}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sylib_8hh_a83358c6078caad76da1250c01a65fa6f}\label{sylib_8hh_a83358c6078caad76da1250c01a65fa6f}} 
+\index{sylib.hh@{sylib.hh}!\_\_attribute@{\_\_attribute}}
+\index{\_\_attribute@{\_\_attribute}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute()}{\_\_attribute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \+\_\+\+\_\+attribute (\begin{DoxyParamCaption}\item[{(constructor)}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8cc_source_l00037}{37}} of file \mbox{\hyperlink{sylib_8cc_source}{sylib.\+cc}}.
+
+\mbox{\Hypertarget{sylib_8hh_a9022799ea77dc9dbb9ed331b77a61e3a}\label{sylib_8hh_a9022799ea77dc9dbb9ed331b77a61e3a}} 
+\index{sylib.hh@{sylib.hh}!\_\_attribute@{\_\_attribute}}
+\index{\_\_attribute@{\_\_attribute}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute()}{\_\_attribute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \+\_\+\+\_\+attribute (\begin{DoxyParamCaption}\item[{(destructor)}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8cc_source_l00043}{43}} of file \mbox{\hyperlink{sylib_8cc_source}{sylib.\+cc}}.
+
+\mbox{\Hypertarget{sylib_8hh_a80ccf5f2a8ac626c8b2d384d4954296c}\label{sylib_8hh_a80ccf5f2a8ac626c8b2d384d4954296c}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_starttime@{\_sysy\_starttime}}
+\index{\_sysy\_starttime@{\_sysy\_starttime}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_starttime()}{\_sysy\_starttime()}}
+{\footnotesize\ttfamily void \+\_\+sysy\+\_\+starttime (\begin{DoxyParamCaption}\item[{int}]{lineno }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8cc_source_l00058}{58}} of file \mbox{\hyperlink{sylib_8cc_source}{sylib.\+cc}}.
+
+\mbox{\Hypertarget{sylib_8hh_af93c3599b763956ce68889441d0fbefb}\label{sylib_8hh_af93c3599b763956ce68889441d0fbefb}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_stoptime@{\_sysy\_stoptime}}
+\index{\_sysy\_stoptime@{\_sysy\_stoptime}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_stoptime()}{\_sysy\_stoptime()}}
+{\footnotesize\ttfamily void \+\_\+sysy\+\_\+stoptime (\begin{DoxyParamCaption}\item[{int}]{lineno }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8cc_source_l00063}{63}} of file \mbox{\hyperlink{sylib_8cc_source}{sylib.\+cc}}.
+
+\mbox{\Hypertarget{sylib_8hh_a3b2e3894e4a6f05036cc4ca5e0a793ad}\label{sylib_8hh_a3b2e3894e4a6f05036cc4ca5e0a793ad}} 
+\index{sylib.hh@{sylib.hh}!getarray@{getarray}}
+\index{getarray@{getarray}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{getarray()}{getarray()}}
+{\footnotesize\ttfamily int getarray (\begin{DoxyParamCaption}\item[{int}]{a\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8cc_source_l00018}{18}} of file \mbox{\hyperlink{sylib_8cc_source}{sylib.\+cc}}.
+
+\mbox{\Hypertarget{sylib_8hh_a160f6d2893bb6b89ab3ad5d863c20e3d}\label{sylib_8hh_a160f6d2893bb6b89ab3ad5d863c20e3d}} 
+\index{sylib.hh@{sylib.hh}!getch@{getch}}
+\index{getch@{getch}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{getch()}{getch()}}
+{\footnotesize\ttfamily int getch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{sylib_8hh_ad72402ea229efa5c0c1ab4518ebe4a24}\label{sylib_8hh_ad72402ea229efa5c0c1ab4518ebe4a24}} 
+\index{sylib.hh@{sylib.hh}!getint@{getint}}
+\index{getint@{getint}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{getint()}{getint()}}
+{\footnotesize\ttfamily int getint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{sylib_8hh_aca3bbf3c0ce8e500c57669dd38cf08ac}\label{sylib_8hh_aca3bbf3c0ce8e500c57669dd38cf08ac}} 
+\index{sylib.hh@{sylib.hh}!putarray@{putarray}}
+\index{putarray@{putarray}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{putarray()}{putarray()}}
+{\footnotesize\ttfamily void putarray (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{int}]{a\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8cc_source_l00028}{28}} of file \mbox{\hyperlink{sylib_8cc_source}{sylib.\+cc}}.
+
+\mbox{\Hypertarget{sylib_8hh_a1268eaa9b4c0bd960fca08705bf24c7b}\label{sylib_8hh_a1268eaa9b4c0bd960fca08705bf24c7b}} 
+\index{sylib.hh@{sylib.hh}!putch@{putch}}
+\index{putch@{putch}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{putch()}{putch()}}
+{\footnotesize\ttfamily void putch (\begin{DoxyParamCaption}\item[{int}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{sylib_8hh_ab31ebfaa4017fcc0a41a0bb5a10e7f76}\label{sylib_8hh_ab31ebfaa4017fcc0a41a0bb5a10e7f76}} 
+\index{sylib.hh@{sylib.hh}!putint@{putint}}
+\index{putint@{putint}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{putint()}{putint()}}
+{\footnotesize\ttfamily void putint (\begin{DoxyParamCaption}\item[{int}]{a }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{sylib_8hh_a902760f5ff175c5533b9ec54499c66b7}\label{sylib_8hh_a902760f5ff175c5533b9ec54499c66b7}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_end@{\_sysy\_end}}
+\index{\_sysy\_end@{\_sysy\_end}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_end}{\_sysy\_end}}
+{\footnotesize\ttfamily struct timeval \+\_\+sysy\+\_\+start \+\_\+sysy\+\_\+end}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00012}{12}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_a7df75eb9a6717153aa6587c192ce4a10}\label{sylib_8hh_a7df75eb9a6717153aa6587c192ce4a10}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_h@{\_sysy\_h}}
+\index{\_sysy\_h@{\_sysy\_h}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_h}{\_sysy\_h}}
+{\footnotesize\ttfamily int \+\_\+sysy\+\_\+h\mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00017}{17}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_a247ffc641d329c227b58b35b10fafba9}\label{sylib_8hh_a247ffc641d329c227b58b35b10fafba9}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_idx@{\_sysy\_idx}}
+\index{\_sysy\_idx@{\_sysy\_idx}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_idx}{\_sysy\_idx}}
+{\footnotesize\ttfamily int \+\_\+sysy\+\_\+idx}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00018}{18}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_ad3042f38cf8ecd889eaf6d8a1c5b2347}\label{sylib_8hh_ad3042f38cf8ecd889eaf6d8a1c5b2347}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_l1@{\_sysy\_l1}}
+\index{\_sysy\_l1@{\_sysy\_l1}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_l1}{\_sysy\_l1}}
+{\footnotesize\ttfamily int \+\_\+sysy\+\_\+l1\mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00016}{16}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_abb8885e598fcb393d753f95b60330e3e}\label{sylib_8hh_abb8885e598fcb393d753f95b60330e3e}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_l2@{\_sysy\_l2}}
+\index{\_sysy\_l2@{\_sysy\_l2}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_l2}{\_sysy\_l2}}
+{\footnotesize\ttfamily int \+\_\+sysy\+\_\+l2\mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00016}{16}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_ae67fddf51d467121ee8bd236812198d4}\label{sylib_8hh_ae67fddf51d467121ee8bd236812198d4}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_m@{\_sysy\_m}}
+\index{\_sysy\_m@{\_sysy\_m}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_m}{\_sysy\_m}}
+{\footnotesize\ttfamily int \+\_\+sysy\+\_\+m\mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00017}{17}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_af0055d90623be162e5a7021b053f1f79}\label{sylib_8hh_af0055d90623be162e5a7021b053f1f79}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_s@{\_sysy\_s}}
+\index{\_sysy\_s@{\_sysy\_s}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_s}{\_sysy\_s}}
+{\footnotesize\ttfamily int \+\_\+sysy\+\_\+s\mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00017}{17}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+
+\mbox{\Hypertarget{sylib_8hh_ab0984ad9be3451b56ab77d123cd9758e}\label{sylib_8hh_ab0984ad9be3451b56ab77d123cd9758e}} 
+\index{sylib.hh@{sylib.hh}!\_sysy\_us@{\_sysy\_us}}
+\index{\_sysy\_us@{\_sysy\_us}!sylib.hh@{sylib.hh}}
+\doxysubsubsection{\texorpdfstring{\_sysy\_us}{\_sysy\_us}}
+{\footnotesize\ttfamily int \+\_\+sysy\+\_\+us\mbox{[}\mbox{\hyperlink{sylib_8hh_a035dfea51a312904215a55ed63dcb2e7}{\+\_\+\+SYSY\+\_\+N}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{sylib_8hh_source_l00017}{17}} of file \mbox{\hyperlink{sylib_8hh_source}{sylib.\+hh}}.
+

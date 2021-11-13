@@ -1,0 +1,204 @@
+\hypertarget{classcompiler_1_1_symbol}{}\doxysection{compiler\+::Symbol Class Reference}
+\label{classcompiler_1_1_symbol}\index{compiler::Symbol@{compiler::Symbol}}
+
+
+{\ttfamily \#include $<$symbol.\+hh$>$}
+
+Inheritance diagram for compiler\+::Symbol\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcompiler_1_1_symbol}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_symbol_afab98d14a85f481dc878232a356b450f}{Symbol}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_symbol_ae6e54f55c52454a34b7728d0245dd954}{Symbol}} (const std\+::string \&\mbox{\hyperlink{classcompiler_1_1_symbol_a871b984f1f888d32edb35d4916c131a9}{name}}, const \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\+\_\+type}} \&\mbox{\hyperlink{classcompiler_1_1_symbol_af5a9b586f94b1d8caffb9b0c4c815702}{type}}, const bool \&\mbox{\hyperlink{classcompiler_1_1_symbol_a0b29a64eece367cec6bcde6f2e5c44fb}{is\+\_\+pointer}}=false)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_symbol_a713654168c669b6cfd4478f30d5102b9}{set\+\_\+value}} (\mbox{\hyperlink{classcompiler_1_1_item__literal}{Item\+\_\+literal}} $\ast$const literal)
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_symbol_ad25ec454e1ab059ff6e1492baefda96e}{add\+\_\+shape}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_symbol_abc9fc73091e74cf97434153df8b63fe5}{shape}})
+\item 
+virtual bool \mbox{\hyperlink{classcompiler_1_1_symbol_a7b35f1436b5545f5cc2b3f80c87fafbf}{is\+\_\+const}} (void) const
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_symbol_a7290a10136617667f37c5edfa4020433}{get\+\_\+name}} (void) const
+\item 
+virtual \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_symbol_a72ba7e222f9b5c89dd6fd07bb3565758}{get\+\_\+type}} (void) const
+\item 
+virtual bool \mbox{\hyperlink{classcompiler_1_1_symbol_aecdb90634aed0b65a92afc77de699cf4}{get\+\_\+is\+\_\+pointer}} (void) const
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_symbol_a100055bfbd6241aeeea5cac643a959b9}{$\sim$\+Symbol}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ uint32\+\_\+t $>$ \mbox{\hyperlink{classcompiler_1_1_symbol_abc9fc73091e74cf97434153df8b63fe5}{shape}}
+\item 
+const std\+::string \mbox{\hyperlink{classcompiler_1_1_symbol_a871b984f1f888d32edb35d4916c131a9}{name}}
+\item 
+const \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_symbol_af5a9b586f94b1d8caffb9b0c4c815702}{type}}
+\item 
+bool \mbox{\hyperlink{classcompiler_1_1_symbol_a0b29a64eece367cec6bcde6f2e5c44fb}{is\+\_\+pointer}}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__literal}{Item\+\_\+literal}} $\ast$ \mbox{\hyperlink{classcompiler_1_1_symbol_a8b46107dbdce7a47f6ea81e71c510c0c}{value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00037}{37}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_symbol_afab98d14a85f481dc878232a356b450f}\label{classcompiler_1_1_symbol_afab98d14a85f481dc878232a356b450f}} 
+\index{compiler::Symbol@{compiler::Symbol}!Symbol@{Symbol}}
+\index{Symbol@{Symbol}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{Symbol()}{Symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Symbol\+::\+Symbol (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_ae6e54f55c52454a34b7728d0245dd954}\label{classcompiler_1_1_symbol_ae6e54f55c52454a34b7728d0245dd954}} 
+\index{compiler::Symbol@{compiler::Symbol}!Symbol@{Symbol}}
+\index{Symbol@{Symbol}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{Symbol()}{Symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Symbol\+::\+Symbol (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name,  }\item[{const \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\+\_\+type}} \&}]{type,  }\item[{const bool \&}]{is\+\_\+pointer = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8cc_source_l00019}{19}} of file \mbox{\hyperlink{symbol_8cc_source}{symbol.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a100055bfbd6241aeeea5cac643a959b9}\label{classcompiler_1_1_symbol_a100055bfbd6241aeeea5cac643a959b9}} 
+\index{compiler::Symbol@{compiler::Symbol}!````~Symbol@{$\sim$Symbol}}
+\index{````~Symbol@{$\sim$Symbol}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{$\sim$Symbol()}{~Symbol()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Symbol\+::$\sim$\+Symbol (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_symbol_ad25ec454e1ab059ff6e1492baefda96e}\label{classcompiler_1_1_symbol_ad25ec454e1ab059ff6e1492baefda96e}} 
+\index{compiler::Symbol@{compiler::Symbol}!add\_shape@{add\_shape}}
+\index{add\_shape@{add\_shape}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{add\_shape()}{add\_shape()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Symbol\+::add\+\_\+shape (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{shape }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00056}{56}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_aecdb90634aed0b65a92afc77de699cf4}\label{classcompiler_1_1_symbol_aecdb90634aed0b65a92afc77de699cf4}} 
+\index{compiler::Symbol@{compiler::Symbol}!get\_is\_pointer@{get\_is\_pointer}}
+\index{get\_is\_pointer@{get\_is\_pointer}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{get\_is\_pointer()}{get\_is\_pointer()}}
+{\footnotesize\ttfamily virtual bool compiler\+::\+Symbol\+::get\+\_\+is\+\_\+pointer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00064}{64}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a7290a10136617667f37c5edfa4020433}\label{classcompiler_1_1_symbol_a7290a10136617667f37c5edfa4020433}} 
+\index{compiler::Symbol@{compiler::Symbol}!get\_name@{get\_name}}
+\index{get\_name@{get\_name}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{get\_name()}{get\_name()}}
+{\footnotesize\ttfamily virtual std\+::string compiler\+::\+Symbol\+::get\+\_\+name (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00060}{60}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a72ba7e222f9b5c89dd6fd07bb3565758}\label{classcompiler_1_1_symbol_a72ba7e222f9b5c89dd6fd07bb3565758}} 
+\index{compiler::Symbol@{compiler::Symbol}!get\_type@{get\_type}}
+\index{get\_type@{get\_type}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{get\_type()}{get\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\+\_\+type}} compiler\+::\+Symbol\+::get\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00062}{62}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a7b35f1436b5545f5cc2b3f80c87fafbf}\label{classcompiler_1_1_symbol_a7b35f1436b5545f5cc2b3f80c87fafbf}} 
+\index{compiler::Symbol@{compiler::Symbol}!is\_const@{is\_const}}
+\index{is\_const@{is\_const}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{is\_const()}{is\_const()}}
+{\footnotesize\ttfamily virtual bool compiler\+::\+Symbol\+::is\+\_\+const (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classcompiler_1_1_symbol__const_abcd3bffbcc8ad3f2553ac33d9e9cfa23}{compiler\+::\+Symbol\+\_\+const}}.
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00058}{58}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a713654168c669b6cfd4478f30d5102b9}\label{classcompiler_1_1_symbol_a713654168c669b6cfd4478f30d5102b9}} 
+\index{compiler::Symbol@{compiler::Symbol}!set\_value@{set\_value}}
+\index{set\_value@{set\_value}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{set\_value()}{set\_value()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Symbol\+::set\+\_\+value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1_item__literal}{Item\+\_\+literal}} $\ast$const}]{literal }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00054}{54}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a0b29a64eece367cec6bcde6f2e5c44fb}\label{classcompiler_1_1_symbol_a0b29a64eece367cec6bcde6f2e5c44fb}} 
+\index{compiler::Symbol@{compiler::Symbol}!is\_pointer@{is\_pointer}}
+\index{is\_pointer@{is\_pointer}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{is\_pointer}{is\_pointer}}
+{\footnotesize\ttfamily bool compiler\+::\+Symbol\+::is\+\_\+pointer\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00045}{45}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a871b984f1f888d32edb35d4916c131a9}\label{classcompiler_1_1_symbol_a871b984f1f888d32edb35d4916c131a9}} 
+\index{compiler::Symbol@{compiler::Symbol}!name@{name}}
+\index{name@{name}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily const std\+::string compiler\+::\+Symbol\+::name\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00041}{41}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_abc9fc73091e74cf97434153df8b63fe5}\label{classcompiler_1_1_symbol_abc9fc73091e74cf97434153df8b63fe5}} 
+\index{compiler::Symbol@{compiler::Symbol}!shape@{shape}}
+\index{shape@{shape}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{shape}{shape}}
+{\footnotesize\ttfamily std\+::vector$<$uint32\+\_\+t$>$ compiler\+::\+Symbol\+::shape\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00039}{39}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_af5a9b586f94b1d8caffb9b0c4c815702}\label{classcompiler_1_1_symbol_af5a9b586f94b1d8caffb9b0c4c815702}} 
+\index{compiler::Symbol@{compiler::Symbol}!type@{type}}
+\index{type@{type}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespacecompiler_a965cf896d037cb61e5cf1d1cd3c700a4}{symbol\+\_\+type}} compiler\+::\+Symbol\+::type\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00043}{43}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_symbol_a8b46107dbdce7a47f6ea81e71c510c0c}\label{classcompiler_1_1_symbol_a8b46107dbdce7a47f6ea81e71c510c0c}} 
+\index{compiler::Symbol@{compiler::Symbol}!value@{value}}
+\index{value@{value}!compiler::Symbol@{compiler::Symbol}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__literal}{Item\+\_\+literal}}$\ast$ compiler\+::\+Symbol\+::value\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{symbol_8hh_source_l00047}{47}} of file \mbox{\hyperlink{symbol_8hh_source}{symbol.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/symbol\+\_\+table/\mbox{\hyperlink{symbol_8hh}{symbol.\+hh}}\item 
+src/frontend/symbol\+\_\+table/\mbox{\hyperlink{symbol_8cc}{symbol.\+cc}}\end{DoxyCompactItemize}

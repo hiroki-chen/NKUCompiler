@@ -1,0 +1,166 @@
+\hypertarget{utils_8cc_source}{}\doxysection{utils.\+cc}
+\label{utils_8cc_source}\index{src/common/utils.cc@{src/common/utils.cc}}
+\mbox{\hyperlink{utils_8cc}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00017}00017 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{compile__excepts_8hh}{common/compile\_excepts.hh}}>}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00018}00018 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{termcolor_8hh}{common/termcolor.hh}}>}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00019}00019 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{utils_8hh}{common/utils.hh}}>}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00020}00020 \textcolor{preprocessor}{\#include <sys/stat.h>}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00022}00022 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00023}00023 \textcolor{preprocessor}{\#include <regex>}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00025}00025 std::string}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00026}\mbox{\hyperlink{namespacecompiler_a9e9379084949204a943d0a187e15a83f}{00026}} \mbox{\hyperlink{namespacecompiler_a9e9379084949204a943d0a187e15a83f}{compiler::to\_string}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679c}{compiler::basic\_type}}\& type)}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00027}00027 \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00028}00028     \textcolor{keywordflow}{switch} (type) \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00029}00029     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca4b39e84849cccef7d23386263e9c9c69}{INT\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00030}00030         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}int"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00032}00032     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca98892b74a1babe0bdf3d649d106b1aa1}{REAL\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00033}00033         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}double"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00035}00035     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca20110368c693ba4cdc8bd3e0f76c2944}{VOID\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00036}00036         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}void"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00038}00038     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca400ed42594ad1bba92a4ccef730843ac}{CHAR\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00039}00039         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}char"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00041}00041     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_ab978429ecff83a3f97002bc5e429679ca090a9a0626c8d57c419c5fcaf6f1505a}{STR\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00042}00042         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}string"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00044}00044     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00045}00045         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_ab193149e25e145cdfc9d10259fdb9997}{compiler::type\_error}}(\textcolor{stringliteral}{"{}Unrecognized basic type!"{}});}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00046}00046     \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00047}00047 \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00049}00049 std::string}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00050}\mbox{\hyperlink{namespacecompiler_ab7ff23c2ceb5a4dbff9d7b16f31c8487}{00050}} \mbox{\hyperlink{namespacecompiler_a9e9379084949204a943d0a187e15a83f}{compiler::to\_string}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145}{compiler::unary\_type}}\& type)}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00051}00051 \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00052}00052     \textcolor{keywordflow}{switch} (type) \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00053}00053     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a0dfcaad662be095c1aacd4086b9bf568}{LNOT\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00054}00054         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}LOGIC\_NOT"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00056}00056     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a7b4fb7e62914b4540108b79f4169a657}{BITNEG\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00057}00057         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}BIT\_NEGATIVE"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00059}00059     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145ac72b6f0f4fcaeaa196443e3df0cc5cef}{UMINUS\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00060}00060         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}UNARY MINUS"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00062}00062     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a8d29b27b81ace4c00bfc4a26d8919884}{UADD\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00063}00063         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}UNARY ADD"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00065}00065     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145a5ab7b9414ce68a9e8a2fa24be04305c9}{UDEREFER\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00066}00066         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}UNARY DEREFERENCE"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00067}00067     }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00068}00068     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a70efda59ea975e441771c1e035914145ae2e8a8a8681a227bfc03aca7fb742068}{UREF\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00069}00069         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}UNARY REFERENCE"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00071}00071     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00072}00072         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_ab193149e25e145cdfc9d10259fdb9997}{compiler::type\_error}}(\textcolor{stringliteral}{"{}Unrecognized unary type!"{}});}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00073}00073     \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00074}00074 \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00076}00076 std::string}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00077}\mbox{\hyperlink{namespacecompiler_a26eadffa61ce5fa459f458189f50ed2b}{00077}} \mbox{\hyperlink{namespacecompiler_a9e9379084949204a943d0a187e15a83f}{compiler::to\_string}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{compiler::binary\_type}}\& type)}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00078}00078 \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00079}00079     \textcolor{keywordflow}{switch} (type) \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00080}00080     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba7196cccebff2f93fd032f1c8d5bebeb2}{ADD\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00081}00081         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Add"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00083}00083     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba68e14726383229d9b5e0564b45ce7e20}{SUB\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00084}00084         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Sub"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00086}00086     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaced2a0518526d6e5fc95bb7fc84e801b}{MUL\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00087}00087         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Mul"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00089}00089     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba3753a2230d4868a3fe3b4095cce6a7a5}{DIV\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00090}00090         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Div"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00091}00091 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00092}00092     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba02a6e21d394512b2c233ea05c5f4cd34}{MOD\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00093}00093         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Mod"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00095}00095     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebabcc0afcb166ba85333e4a7f3b869119a}{BITOR\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00096}00096         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Bitwise\_or"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00098}00098     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba8e61d2f1faa152566234a65c6383f4fe}{BITAND\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00099}00099         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Bitwise\_and"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00101}00101     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba1e943bcfa59f23d5068dc869ce00ab7a}{BITXOR\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00102}00102         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Bitwise\_xor"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00104}00104     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaf9c8d82d0ecec526c23af4231323caac}{EQ\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00105}00105         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_equal"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00107}00107     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba1eeb8be1cc5eb757b10474588fe7d9e2}{NEQ\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00108}00108         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_nonequal"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00110}00110     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba7d57b7f419fc0e040f3065d9bf7020d8}{G\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00111}00111         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_greater"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00113}00113     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebafd81cd307809655ddb70b4f5b1c4f877}{L\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00114}00114         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_less"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00116}00116     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba0bb54315f5d241f15a62109d08255638}{GE\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00117}00117         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_greater\_or\_equal"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00119}00119     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebaa98b0edcb4909b76e7ef81ae881c6331}{LE\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00120}00120         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_less\_or\_equal"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00122}00122     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceba2def45237954b344a0add32cc9f2b1d0}{LOR\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00123}00123         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_or"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00125}00125     \textcolor{keywordflow}{case} \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69cebac05d4bed4e41e4cadff5555345de9fa4}{LAND\_TYPE}}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00126}00126         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Conditional\_and"{}};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00128}00128     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00129}00129         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_ab193149e25e145cdfc9d10259fdb9997}{compiler::type\_error}}(\textcolor{stringliteral}{"{}Unrecognized binary type!"{}});}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00130}00130     \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00131}00131 \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00133}\mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{00133}} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespacecompiler_a55a566e8e34f8cce7a51232585c45f0a}{compiler::print\_indent}}(\textcolor{keyword}{const} uint32\_t\& indent, \textcolor{keyword}{const} \textcolor{keywordtype}{bool}\& leaf, std::ostream\& os)}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00134}00134 \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00135}00135     }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00136}00136     \textcolor{comment}{// Print indentation.}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00137}00137     \textcolor{keywordflow}{for} (uint32\_t i = 0; i < indent; i += 2) \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00138}00138         os << termcolor::bright\_green << \textcolor{stringliteral}{"{}│  "{}} << termcolor::reset;}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00139}00139     \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00141}00141     \textcolor{comment}{// Print node.}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00142}00142     \textcolor{keywordflow}{if} (leaf) \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00143}00143         os << termcolor::bright\_green << (std::string)\textcolor{stringliteral}{"{}└──"{}} << termcolor::reset;}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00144}00144     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00145}00145         os << termcolor::bright\_green << (std::string)\textcolor{stringliteral}{"{}├──"{}} << termcolor::reset;}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00146}00146     \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00147}00147 \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00149}\mbox{\hyperlink{namespacecompiler_a669b4a7b1c78cf69bcbc75c0123b6cfb}{00149}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespacecompiler_a669b4a7b1c78cf69bcbc75c0123b6cfb}{compiler::is\_dir}}(\textcolor{keyword}{const} std::string\& file\_name)}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00150}00150 \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00151}00151     \textcolor{keyword}{struct }stat status;}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00152}00152 }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00153}00153     \textcolor{keywordflow}{if} (stat(file\_name.data(), \&status) == 0) \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00154}00154         \textcolor{keywordflow}{if} (S\_ISDIR(status.st\_mode)) \{}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00155}00155             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00156}00156         \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00157}00157     \}}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00158}00158     }
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00159}00159     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{utils_8cc_source_l00160}00160 \}}
+
+\end{DoxyCode}

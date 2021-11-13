@@ -1,0 +1,388 @@
+\hypertarget{namespacecompiler_1_1ir}{}\doxysection{compiler\+::ir Namespace Reference}
+\label{namespacecompiler_1_1ir}\index{compiler::ir@{compiler::ir}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}
+\begin{DoxyCompactList}\small\item\em The class for \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}} (Intermediate Representation). Some representation notations are taken from LLVM. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{IRContext}}
+\begin{DoxyCompactList}\small\item\em This is the context for generating intermediate representation. It may include\+: 1) \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}} tables; 2) Loop labels; 3) Jump labels;. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{Operand}}
+\begin{DoxyCompactList}\small\item\em Base class for operand in the \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{Operand\+\_\+ptr}}
+\begin{DoxyCompactList}\small\item\em Class for pointer types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} \mbox{\hyperlink{namespacecompiler_1_1ir_a97d2f94a80ee437d5054b480117d3ba9}{IRContext}}
+\begin{DoxyCompactList}\small\item\em This is the context for generating intermediate representation. It may include\+: 1) \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}} tables; 2) Loop labels; 3) Jump labels;. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{compiler\+::ir\+::op\+\_\+type}} \mbox{\hyperlink{namespacecompiler_1_1ir_a57bbb2a11665e7d64a6324d99c90fce1}{op\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Defines different operations. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{compiler\+::ir\+::var\+\_\+type}} \mbox{\hyperlink{namespacecompiler_1_1ir_a8378a129107654aeb3ff06a8415164d9}{var\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Defines different variable types. \end{DoxyCompactList}\item 
+typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{compiler\+::ir\+::\+Operand}} \mbox{\hyperlink{namespacecompiler_1_1ir_ac2c75241ce64a3aa3640d9b002f956b8}{Operand}}
+\begin{DoxyCompactList}\small\item\em Base class for operand in the \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{compiler\+::ir\+::\+Operand\+\_\+ptr}} \mbox{\hyperlink{namespacecompiler_1_1ir_af4e784269e47ac5f8fcc2e6527b8c79e}{Operand\+\_\+ptr}}
+\begin{DoxyCompactList}\small\item\em Class for pointer types. \end{DoxyCompactList}\item 
+typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} \mbox{\hyperlink{namespacecompiler_1_1ir_a5895fb59592f783972fd007adaea2dff}{IR}}
+\begin{DoxyCompactList}\small\item\em The class for \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}} (Intermediate Representation). Some representation notations are taken from LLVM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{op\+\_\+type}} \{ \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe}{NOP}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b}{IADD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7}{ISUB}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2}{IMUL}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69}{IDIV}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac00d3283905503d016f75323069b8393}{IMOD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7d708eb8af8a38f4186b096a2acb9346}{FADD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99}{FSUB}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e}{FMUL}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa5e4104c1540b137c25a4dcf56d53f76}{FDIV}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a51178327a4b243620b43446a46ce98db}{FNEG}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83}{MOV}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568}{CALL}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae438619da937d53d9c3aae1fbacbf1a0}{RET}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4}{JMP}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8}{JGE}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9}{JLE}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6}{JEQ}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff}{JNE}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4}{JLT}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5}{JGT}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac}{BAND}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f}{BOR}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5}{BXOR}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f}{BNEG}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aee780aab6f2f86db39a4496c75f2c796}{SHL}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4fd82151e64bbb7d538d390cc03ae830}{LSHR}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326}{ASHR}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b}{LAND}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3b4e94d8fcb831b0b337dd4f7b6246ee}{LOR}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4c3925b97622203ea43a941f812614de}{LNOT}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1}{CMP}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3}{LOAD}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07}{STORE}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be}{MALLOC}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9}{BEGIN\+\_\+\+DATA}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347}{END\+\_\+\+DATA}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122}{BEGIN\+\_\+\+FUNC}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4}{END\+\_\+\+FUNC}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b}{BEGIN\+\_\+\+STRUCT}}
+, \newline
+\mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119}{END\+\_\+\+STRUCT}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9}{LBL}}
+ \}
+\begin{DoxyCompactList}\small\item\em Defines different operations. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{var\+\_\+type}} \{ \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222}{i32}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513}{i8}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170}{DB}}
+, \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a}{FL}}
+ \}
+\begin{DoxyCompactList}\small\item\em Defines different variable types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{namespacecompiler_1_1ir_a5895fb59592f783972fd007adaea2dff}\label{namespacecompiler_1_1ir_a5895fb59592f783972fd007adaea2dff}} 
+\index{compiler::ir@{compiler::ir}!IR@{IR}}
+\index{IR@{IR}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{IR}{IR}}
+{\footnotesize\ttfamily typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}}}
+
+
+
+The class for \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}} (Intermediate Representation). Some representation notations are taken from LLVM. 
+
+\begin{DoxySeeAlso}{See also}
+\href{https://llvm.org/docs/LangRef.html}{\texttt{ https\+://llvm.\+org/docs/\+Lang\+Ref.\+html}}
+\end{DoxySeeAlso}
+Examples\+: ADD i32 foo, i8 bar, double baz ALLOC i32, align 8.
+
+\begin{DoxyNote}{Note}
+LOGIC EXPLAINED When an compiler\+::\+IR instance is created from the AST, we should call compiler\+::ir\+::\+IR\+::walk\+\_\+ir() function to generate the string as follows\+:
+\begin{DoxyEnumerate}
+\item Create a lambda function that can be passed to compiler\+::ir\+::\+IR\+::walk\+\_\+ir() that does some job with current operation;
+\item The function compiler\+::ir\+::\+IR\+::walk\+\_\+ir() will iterate through each operands, and because each operand can be another instance of \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}}, we need to dig into the ~\newline
+ operand, where callback function comes to help.
+\item The callback will call each operand with callback again until it reaches a deepmost level\+: the raw operand that we can ensure whether it is chained to the caller or not. 
+\end{DoxyEnumerate}
+\end{DoxyNote}
+\mbox{\Hypertarget{namespacecompiler_1_1ir_a97d2f94a80ee437d5054b480117d3ba9}\label{namespacecompiler_1_1ir_a97d2f94a80ee437d5054b480117d3ba9}} 
+\index{compiler::ir@{compiler::ir}!IRContext@{IRContext}}
+\index{IRContext@{IRContext}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{IRContext}{IRContext}}
+{\footnotesize\ttfamily typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}}}
+
+
+
+This is the context for generating intermediate representation. It may include\+: 1) \mbox{\hyperlink{classcompiler_1_1_symbol}{Symbol}} tables; 2) Loop labels; 3) Jump labels;. 
+
+\mbox{\Hypertarget{namespacecompiler_1_1ir_a57bbb2a11665e7d64a6324d99c90fce1}\label{namespacecompiler_1_1ir_a57bbb2a11665e7d64a6324d99c90fce1}} 
+\index{compiler::ir@{compiler::ir}!op\_type@{op\_type}}
+\index{op\_type@{op\_type}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{op\_type}{op\_type}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{compiler\+::ir\+::op\+\_\+type}} \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{compiler\+::ir\+::op\+\_\+type}}}
+
+
+
+Defines different operations. 
+
+\mbox{\Hypertarget{namespacecompiler_1_1ir_ac2c75241ce64a3aa3640d9b002f956b8}\label{namespacecompiler_1_1ir_ac2c75241ce64a3aa3640d9b002f956b8}} 
+\index{compiler::ir@{compiler::ir}!Operand@{Operand}}
+\index{Operand@{Operand}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{Operand}{Operand}}
+{\footnotesize\ttfamily typedef class \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{compiler\+::ir\+::\+Operand}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand}{compiler\+::ir\+::\+Operand}}}
+
+
+
+Base class for operand in the \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{IR}}. 
+
+\mbox{\Hypertarget{namespacecompiler_1_1ir_af4e784269e47ac5f8fcc2e6527b8c79e}\label{namespacecompiler_1_1ir_af4e784269e47ac5f8fcc2e6527b8c79e}} 
+\index{compiler::ir@{compiler::ir}!Operand\_ptr@{Operand\_ptr}}
+\index{Operand\_ptr@{Operand\_ptr}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{Operand\_ptr}{Operand\_ptr}}
+{\footnotesize\ttfamily typedef  \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{compiler\+::ir\+::\+Operand\+\_\+ptr}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_operand__ptr}{compiler\+::ir\+::\+Operand\+\_\+ptr}}}
+
+
+
+Class for pointer types. 
+
+\mbox{\Hypertarget{namespacecompiler_1_1ir_a8378a129107654aeb3ff06a8415164d9}\label{namespacecompiler_1_1ir_a8378a129107654aeb3ff06a8415164d9}} 
+\index{compiler::ir@{compiler::ir}!var\_type@{var\_type}}
+\index{var\_type@{var\_type}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{var\_type}{var\_type}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{compiler\+::ir\+::var\+\_\+type}} \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{compiler\+::ir\+::var\+\_\+type}}}
+
+
+
+Defines different variable types. 
+
+i32 =\texorpdfstring{$>$}{>} 32-\/bit variables. int, unsigned int. 
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}} 
+\index{compiler::ir@{compiler::ir}!op\_type@{op\_type}}
+\index{op\_type@{op\_type}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{op\_type}{op\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6}{compiler\+::ir\+::op\+\_\+type}}}
+
+
+
+Defines different operations. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOP@{NOP}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!NOP@{NOP}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe}} 
+NOP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IADD@{IADD}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!IADD@{IADD}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b}} 
+IADD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ISUB@{ISUB}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!ISUB@{ISUB}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7}} 
+ISUB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IMUL@{IMUL}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!IMUL@{IMUL}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2}} 
+IMUL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IDIV@{IDIV}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!IDIV@{IDIV}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69}} 
+IDIV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IMOD@{IMOD}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!IMOD@{IMOD}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac00d3283905503d016f75323069b8393}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac00d3283905503d016f75323069b8393}} 
+IMOD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FADD@{FADD}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!FADD@{FADD}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7d708eb8af8a38f4186b096a2acb9346}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7d708eb8af8a38f4186b096a2acb9346}} 
+FADD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FSUB@{FSUB}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!FSUB@{FSUB}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99}} 
+FSUB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FMUL@{FMUL}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!FMUL@{FMUL}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e}} 
+FMUL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FDIV@{FDIV}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!FDIV@{FDIV}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa5e4104c1540b137c25a4dcf56d53f76}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa5e4104c1540b137c25a4dcf56d53f76}} 
+FDIV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FNEG@{FNEG}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!FNEG@{FNEG}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a51178327a4b243620b43446a46ce98db}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a51178327a4b243620b43446a46ce98db}} 
+FNEG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MOV@{MOV}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!MOV@{MOV}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83}} 
+MOV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CALL@{CALL}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!CALL@{CALL}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568}} 
+CALL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RET@{RET}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!RET@{RET}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae438619da937d53d9c3aae1fbacbf1a0}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae438619da937d53d9c3aae1fbacbf1a0}} 
+RET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{JMP@{JMP}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!JMP@{JMP}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4}} 
+JMP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{JGE@{JGE}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!JGE@{JGE}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8}} 
+JGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{JLE@{JLE}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!JLE@{JLE}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9}} 
+JLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{JEQ@{JEQ}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!JEQ@{JEQ}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6}} 
+JEQ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{JNE@{JNE}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!JNE@{JNE}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff}} 
+JNE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{JLT@{JLT}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!JLT@{JLT}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4}} 
+JLT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{JGT@{JGT}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!JGT@{JGT}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5}} 
+JGT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BAND@{BAND}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!BAND@{BAND}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac}} 
+BAND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BOR@{BOR}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!BOR@{BOR}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f}} 
+BOR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BXOR@{BXOR}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!BXOR@{BXOR}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5}} 
+BXOR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BNEG@{BNEG}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!BNEG@{BNEG}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f}} 
+BNEG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SHL@{SHL}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!SHL@{SHL}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aee780aab6f2f86db39a4496c75f2c796}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aee780aab6f2f86db39a4496c75f2c796}} 
+SHL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LSHR@{LSHR}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!LSHR@{LSHR}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4fd82151e64bbb7d538d390cc03ae830}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4fd82151e64bbb7d538d390cc03ae830}} 
+LSHR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ASHR@{ASHR}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!ASHR@{ASHR}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326}} 
+ASHR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LAND@{LAND}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!LAND@{LAND}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b}} 
+LAND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOR@{LOR}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!LOR@{LOR}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3b4e94d8fcb831b0b337dd4f7b6246ee}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a3b4e94d8fcb831b0b337dd4f7b6246ee}} 
+LOR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LNOT@{LNOT}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!LNOT@{LNOT}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4c3925b97622203ea43a941f812614de}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a4c3925b97622203ea43a941f812614de}} 
+LNOT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMP@{CMP}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!CMP@{CMP}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1}} 
+CMP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOAD@{LOAD}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!LOAD@{LOAD}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3}} 
+LOAD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STORE@{STORE}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!STORE@{STORE}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07}} 
+STORE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MALLOC@{MALLOC}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!MALLOC@{MALLOC}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be}} 
+MALLOC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGIN\_DATA@{BEGIN\_DATA}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!BEGIN\_DATA@{BEGIN\_DATA}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9}} 
+BEGIN\+\_\+\+DATA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{END\_DATA@{END\_DATA}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!END\_DATA@{END\_DATA}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347}} 
+END\+\_\+\+DATA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGIN\_FUNC@{BEGIN\_FUNC}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!BEGIN\_FUNC@{BEGIN\_FUNC}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122}} 
+BEGIN\+\_\+\+FUNC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{END\_FUNC@{END\_FUNC}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!END\_FUNC@{END\_FUNC}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4}} 
+END\+\_\+\+FUNC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGIN\_STRUCT@{BEGIN\_STRUCT}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!BEGIN\_STRUCT@{BEGIN\_STRUCT}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b}} 
+BEGIN\+\_\+\+STRUCT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{END\_STRUCT@{END\_STRUCT}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!END\_STRUCT@{END\_STRUCT}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119}} 
+END\+\_\+\+STRUCT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LBL@{LBL}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!LBL@{LBL}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9}\label{namespacecompiler_1_1ir_a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9}} 
+LBL&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00106}{106}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+
+\mbox{\Hypertarget{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}\label{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}} 
+\index{compiler::ir@{compiler::ir}!var\_type@{var\_type}}
+\index{var\_type@{var\_type}!compiler::ir@{compiler::ir}}
+\doxysubsubsection{\texorpdfstring{var\_type}{var\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786d}{compiler\+::ir\+::var\+\_\+type}}}
+
+
+
+Defines different variable types. 
+
+i32 =\texorpdfstring{$>$}{>} 32-\/bit variables. int, unsigned int. \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{i32@{i32}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!i32@{i32}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222}\label{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222}} 
+i32&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{i8@{i8}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!i8@{i8}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513}\label{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513}} 
+i8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DB@{DB}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!DB@{DB}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170}\label{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170}} 
+DB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FL@{FL}!compiler::ir@{compiler::ir}}\index{compiler::ir@{compiler::ir}!FL@{FL}}}\mbox{\Hypertarget{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a}\label{namespacecompiler_1_1ir_a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a}} 
+FL&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{ir_8hh_source_l00177}{177}} of file \mbox{\hyperlink{ir_8hh_source}{ir.\+hh}}.
+

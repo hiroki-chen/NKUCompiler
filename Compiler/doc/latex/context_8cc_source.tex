@@ -1,0 +1,45 @@
+\hypertarget{context_8cc_source}{}\doxysection{context.\+cc}
+\label{context_8cc_source}\index{src/ir/context.cc@{src/ir/context.cc}}
+\mbox{\hyperlink{context_8cc}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00017}00017 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{context_8hh}{ir/context.hh}}>}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00018}00018 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{compile__excepts_8hh}{common/compile\_excepts.hh}}>}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00020}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_ae739d94aa93631c45009d3ff5dc320ef}{00020}} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_ae739d94aa93631c45009d3ff5dc320ef}{compiler::ir::IRContext::IRContext}}()}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00021}00021 \{}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00022}00022     \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_af354ea29320f65707b66eb03aeb74992}{symbol\_table}}.\mbox{\hyperlink{classcompiler_1_1_symbol__table_a3de2c6e3d140c3e966256c5f541c0a08}{enter\_scope}}();}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00023}00023 \}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00025}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_abc42fa06f474d4cde72a21cbef3094a0}{00025}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_abc42fa06f474d4cde72a21cbef3094a0}{compiler::ir::IRContext::enter\_scope}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00026}00026 \{}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00027}00027     \textcolor{keywordflow}{if} (symbol\_table.get\_top\_scope\_uuid() == -\/1) \{}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00028}00028         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_a39eff1ab66c342c99e171998c8433273}{fatal\_error}}(\textcolor{stringliteral}{"{}Error: The global symbol table is not found!"{}});}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00029}00029     \}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00030}00030     symbol\_table.enter\_scope();}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00031}00031 \}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00033}\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_abb824b392d1066cae6ef419dd98e3db3}{00033}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context_abb824b392d1066cae6ef419dd98e3db3}{compiler::ir::IRContext::leave\_scope}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00034}00034 \{}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00035}00035     \textcolor{keywordflow}{if} (symbol\_table.get\_top\_scope\_uuid() == 0) \{}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00036}00036         \textcolor{keywordflow}{throw} \mbox{\hyperlink{namespacecompiler_a39eff1ab66c342c99e171998c8433273}{fatal\_error}}(\textcolor{stringliteral}{"{}Error: The compiler is trying to leave the global scope!"{}});}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00037}00037     \}}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00038}00038     symbol\_table.leave\_scope();}
+\DoxyCodeLine{\Hypertarget{context_8cc_source_l00039}00039 \}}
+
+\end{DoxyCode}

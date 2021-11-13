@@ -1,0 +1,135 @@
+\hypertarget{compile__excepts_8hh_source}{}\doxysection{compile\+\_\+excepts.\+hh}
+\label{compile__excepts_8hh_source}\index{include/common/compile\_excepts.hh@{include/common/compile\_excepts.hh}}
+\mbox{\hyperlink{compile__excepts_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00002}00002 \textcolor{comment}{ Copyright (c) 2021 Haobin Chen}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00003}00003 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00004}00004 \textcolor{comment}{ This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00005}00005 \textcolor{comment}{ it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00006}00006 \textcolor{comment}{ the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00007}00007 \textcolor{comment}{ (at your option) any later version.}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00008}00008 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00009}00009 \textcolor{comment}{ This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00010}00010 \textcolor{comment}{ but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00011}00011 \textcolor{comment}{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00012}00012 \textcolor{comment}{ GNU General Public License for more details.}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00013}00013 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00014}00014 \textcolor{comment}{ You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00015}00015 \textcolor{comment}{ along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00016}00016 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00017}00017 \textcolor{preprocessor}{\#ifndef COMPILE\_EXCEPTS\_HH}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00018}00018 \textcolor{preprocessor}{\#define COMPILE\_EXCEPTS\_HH}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00020}00020 \textcolor{preprocessor}{\#include <stdexcept>}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00021}00021 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00023}00023 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacecompiler}{compiler}} \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00028}\mbox{\hyperlink{classcompiler_1_1parse__error}{00028}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1parse__error}{parse\_error}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00029}00029 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00030}\mbox{\hyperlink{classcompiler_1_1parse__error_ad63b7cf4e82fa51afdec995b037cee67}{00030}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1parse__error_ad63b7cf4e82fa51afdec995b037cee67}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00032}00032 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00033}\mbox{\hyperlink{classcompiler_1_1parse__error_adb874e824021af13f59489354d5ef1e5}{00033}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1parse__error_adb874e824021af13f59489354d5ef1e5}{parse\_error}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1parse__error_ad63b7cf4e82fa51afdec995b037cee67}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00034}00034         : \mbox{\hyperlink{classcompiler_1_1parse__error_ad63b7cf4e82fa51afdec995b037cee67}{information}}(\mbox{\hyperlink{classcompiler_1_1parse__error_ad63b7cf4e82fa51afdec995b037cee67}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00035}00035     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00036}00036     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00038}\mbox{\hyperlink{classcompiler_1_1parse__error_a752d8be65a8b9b8af403a4da70bf85e9}{00038}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1parse__error_a752d8be65a8b9b8af403a4da70bf85e9}{what}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1parse__error_ad63b7cf4e82fa51afdec995b037cee67}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00039}\mbox{\hyperlink{namespacecompiler_ab726208bab7ba06d2b15e74ad2cc751a}{00039}} \} \mbox{\hyperlink{namespacecompiler_ab726208bab7ba06d2b15e74ad2cc751a}{parse\_error}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00041}\mbox{\hyperlink{classcompiler_1_1type__error}{00041}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1type__error}{type\_error}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00042}00042 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00043}\mbox{\hyperlink{classcompiler_1_1type__error_a9be0a3734869fd8640e4406b4af6595f}{00043}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1type__error_a9be0a3734869fd8640e4406b4af6595f}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00045}00045 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00046}\mbox{\hyperlink{classcompiler_1_1type__error_a80a23c4f23aa1b6aa102c256b447817f}{00046}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1type__error_a80a23c4f23aa1b6aa102c256b447817f}{type\_error}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1type__error_a9be0a3734869fd8640e4406b4af6595f}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00047}00047         : \mbox{\hyperlink{classcompiler_1_1type__error_a9be0a3734869fd8640e4406b4af6595f}{information}}(\mbox{\hyperlink{classcompiler_1_1type__error_a9be0a3734869fd8640e4406b4af6595f}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00048}00048     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00049}00049     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00051}\mbox{\hyperlink{classcompiler_1_1type__error_a46312df122e34b26118882b9c9ab54e6}{00051}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1type__error_a46312df122e34b26118882b9c9ab54e6}{what}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1type__error_a9be0a3734869fd8640e4406b4af6595f}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00052}\mbox{\hyperlink{namespacecompiler_ab193149e25e145cdfc9d10259fdb9997}{00052}} \} \mbox{\hyperlink{namespacecompiler_ab193149e25e145cdfc9d10259fdb9997}{type\_error}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00054}\mbox{\hyperlink{classcompiler_1_1undeclared__symbol}{00054}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1undeclared__symbol}{undeclared\_symbol}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00055}00055 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00056}\mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a537fd482a8f456076ae3a75768a0e44f}{00056}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a537fd482a8f456076ae3a75768a0e44f}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00058}00058 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00059}\mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a5456714f24bb1d39eb29002f9d8843a7}{00059}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a5456714f24bb1d39eb29002f9d8843a7}{undeclared\_symbol}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a537fd482a8f456076ae3a75768a0e44f}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00060}00060         : \mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a537fd482a8f456076ae3a75768a0e44f}{information}}(\mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a537fd482a8f456076ae3a75768a0e44f}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00061}00061     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00062}00062     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00064}\mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a98a5854d8ce8ed54fd04bd40e8c5d78d}{00064}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a98a5854d8ce8ed54fd04bd40e8c5d78d}{what}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1undeclared__symbol_a537fd482a8f456076ae3a75768a0e44f}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00065}\mbox{\hyperlink{namespacecompiler_a63757d294960574ab620a1b65c898d3b}{00065}} \} \mbox{\hyperlink{namespacecompiler_a63757d294960574ab620a1b65c898d3b}{undeclared\_symbol}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00067}\mbox{\hyperlink{classcompiler_1_1redefined__symbol}{00067}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1redefined__symbol}{redefined\_symbol}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00068}00068 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00069}\mbox{\hyperlink{classcompiler_1_1redefined__symbol_a5e3c006d1808646433baa455dfe7e670}{00069}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1redefined__symbol_a5e3c006d1808646433baa455dfe7e670}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00071}00071 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00072}\mbox{\hyperlink{classcompiler_1_1redefined__symbol_a9306e9509ac53f56ffef35f096ddabe2}{00072}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1redefined__symbol_a9306e9509ac53f56ffef35f096ddabe2}{redefined\_symbol}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1redefined__symbol_a5e3c006d1808646433baa455dfe7e670}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00073}00073         : \mbox{\hyperlink{classcompiler_1_1redefined__symbol_a5e3c006d1808646433baa455dfe7e670}{information}}(\mbox{\hyperlink{classcompiler_1_1redefined__symbol_a5e3c006d1808646433baa455dfe7e670}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00074}00074     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00075}00075     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00077}\mbox{\hyperlink{classcompiler_1_1redefined__symbol_a4178a8b6c95f6dab8695cf0e29f17e82}{00077}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1redefined__symbol_a4178a8b6c95f6dab8695cf0e29f17e82}{what}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1redefined__symbol_a5e3c006d1808646433baa455dfe7e670}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00078}\mbox{\hyperlink{namespacecompiler_af31882b52c1aaa9f1e50b8ca2111f4fe}{00078}} \} \mbox{\hyperlink{namespacecompiler_af31882b52c1aaa9f1e50b8ca2111f4fe}{redefined\_symbol}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00080}\mbox{\hyperlink{classcompiler_1_1unknown__character}{00080}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1unknown__character}{unknown\_character}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00081}00081 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00082}\mbox{\hyperlink{classcompiler_1_1unknown__character_a702aaa4c16237a11d63733ec4345ddd3}{00082}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1unknown__character_a702aaa4c16237a11d63733ec4345ddd3}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00084}00084 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00085}\mbox{\hyperlink{classcompiler_1_1unknown__character_a1ae2aeb975a5fc108bb66bb850cfa63a}{00085}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1unknown__character_a1ae2aeb975a5fc108bb66bb850cfa63a}{unknown\_character}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1unknown__character_a702aaa4c16237a11d63733ec4345ddd3}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00086}00086         : \mbox{\hyperlink{classcompiler_1_1unknown__character_a702aaa4c16237a11d63733ec4345ddd3}{information}}(\mbox{\hyperlink{classcompiler_1_1unknown__character_a702aaa4c16237a11d63733ec4345ddd3}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00087}00087     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00088}00088     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00090}\mbox{\hyperlink{classcompiler_1_1unknown__character_aedc64319227b7021745b24d35b05e7a9}{00090}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1unknown__character_aedc64319227b7021745b24d35b05e7a9}{what}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1unknown__character_a702aaa4c16237a11d63733ec4345ddd3}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00091}\mbox{\hyperlink{namespacecompiler_ab0ce49c5b5ca1c764de368abd03aa4e8}{00091}} \} \mbox{\hyperlink{namespacecompiler_ab0ce49c5b5ca1c764de368abd03aa4e8}{unknown\_character}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00093}\mbox{\hyperlink{classcompiler_1_1fatal__error}{00093}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1fatal__error}{fatal\_error}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00094}00094 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00095}\mbox{\hyperlink{classcompiler_1_1fatal__error_ab58a6d9780579a5a583fd6b0f7d86e2d}{00095}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1fatal__error_ab58a6d9780579a5a583fd6b0f7d86e2d}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00097}00097 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00098}\mbox{\hyperlink{classcompiler_1_1fatal__error_aaaea52d659ad1ef1d2f43fe98a9d0084}{00098}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1fatal__error_aaaea52d659ad1ef1d2f43fe98a9d0084}{fatal\_error}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1fatal__error_ab58a6d9780579a5a583fd6b0f7d86e2d}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00099}00099         : \mbox{\hyperlink{classcompiler_1_1fatal__error_ab58a6d9780579a5a583fd6b0f7d86e2d}{information}}(\mbox{\hyperlink{classcompiler_1_1fatal__error_ab58a6d9780579a5a583fd6b0f7d86e2d}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00100}00100     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00101}00101     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00103}\mbox{\hyperlink{classcompiler_1_1fatal__error_a0811432f085d8184626a6101ae81aa65}{00103}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1fatal__error_a0811432f085d8184626a6101ae81aa65}{what}}() const noexcept\textcolor{keyword}{ override }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1fatal__error_ab58a6d9780579a5a583fd6b0f7d86e2d}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00104}\mbox{\hyperlink{namespacecompiler_a39eff1ab66c342c99e171998c8433273}{00104}} \} \mbox{\hyperlink{namespacecompiler_a39eff1ab66c342c99e171998c8433273}{fatal\_error}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00106}\mbox{\hyperlink{classcompiler_1_1unimplemented__error}{00106}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1unimplemented__error}{unimplemented\_error}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00107}00107 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00108}\mbox{\hyperlink{classcompiler_1_1unimplemented__error_aa28c512a5a8f526c2a6d4e0fdb9f4835}{00108}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1unimplemented__error_aa28c512a5a8f526c2a6d4e0fdb9f4835}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00110}00110 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00111}\mbox{\hyperlink{classcompiler_1_1unimplemented__error_a0f9e0c6550683244ff3d59bb31608a01}{00111}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1unimplemented__error_a0f9e0c6550683244ff3d59bb31608a01}{unimplemented\_error}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1unimplemented__error_aa28c512a5a8f526c2a6d4e0fdb9f4835}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00112}00112         : \mbox{\hyperlink{classcompiler_1_1unimplemented__error_aa28c512a5a8f526c2a6d4e0fdb9f4835}{information}}(\mbox{\hyperlink{classcompiler_1_1unimplemented__error_aa28c512a5a8f526c2a6d4e0fdb9f4835}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00113}00113     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00114}00114     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00116}\mbox{\hyperlink{classcompiler_1_1unimplemented__error_a555320fb22517332f2e81f63c22e3eb6}{00116}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1unimplemented__error_a555320fb22517332f2e81f63c22e3eb6}{what}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1unimplemented__error_aa28c512a5a8f526c2a6d4e0fdb9f4835}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00117}\mbox{\hyperlink{namespacecompiler_ad26c1cb5d242089cde25c488f7f0b990}{00117}} \} \mbox{\hyperlink{namespacecompiler_ad26c1cb5d242089cde25c488f7f0b990}{unimplemented\_error}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00119}\mbox{\hyperlink{classcompiler_1_1unsupported__operation}{00119}} \textcolor{keyword}{typedef} \textcolor{keyword}{class }\mbox{\hyperlink{classcompiler_1_1unsupported__operation}{unsupported\_operation}} : \textcolor{keyword}{public} std::exception \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00120}00120 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00121}\mbox{\hyperlink{classcompiler_1_1unsupported__operation_a717f53b3012f5e9f0aa6d7e4638ad32d}{00121}}     \textcolor{keyword}{const} std::string \mbox{\hyperlink{classcompiler_1_1unsupported__operation_a717f53b3012f5e9f0aa6d7e4638ad32d}{information}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00123}00123 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00124}\mbox{\hyperlink{classcompiler_1_1unsupported__operation_a3fb27cccdeb7c3b7fceef58000b5c57e}{00124}}     \textcolor{keyword}{explicit} \mbox{\hyperlink{classcompiler_1_1unsupported__operation_a3fb27cccdeb7c3b7fceef58000b5c57e}{unsupported\_operation}}(\textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classcompiler_1_1unsupported__operation_a717f53b3012f5e9f0aa6d7e4638ad32d}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00125}00125         : \mbox{\hyperlink{classcompiler_1_1unsupported__operation_a717f53b3012f5e9f0aa6d7e4638ad32d}{information}}(\mbox{\hyperlink{classcompiler_1_1unsupported__operation_a717f53b3012f5e9f0aa6d7e4638ad32d}{information}})}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00126}00126     \{}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00129}\mbox{\hyperlink{classcompiler_1_1unsupported__operation_a4621b6628d346db1c8937060f5d31b9b}{00129}}     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classcompiler_1_1unsupported__operation_a4621b6628d346db1c8937060f5d31b9b}{what}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{noexcept} \textcolor{keyword}{override} \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classcompiler_1_1unsupported__operation_a717f53b3012f5e9f0aa6d7e4638ad32d}{information}}.data(); \}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00130}\mbox{\hyperlink{namespacecompiler_a87fd48f09e2018a9b07942b8e7e4611b}{00130}} \} \mbox{\hyperlink{namespacecompiler_a87fd48f09e2018a9b07942b8e7e4611b}{unsupported\_operation}};}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00131}00131 \} \textcolor{comment}{// namespace compiler}}
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{compile__excepts_8hh_source_l00133}00133 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

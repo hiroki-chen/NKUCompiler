@@ -1,0 +1,176 @@
+\hypertarget{classcompiler_1_1_item__expr__binary}{}\doxysection{compiler\+::Item\+\_\+expr\+\_\+binary Class Reference}
+\label{classcompiler_1_1_item__expr__binary}\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+
+
+Class for binary expressions.  
+
+
+
+
+{\ttfamily \#include $<$item\+\_\+expr.\+hh$>$}
+
+Inheritance diagram for compiler\+::Item\+\_\+expr\+\_\+binary\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classcompiler_1_1_item__expr__binary}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_ae46019a416d21f187d8747880f3ec537}{get\+\_\+expr\+\_\+type}} (void) const override
+\item 
+virtual \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a075ef6d9d556540f35d42265b7ceaf0c}{get\+\_\+binary\+\_\+type}} (void) const
+\item 
+virtual void \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a89d8cd1dcd4f3aa3e8548a4b3fe81dfa}{generate\+\_\+ir}} (\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const context, std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&ir\+\_\+list) const override
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a7e3f791b9f2626b1227a8f18d19e524a}{Item\+\_\+expr\+\_\+binary}} ()=delete
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr__binary_aaca70ea0e1da066423e1168b95da5a71}{Item\+\_\+expr\+\_\+binary}} (const uint32\+\_\+t \&\mbox{\hyperlink{classcompiler_1_1_item_adfe26df6660160284563018887ee827c}{lineno}}, const \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\+\_\+type}} \&\mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{type}}, \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a5de4376a2db5c67817a20be403f43800}{lhs}}, \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a4d9479a0d0b7c963abd2791769ee71ba}{rhs}})
+\item 
+virtual std\+::string \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a92aa1e184f0279c3823d4f7e9b5499da}{print\+\_\+result}} (const uint32\+\_\+t \&indent, const bool \&leaf) const override
+\begin{DoxyCompactList}\small\item\em Prints the the parse result as an abstract syntax tree. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a557fb4abd94dae93d7d1cd9d86e9bef0}{$\sim$\+Item\+\_\+expr\+\_\+binary}} () override=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_ac51a5486fceed19e729f91cae7c8a7c1}{type}}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a5de4376a2db5c67817a20be403f43800}{lhs}}
+\item 
+\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const \mbox{\hyperlink{classcompiler_1_1_item__expr__binary_a4d9479a0d0b7c963abd2791769ee71ba}{rhs}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class for binary expressions. 
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00105}{105}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_a7e3f791b9f2626b1227a8f18d19e524a}\label{classcompiler_1_1_item__expr__binary_a7e3f791b9f2626b1227a8f18d19e524a}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!Item\_expr\_binary@{Item\_expr\_binary}}
+\index{Item\_expr\_binary@{Item\_expr\_binary}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{Item\_expr\_binary()}{Item\_expr\_binary()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+expr\+\_\+binary\+::\+Item\+\_\+expr\+\_\+binary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_aaca70ea0e1da066423e1168b95da5a71}\label{classcompiler_1_1_item__expr__binary_aaca70ea0e1da066423e1168b95da5a71}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!Item\_expr\_binary@{Item\_expr\_binary}}
+\index{Item\_expr\_binary@{Item\_expr\_binary}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{Item\_expr\_binary()}{Item\_expr\_binary()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily compiler\+::\+Item\+\_\+expr\+\_\+binary\+::\+Item\+\_\+expr\+\_\+binary (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{lineno,  }\item[{const \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\+\_\+type}} \&}]{type,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const}]{lhs,  }\item[{\mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}} $\ast$const}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8cc_source_l00038}{38}} of file \mbox{\hyperlink{item__expr_8cc_source}{item\+\_\+expr.\+cc}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_a557fb4abd94dae93d7d1cd9d86e9bef0}\label{classcompiler_1_1_item__expr__binary_a557fb4abd94dae93d7d1cd9d86e9bef0}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!````~Item\_expr\_binary@{$\sim$Item\_expr\_binary}}
+\index{````~Item\_expr\_binary@{$\sim$Item\_expr\_binary}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{$\sim$Item\_expr\_binary()}{~Item\_expr\_binary()}}
+{\footnotesize\ttfamily virtual compiler\+::\+Item\+\_\+expr\+\_\+binary\+::$\sim$\+Item\+\_\+expr\+\_\+binary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_a89d8cd1dcd4f3aa3e8548a4b3fe81dfa}\label{classcompiler_1_1_item__expr__binary_a89d8cd1dcd4f3aa3e8548a4b3fe81dfa}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!generate\_ir@{generate\_ir}}
+\index{generate\_ir@{generate\_ir}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{generate\_ir()}{generate\_ir()}}
+{\footnotesize\ttfamily virtual void compiler\+::\+Item\+\_\+expr\+\_\+binary\+::generate\+\_\+ir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r_context}{compiler\+::ir\+::\+IRContext}} $\ast$const}]{context,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classcompiler_1_1ir_1_1_i_r}{compiler\+::ir\+::\+IR}} $>$ \&}]{ir\+\_\+list }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00118}{118}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_a075ef6d9d556540f35d42265b7ceaf0c}\label{classcompiler_1_1_item__expr__binary_a075ef6d9d556540f35d42265b7ceaf0c}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!get\_binary\_type@{get\_binary\_type}}
+\index{get\_binary\_type@{get\_binary\_type}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{get\_binary\_type()}{get\_binary\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\+\_\+type}} compiler\+::\+Item\+\_\+expr\+\_\+binary\+::get\+\_\+binary\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00116}{116}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_ae46019a416d21f187d8747880f3ec537}\label{classcompiler_1_1_item__expr__binary_ae46019a416d21f187d8747880f3ec537}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!get\_expr\_type@{get\_expr\_type}}
+\index{get\_expr\_type@{get\_expr\_type}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{get\_expr\_type()}{get\_expr\_type()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcompiler_1_1_item__expr_a8047f2d8b0c9b8772813a2d273efba5e}{Item\+\_\+expr\+::expr\+\_\+type}} compiler\+::\+Item\+\_\+expr\+\_\+binary\+::get\+\_\+expr\+\_\+type (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item__expr_ad4b9d671701f636b81def21a83fc3950}{compiler\+::\+Item\+\_\+expr}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00114}{114}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_a92aa1e184f0279c3823d4f7e9b5499da}\label{classcompiler_1_1_item__expr__binary_a92aa1e184f0279c3823d4f7e9b5499da}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!print\_result@{print\_result}}
+\index{print\_result@{print\_result}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{print\_result()}{print\_result()}}
+{\footnotesize\ttfamily std\+::string compiler\+::\+Item\+\_\+expr\+\_\+binary\+::print\+\_\+result (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t \&}]{indent,  }\item[{const bool \&}]{leaf }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Prints the the parse result as an abstract syntax tree. 
+
+\begin{DoxyNote}{Note}
+This function will invoke all of its children\textquotesingle{}s print\+\_\+result(indent + 2) virtual function until there is no child anymore. You should implement this function in each {\bfseries{final}} class.
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+std\+::string 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classcompiler_1_1_item_a24a45e9504118e660be4f87a23a4b284}{compiler\+::\+Item}}.
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8cc_source_l00076}{76}} of file \mbox{\hyperlink{item__expr_8cc_source}{item\+\_\+expr.\+cc}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_a5de4376a2db5c67817a20be403f43800}\label{classcompiler_1_1_item__expr__binary_a5de4376a2db5c67817a20be403f43800}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!lhs@{lhs}}
+\index{lhs@{lhs}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{lhs}{lhs}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}}$\ast$ const compiler\+::\+Item\+\_\+expr\+\_\+binary\+::lhs\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00109}{109}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_a4d9479a0d0b7c963abd2791769ee71ba}\label{classcompiler_1_1_item__expr__binary_a4d9479a0d0b7c963abd2791769ee71ba}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!rhs@{rhs}}
+\index{rhs@{rhs}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{rhs}{rhs}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcompiler_1_1_item__expr}{Item\+\_\+expr}}$\ast$ const compiler\+::\+Item\+\_\+expr\+\_\+binary\+::rhs\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00111}{111}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+\mbox{\Hypertarget{classcompiler_1_1_item__expr__binary_ac51a5486fceed19e729f91cae7c8a7c1}\label{classcompiler_1_1_item__expr__binary_ac51a5486fceed19e729f91cae7c8a7c1}} 
+\index{compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}!type@{type}}
+\index{type@{type}!compiler::Item\_expr\_binary@{compiler::Item\_expr\_binary}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespacecompiler_a39f0ef7ba4a8774cf0d4bf76dbb69ceb}{binary\+\_\+type}} \mbox{\hyperlink{classcompiler_1_1_item_a04b10da5804b07ea48db43809ed485cc}{compiler\+::\+Item\+\_\+expr\+\_\+binary\+::type}}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{item__expr_8hh_source_l00107}{107}} of file \mbox{\hyperlink{item__expr_8hh_source}{item\+\_\+expr.\+hh}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/frontend/nodes/\mbox{\hyperlink{item__expr_8hh}{item\+\_\+expr.\+hh}}\item 
+src/frontend/nodes/\mbox{\hyperlink{item__expr_8cc}{item\+\_\+expr.\+cc}}\end{DoxyCompactItemize}
