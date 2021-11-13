@@ -61,15 +61,20 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
                                                    "direcotry will be read in.",
         cxxopts::value<std::string>()->default_value("test/test.sy"));
 
-    options->add_options("OTHER")("c,compile", "Output the object file rather than executable", cxxopts::value<bool>()->default_value("false"))("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))("t,tree", "Print the abstract syntax tree", cxxopts::value<bool>()->default_value("false"))("o,output", "The output file name."
-                                                                                                                                                                                                                                                                                                                                        "Note that if --source is set to a directory, then --output will be ignored.",
-        cxxopts::value<std::string>()->default_value("a.out"))("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))("h,help", "Get the guidance");
+    options->add_options("OTHER")("c,compile", "Output the object file rather than executable", cxxopts::value<bool>()->default_value("false"))
+        ("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))
+        ("t,tree", "Print the abstract syntax tree", cxxopts::value<bool>()->default_value("false"))
+        ("o,output", "The output file name.", cxxopts::value<std::string>()->default_value("a.out"))
+        ("ir,ir", "Generate intermediate code", cxxopts::value<bool>()->default_value("false"))
+        ("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))
+        ("h,help", "Get the guidance");
 }
 
 compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     : compile_on(result["compile"].as<bool>())
     , debug_on(result["debug"].as<bool>())
     , print_ast(result["tree"].as<bool>())
+    , generate_ir(result["ir"].as<bool>())
     , opt_level(result["optimize"].as<int>())
 {
     const std::string input = result["source"].as<std::string>();

@@ -41,6 +41,8 @@ public:
     virtual Item_literal::literal_type get_literal_type(void) const = 0;
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::LITERAL_TYPE; }
+    
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_literal() = delete;
 
@@ -62,6 +64,8 @@ public:
 
     Item_literal_numeric(const uint32_t& lineno, const double& value);
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual Item_literal::literal_type get_literal_type(void) const override = 0;
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
@@ -74,6 +78,8 @@ public:
     virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::INT_TYPE; }
 
     virtual int get_int() const { return (int)value; }
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_literal_int() = delete;
 
@@ -90,6 +96,8 @@ public:
 
     virtual float get_float() const { return (float)value; }
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     Item_literal_real() = delete;
 
     Item_literal_real(const uint32_t& lineno, const double& value);
@@ -102,6 +110,8 @@ public:
     virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::CHAR_TYPE; }
 
     virtual char get_char() const { return (char)value; }
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_literal_char() = delete;
 
@@ -118,6 +128,8 @@ public:
     virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::STRING_TYPE; }
 
     virtual std::string get_str(void) const { return str; }
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_literal_string() = delete;
 
@@ -144,6 +156,8 @@ public:
     virtual Item_literal::literal_type get_literal_type(void) const override { return Item_literal::literal_type::ARRAY_INIT; }
 
     virtual void add_value(Item_literal_array_init* const value);
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_literal_array_init() = delete;
 

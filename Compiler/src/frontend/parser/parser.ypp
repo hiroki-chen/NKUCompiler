@@ -340,7 +340,14 @@ WhileStmt:  WHILE LPARENTHESIS Exp RPARENTHESIS Stmt                    { $$ = n
          ;
 
 ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
-       | FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS Exp BLOCK
+         {
+             compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
+             block->add_item($3);
+             compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(), static_cast<compiler::Item_expr*>($4), $6);
+             block->add_item(while_stmt);
+             $$ = block;
+         }
+       | FOR LPARENTHESIS ExpStmt ExpStmt Exp RPARENTHESIS BLOCK
        | FOR LPARENTHESIS Decl ExpStmt RPARENTHESIS BLOCK
        | FOR LPARENTHESIS Decl ExpStmt Exp RPARENTHESIS BLOCK
        ;

@@ -115,6 +115,19 @@ public:
 
     const char* what(void) const noexcept override { return information.data(); }
 } unimplemented_error;
+
+typedef class unsupported_operation : public std::exception {
+protected:
+    const std::string information;
+
+public:
+    explicit unsupported_operation(const std::string& information)
+        : information(information)
+    {
+    }
+
+    const char* what(void) const noexcept override { return information.data(); }
+} unsupported_operation;
 } // namespace compiler
 
 #endif

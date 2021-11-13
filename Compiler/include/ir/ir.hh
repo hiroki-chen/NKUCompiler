@@ -35,11 +35,11 @@ typedef class IR {
 typedef enum op_type {
     NOP,
     // Basic algorithmic operations
-    ADD,
-    SUB,
-    MUL,
-    DIV,
-    MOD,
+    IADD,
+    ISUB,
+    IMUL,
+    IDIV,
+    IMOD,
 
     // For floats.
     FADD,
@@ -53,7 +53,7 @@ typedef enum op_type {
 
     // Function call
     CALL,
-    RETURN,
+    RET,
 
     // Jump
     JMP,
@@ -65,10 +65,10 @@ typedef enum op_type {
     JGT,
 
     // Bit operations.
-    BIT_AND,
-    BIT_OR,
-    BIT_XOR,
-    BIT_NEG,
+    BAND,
+    BOR,
+    BXOR,
+    BNEG,
     SHL,
     LSHR,
     ASHR,
@@ -84,7 +84,7 @@ typedef enum op_type {
     // Memory related operations.
     LOAD,
     STORE,
-    MALLOC
+    MALLOC,
 
     // Delimiters.
     BEGIN_DATA,
@@ -107,8 +107,8 @@ typedef enum var_type {
     i32,
     i8,
     // A little bit of complex...
-    DOUBLE,
-    FLOAT
+    DB,
+    FL,
 } var_type;
 
 } // namespace compiler::ir

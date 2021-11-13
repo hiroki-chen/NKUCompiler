@@ -71,6 +71,8 @@ public:
 
     Item_expr_cond(const uint32_t& lineno, Item_expr* const expr);
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_expr_cond() override = default;
@@ -86,6 +88,8 @@ public:
     Item_expr_comma(const uint32_t& lineno);
 
     virtual void add_expression(Item_expr* const expression) { expressions.emplace_back(expression); };
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::COMMA_TYPE; }
 
@@ -111,6 +115,8 @@ public:
 
     virtual binary_type get_binary_type(void) const { return type; }
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     Item_expr_binary() = delete;
 
     Item_expr_binary(const uint32_t& lineno, const binary_type& type, Item_expr* const lhs, Item_expr* const rhs);
@@ -130,6 +136,8 @@ public:
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::UNARY_TYPE; }
 
     virtual unary_type get_unary_type(void) const { return type; }
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_expr_unary() = delete;
 

@@ -69,6 +69,8 @@ private:
 
     bool print_ast = false;
 
+    bool generate_ir = false;
+
     Item_root* root = nullptr;
 
     uint32_t opt_level = 0;

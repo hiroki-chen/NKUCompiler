@@ -68,6 +68,8 @@ public:
 
     virtual void add_declaration(Item_decl* const declaration);
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual std::vector<Item_decl*> get_declarataions(void) const { return declarations; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
@@ -89,6 +91,8 @@ public:
     Item_decl_var() = delete;
 
     Item_decl_var(const uint32_t& lineno, Item_ident* const identifier, const bool& is_decl = true);
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -125,6 +129,8 @@ public:
     Item_decl_pointer_init() = delete;
 
     Item_decl_pointer_init(const uint32_t& lineno, Item_ident_pointer* const identifier, Item_expr* const expression, const bool& is_const, const bool& is_decl = false);
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual bool get_is_const(void) const { return is_const; }
 
@@ -173,6 +179,8 @@ public:
 
     Item_decl_array(const uint32_t& lineno, Item_ident_array* const identifier, const bool& is_decl = true);
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual Item_ident* get_identifier(void) const { return identifier; }
 
     virtual Item_decl::decl_type get_decl_type(void) const override { return Item_decl::decl_type::ARRAY; }
@@ -200,6 +208,8 @@ public:
         const bool& is_const,
         const bool& is_decl = false);
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
     virtual ~Item_decl_array_init() override = default;
@@ -215,6 +225,8 @@ public:
     Item_decl_struct() = delete;
 
     Item_decl_struct(const uint32_t& lineno, Item_ident* const identifier, Item_struct_body* const struct_body, const bool& is_decl = true);
+
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 

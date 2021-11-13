@@ -35,6 +35,8 @@ public:
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
+    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+
     virtual void add_body(Item* const item) { struct_body.emplace_back(item); }
     
     virtual ~Item_struct_body() override = default;
