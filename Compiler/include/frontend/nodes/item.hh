@@ -18,11 +18,11 @@
 #define ITEM_HH
 
 #include <cstdint>
-#include <vector>
 #include <string>
+#include <vector>
 
-#include <ir/ir.hh>
 #include <ir/context.hh>
+#include <ir/ir.hh>
 
 namespace compiler {
 /**
@@ -34,6 +34,8 @@ namespace compiler {
 typedef class Item {
 protected:
     const uint32_t lineno;
+
+    virtual void generate_ir_helper(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const;
 
 public:
     /**
@@ -58,10 +60,10 @@ public:
 
     virtual Item::type get_type(void) const = 0;
 
-    virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const { return; }
+    virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const;
 
     virtual uint32_t get_lineno(void) const { return lineno; }
-    
+
     /**
      * @brief Prints the the parse result as an abstract syntax tree.
      * @note This function will invoke all of its children's print_result(indent + 2) virtual function
@@ -79,6 +81,11 @@ typedef class Item_root : public Item {
 protected:
     std::vector<Item*> children;
 
+    virtual void generate_ir_helper(
+        ir::IRContext* const ir_context,
+        std::vector<ir::IR>& ir_list)
+        const override;
+
 public:
     virtual Item::type get_type(void) const override { return Item::type::ROOT_ITEM; }
 
@@ -90,11 +97,10 @@ public:
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
-    // Root node cannot eval_cond anything.
-    virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const override;
-
     virtual ~Item_root() override = default;
 } Item_root;
+
+using NodeStack = std::vector<Item*>;
 
 } // namespace compiler
 

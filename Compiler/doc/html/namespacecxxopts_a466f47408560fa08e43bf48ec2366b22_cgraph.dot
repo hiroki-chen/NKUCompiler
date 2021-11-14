@@ -1,0 +1,10 @@
+digraph "cxxopts::throw_or_mimic"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="cxxopts::throw_or_mimic",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="cxxopts::value",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacecxxopts.html#a9a3c999d4e9bd55dec5daa5daef79c26",tooltip=" "];
+}

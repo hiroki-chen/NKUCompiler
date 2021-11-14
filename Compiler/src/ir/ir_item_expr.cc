@@ -19,9 +19,17 @@
 extern uint32_t opt_level;
 
 compiler::ir::op_type
-compiler::Item_expr_binary::eval_runtime(
+compiler::Item_expr::eval_runtime(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const
 {
-    return ir::op_type::NOP;
+    // TODO
+}
+
+compiler::ir::op_type
+compiler::Item_expr_binary::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const
+{
+    // TODO
 }

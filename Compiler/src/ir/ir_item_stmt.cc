@@ -19,7 +19,7 @@
 
 #include <sstream>
 
-void compiler::Item_block::generate_ir(
+void compiler::Item_block::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const
@@ -37,7 +37,7 @@ void compiler::Item_block::generate_ir(
     }
 }
 
-void compiler::Item_stmt_void::generate_ir(
+void compiler::Item_stmt_void::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const
@@ -45,7 +45,7 @@ void compiler::Item_stmt_void::generate_ir(
     return;
 }
 
-void compiler::Item_stmt_eif::generate_ir(
+void compiler::Item_stmt_eif::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const
@@ -106,7 +106,7 @@ void compiler::Item_stmt_eif::generate_ir(
     }
 }
 
-void compiler::Item_stmt_assign::generate_ir(
+void compiler::Item_stmt_assign::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const

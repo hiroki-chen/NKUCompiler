@@ -1,0 +1,9 @@
+digraph "compiler::ir::IRContext"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="compiler::ir::IRContext",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This is the context for generating intermediate representation. It may include: 1) Symbol tables; 2) ..."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" symbol_table" ,fontname="Helvetica"];
+  Node2 [label="compiler::Symbol_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcompiler_1_1_symbol__table.html",tooltip="A class for symbol table."];
+}
