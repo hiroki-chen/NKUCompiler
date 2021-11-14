@@ -101,6 +101,18 @@ compiler::ir::IR::IR(
 {
 }
 
+compiler::ir::IR::IR(
+    const op_type& operation,
+    const std::string& label)
+    : type(operation)
+    , dst(nullptr)
+    , operand_a(nullptr)
+    , operand_b(nullptr)
+    , operand_c(nullptr)
+    , label(label)
+{
+}
+
 void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose)
 {
     // Wrap std::ostream in a macro.

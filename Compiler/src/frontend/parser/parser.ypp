@@ -348,8 +348,31 @@ ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
              $$ = block;
          }
        | FOR LPARENTHESIS ExpStmt ExpStmt Exp RPARENTHESIS BLOCK
+       {
+           compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
+           block->add_item($3);
+           $7->add_item(static_cast<compiler::Item_stmt*>($5));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>($4), $7);
+           block->add_item(while_stmt);
+           $$ = block;
+       }
        | FOR LPARENTHESIS Decl ExpStmt RPARENTHESIS BLOCK
+       {
+           compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
+           block->add_item($3);
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>($4), $6);
+           block->add_item(while_stmt);
+           $$ = block;
+       }
        | FOR LPARENTHESIS Decl ExpStmt Exp RPARENTHESIS BLOCK
+       {
+           compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
+           block->add_item($3);
+           $7->add_item(static_cast<compiler::Item_stmt*>($5));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>($4), $7);
+           block->add_item(while_stmt);
+           $$ = block;
+       }
        ;
 
 AssignStmt: Assignment SEMICOLON    { $$ = $1; }

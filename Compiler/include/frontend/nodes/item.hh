@@ -58,7 +58,6 @@ public:
 
     virtual Item::type get_type(void) const = 0;
 
-    // TODO: Implement generate_ir for each node.
     virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const { return; }
 
     virtual uint32_t get_lineno(void) const { return lineno; }
@@ -91,7 +90,7 @@ public:
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
-    // Root node cannot generate anything.
+    // Root node cannot eval_cond anything.
     virtual void generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const override;
 
     virtual ~Item_root() override = default;

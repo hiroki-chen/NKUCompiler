@@ -14,35 +14,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <common/termcolor.hh>
-#include <common/compile_excepts.hh>
 #include <frontend/nodes/item.hh>
 
-#include <sstream>
-#include <string>
-
-compiler::Item::Item(const uint32_t& lineno)
-    : lineno(lineno)
+void compiler::Item_root::generate_ir(ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const
 {
-}
-
-compiler::Item_root::Item_root(const uint32_t& lineno)
-    : Item(lineno)
-{
-}
-
-void compiler::Item_root::add_child(Item* const child)
-{
-    children.emplace_back(child);
-}
-
-std::string compiler::Item_root::print_result(const uint32_t& indent, const bool& leaf) const
-{
-    std::ostringstream oss;
-
-    oss << "Program Root: " << termcolor::reset << std::endl;
-    for (uint32_t i = 0; i < children.size(); i++) {
-        oss << children[i]->print_result(indent, i == children.size() - 1);
+    for (Item* const child : children) {
+        child->generate_ir(ir_context, ir_list);
     }
-    return oss.str();
 }

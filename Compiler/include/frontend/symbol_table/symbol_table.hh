@@ -28,13 +28,20 @@ namespace compiler {
 
 using symbol_table_type = std::unordered_map<std::string, Symbol*>;
 
+/**
+ * @brief Class for a single symbol table.
+ * 
+ */
 typedef class Symbol_block {
 protected:
     symbol_table_type block;
 
 public:
     virtual Symbol* find_symbol(const std::string& name);
+
     virtual void add_symbol(const std::string& name, Symbol* const symbol);
+
+    virtual symbol_table_type get_block(void) const { return block; }
 } Symbol_block;
 
 /**
@@ -46,6 +53,7 @@ public:
 typedef class Symbol_table {
 protected:
     int last_uuid;
+
     std::list<Symbol_block*> symbol_table;
 
 public:
@@ -55,9 +63,9 @@ public:
             delete cur;
     }
 
-    virtual int get_top_scope_uuid() { return (int)symbol_table.size() - 1; }
+    virtual int get_top_scope_uuid() const { return (int)symbol_table.size() - 1; }
 
-    virtual int get_last_find_uuid(void) { return last_uuid; }
+    virtual int get_last_find_uuid(void) const { return last_uuid; }
 
     virtual Symbol_block* get_spec_block(const uint32_t& index);
 

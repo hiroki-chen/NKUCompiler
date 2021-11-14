@@ -51,7 +51,46 @@ public:
 
     virtual Item::type get_type(void) const override { return Item::type::EXPR_ITEM; }
 
-    // virtual ? eval() const = 0;
+    /**
+     * @brief Used to eval_cond conditional IR in runtime.
+     * 
+     * @param ir_context   The IR context.
+     * @param ir_list 
+     * @return BranchIR 
+     */
+    virtual BranchIR eval_cond(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const
+    {
+        return { compiler::ir::op_type::NOP, compiler::ir::op_type::NOP };
+    }
+    
+    /**
+     * @brief This function is called when optimization level is set. We calculate the expression at runtime.
+     * 
+     * @param ir_context 
+     * @return std::string The return value.
+     * @note Since there could be different types of values, we need to return a string to store it.
+     */
+    virtual std::string eval_runtime(compiler::ir::IRContext* const ir_context) const 
+    {
+        //TODO: implement this in each inherited class.
+        return "";
+    }
+
+    /**
+     * @brief Emit (possibly) IR.
+     * 
+     * @param ir_context 
+     * @param ir_list 
+     * @return ir::op_type 
+     */
+    virtual ir::op_type eval_runtime(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const
+    {
+        return compiler::ir::op_type::NOP;
+    }
 
     virtual ~Item_expr() override = default;
 } Item_expr;
@@ -115,7 +154,9 @@ public:
 
     virtual binary_type get_binary_type(void) const { return type; }
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual ir::op_type eval_runtime(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const override;
 
     Item_expr_binary() = delete;
 
