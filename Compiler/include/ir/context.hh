@@ -32,12 +32,22 @@ namespace compiler::ir {
  */
 typedef class IRContext {
 protected:
-    // The context will always maintain the deepmost symbol table.
+    /**
+     * @brief The context will store a symbol table within itself.
+     * 
+     */
     Symbol_table symbol_table;
 
-    // Loop labels.
+    /**
+     * @brief Stack that is used to store loop labels.
+     * 
+     */
     std::stack<std::string> loop_label;
 public:
+    /**
+     * @brief Construct a new IRContext object. It will also create a global context?
+     * 
+     */
     IRContext();
 
     /**
@@ -51,8 +61,31 @@ public:
      * 
      */
     virtual void leave_scope(void);
+    
+    /**
+     * @brief Checks if the current context is created by a loop statement. 
+     *        It is used when a continue, break or other loop-related statement is evaluated.
+     * 
+     * @return true 
+     * @return false 
+     */
+    virtual bool is_loop_context(void) const { return loop_label.size() != 0;}
 
-    // The outside functions and variables may need symbol_table and invoke its interfaces.
+    /**
+     * @brief Check if the current context is a global context.
+     * @note uuid == 0 denotes that the context is a global context.
+     * 
+     * @return true 
+     * @return false 
+     */
+    virtual bool is_global_context(void) const { return symbol_table.get_top_scope_uuid() == 0; }
+
+    /**
+     * @brief Get the symbol table object. 
+     *        The outside functions and variables may need symbol_table and invoke its interfaces.
+     * 
+     * @return Symbol_table 
+     */
     Symbol_table get_symbol_table(void) const { return symbol_table; }
 } IRContext;
 } // namespace compiler::ir.

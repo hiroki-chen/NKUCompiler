@@ -20,6 +20,7 @@
 #include <functional>
 #include <iostream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #ifndef FORMAT
@@ -253,7 +254,7 @@ public:
  * 
  * @note LOGIC EXPLAINED
  *       When an compiler::IR instance is created from the AST, we should call compiler::ir::IR::walk_ir()
- *       function to generate the string as follows:
+ *       function to eval_cond the string as follows:
  *       1. Create a lambda function that can be passed to compiler::ir::IR::walk_ir()
  *          that does some job with current operation;
  *       2. The function compiler::ir::IR::walk_ir() will iterate through each operands,
@@ -336,6 +337,10 @@ public:
         Operand* const dst,
         const std::string& label = "");
 
+    IR(
+        const op_type& operation,
+        const std::string& label = "");
+
     /**
      * @brief Emit the IR.
      * 
@@ -346,5 +351,7 @@ public:
 } IR;
 
 } // namespace compiler::ir
+
+using BranchIR = std::pair<compiler::ir::op_type, compiler::ir::op_type>;
 
 #endif

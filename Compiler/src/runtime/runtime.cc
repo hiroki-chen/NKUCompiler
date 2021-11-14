@@ -31,6 +31,8 @@ extern void yyset_lineno(int _line_number);
 extern int yycolumn;
 extern void yyset_in(FILE* _in_str);
 
+uint32_t opt_level; // Shared with each node for generating optimized IR.
+
 std::vector<std::string> compiler::process_input(const std::string& input)
 {
     std::vector<std::string> files;
@@ -65,8 +67,8 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
         ("g,debug", "Enable debug mode", cxxopts::value<bool>()->default_value("false"))
         ("t,tree", "Print the abstract syntax tree", cxxopts::value<bool>()->default_value("false"))
         ("o,output", "The output file name.", cxxopts::value<std::string>()->default_value("a.out"))
-        ("ir,ir", "Generate intermediate code", cxxopts::value<bool>()->default_value("false"))
-        ("O,optimize", "The level of optimization", cxxopts::value<int>()->default_value("0"))
+        ("print-ir", "eval_cond intermediate code", cxxopts::value<bool>()->default_value("false"))
+        ("O,opt-level", "The level of optimization", cxxopts::value<int>()->default_value("0"))
         ("h,help", "Get the guidance");
 }
 
@@ -74,9 +76,10 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     : compile_on(result["compile"].as<bool>())
     , debug_on(result["debug"].as<bool>())
     , print_ast(result["tree"].as<bool>())
-    , generate_ir(result["ir"].as<bool>())
-    , opt_level(result["optimize"].as<int>())
+    , generate_ir(result["print-ir"].as<bool>())
+    , opt_level(result["opt-level"].as<int>())
 {
+    ::opt_level = opt_level;
     const std::string input = result["source"].as<std::string>();
 
     if (is_dir(input)) {

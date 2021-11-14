@@ -116,7 +116,7 @@ compiler::Item_literal_array_init::print_result(const uint32_t& indent, const bo
     oss << " Literal Array Init" << std::endl;
 
     if (expression != nullptr) {
-        oss << expression->print_result(indent + 2, false) << std::endl;
+        oss << expression->print_result(indent + 2, false);
     }
 
     for (uint32_t i = 0; i < value_list.size(); i++) {
