@@ -28,24 +28,15 @@ namespace compiler {
  */
 typedef class Item_expr : public Item {
 protected:
-    virtual BranchIR eval_cond_helper(
+    virtual ir::BranchIR eval_cond_helper(
         compiler::ir::IRContext* const ir_context,
-        std::vector<compiler::ir::IR>& ir_list) const
-    {
-        return { compiler::ir::op_type::NOP, compiler::ir::op_type::NOP };
-    }
+        std::vector<compiler::ir::IR>& ir_list) const;
 
-    virtual std::string eval_runtime_helper(compiler::ir::IRContext* const ir_context) const
-    {
-        return "";
-    }
+    virtual compiler::ir::Operand* eval_runtime_helper(compiler::ir::IRContext* const ir_context) const;
 
-    virtual ir::op_type eval_runtime_helper(
+    virtual ir::Operand* eval_runtime_helper(
         compiler::ir::IRContext* const ir_context,
-        std::vector<compiler::ir::IR>& ir_list) const
-    {
-        return compiler::ir::op_type::NOP;
-    }
+        std::vector<compiler::ir::IR>& ir_list) const;
 
 public:
     typedef enum expr_type {
@@ -76,36 +67,29 @@ public:
      * 
      * @param ir_context   The IR context.
      * @param ir_list 
-     * @return BranchIR 
+     * @return compiler::ir::BranchIR 
      */
-    virtual BranchIR eval_cond(
+    virtual compiler::ir::BranchIR eval_cond(
         compiler::ir::IRContext* const ir_context,
-        std::vector<compiler::ir::IR>& ir_list) const
-    {
-        return { compiler::ir::op_type::NOP, compiler::ir::op_type::NOP };
-    }
+        std::vector<compiler::ir::IR>& ir_list) const;
 
     /**
      * @brief This function is called when optimization level is set. We calculate the expression at runtime.
      * 
      * @param ir_context 
-     * @return std::string The return value.
+     * @return compiler::ir::Operand* The return value.
      * @note Since there could be different types of values, we need to return a string to store it.
      */
-    virtual std::string eval_runtime(compiler::ir::IRContext* const ir_context) const
-    {
-        //TODO: implement this in each inherited class.
-        return "";
-    }
+    virtual compiler::ir::Operand* eval_runtime(compiler::ir::IRContext* const ir_context) const;
 
     /**
-     * @brief Emit (possibly) IR.
+     * @brief Emit an operand.
      * 
      * @param ir_context 
      * @param ir_list 
-     * @return ir::op_type 
+     * @return compiler::ir::Operand* 
      */
-    virtual ir::op_type eval_runtime(
+    virtual compiler::ir::Operand* eval_runtime(
         compiler::ir::IRContext* const ir_context,
         std::vector<compiler::ir::IR>& ir_list) const;
 
@@ -166,7 +150,9 @@ protected:
 
     Item_expr* const rhs;
 
-    virtual ir::op_type eval_runtime_helper(
+    virtual compiler::ir::Operand* eval_runtime_helper(compiler::ir::IRContext* const ir_context) const override;
+
+    virtual compiler::ir::Operand* eval_runtime_helper(
         compiler::ir::IRContext* const ir_context,
         std::vector<compiler::ir::IR>& ir_list) const override;
 

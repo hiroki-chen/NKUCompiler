@@ -154,7 +154,23 @@ bool compiler::is_dir(const std::string& file_name)
         if (S_ISDIR(status.st_mode)) {
             return true;
         }
+    } else {
+        throw std::invalid_argument("Path does not exist!");
     }
     
     return false;
+}
+
+compiler::ir::var_type compiler::to_ir_type(const basic_type& b_type)
+{
+    switch (b_type) {
+    case basic_type::CHAR_TYPE:
+        return ir::var_type::i8;
+    case basic_type::INT_TYPE:
+        return ir::var_type::i32;
+    case basic_type::REAL_TYPE:
+        return ir::var_type::DB;
+    default:
+        throw compiler::unsupported_operation("Cannot convert this type to IR!");
+    }
 }

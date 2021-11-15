@@ -25,6 +25,12 @@
 namespace compiler {
 
 typedef class Item_stmt : public Item_expr {
+protected:
+    virtual ir::Operand* eval_runtime_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list)
+        const override;
+
 public:
     typedef enum stmt_type {
         ASSIGN_STMT,
@@ -127,6 +133,32 @@ protected:
     Item_stmt* const statement; // while body
 
     const bool is_do_while;
+
+    /**
+     * @brief Generate the IR for while block.
+     * @note The structure of the while block (also the same for 'for' statement.) is given as follows:
+     * .L.scope_WHILE
+     * .L.COND
+     *      CMP
+     *      JNE DO
+     *      JEQ END
+     * .L.DO
+     *      DO_SOMETHING
+     *      BREAK
+     *      CONITNUE
+     * .L.CONITNUE
+     *      JMP COND
+     * .L.END
+     * 
+     * @note Insert phi_move before `jne END`、`break;`、`continue`.
+     * 
+     * @param context 
+     * @param ir_list 
+     */
+    virtual void generate_ir_helper(
+        compiler::ir::IRContext* const context,
+        std::vector<compiler::ir::IR>& ir_list)
+        const override;
 
 public:
     Item_stmt_while() = delete;

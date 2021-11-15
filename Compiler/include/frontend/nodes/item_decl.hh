@@ -19,10 +19,10 @@
 
 #include <common/types.hh>
 #include <frontend/nodes/item.hh>
-#include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_func.hh>
-#include <frontend/nodes/item_struct.hh>
+#include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_stmt.hh>
+#include <frontend/nodes/item_struct.hh>
 
 #include <memory>
 #include <vector>
@@ -36,6 +36,12 @@ class Item_struct_body;
 typedef class Item_decl : public Item {
 protected:
     const bool is_decl; // This differentiates between DEFINITION AND DECLARATION.
+
+    virtual void generate_ir_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list,
+        const basic_type& b_type) const { throw; }
+
 public:
     typedef enum decl_type {
         VARIABLE,
@@ -54,6 +60,19 @@ public:
 
     virtual Item_decl::decl_type get_decl_type(void) const = 0;
 
+    /**
+     * @brief For declaration, basic_type must be given in order to determine which type it is.
+     * @note This function can ONLY be called by compiler::Item_stmt_decl.
+     * 
+     * @param ir_context 
+     * @param ir_list 
+     * @param b_type 
+     */
+    virtual void generate_ir(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list,
+        const basic_type& b_type) const;
+
     virtual ~Item_decl() override = default;
 } Item_decl;
 
@@ -63,12 +82,22 @@ protected:
 
     const basic_type type;
 
+    /**
+     * @brief Note that this function will invoke compiler::Item_decl::generate_ir with compiler::basic_type 
+     *        specified.
+     * 
+     * @param ir_context 
+     * @param ir_list 
+     */
+    virtual void generate_ir_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list)
+        const override;
+
 public:
     virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::DECL_STMT; }
 
     virtual void add_declaration(Item_decl* const declaration);
-
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::vector<Item_decl*> get_declarataions(void) const { return declarations; }
 
@@ -87,12 +116,15 @@ typedef class Item_decl_var : public Item_decl {
 protected:
     Item_ident* const identifier;
 
+    virtual void generate_ir_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list,
+        const basic_type& b_type) const override;
+
 public:
     Item_decl_var() = delete;
 
     Item_decl_var(const uint32_t& lineno, Item_ident* const identifier, const bool& is_decl = true);
-
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -151,6 +183,12 @@ protected:
     Item_expr* const expression; // Init value.
 
     const bool is_const;
+
+    virtual void generate_ir_helper(
+        ir::IRContext* const ir_context,
+        std::vector<ir::IR>& ir_list,
+        const basic_type& b_type)
+        const override;
 
 public:
     virtual bool get_is_const(void) const { return is_const; }

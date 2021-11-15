@@ -61,6 +61,21 @@ typedef enum decl_type {
     CONST_DECL,
 } decl_type;
 
+namespace ir {
+    /**
+     * @brief Defines different variable types.
+     * 
+     * i32 => 32-bit variables. int, unsigned int.
+     */
+    typedef enum var_type {
+        DB,
+        i32,
+        i8,
+        // A little bit of complex...
+        NONE,
+    } var_type;
+}
+
 typedef enum symbol_type {
     VAR_TYPE,
     FUNC_TYPE,

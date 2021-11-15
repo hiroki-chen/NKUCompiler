@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <runtime/runtime.hh>
 
 using compiler::Command_parser;
@@ -24,11 +25,16 @@ Compiler_runtime* compiler_runtime;
 int main(int argc, const char** argv)
 {
     // First parse the command line
-    Command_parser* const parser = new Command_parser(argc, argv);
-    parser->parse();
+    try {
+        Command_parser* const parser = new Command_parser(argc, argv);
+        parser->parse();
 
-    // Then send the parsed result to the compiler runtime.
-    compiler_runtime = new Compiler_runtime(parser->get_result());
-    compiler_runtime->run();
+        // Then send the parsed result to the compiler runtime.
+        compiler_runtime = new Compiler_runtime(parser->get_result());
+        compiler_runtime->run();
+    } catch (const std::exception& e) {
+        std::cerr << termcolor::bold << termcolor::red << e.what() << termcolor::reset << std::endl;
+    }
+
     return 0;
 }

@@ -17,7 +17,23 @@
 #include <frontend/nodes/item.hh>
 #include <ir/ir.hh>
 
+#include <sstream>
 #include <iomanip>
+
+compiler::ir::Operand::Operand()
+    : type(compiler::ir::var_type::NONE)
+    , identifier("")
+    , value("")
+    , is_var(false)
+    , is_ptr(false)
+{
+}
+
+compiler::ir::Operand_ptr::Operand_ptr()
+    : Operand()
+    , shape(0)
+{
+}
 
 compiler::ir::Operand::Operand(
     const var_type& type,
@@ -158,4 +174,33 @@ bool compiler::ir::IR::emit_helper(
 {
     // This callback function is what we created in function walk_ir and the latter one is created in iterate_operand.
     return (chained && callback(dst)) || callback(operand_a) || callback(operand_b) || callback(operand_c);
+}
+
+bool compiler::ir::get_type_priority(const var_type& lhs, const var_type& rhs)
+{
+    return lhs <= rhs;
+}
+
+bool compiler::ir::check_valid_binary(compiler::ir::Operand* const lhs, compiler::ir::Operand* const rhs)
+{
+    if (lhs->get_type() == compiler::ir::var_type::NONE || lhs->get_type() == compiler::ir::var_type::NONE) {
+        return false;
+    } else if ((lhs->get_is_ptr() & rhs->get_is_var()) == 0) {
+        return false;
+    }
+    return true;
+}
+
+double compiler::ir::convert_from_string(const std::string& num)
+{
+    const uint32_t res = std::stoul(num);
+    return *reinterpret_cast<const double*>(&res);
+}
+
+std::string compiler::ir::convert_from_double(const double& num)
+{
+    uint32_t res = *reinterpret_cast<const uint32_t*>(&num);
+    std::ostringstream oss;
+    oss << std::ios::hex << res;
+    return oss.str();
 }
