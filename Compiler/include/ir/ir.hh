@@ -17,6 +17,8 @@
 #ifndef IR_HH
 #define IR_HH
 
+#include <common/types.hh>
+
 #include <functional>
 #include <iostream>
 #include <string>
@@ -35,7 +37,7 @@ namespace compiler::ir {
  * @brief Look-up table for enum type compiler::ir::op_type.
  * 
  */
-static const char* op_name[42] {
+static const char* op_name[45] {
     "NOP",
     // Basic algorithmic operations
     "IADD",
@@ -91,6 +93,8 @@ static const char* op_name[42] {
 
     // Delimiters.
     "BEGIN_DATA",
+    "WORD",
+    "SPACE",
     "END_DATA",
     "BEGIN_FUNC",
     "END_FUNC",
@@ -99,6 +103,9 @@ static const char* op_name[42] {
 
     // Jump labels.
     "LBL",
+
+    // PHI_MOVE
+    "PHI_MOVE",
 };
 /**
  * @brief Defines different operations.
@@ -160,6 +167,8 @@ typedef enum op_type {
 
     // Delimiters.
     BEGIN_DATA,
+    WORD,
+    SPACE,
     END_DATA,
     BEGIN_FUNC,
     END_FUNC,
@@ -169,19 +178,6 @@ typedef enum op_type {
     // Jump labels.
     LBL,
 } op_type;
-
-/**
- * @brief Defines different variable types.
- * 
- * i32 => 32-bit variables. int, unsigned int.
- */
-typedef enum var_type {
-    i32,
-    i8,
-    // A little bit of complex...
-    DB,
-    FL,
-} var_type;
 
 /**
  * @brief Base class for operand in the IR.
@@ -201,7 +197,11 @@ protected:
     const std::string value;
 
 public:
-    Operand() = delete;
+    /**
+     * @brief Construct a dummy Operand object.
+     * 
+     */
+    Operand();
 
     Operand(
         const var_type& type,
@@ -233,7 +233,7 @@ protected:
     const uint32_t shape;
 
 public:
-    Operand_ptr() = delete;
+    Operand_ptr();
 
     Operand_ptr(
         const var_type& type,
@@ -350,8 +350,45 @@ public:
     void emit_ir(std::ostream& out = std::cout, const bool& verbose = false);
 } IR;
 
-} // namespace compiler::ir
-
 using BranchIR = std::pair<compiler::ir::op_type, compiler::ir::op_type>;
 
+bool get_type_priority(const var_type& lhs, const var_type& rhs);
+
+/**
+ * @brief Checks if the binary expression is valid.
+ *          E.g. 1 + '3',  0.4 * 5 is valid.
+ *               1 + "sdadas" is not valid.
+ * 
+ * @param lhs 
+ * @param rhs 
+ * @return true 
+ * @return false 
+ */
+bool check_valid_binary(Operand* const lhs, Operand* const rhs);
+
+/**
+ * @brief Convert a heximal string to double.
+ * 
+ * @param num 
+ * @return double 
+ */
+double convert_from_string(const std::string& num);
+
+/**
+ * @brief Convert a double to hexical.
+ * 
+ * @param num 
+ * @return std::string 
+ */
+std::string convert_from_double(const double& num);
+
+/**
+ * @brief Convert a variable type to its corresponding string.
+ * 
+ * @param type 
+ * @return std::string 
+ */
+std::string var_type_to_string(const var_type& type);
+
+} // namespace compiler::ir
 #endif

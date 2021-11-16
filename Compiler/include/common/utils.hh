@@ -52,6 +52,14 @@ bool is_dir(const std::string& file_path);
 void handle_lib_put(const std::string& func_name, const int& value);
 
 int handle_lib_get(const std::string& func_name);
+
+/**
+ * @brief Converts a basic_type to its corresponding IR type.
+ * 
+ * @param b_type 
+ * @return ir::var_type 
+ */
+ir::var_type to_ir_type(const basic_type& b_type);
 } // namespace compiler
 
 #endif

@@ -43,6 +43,12 @@ protected:
      * 
      */
     std::stack<std::string> loop_label;
+
+    /**
+     * @brief Stack that is used to store temporary variables for loop statement.
+     * 
+     */
+    std::stack<std::vector<std::string>> loop_variable;
 public:
     /**
      * @brief Construct a new IRContext object. It will also create a global context?
@@ -79,6 +85,27 @@ public:
      * @return false 
      */
     virtual bool is_global_context(void) const { return symbol_table.get_top_scope_uuid() == 0; }
+
+    /**
+     * @brief Push a loop label into the stack, and then create a new stack for loop variable.
+     * 
+     * @param label 
+     */
+    virtual void add_loop_label(const std::string& label) { loop_label.push(label); loop_variable.push({}); }
+
+    /**
+     * @brief Add a loop variable into the current vector.
+     * 
+     * @param var 
+     */
+    virtual void add_loop_var(const std::string& var) { loop_variable.top().emplace_back(var); }
+
+    /**
+     * @brief Get the top loop label object
+     * 
+     * @return std::string 
+     */
+    virtual std::string get_top_loop_label(void) const { return loop_label.top(); }
 
     /**
      * @brief Get the symbol table object. 

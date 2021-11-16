@@ -17,9 +17,20 @@
 #include <common/compile_excepts.hh>
 #include <frontend/nodes/item_stmt.hh>
 
+#include <cstring>
 #include <sstream>
 
-void compiler::Item_block::generate_ir(
+compiler::ir::Operand*
+compiler::Item_stmt::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list)
+    const
+{
+    generate_ir(ir_context, ir_list);
+    return new compiler::ir::Operand();
+}
+
+void compiler::Item_block::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const
@@ -37,7 +48,7 @@ void compiler::Item_block::generate_ir(
     }
 }
 
-void compiler::Item_stmt_void::generate_ir(
+void compiler::Item_stmt_void::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const
@@ -45,7 +56,7 @@ void compiler::Item_stmt_void::generate_ir(
     return;
 }
 
-void compiler::Item_stmt_eif::generate_ir(
+void compiler::Item_stmt_eif::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const
@@ -54,7 +65,7 @@ void compiler::Item_stmt_eif::generate_ir(
         ir_context->enter_scope();
         // Get the id of current scope.
         const uint32_t scope_uuid_cur = (uint32_t)(ir_context->get_symbol_table().get_top_scope_uuid());
-        const BranchIR branch_ir = condition->eval_cond(ir_context, ir_list);
+        const compiler::ir::BranchIR branch_ir = condition->eval_cond(ir_context, ir_list);
 
         // The if_branch is taken. Evaluated at runtime.
         if (branch_ir.first == compiler::ir::JMP) {
@@ -106,7 +117,7 @@ void compiler::Item_stmt_eif::generate_ir(
     }
 }
 
-void compiler::Item_stmt_assign::generate_ir(
+void compiler::Item_stmt_assign::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list)
     const
@@ -118,5 +129,37 @@ void compiler::Item_stmt_assign::generate_ir(
     if (Item_ident::ident_type::VARIABLE == type) {
 
     } else if (Item_ident::ident_type::ARRAY == type) {
+    }
+}
+
+void compiler::Item_stmt_while::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const
+{
+    try {
+        // Enter a scope.
+        ir_context->enter_scope();
+        // Create a loop label.
+        const uint32_t scope_id = ir_context->get_symbol_table().get_top_scope_uuid();
+        ir_context->add_loop_label(std::to_string(scope_id));
+
+        // Step 1: Copy the previous context.
+        const uint32_t size = sizeof(*ir_context);
+        unsigned char* backup = new unsigned char[size];
+        memcpy(backup, static_cast<void*>(ir_context), size);
+        compiler::ir::IRContext* const ir_context_conditional = reinterpret_cast<compiler::ir::IRContext*>(backup);
+
+        // Step 2: Create condition.
+        std::vector<compiler::ir::IR> ir_conditional;
+        ir_conditional.emplace_back(
+            compiler::ir::op_type::LBL,
+            ".L.LOOP_" + ir_context->get_top_loop_label() + "_BEGIN");
+        const compiler::ir::BranchIR branch_ir = condition->eval_cond(ir_context_conditional, ir_conditional);
+
+        //TODO: Step 3: DO Block...
+
+        ir_context->leave_scope();
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
     }
 }

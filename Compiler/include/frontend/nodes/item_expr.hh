@@ -27,6 +27,17 @@ namespace compiler {
  * 
  */
 typedef class Item_expr : public Item {
+protected:
+    virtual ir::BranchIR eval_cond_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const;
+
+    virtual ir::Operand* eval_runtime_helper(compiler::ir::IRContext* const ir_context) const;
+
+    virtual ir::Operand* eval_runtime_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const;
+
 public:
     typedef enum expr_type {
         STMT_TYPE,
@@ -56,41 +67,31 @@ public:
      * 
      * @param ir_context   The IR context.
      * @param ir_list 
-     * @return BranchIR 
+     * @return compiler::ir::BranchIR 
      */
-    virtual BranchIR eval_cond(
+    virtual compiler::ir::BranchIR eval_cond(
         compiler::ir::IRContext* const ir_context,
-        std::vector<compiler::ir::IR>& ir_list) const
-    {
-        return { compiler::ir::op_type::NOP, compiler::ir::op_type::NOP };
-    }
-    
+        std::vector<compiler::ir::IR>& ir_list) const;
+
     /**
      * @brief This function is called when optimization level is set. We calculate the expression at runtime.
      * 
      * @param ir_context 
-     * @return std::string The return value.
+     * @return compiler::ir::Operand* The return value.
      * @note Since there could be different types of values, we need to return a string to store it.
      */
-    virtual std::string eval_runtime(compiler::ir::IRContext* const ir_context) const 
-    {
-        //TODO: implement this in each inherited class.
-        return "";
-    }
+    virtual compiler::ir::Operand* eval_runtime(compiler::ir::IRContext* const ir_context) const;
 
     /**
-     * @brief Emit (possibly) IR.
+     * @brief Emit an operand.
      * 
      * @param ir_context 
      * @param ir_list 
-     * @return ir::op_type 
+     * @return compiler::ir::Operand* 
      */
-    virtual ir::op_type eval_runtime(
+    virtual compiler::ir::Operand* eval_runtime(
         compiler::ir::IRContext* const ir_context,
-        std::vector<compiler::ir::IR>& ir_list) const
-    {
-        return compiler::ir::op_type::NOP;
-    }
+        std::vector<compiler::ir::IR>& ir_list) const;
 
     virtual ~Item_expr() override = default;
 } Item_expr;
@@ -110,7 +111,7 @@ public:
 
     Item_expr_cond(const uint32_t& lineno, Item_expr* const expr);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -121,6 +122,10 @@ typedef class Item_expr_comma final : public Item_expr {
 protected:
     std::vector<Item_expr*> expressions;
 
+    virtual compiler::ir::Operand* eval_runtime_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const override;
+
 public:
     Item_expr_comma() = delete;
 
@@ -128,7 +133,7 @@ public:
 
     virtual void add_expression(Item_expr* const expression) { expressions.emplace_back(expression); };
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::COMMA_TYPE; }
 
@@ -149,14 +154,16 @@ protected:
 
     Item_expr* const rhs;
 
+    virtual compiler::ir::Operand* eval_runtime_helper(compiler::ir::IRContext* const ir_context) const override;
+
+    virtual compiler::ir::Operand* eval_runtime_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const override;
+
 public:
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::BINARY_TYPE; }
 
     virtual binary_type get_binary_type(void) const { return type; }
-
-    virtual ir::op_type eval_runtime(
-        compiler::ir::IRContext* const ir_context,
-        std::vector<compiler::ir::IR>& ir_list) const override;
 
     Item_expr_binary() = delete;
 
@@ -178,7 +185,7 @@ public:
 
     virtual unary_type get_unary_type(void) const { return type; }
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_expr_unary() = delete;
 

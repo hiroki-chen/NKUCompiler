@@ -1,6 +1,6 @@
-#line 2 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
+#line 1 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
 
-#line 4 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
+#line 3 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -47,6 +47,7 @@ typedef int16_t flex_int16_t;
 typedef uint16_t flex_uint16_t;
 typedef int32_t flex_int32_t;
 typedef uint32_t flex_uint32_t;
+typedef uint64_t flex_uint64_t;
 #else
 typedef signed char flex_int8_t;
 typedef short int flex_int16_t;
@@ -155,7 +156,7 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 typedef size_t yy_size_t;
 #endif
 
-extern int yyleng;
+extern yy_size_t yyleng;
 
 extern FILE *yyin, *yyout;
 
@@ -172,7 +173,7 @@ extern FILE *yyin, *yyout;
      */
     #define  YY_LESS_LINENO(n) \
             do { \
-                int yyl;\
+                yy_size_t yyl;\
                 for ( yyl = n; yyl < yyleng; ++yyl )\
                     if ( yytext[yyl] == '\n' )\
                         --yylineno;\
@@ -217,7 +218,7 @@ struct yy_buffer_state
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	int yy_n_chars;
+	yy_size_t yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -286,8 +287,8 @@ static YY_BUFFER_STATE * yy_buffer_stack = NULL; /**< Stack as an array. */
 
 /* yy_hold_char holds the character lost when yytext is formed. */
 static char yy_hold_char;
-static int yy_n_chars;		/* number of characters read into yy_ch_buf */
-int yyleng;
+static yy_size_t yy_n_chars;		/* number of characters read into yy_ch_buf */
+yy_size_t yyleng;
 
 /* Points to current character in buffer. */
 static char *yy_c_buf_p = NULL;
@@ -314,7 +315,7 @@ static void yy_init_buffer ( YY_BUFFER_STATE b, FILE *file  );
 
 YY_BUFFER_STATE yy_scan_buffer ( char *base, yy_size_t size  );
 YY_BUFFER_STATE yy_scan_string ( const char *yy_str  );
-YY_BUFFER_STATE yy_scan_bytes ( const char *bytes, int len  );
+YY_BUFFER_STATE yy_scan_bytes ( const char *bytes, yy_size_t len  );
 
 void *yyalloc ( yy_size_t  );
 void *yyrealloc ( void *, yy_size_t  );
@@ -370,7 +371,7 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
  */
 #define YY_DO_BEFORE_ACTION \
 	(yytext_ptr) = yy_bp; \
-	yyleng = (int) (yy_cp - yy_bp); \
+	yyleng = (yy_size_t) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
@@ -383,23 +384,23 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[134] =
+static const flex_int16_t yy_accept[140] =
     {   0,
         0,    0,   60,   58,   57,   57,   42,   58,   53,   43,
        58,   28,   29,   51,   49,   32,   50,   31,   52,   23,
        23,   30,   36,   39,   37,   54,   24,   25,   45,   54,
        54,   54,   54,   54,   54,   54,   54,   54,   54,   54,
-       26,   44,   27,   46,   57,   38,    0,   56,   40,    0,
-        0,   47,   48,   23,    2,    0,   23,   22,   23,    0,
-       35,   33,   34,   54,   54,   54,   54,   11,   54,   54,
-       54,   54,    9,   54,   54,   54,   54,   54,   54,   41,
-       55,   55,    0,    1,    1,   23,   21,   54,   54,   54,
-       54,   54,   54,   54,   18,    3,   54,   54,   54,   54,
+       54,   26,   44,   27,   46,   57,   38,    0,   56,   40,
+        0,    0,   47,   48,   23,    2,    0,   23,   22,   23,
+        0,   35,   33,   34,   54,   54,   54,   54,   11,   54,
+       54,   54,   54,    9,   54,   54,   54,   54,   54,   54,
+       54,   41,   55,   55,    0,    1,    1,   23,   21,   54,
+       54,   54,   54,   54,   54,   54,   18,    3,   54,   54,
 
-       54,   54,    6,   54,   54,   54,   10,   54,   54,   54,
-       54,   54,   13,    7,   54,   17,   19,   54,   54,   14,
-        5,   54,   54,   54,   12,   54,    4,   15,    8,   20,
-       54,   16,    0
+       54,   54,   54,   54,   54,    6,   54,   54,   54,   10,
+       54,   54,   54,   54,   54,   13,    7,   54,   17,   19,
+       54,   54,   14,    5,   54,   54,   54,   12,   54,    4,
+       54,   15,   20,   54,   54,   16,   54,    8,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -413,11 +414,11 @@ static const YY_CHAR yy_ec[256] =
        23,   24,    1,    1,   25,   25,   25,   25,   25,   25,
        26,   26,   26,   26,   26,   26,   26,   26,   26,   26,
        26,   26,   26,   26,   26,   26,   26,   27,   26,   26,
-       28,   29,   30,   31,   26,    1,   32,   33,   34,   35,
+       28,   29,   30,   31,   32,    1,   33,   34,   35,   36,
 
-       36,   37,   38,   39,   40,   26,   41,   42,   26,   43,
-       44,   26,   26,   45,   46,   47,   48,   49,   50,   51,
-       26,   26,   52,   53,   54,   55,    1,    1,    1,    1,
+       37,   38,   39,   40,   41,   26,   42,   43,   44,   45,
+       46,   26,   26,   47,   48,   49,   50,   51,   52,   53,
+       54,   26,   55,   56,   57,   58,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -434,114 +435,118 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[56] =
+static const YY_CHAR yy_meta[59] =
     {   0,
         1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    3,    3,    3,
         1,    1,    1,    1,    3,    4,    4,    1,    1,    1,
-        1,    3,    3,    3,    3,    3,    3,    4,    4,    4,
+        1,    4,    3,    3,    3,    3,    3,    3,    4,    4,
         4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-        4,    1,    1,    1,    1
+        4,    4,    4,    4,    1,    1,    1,    1
     } ;
 
-static const flex_int16_t yy_base[139] =
+static const flex_int16_t yy_base[145] =
     {   0,
-        0,    0,  190,  191,   54,   57,  166,  182,  191,  179,
-      157,  191,  191,  191,  172,  191,  169,   44,   53,   53,
-       58,  191,  160,  159,  158,    0,  191,  191,  191,  135,
-       40,  135,  136,   43,   45,  141,  129,  130,  130,  134,
-      191,  119,  191,  191,   64,  191,  165,  191,  191,  161,
-      160,  191,  191,   71,  191,   89,   76,   81,   87,    0,
-      191,  191,  191,    0,  132,  135,  123,  117,  118,  121,
-      118,  116,    0,  113,  112,  113,  109,  116,  115,  191,
-      191,  145,  105,  149,  191,   92,    0,  120,  106,   67,
-      117,  113,  102,  115,    0,    0,   98,   75,  109,  109,
+        0,    0,  198,  199,   57,   60,  174,  190,  199,  187,
+      165,  199,  199,  199,  180,  199,  177,   47,   56,   56,
+       61,  199,  168,  167,  166,    0,  199,  199,  199,  141,
+       38,  141,  143,   49,   48,  131,  147,  134,  135,  135,
+      140,  199,  123,  199,  199,   67,  199,  172,  199,  199,
+      168,  167,  199,  199,   69,  199,   87,   78,   83,   88,
+        0,  199,  199,  199,    0,  138,  141,  128,  122,  123,
+      127,  123,  121,    0,  118,  134,  116,  117,  113,  121,
+      120,  199,  199,  151,  107,  155,  199,   94,    0,  125,
+      110,   67,  122,  118,  106,  120,    0,    0,  104,  101,
 
-      101,  101,    0,   94,  100,   97,    0,  102,   82,   77,
-       78,   86,    0,    0,   83,    0,    0,   75,   81,    0,
-        0,   73,   64,   51,    0,   38,    0,    0,    0,    0,
-       47,    0,  191,  123,  127,  129,  133,   78
+      100,  112,  112,  104,  104,    0,   96,  103,  100,    0,
+      105,   92,   91,   92,  103,    0,    0,  100,    0,    0,
+       91,   98,    0,    0,   87,   88,   83,    0,   81,    0,
+       81,    0,    0,   68,   55,    0,   55,    0,  199,  116,
+      120,  122,  126,   82
     } ;
 
-static const flex_int16_t yy_def[139] =
+static const flex_int16_t yy_def[145] =
     {   0,
-      133,    1,  133,  133,  133,  133,  133,  134,  133,  133,
-      135,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  136,  133,  133,  133,  136,
-      136,  136,  136,  136,  136,  136,  136,  136,  136,  136,
-      133,  133,  133,  133,  133,  133,  134,  133,  133,  133,
-      135,  133,  133,  133,  133,  137,  133,  133,  133,  138,
-      133,  133,  133,  136,  136,  136,  136,  136,  136,  136,
-      136,  136,  136,  136,  136,  136,  136,  136,  136,  133,
-      133,  133,  137,  133,  133,  133,  138,  136,  136,  136,
-      136,  136,  136,  136,  136,  136,  136,  136,  136,  136,
+      139,    1,  139,  139,  139,  139,  139,  140,  139,  139,
+      141,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  142,  139,  139,  139,  142,
+      142,  142,  142,  142,  142,  142,  142,  142,  142,  142,
+      142,  139,  139,  139,  139,  139,  139,  140,  139,  139,
+      139,  141,  139,  139,  139,  139,  143,  139,  139,  139,
+      144,  139,  139,  139,  142,  142,  142,  142,  142,  142,
+      142,  142,  142,  142,  142,  142,  142,  142,  142,  142,
+      142,  139,  139,  139,  143,  139,  139,  139,  144,  142,
+      142,  142,  142,  142,  142,  142,  142,  142,  142,  142,
 
-      136,  136,  136,  136,  136,  136,  136,  136,  136,  136,
-      136,  136,  136,  136,  136,  136,  136,  136,  136,  136,
-      136,  136,  136,  136,  136,  136,  136,  136,  136,  136,
-      136,  136,    0,  133,  133,  133,  133,  133
+      142,  142,  142,  142,  142,  142,  142,  142,  142,  142,
+      142,  142,  142,  142,  142,  142,  142,  142,  142,  142,
+      142,  142,  142,  142,  142,  142,  142,  142,  142,  142,
+      142,  142,  142,  142,  142,  142,  142,  142,    0,  139,
+      139,  139,  139,  139
     } ;
 
-static const flex_int16_t yy_nxt[247] =
+static const flex_int16_t yy_nxt[258] =
     {   0,
         4,    5,    6,    5,    7,    8,    9,   10,   11,   12,
        13,   14,   15,   16,   17,   18,   19,   20,   21,   21,
        22,   23,   24,   25,   26,   26,   26,   27,    4,   28,
-       29,   26,   30,   31,   32,   33,   34,   26,   26,   35,
-       26,   26,   26,   26,   36,   37,   38,   26,   39,   40,
-       26,   41,   42,   43,   44,   45,   45,   45,   45,   45,
-       45,   54,   54,   54,   55,   45,   45,   45,   57,   56,
-       58,   58,   59,   57,   70,   59,   59,   59,   66,   60,
-       87,   73,  132,   67,   71,  131,   72,   74,   54,   54,
-       54,   84,   85,   86,   86,   86,   57,  130,   58,   58,
+       29,   26,   26,   30,   31,   32,   33,   34,   26,   26,
+       35,   26,   26,   36,   26,   26,   37,   38,   39,   26,
+       40,   41,   26,   26,   42,   43,   44,   45,   46,   46,
+       46,   46,   46,   46,   55,   55,   55,   56,   46,   46,
+       46,   58,   57,   59,   59,   60,   58,   67,   60,   60,
+       60,   71,   61,   68,   89,   74,   55,   55,   55,   86,
+       87,   72,   75,  138,   73,   88,   88,   88,   58,  137,
 
-       59,  129,   57,   60,   59,   59,   59,   84,   85,   86,
-       86,   86,  104,  105,  111,  128,  127,  126,  125,  124,
-      123,  122,  112,   47,   47,   47,   47,   50,  121,   50,
-       50,   64,   64,   83,   83,   83,   83,  120,  119,  118,
-      117,  116,  115,  114,  113,  110,  109,  108,  107,  106,
-      103,  102,   85,   81,  101,  100,   99,   98,   97,   96,
-       95,   94,   93,   92,   91,   90,   89,   88,   82,   81,
-       48,   80,   79,   78,   77,   76,   75,   69,   68,   65,
-       63,   62,   61,   53,   52,   51,   49,   48,   46,  133,
-        3,  133,  133,  133,  133,  133,  133,  133,  133,  133,
+       59,   59,   60,   58,  136,   60,   60,   60,   61,   86,
+       87,   88,   88,   88,  107,  108,   48,   48,   48,   48,
+       51,  135,   51,   51,   65,   65,   85,   85,   85,   85,
+      134,  133,  132,  131,  130,  129,  128,  127,  126,  125,
+      124,  123,  122,  121,  120,  119,  118,  117,  116,  115,
+      114,  113,  112,  111,  110,  109,  106,  105,   87,   83,
+      104,  103,  102,  101,  100,   99,   98,   97,   96,   95,
+       94,   93,   92,   91,   90,   84,   83,   49,   82,   81,
+       80,   79,   78,   77,   76,   70,   69,   66,   64,   63,
+       62,   54,   53,   52,   50,   49,   47,  139,    3,  139,
 
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139
     } ;
 
-static const flex_int16_t yy_chk[247] =
+static const flex_int16_t yy_chk[258] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    5,    5,    5,    6,    6,
-        6,   18,   18,   18,   19,   45,   45,   45,   20,   19,
-       20,   20,   20,   21,   34,   21,   21,   21,   31,   20,
-      138,   35,  131,   31,   34,  126,   34,   35,   54,   54,
-       54,   56,   56,   57,   57,   57,   58,  124,   58,   58,
+        1,    1,    1,    1,    1,    1,    1,    1,    5,    5,
+        5,    6,    6,    6,   18,   18,   18,   19,   46,   46,
+       46,   20,   19,   20,   20,   20,   21,   31,   21,   21,
+       21,   34,   20,   31,  144,   35,   55,   55,   55,   57,
+       57,   34,   35,  137,   34,   58,   58,   58,   59,  135,
 
-       58,  123,   59,   20,   59,   59,   59,   83,   83,   86,
-       86,   86,   90,   90,   98,  122,  119,  118,  115,  112,
-      111,  110,   98,  134,  134,  134,  134,  135,  109,  135,
-      135,  136,  136,  137,  137,  137,  137,  108,  106,  105,
-      104,  102,  101,  100,   99,   97,   94,   93,   92,   91,
-       89,   88,   84,   82,   79,   78,   77,   76,   75,   74,
-       72,   71,   70,   69,   68,   67,   66,   65,   51,   50,
-       47,   42,   40,   39,   38,   37,   36,   33,   32,   30,
-       25,   24,   23,   17,   15,   11,   10,    8,    7,    3,
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
+       59,   59,   59,   60,  134,   60,   60,   60,   20,   85,
+       85,   88,   88,   88,   92,   92,  140,  140,  140,  140,
+      141,  131,  141,  141,  142,  142,  143,  143,  143,  143,
+      129,  127,  126,  125,  122,  121,  118,  115,  114,  113,
+      112,  111,  109,  108,  107,  105,  104,  103,  102,  101,
+      100,   99,   96,   95,   94,   93,   91,   90,   86,   84,
+       81,   80,   79,   78,   77,   76,   75,   73,   72,   71,
+       70,   69,   68,   67,   66,   52,   51,   48,   43,   41,
+       40,   39,   38,   37,   36,   33,   32,   30,   25,   24,
+       23,   17,   15,   11,   10,    8,    7,    3,  139,  139,
 
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133,  133,  133,  133,  133,
-      133,  133,  133,  133,  133,  133
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139,  139,  139,  139,
+      139,  139,  139,  139,  139,  139,  139
     } ;
 
 /* Table of booleans, true if rule could match eol. */
@@ -566,8 +571,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
-#line 4 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 1 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 4 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
     /*************************************************************
     expr.l
     LEX FILE
@@ -601,8 +606,8 @@ int yycolumn = 1;
                        }                                        \
                        yylloc.last_line = yylineno;             \
                        yylloc.last_column = yycolumn - 1;
-#line 605 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
-#line 606 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
+#line 609 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
+#line 610 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
 
 #define INITIAL 0
 
@@ -641,7 +646,7 @@ FILE *yyget_out ( void );
 
 void yyset_out  ( FILE * _out_str  );
 
-			int yyget_leng ( void );
+			yy_size_t yyget_leng ( void );
 
 char *yyget_text ( void );
 
@@ -710,7 +715,7 @@ static int input ( void );
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
 		{ \
 		int c = '*'; \
-		int n; \
+		yy_size_t n; \
 		for ( n = 0; n < max_size && \
 			     (c = getc( yyin )) != EOF && c != '\n'; ++n ) \
 			buf[n] = (char) c; \
@@ -819,9 +824,9 @@ YY_DECL
 		}
 
 	{
-#line 50 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 50 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 
-#line 825 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
+#line 829 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -848,13 +853,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 134 )
+				if ( yy_current_state >= 140 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 191 );
+		while ( yy_base[yy_current_state] != 199 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -869,7 +874,7 @@ yy_find_action:
 
 		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
 			{
-			int yyl;
+			yy_size_t yyl;
 			for ( yyl = 0; yyl < yyleng; ++yyl )
 				if ( yytext[yyl] == '\n' )
 					
@@ -891,12 +896,12 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 51 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 51 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { ; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 52 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 52 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 {
     // Handles mutilline comment.
     char c;
@@ -916,284 +921,284 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 69 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 69 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return INT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 70 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 70 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return DOUBLE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 71 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 71 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return FLOAT; } 
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 72 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 72 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return CHAR; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 73 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 73 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return VOID; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 74 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 74 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return STRING; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 76 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 76 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return IF; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 77 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 77 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return ELSE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 78 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 78 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return DO; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 79 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 79 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return WHILE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 80 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 80 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return TRUE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 81 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 81 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return FALSE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 82 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 82 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return RETURN; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 83 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 83 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return CONTINUE; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 84 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 84 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return BREAK; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 85 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 85 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return FOR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 86 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 86 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return CONST; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 87 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 87 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return STRUCT_TOKEN; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 89 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 89 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 90 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 90 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 91 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 91 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 93 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 93 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return LSQUARE; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 94 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 94 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return RSQUARE; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 95 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 95 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return LBRACE; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 96 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 96 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return RBRACE; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 97 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 97 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return LPARENTHESIS; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 98 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 98 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return RPARENTHESIS; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 99 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 99 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return SEMICOLON; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 100 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 100 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return DOT; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 101 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 101 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return COMMA; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 103 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 103 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return EQ; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 104 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 104 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return GEQ; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 105 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 105 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return LEQ; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 106 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 106 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return L; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 107 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 107 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return G; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 108 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 108 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return NEQ; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 110 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 110 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return ASSIGN; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 112 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 112 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return LOGIC_AND; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 113 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 113 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return LOGIC_OR; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 114 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 114 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return LOGIC_NOT; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 116 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 116 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return BIT_AND; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 117 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 117 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return BIT_OR; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 118 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 118 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return BIT_XOR; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 119 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 119 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return BIT_NEG; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 121 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 121 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return INC; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 122 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 122 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return DEC; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 123 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 123 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return ADD; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 124 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 124 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return MINUS; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 125 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 125 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return MUL; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 126 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 126 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return DIV; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 127 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 127 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { return MOD; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 129 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 129 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { yylval.raw_string = new std::string(yytext, yyleng); return ID; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 130 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 130 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { yylval.raw_char = yytext[1]; return CHAR; }
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
 YY_RULE_SETUP
-#line 131 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 131 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { yylval.raw_string = new std::string(yytext, yyleng); return STRING; }
 	YY_BREAK
 case 57:
 /* rule 57 can match eol */
 YY_RULE_SETUP
-#line 132 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 132 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { ; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 134 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 134 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { 
     std::ostringstream oss;
     oss << "Error: Unknown character " << yytext;
@@ -1201,15 +1206,15 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 141 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 141 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 { yyterminate(); }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 143 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 143 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 ECHO;
 	YY_BREAK
-#line 1213 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
+#line 1217 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1394,7 +1399,7 @@ static int yy_get_next_buffer (void)
 
 	else
 		{
-			int num_to_read =
+			yy_size_t num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
@@ -1408,7 +1413,7 @@ static int yy_get_next_buffer (void)
 
 			if ( b->yy_is_our_buffer )
 				{
-				int new_size = b->yy_buf_size * 2;
+				yy_size_t new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1466,7 +1471,7 @@ static int yy_get_next_buffer (void)
 
 	if (((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
-		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
 		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc(
 			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, (yy_size_t) new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
@@ -1504,7 +1509,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 134 )
+			if ( yy_current_state >= 140 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1532,11 +1537,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 134 )
+		if ( yy_current_state >= 140 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 133);
+	yy_is_jam = (yy_current_state == 139);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1555,7 +1560,7 @@ static int yy_get_next_buffer (void)
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		int number_to_move = (yy_n_chars) + 2;
+		yy_size_t number_to_move = (yy_n_chars) + 2;
 		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
 		char *source =
@@ -1610,7 +1615,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			int offset = (int) ((yy_c_buf_p) - (yytext_ptr));
+			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1984,12 +1989,12 @@ YY_BUFFER_STATE yy_scan_string (const char * yystr )
  * 
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )
+YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, yy_size_t  _yybytes_len )
 {
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	int i;
+	yy_size_t i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = (yy_size_t) (_yybytes_len + 2);
@@ -2031,7 +2036,7 @@ static void yynoreturn yy_fatal_error (const char* msg )
 	do \
 		{ \
 		/* Undo effects of setting up yytext. */ \
-        int yyless_macro_arg = (n); \
+        yy_size_t yyless_macro_arg = (n); \
         YY_LESS_LINENO(yyless_macro_arg);\
 		yytext[yyleng] = (yy_hold_char); \
 		(yy_c_buf_p) = yytext + yyless_macro_arg; \
@@ -2071,7 +2076,7 @@ FILE *yyget_out  (void)
 /** Get the length of the current token.
  * 
  */
-int yyget_leng  (void)
+yy_size_t yyget_leng  (void)
 {
         return yyleng;
 }
@@ -2224,5 +2229,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 143 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.l"
+#line 143 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
 

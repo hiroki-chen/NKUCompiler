@@ -1,0 +1,10 @@
+digraph "compiler::fatal_error::what"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="compiler::fatal_error\l::what",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="compiler::Item_block\l::generate_ir",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcompiler_1_1_item__block.html#a5ce5388a3cd326a7e63ae309c10b694d",tooltip=" "];
+}

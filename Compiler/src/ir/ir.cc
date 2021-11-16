@@ -14,10 +14,27 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/compile_excepts.hh>
 #include <frontend/nodes/item.hh>
 #include <ir/ir.hh>
 
 #include <iomanip>
+#include <sstream>
+
+compiler::ir::Operand::Operand()
+    : type(compiler::ir::var_type::NONE)
+    , identifier("")
+    , value("")
+    , is_var(false)
+    , is_ptr(false)
+{
+}
+
+compiler::ir::Operand_ptr::Operand_ptr()
+    : Operand()
+    , shape(0)
+{
+}
 
 compiler::ir::Operand::Operand(
     const var_type& type,
@@ -126,11 +143,13 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose)
         }
 
         const bool is_var = operand->get_is_var();
-        output << (is_var == true ? operand->get_identifier() : operand->get_value())
+        output << var_type_to_string(operand->get_type())
+               << (is_var == true ? operand->get_identifier() : operand->get_value())
                << "\t" << label << std::endl;
     };
 
     walk_ir(lambda_walk_ir);
+    output << label << std::endl;
 }
 
 void compiler::ir::IR::walk_ir(std::function<void(Operand* const)>&& callback, const bool& chained)
@@ -158,4 +177,49 @@ bool compiler::ir::IR::emit_helper(
 {
     // This callback function is what we created in function walk_ir and the latter one is created in iterate_operand.
     return (chained && callback(dst)) || callback(operand_a) || callback(operand_b) || callback(operand_c);
+}
+
+bool compiler::ir::get_type_priority(const var_type& lhs, const var_type& rhs)
+{
+    return lhs <= rhs;
+}
+
+bool compiler::ir::check_valid_binary(compiler::ir::Operand* const lhs, compiler::ir::Operand* const rhs)
+{
+    if (lhs->get_type() == compiler::ir::var_type::NONE || lhs->get_type() == compiler::ir::var_type::NONE) {
+        return false;
+    } else if ((lhs->get_is_ptr() & rhs->get_is_var()) == 0) {
+        return false;
+    }
+    return true;
+}
+
+double compiler::ir::convert_from_string(const std::string& num)
+{
+    const uint32_t res = std::stoul(num);
+    return *reinterpret_cast<const double*>(&res);
+}
+
+std::string compiler::ir::convert_from_double(const double& num)
+{
+    uint32_t res = *reinterpret_cast<const uint32_t*>(&num);
+    std::ostringstream oss;
+    oss << std::ios::hex << res;
+    return oss.str();
+}
+
+std::string compiler::ir::var_type_to_string(const compiler::ir::var_type& type)
+{
+    switch (type) {
+    case var_type::DB:
+        return "DOUBLE";
+    case var_type::i32:
+        return "i32";
+    case var_type::i8:
+        return "i8";
+    case var_type::NONE:
+        return "";
+    default:
+        throw compiler::unimplemented_error("This type of variable is not yet supported!");
+    }
 }

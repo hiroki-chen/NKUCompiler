@@ -1,0 +1,13 @@
+digraph "compiler::Item_stmt_while"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="compiler::Item_stmt\l_while",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Class for while statement."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="compiler::Item_stmt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcompiler_1_1_item__stmt.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="compiler::Item_expr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcompiler_1_1_item__expr.html",tooltip="Class for general expressions."];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="compiler::Item",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcompiler_1_1_item.html",tooltip="The most basic type for each node in the AST."];
+}
