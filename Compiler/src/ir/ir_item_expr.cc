@@ -123,6 +123,8 @@ compiler::Item_expr_binary::eval_runtime_helper(compiler::ir::IRContext* const i
             expr_left->get_type(), expr_right->get_type()) ? expr_left->get_type() : expr_right->get_type();
         return new compiler::ir::Operand(type, "", compiler::ir::convert_from_double(res), false, false);
     }
+
+    // TODO: Implement other types. Maybe we can add a utility function?
     default:
         throw compiler::unsupported_operation("Unknown binary type!");
     }
@@ -142,5 +144,18 @@ compiler::Item_expr_binary::eval_runtime_helper(
             throw e;
         }
     } else {
+
     }
+}
+
+compiler::ir::Operand*
+compiler::Item_expr_comma::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const
+{
+    compiler::ir::Operand* ans = nullptr;
+    for (compiler::Item_expr* const expr : expressions) {
+        ans = expr->eval_runtime(ir_context, ir_list);
+    }
+    return ans;
 }

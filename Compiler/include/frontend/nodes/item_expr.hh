@@ -32,7 +32,7 @@ protected:
         compiler::ir::IRContext* const ir_context,
         std::vector<compiler::ir::IR>& ir_list) const;
 
-    virtual compiler::ir::Operand* eval_runtime_helper(compiler::ir::IRContext* const ir_context) const;
+    virtual ir::Operand* eval_runtime_helper(compiler::ir::IRContext* const ir_context) const;
 
     virtual ir::Operand* eval_runtime_helper(
         compiler::ir::IRContext* const ir_context,
@@ -111,7 +111,7 @@ public:
 
     Item_expr_cond(const uint32_t& lineno, Item_expr* const expr);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -122,6 +122,10 @@ typedef class Item_expr_comma final : public Item_expr {
 protected:
     std::vector<Item_expr*> expressions;
 
+    virtual compiler::ir::Operand* eval_runtime_helper(
+        compiler::ir::IRContext* const ir_context,
+        std::vector<compiler::ir::IR>& ir_list) const override;
+
 public:
     Item_expr_comma() = delete;
 
@@ -129,7 +133,7 @@ public:
 
     virtual void add_expression(Item_expr* const expression) { expressions.emplace_back(expression); };
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::COMMA_TYPE; }
 
@@ -181,7 +185,7 @@ public:
 
     virtual unary_type get_unary_type(void) const { return type; }
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_expr_unary() = delete;
 

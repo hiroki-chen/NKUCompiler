@@ -382,5 +382,13 @@ double convert_from_string(const std::string& num);
  */
 std::string convert_from_double(const double& num);
 
+/**
+ * @brief Convert a variable type to its corresponding string.
+ * 
+ * @param type 
+ * @return std::string 
+ */
+std::string var_type_to_string(const var_type& type);
+
 } // namespace compiler::ir
 #endif

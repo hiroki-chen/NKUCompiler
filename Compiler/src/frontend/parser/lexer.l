@@ -71,7 +71,7 @@ CHAR        '\\?.'
 "float"      { return FLOAT; } 
 "char"       { return CHAR; }
 "void"       { return VOID; }
-"string"     { return STRING; }
+"my_string"     { return STRING; }
 
 "if"         { return IF; }
 "else"       { return ELSE; }

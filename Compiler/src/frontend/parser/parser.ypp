@@ -217,6 +217,8 @@ VarDefArray: ArrayID ASSIGN ArrayInitVal    { $$ = new compiler::Item_decl_array
 
 ArrayID: ArrayID LSQUARE Exp RSQUARE        { $$ = $1; $$->add_shape($3); }
        | Ident LSQUARE Exp RSQUARE          { $$ = new compiler::Item_ident_array(yyget_lineno(), $1->get_name()); $$->add_shape($3); }
+       | Ident LSQUARE RSQUARE              { $$ = new compiler::Item_ident_array(yyget_lineno(), $1->get_name()); $$->add_shape(nullptr); }
+       | ArrayID LSQUARE RSQUARE            { $$ = $1; $$->add_shape(nullptr); }
        ;
 
 ArrayInitVal: LBRACE ArrayInitValHelper RBRACE             { $$ = $2; }
@@ -257,7 +259,13 @@ FuncParamArray: BType Ident LSQUARE RSQUARE                {
                                                             ident->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1));
                                                             $$ = new compiler::Item_func_def_arg(yyget_lineno(), $1, ident);
                                                         }
+              | BType Ident LSQUARE Exp RSQUARE                {
+                                                            compiler::Item_ident_array* ident = new compiler::Item_ident_array(yyget_lineno(), $2->get_name());
+                                                            ident->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1));
+                                                            $$ = new compiler::Item_func_def_arg(yyget_lineno(), $1, ident);
+                                                        }
               | FuncParamArray LSQUARE RSQUARE          { $$ = $1; static_cast<compiler::Item_ident_array*>($$->get_identifier())->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1)); }
+              | FuncParamArray LSQUARE Exp RSQUARE          { $$ = $1; static_cast<compiler::Item_ident_array*>($$->get_identifier())->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1)); }
               ;
 
 Ident: ID       { $$ = new compiler::Item_ident(yyget_lineno(), *$1); }

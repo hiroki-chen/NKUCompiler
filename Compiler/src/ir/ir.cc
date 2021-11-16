@@ -14,11 +14,12 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/compile_excepts.hh>
 #include <frontend/nodes/item.hh>
 #include <ir/ir.hh>
 
-#include <sstream>
 #include <iomanip>
+#include <sstream>
 
 compiler::ir::Operand::Operand()
     : type(compiler::ir::var_type::NONE)
@@ -142,11 +143,13 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose)
         }
 
         const bool is_var = operand->get_is_var();
-        output << (is_var == true ? operand->get_identifier() : operand->get_value())
+        output << var_type_to_string(operand->get_type())
+               << (is_var == true ? operand->get_identifier() : operand->get_value())
                << "\t" << label << std::endl;
     };
 
     walk_ir(lambda_walk_ir);
+    output << label << std::endl;
 }
 
 void compiler::ir::IR::walk_ir(std::function<void(Operand* const)>&& callback, const bool& chained)
@@ -203,4 +206,20 @@ std::string compiler::ir::convert_from_double(const double& num)
     std::ostringstream oss;
     oss << std::ios::hex << res;
     return oss.str();
+}
+
+std::string compiler::ir::var_type_to_string(const compiler::ir::var_type& type)
+{
+    switch (type) {
+    case var_type::DB:
+        return "DOUBLE";
+    case var_type::i32:
+        return "i32";
+    case var_type::i8:
+        return "i8";
+    case var_type::NONE:
+        return "";
+    default:
+        throw compiler::unimplemented_error("This type of variable is not yet supported!");
+    }
 }

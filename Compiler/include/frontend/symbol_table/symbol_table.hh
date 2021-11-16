@@ -22,8 +22,6 @@
 #include <list>
 #include <unordered_map>
 
-// TODO: Implement our symbol table according to LAB5.
-
 namespace compiler {
 
 using symbol_table_type = std::unordered_map<std::string, Symbol*>;

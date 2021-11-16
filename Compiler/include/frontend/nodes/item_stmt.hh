@@ -52,7 +52,7 @@ public:
 
     Item_stmt(const uint32_t& lineno);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::STMT_TYPE; }
 
@@ -71,7 +71,7 @@ protected:
 
     Item_expr* const expression;
 
-    virtual void generate_ir_helper(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override;
+    virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override;
 
 public:
     Item_stmt_assign() = delete;
@@ -100,7 +100,7 @@ protected:
 
     Item_stmt* const else_branch;
 
-    virtual void generate_ir_helper(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override;
+    virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override;
 
 public:
     Item_stmt_eif() = delete;
@@ -156,7 +156,7 @@ protected:
      * @param ir_list 
      */
     virtual void generate_ir_helper(
-        compiler::ir::IRContext* const context,
+        compiler::ir::IRContext* const ir_context,
         std::vector<compiler::ir::IR>& ir_list)
         const override;
 
@@ -169,7 +169,7 @@ public:
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual ~Item_stmt_while() override = default;
 } Item_stmt_while;
@@ -188,7 +188,7 @@ public:
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual ~Item_stmt_break() override = default;
 } Item_stmt_break;
@@ -227,7 +227,7 @@ public:
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual ~Item_stmt_return() override = default;
 } Item_stmt_return;
@@ -239,7 +239,7 @@ public:
 typedef class Item_stmt_void final : public Item_stmt {
 protected:
     virtual void generate_ir_helper(
-        compiler::ir::IRContext* const context,
+        compiler::ir::IRContext* const ir_context,
         std::vector<compiler::ir::IR>& ir_list) const override;
 
 public:
@@ -263,7 +263,7 @@ public:
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_stmt_eval() = delete;
 
@@ -287,7 +287,7 @@ public:
 
     Item_stmt_postfix(const uint32_t& lineno, Item_ident* const identifier, const binary_type& type);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual ~Item_stmt_postfix() override = default;
 } Item_stmt_postfix;
@@ -300,7 +300,7 @@ typedef class Item_block final : public Item_stmt {
 protected:
     std::vector<Item_stmt*> statements; // Block body.
 
-    virtual void generate_ir_helper(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override;
+    virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override;
 
 public:
     Item_block() = delete;

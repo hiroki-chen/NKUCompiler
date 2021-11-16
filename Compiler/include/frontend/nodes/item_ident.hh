@@ -44,7 +44,7 @@ public:
 
     virtual std::string get_name(void) const { return name; } 
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_ident() = delete;
 
@@ -68,7 +68,7 @@ public:
 
     virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::ARRAY; }
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     Item_ident_array() = delete;
 
@@ -110,7 +110,7 @@ public:
 
     virtual void add_shape(void) { shape++; } ;
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::POINTER; }
 

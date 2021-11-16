@@ -162,7 +162,7 @@ public:
 
     Item_decl_pointer_init(const uint32_t& lineno, Item_ident_pointer* const identifier, Item_expr* const expression, const bool& is_const, const bool& is_decl = false);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual bool get_is_const(void) const { return is_const; }
 
@@ -217,7 +217,7 @@ public:
 
     Item_decl_array(const uint32_t& lineno, Item_ident_array* const identifier, const bool& is_decl = true);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual Item_ident* get_identifier(void) const { return identifier; }
 
@@ -246,7 +246,7 @@ public:
         const bool& is_const,
         const bool& is_decl = false);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 
@@ -264,7 +264,7 @@ public:
 
     Item_decl_struct(const uint32_t& lineno, Item_ident* const identifier, Item_struct_body* const struct_body, const bool& is_decl = true);
 
-    virtual void generate_ir(compiler::ir::IRContext* const context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
 
     virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
 

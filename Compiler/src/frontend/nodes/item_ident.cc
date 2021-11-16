@@ -47,7 +47,6 @@ void compiler::Item_ident_array::add_shape(Item_expr* const shape)
     array_shape.emplace_back(shape);
 }
 
-// TODO: We need to lookup the symbol table and get its value :)
 std::string
 compiler::Item_ident::print_result(const uint32_t& indent, const bool& leaf) const
 {
