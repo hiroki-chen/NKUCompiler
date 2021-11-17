@@ -17,81 +17,70 @@
 #include <common/termcolor.hh>
 #include <common/utils.hh>
 #include <frontend/nodes/item_ident.hh>
-
 #include <sstream>
 
-compiler::Item_ident::Item_ident(const uint32_t& lineno, const std::string& name)
-    : Item_expr(lineno)
-    , name(name)
-{
+compiler::Item_ident::Item_ident(const uint32_t& lineno,
+                                 const std::string& name)
+    : Item_expr(lineno), name(name) {}
+
+compiler::Item_ident_array::Item_ident_array(const uint32_t& lineno,
+                                             const std::string& name)
+    : Item_ident(lineno, name) {}
+
+compiler::Item_ident_func::Item_ident_func(const uint32_t& lineno,
+                                           const std::string& name)
+    : Item_ident(lineno, name) {}
+
+compiler::Item_ident_pointer::Item_ident_pointer(const uint32_t& lineno,
+                                                 const std::string& name)
+    : Item_ident(lineno, name), shape(1) {}
+
+void compiler::Item_ident_array::add_shape(Item_expr* const shape) {
+  array_shape.emplace_back(shape);
 }
 
-compiler::Item_ident_array::Item_ident_array(const uint32_t& lineno, const std::string& name)
-    : Item_ident(lineno, name)
-{
+std::string compiler::Item_ident::print_result(const uint32_t& indent,
+                                               const bool& leaf) const {
+  std::ostringstream oss;
+
+  print_indent(indent, leaf, oss);
+  oss << " Identifier with name " << termcolor::red << name << termcolor::reset
+      << std::endl;
+  return oss.str();
 }
 
-compiler::Item_ident_func::Item_ident_func(const uint32_t& lineno, const std::string& name)
-    : Item_ident(lineno, name)
-{
+std::string compiler::Item_ident_pointer::print_result(const uint32_t& indent,
+                                                       const bool& leaf) const {
+  std::ostringstream oss;
+
+  print_indent(indent, leaf, oss);
+  oss << " Identifier with name " << termcolor::red << name << termcolor::reset
+      << ", with shape " << termcolor::red << shape << termcolor::reset
+      << std::endl;
+  return oss.str();
 }
 
-compiler::Item_ident_pointer::Item_ident_pointer(const uint32_t& lineno, const std::string& name)
-    : Item_ident(lineno, name)
-    , shape(1)
-{
+std::string compiler::Item_ident_func::print_result(const uint32_t& indent,
+                                                    const bool& leaf) const {
+  std::ostringstream oss;
+
+  print_indent(indent, leaf, oss);
+  oss << " Identifier Function with name " << termcolor::red << name
+      << termcolor::reset << std::endl;
+  return oss.str();
 }
 
-void compiler::Item_ident_array::add_shape(Item_expr* const shape)
-{
-    array_shape.emplace_back(shape);
-}
+std::string compiler::Item_ident_array::print_result(const uint32_t& indent,
+                                                     const bool& leaf) const {
+  std::ostringstream oss;
 
-std::string
-compiler::Item_ident::print_result(const uint32_t& indent, const bool& leaf) const
-{
-    std::ostringstream oss;
-    
-    print_indent(indent, leaf, oss);
-    oss << " Identifier with name "
-        << termcolor::red << name << termcolor::reset << std::endl;
-    return oss.str();
-}
-
-std::string
-compiler::Item_ident_pointer::print_result(const uint32_t& indent, const bool& leaf) const
-{
-    std::ostringstream oss;
-    
-    print_indent(indent, leaf, oss);
-    oss << " Identifier with name "
-        << termcolor::red << name << termcolor::reset 
-        << ", with shape " << termcolor::red << shape << termcolor::reset
-        << std::endl;
-    return oss.str();
-}
-
-std::string
-compiler::Item_ident_func::print_result(const uint32_t& indent, const bool& leaf) const
-{
-    std::ostringstream oss;
-    
-    print_indent(indent, leaf, oss);
-    oss << " Identifier Function with name "
-        << termcolor::red << name << termcolor::reset << std::endl;
-    return oss.str();
-}
-
-std::string
-compiler::Item_ident_array::print_result(const uint32_t& indent, const bool& leaf) const
-{
-    std::ostringstream oss;
-    
-    print_indent(indent, leaf, oss);
-    oss << " Array Identifier with name "
-        << termcolor::red << name << termcolor::reset << ", and the shape is " << std::endl;
-    for (uint32_t i = 0; i < array_shape.size(); i++) {
-        oss << array_shape[i]->print_result(indent + 2, i == array_shape.size() - 1); // Each number is a dimension.
-    }
-    return oss.str();
+  print_indent(indent, leaf, oss);
+  oss << " Array Identifier with name " << termcolor::red << name
+      << termcolor::reset << ", and the shape is " << std::endl;
+  for (uint32_t i = 0; i < array_shape.size(); i++) {
+    oss << array_shape[i]->print_result(
+        indent + 2,
+        i == array_shape.size() - 1);  // Each number is a dimension.
+  }
+  return oss.str();
 }

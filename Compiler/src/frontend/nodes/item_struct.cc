@@ -16,22 +16,19 @@
  */
 #include <common/utils.hh>
 #include <frontend/nodes/item_struct.hh>
-
 #include <sstream>
 
 compiler::Item_struct_body::Item_struct_body(const uint32_t& lineno)
-    : Item_stmt(lineno)
-{
-}
+    : Item_stmt(lineno) {}
 
-std::string
-compiler::Item_struct_body::print_result(const uint32_t& indent, const bool& leaf) const
-{
-    std::ostringstream oss;
-    print_indent(indent, leaf, oss);
-    oss << " Struct Body" << std::endl;
-    for (uint32_t i = 0; i < struct_body.size(); i++) {
-        oss << struct_body[i]->print_result(indent + 2, i == struct_body.size() - 1 ? true : false);
-    }
-    return oss.str();
+std::string compiler::Item_struct_body::print_result(const uint32_t& indent,
+                                                     const bool& leaf) const {
+  std::ostringstream oss;
+  print_indent(indent, leaf, oss);
+  oss << " Struct Body" << std::endl;
+  for (uint32_t i = 0; i < struct_body.size(); i++) {
+    oss << struct_body[i]->print_result(
+        indent + 2, i == struct_body.size() - 1 ? true : false);
+  }
+  return oss.str();
 }

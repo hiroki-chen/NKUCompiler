@@ -18,29 +18,35 @@
 #define ITEM_STRUCT_HH
 
 #include <frontend/nodes/item_decl.hh>
-
 #include <vector>
 
 namespace compiler {
 typedef class Item_struct_body final : Item_stmt {
-protected:
-    std::vector<Item*> struct_body;
+ protected:
+  std::vector<Item*> struct_body;
 
-public:
-    Item_struct_body() = delete;
+ public:
+  Item_struct_body() = delete;
 
-    Item_struct_body(const uint32_t& lineno);
+  Item_struct_body(const uint32_t& lineno);
 
-    virtual Item_stmt::stmt_type get_stmt_type(void) const override { return Item_stmt::stmt_type::STRUCT_BODY; }
+  virtual Item_stmt::stmt_type get_stmt_type(void) const override {
+    return Item_stmt::stmt_type::STRUCT_BODY;
+  }
 
-    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+  virtual std::string print_result(const uint32_t& indent,
+                                   const bool& leaf) const override;
 
-    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+  virtual void generate_ir(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override {
+    return;
+  }
 
-    virtual void add_body(Item* const item) { struct_body.emplace_back(item); }
-    
-    virtual ~Item_struct_body() override = default;
+  virtual void add_body(Item* const item) { struct_body.emplace_back(item); }
+
+  virtual ~Item_struct_body() override = default;
 } Item_struct_body;
-} // namespace compiler;
+}  // namespace compiler
 
 #endif

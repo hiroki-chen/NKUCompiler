@@ -18,7 +18,6 @@
 #define CONTEXT_HH
 
 #include <frontend/symbol_table/symbol_table.hh>
-
 #include <stack>
 
 namespace compiler::ir {
@@ -28,93 +27,109 @@ namespace compiler::ir {
  *        1) Symbol tables;
  *        2) Loop labels;
  *        3) Jump labels;
- * 
+ *
  */
 typedef class IRContext {
-protected:
-    /**
-     * @brief The context will store a symbol table within itself.
-     * 
-     */
-    Symbol_table symbol_table;
+ protected:
+  /**
+   * @brief The context will store a symbol table within itself.
+   *
+   */
+  Symbol_table symbol_table;
 
-    /**
-     * @brief Stack that is used to store loop labels.
-     * 
-     */
-    std::stack<std::string> loop_label;
+  /**
+   * @brief Stack that is used to store loop labels.
+   *
+   */
+  std::stack<std::string> loop_label;
 
-    /**
-     * @brief Stack that is used to store temporary variables for loop statement.
-     * 
-     */
-    std::stack<std::vector<std::string>> loop_variable;
-public:
-    /**
-     * @brief Construct a new IRContext object. It will also create a global context?
-     * 
-     */
-    IRContext();
+  /**
+   * @brief Stack that is used to store temporary variables for loop statement.
+   *
+   */
+  std::stack<std::vector<std::string>> loop_variable;
 
-    /**
-     * @brief Called when a new scope is encountered and we should enter a new scope.
-     * 
-     */
-    virtual void enter_scope(void);
+ public:
+  /**
+   * @brief Construct a new IRContext object. It will also create a global
+   * context?
+   *
+   */
+  IRContext();
 
-    /**
-     * @brief If a scope is left, then we need to call the function and do some garbage cleaning work.
-     * 
-     */
-    virtual void leave_scope(void);
-    
-    /**
-     * @brief Checks if the current context is created by a loop statement. 
-     *        It is used when a continue, break or other loop-related statement is evaluated.
-     * 
-     * @return true 
-     * @return false 
-     */
-    virtual bool is_loop_context(void) const { return loop_label.size() != 0;}
+  /**
+   * @brief Called when a new scope is encountered and we should enter a new
+   * scope.
+   *
+   */
+  virtual void enter_scope(void);
 
-    /**
-     * @brief Check if the current context is a global context.
-     * @note uuid == 0 denotes that the context is a global context.
-     * 
-     * @return true 
-     * @return false 
-     */
-    virtual bool is_global_context(void) const { return symbol_table.get_top_scope_uuid() == 0; }
+  /**
+   * @brief If a scope is left, then we need to call the function and do some
+   * garbage cleaning work.
+   *
+   */
+  virtual void leave_scope(void);
 
-    /**
-     * @brief Push a loop label into the stack, and then create a new stack for loop variable.
-     * 
-     * @param label 
-     */
-    virtual void add_loop_label(const std::string& label) { loop_label.push(label); loop_variable.push({}); }
+  /**
+   * @brief Checks if the current context is created by a loop statement.
+   *        It is used when a continue, break or other loop-related statement is
+   * evaluated.
+   *
+   * @return true
+   * @return false
+   */
+  virtual bool is_loop_context(void) const { return loop_label.size() != 0; }
 
-    /**
-     * @brief Add a loop variable into the current vector.
-     * 
-     * @param var 
-     */
-    virtual void add_loop_var(const std::string& var) { loop_variable.top().emplace_back(var); }
+  /**
+   * @brief Check if the current context is a global context.
+   * @note uuid == 0 denotes that the context is a global context.
+   *
+   * @return true
+   * @return false
+   */
+  virtual bool is_global_context(void) const {
+    return symbol_table.get_top_scope_uuid() == 0;
+  }
 
-    /**
-     * @brief Get the top loop label object
-     * 
-     * @return std::string 
-     */
-    virtual std::string get_top_loop_label(void) const { return loop_label.top(); }
+  /**
+   * @brief Push a loop label into the stack, and then create a new stack for
+   * loop variable.
+   *
+   * @param label
+   */
+  virtual void add_loop_label(const std::string& label) {
+    loop_label.push(label);
+    loop_variable.push({});
+  }
 
-    /**
-     * @brief Get the symbol table object. 
-     *        The outside functions and variables may need symbol_table and invoke its interfaces.
-     * 
-     * @return Symbol_table 
-     */
-    Symbol_table get_symbol_table(void) const { return symbol_table; }
+  /**
+   * @brief Add a loop variable into the current vector.
+   *
+   * @param var
+   */
+  virtual void add_loop_var(const std::string& var) {
+    loop_variable.top().emplace_back(var);
+  }
+
+  /**
+   * @brief Get the top loop label object
+   *
+   * @return std::string
+   */
+  virtual std::string get_top_loop_label(void) const {
+    return loop_label.top();
+  }
+
+  /**
+   * @brief Get the symbol table object.
+   *        The outside functions and variables may need symbol_table and invoke
+   * its interfaces.
+   *
+   * @return Symbol_table
+   */
+  Symbol_table get_symbol_table(void) const { return symbol_table; }
 } IRContext;
-} // namespace compiler::ir.
+}  // namespace compiler::ir.
 
 #endif

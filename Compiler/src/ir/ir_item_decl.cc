@@ -21,83 +21,75 @@ extern compiler::NodeStack stack;
 
 void compiler::Item_decl_var::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list,
-    const basic_type& b_type) const
-{
-    const std::string name = identifier->get_name();
-    // Check current scope.
-    if (ir_context->is_global_context() == true) {
-        const std::string name_symbol = "@" + name;
-        ir_list.emplace_back(compiler::ir::op_type::BEGIN_DATA, name_symbol);
-        ir_list.emplace_back(
-            compiler::ir::op_type::WORD,
-            new compiler::ir::Operand(compiler::to_ir_type(b_type), name, "uninit", true, false));
-        ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
+    std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type) const {
+  const std::string name = identifier->get_name();
+  // Check current scope.
+  if (ir_context->is_global_context() == true) {
+    const std::string name_symbol = "@" + name;
+    ir_list.emplace_back(compiler::ir::op_type::BEGIN_DATA, name_symbol);
+    ir_list.emplace_back(
+        compiler::ir::op_type::WORD,
+        new compiler::ir::Operand(compiler::to_ir_type(b_type), name, "uninit",
+                                  true, false));
+    ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
 
-        // Create a new symbol for the symbol table.
-        compiler::Symbol* const symbol = new compiler::Symbol(
-            name_symbol, compiler::symbol_type::VAR_TYPE, false);
-        ir_context->get_symbol_table().add_symbol(name, symbol);
-    } else {
-        const uint32_t scope_id = ir_context->get_symbol_table().get_top_scope_uuid();
-        const std::string name_symbol = "%" + std::to_string(scope_id) + name;
-        // Create a temporary symbol for the symbol table.
-        compiler::Symbol* const symbol = new compiler::Symbol(
-            name, compiler::symbol_type::VAR_TYPE, false);
-        ir_context->get_symbol_table().add_symbol(name, symbol);
-    }
+    // Create a new symbol for the symbol table.
+    compiler::Symbol* const symbol = new compiler::Symbol(
+        name_symbol, compiler::symbol_type::VAR_TYPE, false);
+    ir_context->get_symbol_table().add_symbol(name, symbol);
+  } else {
+    const uint32_t scope_id =
+        ir_context->get_symbol_table().get_top_scope_uuid();
+    const std::string name_symbol = "%" + std::to_string(scope_id) + name;
+    // Create a temporary symbol for the symbol table.
+    compiler::Symbol* const symbol =
+        new compiler::Symbol(name, compiler::symbol_type::VAR_TYPE, false);
+    ir_context->get_symbol_table().add_symbol(name, symbol);
+  }
 }
 
 void compiler::Item_decl_var_init::generate_ir_helper(
-    ir::IRContext* const ir_context,
-    std::vector<ir::IR>& ir_list,
-    const basic_type& b_type)
-    const
-{
-    const std::string name = identifier->get_name();
-    // Check current scope.
-    if (ir_context->is_global_context()) {
-        const std::string name_symbol = "@" + name;
-        ir_list.emplace_back(compiler::ir::op_type::BEGIN_DATA, name_symbol);
+    ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list,
+    const basic_type& b_type) const {
+  const std::string name = identifier->get_name();
+  // Check current scope.
+  if (ir_context->is_global_context()) {
+    const std::string name_symbol = "@" + name;
+    ir_list.emplace_back(compiler::ir::op_type::BEGIN_DATA, name_symbol);
 
-        // TODO: Eval runtime...
-        
-        ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
+    // TODO: Eval runtime...
+
+    ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
+  } else {
+    const uint32_t scope_id =
+        ir_context->get_symbol_table().get_top_scope_uuid();
+    const std::string name_symbol = "%" + std::to_string(scope_id) + name;
+
+    if (is_const == true) {
+      // symbol = new
+      // compiler::Symbol_const(name,compiler::symbol_type::VAR_TYPE);
     } else {
-        const uint32_t scope_id = ir_context->get_symbol_table().get_top_scope_uuid();
-        const std::string name_symbol = "%" + std::to_string(scope_id) + name;
-        
-        
-        if (is_const == true) {
-            // symbol = new compiler::Symbol_const(name,compiler::symbol_type::VAR_TYPE);
-        } else {
-
-        }
-        
     }
+  }
 }
 
-void compiler::Item_decl::generate_ir(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list,
-    const basic_type& b_type) const
-{
-    stack.emplace_back(static_cast<Item*>(const_cast<Item_decl*>(this)));
-    try {
-        generate_ir_helper(ir_context, ir_list, b_type);
-        stack.pop_back();
-    } catch (const std::exception& e) {
-        stack.pop_back();
-        throw e;
-    }
+void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
+                                      std::vector<compiler::ir::IR>& ir_list,
+                                      const basic_type& b_type) const {
+  stack.emplace_back(static_cast<Item*>(const_cast<Item_decl*>(this)));
+  try {
+    generate_ir_helper(ir_context, ir_list, b_type);
+    stack.pop_back();
+  } catch (const std::exception& e) {
+    stack.pop_back();
+    throw e;
+  }
 }
 
 void compiler::Item_stmt_decl::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list)
-    const
-{
-    for (compiler::Item_decl* const declaration : declarations) {
-        declaration->generate_ir(ir_context, ir_list, type);
-    }
+    std::vector<compiler::ir::IR>& ir_list) const {
+  for (compiler::Item_decl* const declaration : declarations) {
+    declaration->generate_ir(ir_context, ir_list, type);
+  }
 }

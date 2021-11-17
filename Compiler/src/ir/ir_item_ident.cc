@@ -15,3 +15,16 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <frontend/nodes/item_ident.hh>
+
+compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context) const {
+  // TODO: Implement this.
+  return nullptr;
+}
+
+compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // TODO: Imeplement this.
+  return nullptr;
+}

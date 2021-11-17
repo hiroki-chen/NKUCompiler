@@ -19,35 +19,40 @@
 
 void compiler::Item_literal::generate_ir(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const
-{
-    // Literal does not have IR.
-    throw compiler::unsupported_operation("Cannot generate IR for literal type!");
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // Literal does not have IR.
+  throw compiler::unsupported_operation("Cannot generate IR for literal type!");
 }
 
-compiler::ir::Operand*
-compiler::Item_literal::eval_runtime_helper(compiler::ir::IRContext* const ir_context) const
-{
-    switch (get_literal_type()) {
+compiler::ir::Operand* compiler::Item_literal::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context) const {
+  switch (get_literal_type()) {
     case literal_type::INT_TYPE: {
-        const auto* const literal = static_cast<const compiler::Item_literal_int* const>(this);
-        return new compiler::ir::Operand(
-            ir::var_type::i32, "", std::to_string(literal->get_int()), false, false);
+      const auto* const literal =
+          static_cast<const compiler::Item_literal_int* const>(this);
+      return new compiler::ir::Operand(ir::var_type::i32, "",
+                                       std::to_string(literal->get_int()),
+                                       false, false);
     }
-    
+
     case literal_type::CHAR_TYPE: {
-        const auto* const literal = static_cast<const compiler::Item_literal_char* const>(this);
-        return new compiler::ir::Operand(
-            ir::var_type::i8, "", std::to_string(literal->get_char()), false, false);
+      const auto* const literal =
+          static_cast<const compiler::Item_literal_char* const>(this);
+      return new compiler::ir::Operand(ir::var_type::i8, "",
+                                       std::to_string(literal->get_char()),
+                                       false, false);
     }
 
     case literal_type::REAL_TYPE: {
-        const auto* const literal = static_cast<const compiler::Item_literal_real* const>(this);
-        return new compiler::ir::Operand(
-            ir::var_type::DB, "", ir::convert_from_double(literal->get_double()), false, false);
+      const auto* const literal =
+          static_cast<const compiler::Item_literal_real* const>(this);
+      return new compiler::ir::Operand(
+          ir::var_type::DB, "", ir::convert_from_double(literal->get_double()),
+          false, false);
     }
 
     default:
-        throw compiler::unimplemented_error("Cannot do this at this time! Maybe later:)");
-    }
+      throw compiler::unimplemented_error(
+          "Cannot do this at this time! Maybe later:)");
+  }
 }

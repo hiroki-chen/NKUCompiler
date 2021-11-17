@@ -14,26 +14,22 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <ir/context.hh>
 #include <common/compile_excepts.hh>
+#include <ir/context.hh>
 
-compiler::ir::IRContext::IRContext()
-{
-    symbol_table.enter_scope();
+compiler::ir::IRContext::IRContext() { symbol_table.enter_scope(); }
+
+void compiler::ir::IRContext::enter_scope(void) {
+  if (symbol_table.get_top_scope_uuid() == -1) {
+    throw fatal_error("Error: The global symbol table is not found!");
+  }
+  symbol_table.enter_scope();
 }
 
-void compiler::ir::IRContext::enter_scope(void)
-{
-    if (symbol_table.get_top_scope_uuid() == -1) {
-        throw fatal_error("Error: The global symbol table is not found!");
-    }
-    symbol_table.enter_scope();
-}
-
-void compiler::ir::IRContext::leave_scope(void)
-{
-    if (symbol_table.get_top_scope_uuid() == 0) {
-        throw fatal_error("Error: The compiler is trying to leave the global scope!");
-    }
-    symbol_table.leave_scope();
+void compiler::ir::IRContext::leave_scope(void) {
+  if (symbol_table.get_top_scope_uuid() == 0) {
+    throw fatal_error(
+        "Error: The compiler is trying to leave the global scope!");
+  }
+  symbol_table.leave_scope();
 }

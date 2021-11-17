@@ -22,19 +22,19 @@ using compiler::Compiler_runtime;
 
 Compiler_runtime* compiler_runtime;
 
-int main(int argc, const char** argv)
-{
-    // First parse the command line
-    try {
-        Command_parser* const parser = new Command_parser(argc, argv);
-        parser->parse();
+int main(int argc, const char** argv) {
+  // First parse the command line
+  try {
+    Command_parser* const parser = new Command_parser(argc, argv);
+    parser->parse();
 
-        // Then send the parsed result to the compiler runtime.
-        compiler_runtime = new Compiler_runtime(parser->get_result());
-        compiler_runtime->run();
-    } catch (const std::exception& e) {
-        std::cerr << termcolor::bold << termcolor::red << e.what() << termcolor::reset << std::endl;
-    }
+    // Then send the parsed result to the compiler runtime.
+    compiler_runtime = new Compiler_runtime(parser->get_result());
+    compiler_runtime->run();
+  } catch (const std::exception& e) {
+    std::cerr << termcolor::bold << termcolor::red << e.what()
+              << termcolor::reset << std::endl;
+  }
 
-    return 0;
+  return 0;
 }
