@@ -19,83 +19,83 @@
 
 #include <common/cxxopts.hh>
 #include <frontend/nodes/item.hh>
-
 #include <fstream>
 
 namespace compiler {
 /**
  * @brief Class for command line parser.
- * 
+ *
  */
 typedef class Command_parser final {
-private:
-    const int argc;
+ private:
+  const int argc;
 
-    const char** argv;
+  const char** argv;
 
-    cxxopts::Options* options;
+  cxxopts::Options* options;
 
-    cxxopts::ParseResult result;
+  cxxopts::ParseResult result;
 
-public:
-    Command_parser() = delete;
+ public:
+  Command_parser() = delete;
 
-    /**
-     * @brief Construct a new Command_parser object
-     * 
-     * @param argc 
-     * @param argv captured from 'main'
-     */
-    Command_parser(const int& argc, const char** argv);
+  /**
+   * @brief Construct a new Command_parser object
+   *
+   * @param argc
+   * @param argv captured from 'main'
+   */
+  Command_parser(const int& argc, const char** argv);
 
-    /**
-     * @brief Parse the argument passed by the command line.
-     * 
-     */
-    void parse(void);
+  /**
+   * @brief Parse the argument passed by the command line.
+   *
+   */
+  void parse(void);
 
-    cxxopts::ParseResult get_result(void) { return result; };
+  cxxopts::ParseResult get_result(void) { return result; };
 } Command_parser;
 
 /**
  * @brief Class for compiler runtime.
- * 
+ *
  */
 typedef class Compiler_runtime {
-private:
-    bool compile_on = false;
+ private:
+  bool compile_on = false;
 
-    bool debug_on = false;
+  bool debug_on = false;
 
-    bool print_ast = false;
+  bool print_ast = false;
 
-    bool generate_ir = false;
+  bool generate_ir = false;
 
-    Item_root* root = nullptr;
+  Item_root* root = nullptr;
 
-    uint32_t opt_level = 0;
+  uint32_t opt_level = 0;
 
-    std::vector<std::string> input_file;
+  std::vector<std::string> input_file;
 
-    std::ofstream output_file;
+  std::ofstream output_file;
 
-    std::string base_path;
+  std::string base_path;
 
-public:
-    void run(void);
+ public:
+  void run(void);
 
-    Compiler_runtime() = delete;
+  Compiler_runtime() = delete;
 
-    Compiler_runtime(const cxxopts::ParseResult& result);
+  Compiler_runtime(const cxxopts::ParseResult& result);
 
-    void set_root(Item_root* const root) { this->root = root; }
+  void set_root(Item_root* const root) { this->root = root; }
 
-    Item_root* get_root() { return root; }
+  Item_root* get_root() { return root; }
 
-    ~Compiler_runtime(); // Customized destructor. Should do some garbage cleanup.
+  ~Compiler_runtime();  // Customized destructor. Should do some garbage
+                        // cleanup.
 } Compiler_runtime;
 
 std::vector<std::string> process_input(const std::string& input);
-} // namespace compiler
+}  // namespace compiler
 
 #endif

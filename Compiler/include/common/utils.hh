@@ -18,7 +18,6 @@
 #define UTILS_HH
 
 #include <common/types.hh>
-
 #include <regex>
 #include <string>
 
@@ -31,20 +30,20 @@ std::string to_string(const compiler::binary_type& type);
 
 /**
  * @brief Print indentation for each node in the AST.
- * 
- * @param indent 
- * @param leaf 
- * @param os 
+ *
+ * @param indent
+ * @param leaf
+ * @param os
  */
 void print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os);
 
 /**
  * @brief Checks whether a given file path is a directory.
  * @note std::filesystem is a must.
- * 
- * @param file_path 
- * @return true 
- * @return false 
+ *
+ * @param file_path
+ * @return true
+ * @return false
  */
 bool is_dir(const std::string& file_path);
 
@@ -55,11 +54,11 @@ int handle_lib_get(const std::string& func_name);
 
 /**
  * @brief Converts a basic_type to its corresponding IR type.
- * 
- * @param b_type 
- * @return ir::var_type 
+ *
+ * @param b_type
+ * @return ir::var_type
  */
 ir::var_type to_ir_type(const basic_type& b_type);
-} // namespace compiler
+}  // namespace compiler
 
 #endif

@@ -14,163 +14,154 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <sys/stat.h>
+
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
 #include <common/utils.hh>
-#include <sys/stat.h>
-
 #include <iostream>
 #include <regex>
 
-std::string
-compiler::to_string(const compiler::basic_type& type)
-{
-    switch (type) {
+std::string compiler::to_string(const compiler::basic_type& type) {
+  switch (type) {
     case INT_TYPE:
-        return "int";
+      return "int";
 
     case REAL_TYPE:
-        return "double";
+      return "double";
 
     case VOID_TYPE:
-        return "void";
+      return "void";
 
     case CHAR_TYPE:
-        return "char";
+      return "char";
 
     case STR_TYPE:
-        return "string";
+      return "string";
 
     default:
-        throw compiler::type_error("Unrecognized basic type!");
-    }
+      throw compiler::type_error("Unrecognized basic type!");
+  }
 }
 
-std::string
-compiler::to_string(const compiler::unary_type& type)
-{
-    switch (type) {
+std::string compiler::to_string(const compiler::unary_type& type) {
+  switch (type) {
     case LNOT_TYPE:
-        return "LOGIC_NOT";
+      return "LOGIC_NOT";
 
     case BITNEG_TYPE:
-        return "BIT_NEGATIVE";
+      return "BIT_NEGATIVE";
 
     case UMINUS_TYPE:
-        return "UNARY MINUS";
+      return "UNARY MINUS";
 
     case UADD_TYPE:
-        return "UNARY ADD";
+      return "UNARY ADD";
 
     case UDEREFER_TYPE:
-        return "UNARY DEREFERENCE";
-    
+      return "UNARY DEREFERENCE";
+
     case UREF_TYPE:
-        return "UNARY REFERENCE";
+      return "UNARY REFERENCE";
 
     default:
-        throw compiler::type_error("Unrecognized unary type!");
-    }
+      throw compiler::type_error("Unrecognized unary type!");
+  }
 }
 
-std::string
-compiler::to_string(const compiler::binary_type& type)
-{
-    switch (type) {
+std::string compiler::to_string(const compiler::binary_type& type) {
+  switch (type) {
     case ADD_TYPE:
-        return "Add";
+      return "Add";
 
     case SUB_TYPE:
-        return "Sub";
+      return "Sub";
 
     case MUL_TYPE:
-        return "Mul";
+      return "Mul";
 
     case DIV_TYPE:
-        return "Div";
+      return "Div";
 
     case MOD_TYPE:
-        return "Mod";
+      return "Mod";
 
     case BITOR_TYPE:
-        return "Bitwise_or";
+      return "Bitwise_or";
 
     case BITAND_TYPE:
-        return "Bitwise_and";
+      return "Bitwise_and";
 
     case BITXOR_TYPE:
-        return "Bitwise_xor";
+      return "Bitwise_xor";
 
     case EQ_TYPE:
-        return "Conditional_equal";
+      return "Conditional_equal";
 
     case NEQ_TYPE:
-        return "Conditional_nonequal";
+      return "Conditional_nonequal";
 
     case G_TYPE:
-        return "Conditional_greater";
+      return "Conditional_greater";
 
     case L_TYPE:
-        return "Conditional_less";
+      return "Conditional_less";
 
     case GE_TYPE:
-        return "Conditional_greater_or_equal";
+      return "Conditional_greater_or_equal";
 
     case LE_TYPE:
-        return "Conditional_less_or_equal";
+      return "Conditional_less_or_equal";
 
     case LOR_TYPE:
-        return "Conditional_or";
+      return "Conditional_or";
 
     case LAND_TYPE:
-        return "Conditional_and";
+      return "Conditional_and";
 
     default:
-        throw compiler::type_error("Unrecognized binary type!");
-    }
+      throw compiler::type_error("Unrecognized binary type!");
+  }
 }
 
-void compiler::print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os)
-{
-    
-    // Print indentation.
-    for (uint32_t i = 0; i < indent; i += 2) {
-        os << termcolor::bright_green << "│  " << termcolor::reset;
-    }
+void compiler::print_indent(const uint32_t& indent, const bool& leaf,
+                            std::ostream& os) {
+  // Print indentation.
+  for (uint32_t i = 0; i < indent; i += 2) {
+    os << termcolor::bright_green << "│  " << termcolor::reset;
+  }
 
-    // Print node.
-    if (leaf) {
-        os << termcolor::bright_green << (std::string)"└──" << termcolor::reset;
-    } else {
-        os << termcolor::bright_green << (std::string)"├──" << termcolor::reset;
-    }
+  // Print node.
+  if (leaf) {
+    os << termcolor::bright_green << (std::string) "└──" << termcolor::reset;
+  } else {
+    os << termcolor::bright_green << (std::string) "├──" << termcolor::reset;
+  }
 }
 
-bool compiler::is_dir(const std::string& file_name)
-{
-    struct stat status;
+bool compiler::is_dir(const std::string& file_name) {
+  struct stat status;
 
-    if (stat(file_name.data(), &status) == 0) {
-        if (S_ISDIR(status.st_mode)) {
-            return true;
-        }
-    } else {
-        throw std::invalid_argument("Path does not exist!");
+  if (stat(file_name.data(), &status) == 0) {
+    if (S_ISDIR(status.st_mode)) {
+      return true;
     }
-    
-    return false;
+  } else {
+    throw std::invalid_argument("Path does not exist!");
+  }
+
+  return false;
 }
 
-compiler::ir::var_type compiler::to_ir_type(const basic_type& b_type)
-{
-    switch (b_type) {
+compiler::ir::var_type compiler::to_ir_type(const basic_type& b_type) {
+  switch (b_type) {
     case basic_type::CHAR_TYPE:
-        return ir::var_type::i8;
+      return ir::var_type::i8;
     case basic_type::INT_TYPE:
-        return ir::var_type::i32;
+      return ir::var_type::i32;
     case basic_type::REAL_TYPE:
-        return ir::var_type::DB;
+      return ir::var_type::DB;
     default:
-        throw compiler::unsupported_operation("Cannot convert this type to IR!");
-    }
+      throw compiler::unsupported_operation("Cannot convert this type to IR!");
+  }
 }

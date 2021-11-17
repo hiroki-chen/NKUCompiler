@@ -20,70 +20,70 @@
 namespace compiler {
 
 typedef enum binary_type {
-    ADD_TYPE,
-    SUB_TYPE,
-    MUL_TYPE,
-    DIV_TYPE,
-    MOD_TYPE,
-    BITOR_TYPE,
-    BITAND_TYPE,
-    BITXOR_TYPE,
-    EQ_TYPE,
-    NEQ_TYPE,
-    G_TYPE,
-    L_TYPE,
-    GE_TYPE,
-    LE_TYPE,
-    LOR_TYPE,
-    LAND_TYPE,
+  ADD_TYPE,
+  SUB_TYPE,
+  MUL_TYPE,
+  DIV_TYPE,
+  MOD_TYPE,
+  BITOR_TYPE,
+  BITAND_TYPE,
+  BITXOR_TYPE,
+  EQ_TYPE,
+  NEQ_TYPE,
+  G_TYPE,
+  L_TYPE,
+  GE_TYPE,
+  LE_TYPE,
+  LOR_TYPE,
+  LAND_TYPE,
 } binary_type;
 
 typedef enum unary_type {
-    LNOT_TYPE,
-    BITNEG_TYPE,
-    UMINUS_TYPE,
-    UADD_TYPE,
-    UDEREFER_TYPE,
-    UREF_TYPE,
+  LNOT_TYPE,
+  BITNEG_TYPE,
+  UMINUS_TYPE,
+  UADD_TYPE,
+  UDEREFER_TYPE,
+  UREF_TYPE,
 } unary_type;
 
 typedef enum basic_type {
-    VOID_TYPE,
-    INT_TYPE,
-    REAL_TYPE,
-    CHAR_TYPE,
-    STR_TYPE,
-    STRUCT
+  VOID_TYPE,
+  INT_TYPE,
+  REAL_TYPE,
+  CHAR_TYPE,
+  STR_TYPE,
+  STRUCT
 } basic_type;
 
 typedef enum decl_type {
-    VAR_DECL,
-    CONST_DECL,
+  VAR_DECL,
+  CONST_DECL,
 } decl_type;
 
 namespace ir {
-    /**
-     * @brief Defines different variable types.
-     * 
-     * i32 => 32-bit variables. int, unsigned int.
-     */
-    typedef enum var_type {
-        DB,
-        i32,
-        i8,
-        // A little bit of complex...
-        NONE,
-    } var_type;
-}
+/**
+ * @brief Defines different variable types.
+ *
+ * i32 => 32-bit variables. int, unsigned int.
+ */
+typedef enum var_type {
+  DB,
+  i32,
+  i8,
+  // A little bit of complex...
+  NONE,
+} var_type;
+}  // namespace ir
 
 typedef enum symbol_type {
-    VAR_TYPE,
-    FUNC_TYPE,
-    POINTER_TYPE,
-    ARRAY_TYPE,
-    STRUCT_TYPE,
-    UNDEFINED,
+  VAR_TYPE,
+  FUNC_TYPE,
+  POINTER_TYPE,
+  ARRAY_TYPE,
+  STRUCT_TYPE,
+  UNDEFINED,
 } symbol_type;
-} // namespace compiler
+}  // namespace compiler
 
 #endif

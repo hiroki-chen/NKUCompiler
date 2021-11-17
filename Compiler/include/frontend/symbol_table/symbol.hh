@@ -18,72 +18,73 @@
 #define SYMBOL_HH
 
 #include <common/types.hh>
-
 #include <string>
 #include <vector>
 
 namespace compiler {
 // To avoid circular includes error.
-// 1. Item_literal <- compiler::symbol_table <- compiler::ir::context <- Item_literal
-// 2. Another way is to define seperate virtual functions for each node type. But Item_literal is inherited from Item_expr.
+// 1. Item_literal <- compiler::symbol_table <- compiler::ir::context <-
+// Item_literal
+// 2. Another way is to define seperate virtual functions for each node type.
+// But Item_literal is inherited from Item_expr.
 class Item_literal;
 
 /**
  * @brief Class for symbols (basic type).
- * 
+ *
  */
 class Symbol_table;
 
 typedef class Symbol {
-protected:
-    std::vector<uint32_t> shape;
+ protected:
+  std::vector<uint32_t> shape;
 
-    const std::string name;
+  const std::string name;
 
-    const symbol_type type;
+  const symbol_type type;
 
-    bool is_pointer; // Array is pointer type.
+  bool is_pointer;  // Array is pointer type.
 
-    Item_literal* value;
+  Item_literal* value;
 
-public:
-    Symbol() = delete;
+ public:
+  Symbol() = delete;
 
-    Symbol(const std::string& name, const symbol_type& type, const bool& is_pointer = false);
+  Symbol(const std::string& name, const symbol_type& type,
+         const bool& is_pointer = false);
 
-    virtual void set_value(Item_literal* const literal) { this->value = literal; }
+  virtual void set_value(Item_literal* const literal) { this->value = literal; }
 
-    virtual void add_shape(const uint32_t& shape) { this->shape.emplace_back(shape); }
+  virtual void add_shape(const uint32_t& shape) {
+    this->shape.emplace_back(shape);
+  }
 
-    virtual bool is_const(void) const { return false; }
+  virtual bool is_const(void) const { return false; }
 
-    virtual std::string get_name(void) const { return name; }
+  virtual std::string get_name(void) const { return name; }
 
-    virtual symbol_type get_type(void) const { return type; }
+  virtual symbol_type get_type(void) const { return type; }
 
-    virtual bool get_is_pointer(void) const { return is_pointer; }
+  virtual bool get_is_pointer(void) const { return is_pointer; }
 
-    virtual ~Symbol() = default;
+  virtual ~Symbol() = default;
 } Symbol;
 
 typedef class Symbol_const : public Symbol {
-protected:
-    std::vector<Item_literal*> values;
+ protected:
+  std::vector<Item_literal*> values;
 
-    Item_literal* value;
+  Item_literal* value;
 
-public:
-    Symbol_const() = delete;
+ public:
+  Symbol_const() = delete;
 
-    Symbol_const(
-        const std::string& name,
-        const symbol_type& type,
-        Item_literal* const value,
-        const bool& is_pointer = false,
-        const std::vector<Item_literal*>& values = {});
+  Symbol_const(const std::string& name, const symbol_type& type,
+               Item_literal* const value, const bool& is_pointer = false,
+               const std::vector<Item_literal*>& values = {});
 
-    virtual bool is_const(void) const override { return true; }
+  virtual bool is_const(void) const override { return true; }
 } Symbol_const;
-} // namespace compiler
+}  // namespace compiler
 
 #endif

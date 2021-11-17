@@ -22,112 +22,97 @@
 
 namespace compiler {
 /**
- * @brief Maybe we could ignore the function yyerror and implement our exception handlers.
- * 
+ * @brief Maybe we could ignore the function yyerror and implement our exception
+ * handlers.
+ *
  */
 typedef class parse_error : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit parse_error(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit parse_error(const std::string& information)
+      : information(information) {}
 
-    const char* what(void) const noexcept override { return information.data(); }
+  const char* what(void) const noexcept override { return information.data(); }
 } parse_error;
 
 typedef class type_error : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit type_error(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit type_error(const std::string& information)
+      : information(information) {}
 
-    const char* what(void) const noexcept override { return information.data(); }
+  const char* what(void) const noexcept override { return information.data(); }
 } type_error;
 
 typedef class undeclared_symbol : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit undeclared_symbol(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit undeclared_symbol(const std::string& information)
+      : information(information) {}
 
-    const char* what(void) const noexcept override { return information.data(); }
+  const char* what(void) const noexcept override { return information.data(); }
 } undeclared_symbol;
 
 typedef class redefined_symbol : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit redefined_symbol(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit redefined_symbol(const std::string& information)
+      : information(information) {}
 
-    const char* what(void) const noexcept override { return information.data(); }
+  const char* what(void) const noexcept override { return information.data(); }
 } redefined_symbol;
 
 typedef class unknown_character : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit unknown_character(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit unknown_character(const std::string& information)
+      : information(information) {}
 
-    const char* what(void) const noexcept override { return information.data(); }
+  const char* what(void) const noexcept override { return information.data(); }
 } unknown_character;
 
 typedef class fatal_error : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit fatal_error(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit fatal_error(const std::string& information)
+      : information(information) {}
 
-    const char* what() const noexcept override { return information.data(); }
+  const char* what() const noexcept override { return information.data(); }
 } fatal_error;
 
 typedef class unimplemented_error : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit unimplemented_error(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit unimplemented_error(const std::string& information)
+      : information(information) {}
 
-    const char* what(void) const noexcept override { return information.data(); }
+  const char* what(void) const noexcept override { return information.data(); }
 } unimplemented_error;
 
 typedef class unsupported_operation : public std::exception {
-protected:
-    const std::string information;
+ protected:
+  const std::string information;
 
-public:
-    explicit unsupported_operation(const std::string& information)
-        : information(information)
-    {
-    }
+ public:
+  explicit unsupported_operation(const std::string& information)
+      : information(information) {}
 
-    const char* what(void) const noexcept override { return information.data(); }
+  const char* what(void) const noexcept override { return information.data(); }
 } unsupported_operation;
-} // namespace compiler
+}  // namespace compiler
 
 #endif

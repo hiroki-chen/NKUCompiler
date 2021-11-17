@@ -18,7 +18,6 @@
 #define ITEM_IDENT_HH
 
 #include <frontend/nodes/item_expr.hh>
-
 #include <string>
 #include <vector>
 
@@ -26,96 +25,124 @@ namespace compiler {
 
 /**
  * @brief Class for identifiers.
- * 
+ *
  */
 typedef class Item_ident : public Item_expr {
-protected:
-    const std::string name;
+ protected:
+  const std::string name;
 
-public:
-    typedef enum ident_type {
-        VARIABLE,
-        POINTER,
-        ARRAY,
-        FUNCTION
-    } ident_type;
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context) const override;
 
-    virtual Item_expr::expr_type get_expr_type(void) const override { return Item_expr::expr_type::IDENTIFIER_TYPE; }
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override;
 
-    virtual std::string get_name(void) const { return name; } 
+ public:
+  typedef enum ident_type { VARIABLE, POINTER, ARRAY, FUNCTION } ident_type;
 
-    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+  virtual Item_expr::expr_type get_expr_type(void) const override {
+    return Item_expr::expr_type::IDENTIFIER_TYPE;
+  }
 
-    Item_ident() = delete;
+  virtual std::string get_name(void) const { return name; }
 
-    Item_ident(const uint32_t& lineno, const std::string& name);
+  virtual void generate_ir(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override {
+    return;
+  }
 
-    virtual Item_ident::ident_type get_ident_type(void) const { return Item_ident::ident_type::VARIABLE; }
+  Item_ident() = delete;
 
-    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+  Item_ident(const uint32_t& lineno, const std::string& name);
+
+  virtual Item_ident::ident_type get_ident_type(void) const {
+    return Item_ident::ident_type::VARIABLE;
+  }
+
+  virtual std::string print_result(const uint32_t& indent,
+                                   const bool& leaf) const override;
 } Item_ident;
 
 /**
  * @brief Class for array identifiers.
- * 
+ *
  */
 typedef class Item_ident_array final : public Item_ident {
-protected:
-    std::vector<Item_expr*> array_shape;
+ protected:
+  std::vector<Item_expr*> array_shape;
 
-public:
-    virtual void add_shape(Item_expr* const array_shape);
+ public:
+  virtual void add_shape(Item_expr* const array_shape);
 
-    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::ARRAY; }
+  virtual Item_ident::ident_type get_ident_type(void) const override {
+    return Item_ident::ident_type::ARRAY;
+  }
 
-    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+  virtual void generate_ir(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override {
+    return;
+  }
 
-    Item_ident_array() = delete;
+  Item_ident_array() = delete;
 
-    Item_ident_array(const uint32_t& lineno, const std::string& name);
+  Item_ident_array(const uint32_t& lineno, const std::string& name);
 
-    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+  virtual std::string print_result(const uint32_t& indent,
+                                   const bool& leaf) const override;
 
-    virtual ~Item_ident_array() override = default;
+  virtual ~Item_ident_array() override = default;
 } Item_ident_array;
 
 typedef class Item_ident_func final : public Item_ident {
-public:
-    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::ARRAY; }
+ public:
+  virtual Item_ident::ident_type get_ident_type(void) const override {
+    return Item_ident::ident_type::ARRAY;
+  }
 
-    Item_ident_func() = delete;
+  Item_ident_func() = delete;
 
-    Item_ident_func(const uint32_t& lineno, const std::string& name);
+  Item_ident_func(const uint32_t& lineno, const std::string& name);
 
-    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+  virtual std::string print_result(const uint32_t& indent,
+                                   const bool& leaf) const override;
 
-    virtual ~Item_ident_func() override = default;
+  virtual ~Item_ident_func() override = default;
 } Item_ident_func;
 
 /**
  * @brief Class for pointers.
- * 
+ *
  */
 typedef class Item_ident_pointer final : public Item_ident {
-protected:
-    // This should be similar as the array.
-    uint32_t shape;
+ protected:
+  // This should be similar as the array.
+  uint32_t shape;
 
-public:
-    Item_ident_pointer() = delete;
+ public:
+  Item_ident_pointer() = delete;
 
-    Item_ident_pointer(const uint32_t& lineno, const std::string& name);
+  Item_ident_pointer(const uint32_t& lineno, const std::string& name);
 
-    virtual std::string print_result(const uint32_t& indent, const bool& leaf) const override;
+  virtual std::string print_result(const uint32_t& indent,
+                                   const bool& leaf) const override;
 
-    virtual void add_shape(void) { shape++; } ;
+  virtual void add_shape(void) { shape++; };
 
-    virtual void generate_ir(compiler::ir::IRContext* const ir_context, std::vector<compiler::ir::IR>& ir_list) const override { return; }
+  virtual void generate_ir(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override {
+    return;
+  }
 
-    virtual Item_ident::ident_type get_ident_type(void) const override { return Item_ident::ident_type::POINTER; }
+  virtual Item_ident::ident_type get_ident_type(void) const override {
+    return Item_ident::ident_type::POINTER;
+  }
 
-    virtual ~Item_ident_pointer() override = default;
+  virtual ~Item_ident_pointer() override = default;
 } Item_ident_pointer;
-} // namespace compiler
+}  // namespace compiler
 
 #endif

@@ -16,21 +16,15 @@
  */
 #include <frontend/symbol_table/symbol.hh>
 
-compiler::Symbol::Symbol(const std::string& name, const symbol_type& type, const bool& is_pointer)
-    : name(name)
-    , type(type)
-    , is_pointer(is_pointer)
-{
-}
+compiler::Symbol::Symbol(const std::string& name, const symbol_type& type,
+                         const bool& is_pointer)
+    : name(name), type(type), is_pointer(is_pointer) {}
 
-compiler::Symbol_const::Symbol_const(
-    const std::string& name,
-    const symbol_type& type,
-    compiler::Item_literal* const value,
-    const bool& is_pointer,
-    const std::vector<Item_literal*>& values)
-    : Symbol(name, type, is_pointer)
-    , values(values.begin(), values.end())
-    , value(value)
-{
-}
+compiler::Symbol_const::Symbol_const(const std::string& name,
+                                     const symbol_type& type,
+                                     compiler::Item_literal* const value,
+                                     const bool& is_pointer,
+                                     const std::vector<Item_literal*>& values)
+    : Symbol(name, type, is_pointer),
+      values(values.begin(), values.end()),
+      value(value) {}
