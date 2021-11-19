@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -96,6 +96,8 @@ $(document).ready(function(){initNavTree('types_8hh.html',''); initResizable(); 
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacecompiler"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html">compiler</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacecompiler_1_1ir"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html">compiler::ir</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -107,6 +109,9 @@ Typedefs</h2></td></tr>
 <tr class="separator:a314232a179682d2ed0bbdeabad4728d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d0993e29c3d89fc12525df510db53bf"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespacecompiler.html#a70683183d067b3e669aab61bd5c06351">compiler::decl_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a2d0993e29c3d89fc12525df510db53bf">compiler::decl_type</a></td></tr>
 <tr class="separator:a2d0993e29c3d89fc12525df510db53bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8378a129107654aeb3ff06a8415164d9"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">compiler::ir::var_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a8378a129107654aeb3ff06a8415164d9">compiler::ir::var_type</a></td></tr>
+<tr class="memdesc:a8378a129107654aeb3ff06a8415164d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different variable types.  <a href="namespacecompiler_1_1ir.html#a8378a129107654aeb3ff06a8415164d9">More...</a><br /></td></tr>
+<tr class="separator:a8378a129107654aeb3ff06a8415164d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46971f6aa1a82f70d8918d37f8d6f7e6"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">compiler::symbol_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a46971f6aa1a82f70d8918d37f8d6f7e6">compiler::symbol_type</a></td></tr>
 <tr class="separator:a46971f6aa1a82f70d8918d37f8d6f7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -161,6 +166,13 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacecompiler.html#a70683183d067b3e669aab61bd5c06351a8f5ad6659b10ce6d9e6be123bbaf6aa5">compiler::CONST_DECL</a>
  }</td></tr>
 <tr class="separator:a70683183d067b3e669aab61bd5c06351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2988552954b6d039b75f3c191140786d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">compiler::ir::var_type</a> { <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170">compiler::ir::DB</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222">compiler::ir::i32</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513">compiler::ir::i8</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786dafd10280670a8cfb82fc07aa0ec20ae5a">compiler::ir::NONE</a>
+ }</td></tr>
+<tr class="memdesc:a2988552954b6d039b75f3c191140786d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different variable types.  <a href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">More...</a><br /></td></tr>
+<tr class="separator:a2988552954b6d039b75f3c191140786d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a965cf896d037cb61e5cf1d1cd3c700a4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">compiler::symbol_type</a> { <br />
 &#160;&#160;<a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4af521ac2d65b94a2b6528d4f957cbe455">compiler::VAR_TYPE</a>
 , <a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4a6187457fdfb1ba6b27f890cb2e0058d6">compiler::FUNC_TYPE</a>

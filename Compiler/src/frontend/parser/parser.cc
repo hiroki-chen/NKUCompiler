@@ -285,8 +285,8 @@ typedef union YYSTYPE
     compiler::Item_func_call_list*      item_func_call_list;
     compiler::Item_block*               item_block;
     compiler::Item_struct_body*         item_struct_body;
-    std::string*                        raw_string;
     double                              raw_number;
+    std::string*                        raw_string;
     char                                raw_char;
 }
 /* Line 193 of yacc.c.  */
@@ -690,7 +690,7 @@ static const yytype_uint16 yyrline[] =
      450,   453,   454,   455,   458,   459,   460,   463,   464,   465,
      468,   469,   470,   473,   474,   475,   476,   479,   480,   481,
      482,   483,   484,   485,   486,   489,   490,   491,   492,   495,
-     496,   497,   498,   499,   500,   501,   504,   505,   508,   509
+     496,   497,   506,   507,   508,   509,   512,   513,   516,   517
 };
 #endif
 
@@ -2637,53 +2637,60 @@ yyreduce:
     break;
 
   case 161:
-#line 497 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
-    { (yyval.item_literal) = new compiler::Item_literal_real(yyget_lineno(), (yyvsp[(1) - (1)].raw_number)); ;}
+#line 498 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+    { 
+          if (((yyvsp[(1) - (1)].raw_string))->find(".") != std::string::npos) {
+            (yyval.item_literal) = new compiler::Item_literal_real(yyget_lineno(), std::stod(*(yyvsp[(1) - (1)].raw_string))); 
+          } else {
+            (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), std::stoi(*(yyvsp[(1) - (1)].raw_string))); 
+          }
+          
+        ;}
     break;
 
   case 162:
-#line 498 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 506 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_char(yyget_lineno(), (yyvsp[(1) - (1)].raw_char)); ;}
     break;
 
   case 163:
-#line 499 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 507 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_string(yyget_lineno(), *(yyvsp[(1) - (1)].raw_string)); ;}
     break;
 
   case 164:
-#line 500 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 508 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), 1); ;}
     break;
 
   case 165:
-#line 501 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 509 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), 0); ;}
     break;
 
   case 166:
-#line 504 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 512 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_func_call(yyget_lineno(), (yyvsp[(1) - (3)].item_ident), new compiler::Item_func_call_list(yyget_lineno())); ;}
     break;
 
   case 167:
-#line 505 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 513 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_expr) = new compiler::Item_func_call(yyget_lineno(), (yyvsp[(1) - (4)].item_ident), (yyvsp[(3) - (4)].item_func_call_list)); ;}
     break;
 
   case 168:
-#line 508 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 516 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_func_call_list) = (yyvsp[(1) - (3)].item_func_call_list); (yyvsp[(1) - (3)].item_func_call_list)->add_arg((yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 169:
-#line 509 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 517 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_func_call_list) = new compiler::Item_func_call_list(yyget_lineno()); (yyval.item_func_call_list)->add_arg((yyvsp[(1) - (1)].item_expr)); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2687 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.cc"
+#line 2694 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.cc"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2903,5 +2910,5 @@ yyreturn:
 }
 
 
-#line 511 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
+#line 519 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
 

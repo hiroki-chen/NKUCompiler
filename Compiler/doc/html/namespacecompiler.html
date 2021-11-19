@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -105,6 +105,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_compiler__runtime.html">Compiler_runtime</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for compiler runtime.  <a href="classcompiler_1_1_compiler__runtime.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_const__block.html">Const_block</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores some information about constant types which are needed at runtime evaluation.  <a href="classcompiler_1_1_const__block.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1fatal__error.html">fatal_error</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html">Item</a></td></tr>
@@ -142,7 +145,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr__comma.html">Item_expr_comma</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr__cond.html">Item_expr_cond</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for conditional expressions.  <a href="classcompiler_1_1_item__expr__cond.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for conditional expressions. FIXME: Maybe this is useless.  <a href="classcompiler_1_1_item__expr__cond.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr__unary.html">Item_expr_unary</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -236,6 +239,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html">Symbol</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol__block.html">Symbol_block</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for a single symbol table.  <a href="classcompiler_1_1_symbol__block.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol__const.html">Symbol_const</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -303,6 +307,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:a89a02750c286458937eca5ba747f8856"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f40acac12be1cd9a2493ec25b5b63a0"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classcompiler_1_1_item__root.html">compiler::Item_root</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a2f40acac12be1cd9a2493ec25b5b63a0">Item_root</a></td></tr>
 <tr class="separator:a2f40acac12be1cd9a2493ec25b5b63a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2be354e6159d01b6469e236e6944d01c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a2be354e6159d01b6469e236e6944d01c">NodeStack</a> = std::vector&lt; <a class="el" href="classcompiler_1_1_item.html">Item</a> * &gt;</td></tr>
+<tr class="separator:a2be354e6159d01b6469e236e6944d01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac58f5501852429707a99463296477549"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classcompiler_1_1_item__decl.html">compiler::Item_decl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#ac58f5501852429707a99463296477549">Item_decl</a></td></tr>
 <tr class="memdesc:ac58f5501852429707a99463296477549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for declaration. BUT THIS NOT A DECLARE STATEMENT.  <a href="namespacecompiler.html#ac58f5501852429707a99463296477549">More...</a><br /></td></tr>
 <tr class="separator:ac58f5501852429707a99463296477549"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -329,7 +335,7 @@ Typedefs</h2></td></tr>
 <tr class="memdesc:ae1a09e79f919f14db9d74ff27c91c18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for general expressions.  <a href="namespacecompiler.html#ae1a09e79f919f14db9d74ff27c91c18c">More...</a><br /></td></tr>
 <tr class="separator:ae1a09e79f919f14db9d74ff27c91c18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bd7e9d5a4953d9af47f053a0d8003d0"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classcompiler_1_1_item__expr__cond.html">compiler::Item_expr_cond</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a5bd7e9d5a4953d9af47f053a0d8003d0">Item_expr_cond</a></td></tr>
-<tr class="memdesc:a5bd7e9d5a4953d9af47f053a0d8003d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for conditional expressions.  <a href="namespacecompiler.html#a5bd7e9d5a4953d9af47f053a0d8003d0">More...</a><br /></td></tr>
+<tr class="memdesc:a5bd7e9d5a4953d9af47f053a0d8003d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for conditional expressions. FIXME: Maybe this is useless.  <a href="namespacecompiler.html#a5bd7e9d5a4953d9af47f053a0d8003d0">More...</a><br /></td></tr>
 <tr class="separator:a5bd7e9d5a4953d9af47f053a0d8003d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aece274f8bd58198c65bef5957760311b"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classcompiler_1_1_item__expr__comma.html">compiler::Item_expr_comma</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#aece274f8bd58198c65bef5957760311b">Item_expr_comma</a></td></tr>
 <tr class="separator:aece274f8bd58198c65bef5957760311b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -412,8 +418,14 @@ Typedefs</h2></td></tr>
 <tr class="separator:a412087a28c0db90601f25f6218e5b89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7fb2b62084a5b23f76371cc0e87fd9c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#aa7fb2b62084a5b23f76371cc0e87fd9c">symbol_table_type</a> = std::unordered_map&lt; std::string, <a class="el" href="classcompiler_1_1_symbol.html">Symbol</a> * &gt;</td></tr>
 <tr class="separator:aa7fb2b62084a5b23f76371cc0e87fd9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f87fc26ab63ada32a02f3a1beebbdbe"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a0f87fc26ab63ada32a02f3a1beebbdbe">const_table_type</a> = std::unordered_map&lt; std::string, <a class="el" href="classcompiler_1_1_symbol__const.html">Symbol_const</a> * &gt;</td></tr>
+<tr class="separator:a0f87fc26ab63ada32a02f3a1beebbdbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8b1d792b1bc84c943dd5ba8797460a3"><td class="memItemLeft" align="right" valign="top">typedef class <a class="el" href="classcompiler_1_1_symbol__block.html">compiler::Symbol_block</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#aa8b1d792b1bc84c943dd5ba8797460a3">Symbol_block</a></td></tr>
+<tr class="memdesc:aa8b1d792b1bc84c943dd5ba8797460a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for a single symbol table.  <a href="namespacecompiler.html#aa8b1d792b1bc84c943dd5ba8797460a3">More...</a><br /></td></tr>
 <tr class="separator:aa8b1d792b1bc84c943dd5ba8797460a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a0652d7851053ba6f080f13d421aa6b"><td class="memItemLeft" align="right" valign="top">typedef class <a class="el" href="classcompiler_1_1_const__block.html">compiler::Const_block</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a1a0652d7851053ba6f080f13d421aa6b">Const_block</a></td></tr>
+<tr class="memdesc:a1a0652d7851053ba6f080f13d421aa6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores some information about constant types which are needed at runtime evaluation.  <a href="namespacecompiler.html#a1a0652d7851053ba6f080f13d421aa6b">More...</a><br /></td></tr>
+<tr class="separator:a1a0652d7851053ba6f080f13d421aa6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a301d31765cbb89fb9b8f1998eba0b408"><td class="memItemLeft" align="right" valign="top">typedef class <a class="el" href="classcompiler_1_1_command__parser.html">compiler::Command_parser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a301d31765cbb89fb9b8f1998eba0b408">Command_parser</a></td></tr>
 <tr class="memdesc:a301d31765cbb89fb9b8f1998eba0b408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for command line parser.  <a href="namespacecompiler.html#a301d31765cbb89fb9b8f1998eba0b408">More...</a><br /></td></tr>
 <tr class="separator:a301d31765cbb89fb9b8f1998eba0b408"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -502,6 +514,9 @@ Functions</h2></td></tr>
 <tr class="separator:a6fe0a06d805218f1fd5e9ad21080249b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab58b91278e04bd47f08daff5fd391a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#aab58b91278e04bd47f08daff5fd391a8">handle_lib_get</a> (const std::string &amp;func_name)</td></tr>
 <tr class="separator:aab58b91278e04bd47f08daff5fd391a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0f9613ec21563f75931e478d31e7eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">ir::var_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#aaa0f9613ec21563f75931e478d31e7eb">to_ir_type</a> (const <a class="el" href="namespacecompiler.html#ab978429ecff83a3f97002bc5e429679c">basic_type</a> &amp;b_type)</td></tr>
+<tr class="memdesc:aaa0f9613ec21563f75931e478d31e7eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a basic_type to its corresponding IR type.  <a href="namespacecompiler.html#aaa0f9613ec21563f75931e478d31e7eb">More...</a><br /></td></tr>
+<tr class="separator:aaa0f9613ec21563f75931e478d31e7eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace19f0378f105a9a7c96ee30661e74ff"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#ace19f0378f105a9a7c96ee30661e74ff">process_input</a> (const std::string &amp;input)</td></tr>
 <tr class="separator:ace19f0378f105a9a7c96ee30661e74ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -563,6 +578,38 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Class for compiler runtime. </p>
+
+</div>
+</div>
+<a id="a1a0652d7851053ba6f080f13d421aa6b" name="a1a0652d7851053ba6f080f13d421aa6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a0652d7851053ba6f080f13d421aa6b">&#9670;&nbsp;</a></span>Const_block</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef class <a class="el" href="classcompiler_1_1_const__block.html">compiler::Const_block</a> <a class="el" href="classcompiler_1_1_const__block.html">compiler::Const_block</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stores some information about constant types which are needed at runtime evaluation. </p>
+
+</div>
+</div>
+<a id="a0f87fc26ab63ada32a02f3a1beebbdbe" name="a0f87fc26ab63ada32a02f3a1beebbdbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f87fc26ab63ada32a02f3a1beebbdbe">&#9670;&nbsp;</a></span>const_table_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacecompiler.html#a0f87fc26ab63ada32a02f3a1beebbdbe">compiler::const_table_type</a> = typedef std::unordered_map&lt;std::string, <a class="el" href="classcompiler_1_1_symbol__const.html">Symbol_const</a>*&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00028">28</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
 
 </div>
 </div>
@@ -805,7 +852,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Class for conditional expressions. </p>
+<p>Class for conditional expressions. FIXME: Maybe this is useless. </p>
 
 </div>
 </div>
@@ -1328,6 +1375,22 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a2be354e6159d01b6469e236e6944d01c" name="a2be354e6159d01b6469e236e6944d01c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2be354e6159d01b6469e236e6944d01c">&#9670;&nbsp;</a></span>NodeStack</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacecompiler.html#a2be354e6159d01b6469e236e6944d01c">compiler::NodeStack</a> = typedef std::vector&lt;<a class="el" href="classcompiler_1_1_item.html">Item</a>*&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="item_8hh_source.html#l00108">108</a> of file <a class="el" href="item_8hh_source.html">item.hh</a>.</p>
+
+</div>
+</div>
 <a id="ab726208bab7ba06d2b15e74ad2cc751a" name="ab726208bab7ba06d2b15e74ad2cc751a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab726208bab7ba06d2b15e74ad2cc751a">&#9670;&nbsp;</a></span>parse_error</h2>
 
@@ -1384,6 +1447,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Class for a single symbol table. </p>
+
 </div>
 </div>
 <a id="a412087a28c0db90601f25f6218e5b89f" name="a412087a28c0db90601f25f6218e5b89f"></a>
@@ -1431,7 +1496,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00029">29</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00026">26</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
 
 </div>
 </div>
@@ -1632,7 +1697,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a965cf896d037cb61e5cf1d1cd3c700a4ac1009dd02c534a0fb092e33a58d7c853" name="a965cf896d037cb61e5cf1d1cd3c700a4ac1009dd02c534a0fb092e33a58d7c853"></a>UNDEFINED&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="types_8hh_source.html#l00064">64</a> of file <a class="el" href="types_8hh_source.html">types.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="types_8hh_source.html#l00079">79</a> of file <a class="el" href="types_8hh_source.html">types.hh</a>.</p>
 
 </div>
 </div>
@@ -1735,7 +1800,7 @@ Functions</h2></td></tr>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00149">149</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00142">142</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
 
 </div>
 </div>
@@ -1781,7 +1846,7 @@ false </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00133">133</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00127">127</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
 
 </div>
 </div>
@@ -1801,7 +1866,36 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8cc_source.html#l00034">34</a> of file <a class="el" href="runtime_8cc_source.html">runtime.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8cc_source.html#l00035">35</a> of file <a class="el" href="runtime_8cc_source.html">runtime.cc</a>.</p>
+
+</div>
+</div>
+<a id="aaa0f9613ec21563f75931e478d31e7eb" name="aaa0f9613ec21563f75931e478d31e7eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa0f9613ec21563f75931e478d31e7eb">&#9670;&nbsp;</a></span>to_ir_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">compiler::ir::var_type</a> compiler::to_ir_type </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacecompiler.html#ab978429ecff83a3f97002bc5e429679c">basic_type</a> &amp;&#160;</td>
+          <td class="paramname"><em>b_type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts a basic_type to its corresponding IR type. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b_type</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d" title="Defines different variable types.">ir::var_type</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00156">156</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
 
 </div>
 </div>
@@ -1821,7 +1915,7 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00026">26</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00025">25</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
 
 </div>
 </div>
@@ -1841,7 +1935,7 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00077">77</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00072">72</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
 
 </div>
 </div>
@@ -1861,7 +1955,7 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00050">50</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8cc_source.html#l00047">47</a> of file <a class="el" href="utils_8cc_source.html">utils.cc</a>.</p>
 
 </div>
 </div>

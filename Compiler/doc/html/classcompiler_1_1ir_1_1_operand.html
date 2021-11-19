@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -106,8 +106,11 @@ Inheritance diagram for compiler::ir::Operand:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a98c7fbe9315a94e9d75e51f6f6fa707e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_operand.html#a98c7fbe9315a94e9d75e51f6f6fa707e">Operand</a> ()=delete</td></tr>
-<tr class="separator:a98c7fbe9315a94e9d75e51f6f6fa707e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a659e99197d502357f6f36a735b3a010c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_operand.html#a659e99197d502357f6f36a735b3a010c">Operand</a> ()</td></tr>
+<tr class="memdesc:a659e99197d502357f6f36a735b3a010c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a dummy <a class="el" href="classcompiler_1_1ir_1_1_operand.html" title="Base class for operand in the IR.">Operand</a> object.  <a href="classcompiler_1_1ir_1_1_operand.html#a659e99197d502357f6f36a735b3a010c">More...</a><br /></td></tr>
+<tr class="separator:a659e99197d502357f6f36a735b3a010c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7647358750ba4ca17f52af671d210195"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_operand.html#a7647358750ba4ca17f52af671d210195">Operand</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a7647358750ba4ca17f52af671d210195"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cea32aeaffcba546e28a3eb9086fee6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_operand.html#a4cea32aeaffcba546e28a3eb9086fee6">Operand</a> (const <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">var_type</a> &amp;<a class="el" href="classcompiler_1_1ir_1_1_operand.html#aa1a53f27dd9c09930d72efcc8c91cd37">type</a>, const std::string &amp;<a class="el" href="classcompiler_1_1ir_1_1_operand.html#a7dfc0f5a6e039ef1674ffd693ae77a3c">identifier</a>, const std::string &amp;<a class="el" href="classcompiler_1_1ir_1_1_operand.html#aa68dd9cc1730ba9ee346aefd53dc3d3d">value</a>, const bool &amp;<a class="el" href="classcompiler_1_1ir_1_1_operand.html#a953a71abee991c5f1866d5af8b4c1b66">is_var</a>=true, const bool &amp;<a class="el" href="classcompiler_1_1ir_1_1_operand.html#adb82fe1707731658d198beef1cc986e6">is_ptr</a>=false)</td></tr>
 <tr class="separator:a4cea32aeaffcba546e28a3eb9086fee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7931fb159adcc42d5bb25bc90ab2eba"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">var_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_operand.html#ae7931fb159adcc42d5bb25bc90ab2eba">get_type</a> (void) const</td></tr>
@@ -139,16 +142,13 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Base class for operand in the <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM.">IR</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00189">189</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00185">185</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a98c7fbe9315a94e9d75e51f6f6fa707e" name="a98c7fbe9315a94e9d75e51f6f6fa707e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98c7fbe9315a94e9d75e51f6f6fa707e">&#9670;&nbsp;</a></span>Operand() <span class="overload">[1/2]</span></h2>
+<a id="a659e99197d502357f6f36a735b3a010c" name="a659e99197d502357f6f36a735b3a010c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a659e99197d502357f6f36a735b3a010c">&#9670;&nbsp;</a></span>Operand() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">compiler::ir::Operand::Operand </td>
@@ -157,17 +157,36 @@ Protected Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Construct a dummy <a class="el" href="classcompiler_1_1ir_1_1_operand.html" title="Base class for operand in the IR.">Operand</a> object. </p>
+
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00026">26</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+
+</div>
+</div>
+<a id="a7647358750ba4ca17f52af671d210195" name="a7647358750ba4ca17f52af671d210195"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7647358750ba4ca17f52af671d210195">&#9670;&nbsp;</a></span>Operand() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">compiler::ir::Operand::Operand </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00034">34</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
 <a id="a4cea32aeaffcba546e28a3eb9086fee6" name="a4cea32aeaffcba546e28a3eb9086fee6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cea32aeaffcba546e28a3eb9086fee6">&#9670;&nbsp;</a></span>Operand() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cea32aeaffcba546e28a3eb9086fee6">&#9670;&nbsp;</a></span>Operand() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,7 +229,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00022">22</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00043">43</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -264,7 +283,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00218">218</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00217">217</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -292,7 +311,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00214">214</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00213">213</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -320,7 +339,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00216">216</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00215">215</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -348,7 +367,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00212">212</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00211">211</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -376,7 +395,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00220">220</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00219">219</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -401,7 +420,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00193">193</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00189">189</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -425,7 +444,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00195">195</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00191">191</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -449,7 +468,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00197">197</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00193">193</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -473,7 +492,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00191">191</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00187">187</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -497,7 +516,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00200">200</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00196">196</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>

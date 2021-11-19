@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -106,6 +106,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab5df0f767e360d7625900ca8080aa930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9736d00376507f196348b5c5669890e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_i_r.html#ad9736d00376507f196348b5c5669890e">IR</a> (const <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">op_type</a> &amp;operation, <a class="el" href="classcompiler_1_1ir_1_1_operand.html">Operand</a> *const dst, const std::string &amp;label=&quot;&quot;)</td></tr>
 <tr class="separator:ad9736d00376507f196348b5c5669890e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab21f32a4987de0c45ac1c93a4541062b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_i_r.html#ab21f32a4987de0c45ac1c93a4541062b">IR</a> (const <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">op_type</a> &amp;operation, const std::string &amp;label=&quot;&quot;)</td></tr>
+<tr class="separator:ab21f32a4987de0c45ac1c93a4541062b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab38b34d883093dbd500817df2d90ae58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_i_r.html#ab38b34d883093dbd500817df2d90ae58">emit_ir</a> (std::ostream &amp;out=std::cout, const bool &amp;verbose=false)</td></tr>
 <tr class="memdesc:ab38b34d883093dbd500817df2d90ae58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emit the <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM.">IR</a>.  <a href="classcompiler_1_1ir_1_1_i_r.html#ab38b34d883093dbd500817df2d90ae58">More...</a><br /></td></tr>
 <tr class="separator:ab38b34d883093dbd500817df2d90ae58"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,18 +116,17 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p >The class for <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM.">IR</a> (Intermediate Representation). Some representation notations are taken from LLVM. </p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://llvm.org/docs/LangRef.html">https://llvm.org/docs/LangRef.html</a></dd></dl>
 <p>Examples: ADD i32 foo, i8 bar, double baz ALLOC i32, align 8.</p>
-<dl class="section note"><dt>Note</dt><dd>LOGIC EXPLAINED When an compiler::IR instance is created from the AST, we should call compiler::ir::IR::walk_ir() function to generate the string as follows:<ol type="1">
+<dl class="section note"><dt>Note</dt><dd>LOGIC EXPLAINED When an compiler::IR instance is created from the AST, we should call compiler::ir::IR::walk_ir() function to eval_cond the string as follows:<ol type="1">
 <li>Create a lambda function that can be passed to compiler::ir::IR::walk_ir() that does some job with current operation;</li>
-<li>The function compiler::ir::IR::walk_ir() will iterate through each operands, and because each operand can be another instance of <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM.">compiler::ir::IR</a>, we need to dig into the <br  />
- operand, where callback function comes to help.</li>
+<li>The function compiler::ir::IR::walk_ir() will iterate through each operands, and because each operand can be another instance of <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM.">compiler::ir::IR</a>, we need to dig into the operand, where callback function comes to help.</li>
 <li>The callback will call each operand with callback again until it reaches a deepmost level: the raw operand that we can ensure whether it is chained to the caller or not. </li>
 </ol>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00265">265</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00264">264</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a110038524afefd162f2b839f563b6cd4" name="a110038524afefd162f2b839f563b6cd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a110038524afefd162f2b839f563b6cd4">&#9670;&nbsp;</a></span>IR() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a110038524afefd162f2b839f563b6cd4">&#9670;&nbsp;</a></span>IR() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,7 +151,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a02d88bf9eac25b7a2719c582fb543021" name="a02d88bf9eac25b7a2719c582fb543021"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02d88bf9eac25b7a2719c582fb543021">&#9670;&nbsp;</a></span>IR() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d88bf9eac25b7a2719c582fb543021">&#9670;&nbsp;</a></span>IR() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,12 +200,12 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00046">46</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00059">59</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
 <a id="a6681fa07e333cb9c4acd2312ca033f46" name="a6681fa07e333cb9c4acd2312ca033f46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6681fa07e333cb9c4acd2312ca033f46">&#9670;&nbsp;</a></span>IR() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6681fa07e333cb9c4acd2312ca033f46">&#9670;&nbsp;</a></span>IR() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -247,12 +248,12 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00062">62</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00069">69</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
 <a id="ab5df0f767e360d7625900ca8080aa930" name="ab5df0f767e360d7625900ca8080aa930"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5df0f767e360d7625900ca8080aa930">&#9670;&nbsp;</a></span>IR() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5df0f767e360d7625900ca8080aa930">&#9670;&nbsp;</a></span>IR() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,12 +290,12 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00077">77</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00079">79</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
 <a id="ad9736d00376507f196348b5c5669890e" name="ad9736d00376507f196348b5c5669890e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9736d00376507f196348b5c5669890e">&#9670;&nbsp;</a></span>IR() <span class="overload">[5/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9736d00376507f196348b5c5669890e">&#9670;&nbsp;</a></span>IR() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -325,7 +326,37 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00091">91</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00088">88</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+
+</div>
+</div>
+<a id="ab21f32a4987de0c45ac1c93a4541062b" name="ab21f32a4987de0c45ac1c93a4541062b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab21f32a4987de0c45ac1c93a4541062b">&#9670;&nbsp;</a></span>IR() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">compiler::ir::IR::IR </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">op_type</a> &amp;&#160;</td>
+          <td class="paramname"><em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00097">97</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -365,7 +396,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00104">104</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00105">105</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>

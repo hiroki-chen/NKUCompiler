@@ -1022,7 +1022,7 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 91 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/lexer.l"
-{ yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
+{ yylval.raw_string = new std::string(yytext, yyleng); return DECIMAL; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP

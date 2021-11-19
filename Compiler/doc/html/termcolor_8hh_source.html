@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -909,7 +909,7 @@ $(document).ready(function(){initNavTree('termcolor_8hh_source.html',''); initRe
 <div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> win_change_attributes(std::ostream&amp; stream, <span class="keywordtype">int</span> foreground, <span class="keywordtype">int</span> background)</div>
 <div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span>        {</div>
 <div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>            <span class="comment">// yeah, i know.. it&#39;s ugly, it&#39;s windows.</span></div>
-<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>            <span class="keyword">static</span> WORD defaultAttributes = 0;</div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>            <span class="keyword">static</span> <a class="code hl_enumvalue" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a987b6bee3687c0a2dcf3413849457947">WORD</a> defaultAttributes = 0;</div>
 <div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span> </div>
 <div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>            <span class="comment">// Windows doesn&#39;t have ANSI escape sequences and so we use special</span></div>
 <div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>            <span class="comment">// API to change Terminal output color. That means we can&#39;t</span></div>
@@ -949,13 +949,13 @@ $(document).ready(function(){initNavTree('termcolor_8hh_source.html',''); initRe
 <div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>            <span class="keywordflow">if</span> (foreground != -1)</div>
 <div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>            {</div>
 <div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>                info.wAttributes &amp;= ~(info.wAttributes &amp; 0x0F);</div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>                info.wAttributes |= <span class="keyword">static_cast&lt;</span>WORD<span class="keyword">&gt;</span>(foreground);</div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>                info.wAttributes |= <span class="keyword">static_cast&lt;</span><a class="code hl_enumvalue" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a987b6bee3687c0a2dcf3413849457947">WORD</a><span class="keyword">&gt;</span>(foreground);</div>
 <div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>            }</div>
 <div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span> </div>
 <div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>            <span class="keywordflow">if</span> (background != -1)</div>
 <div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>            {</div>
 <div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>                info.wAttributes &amp;= ~(info.wAttributes &amp; 0xF0);</div>
-<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>                info.wAttributes |= <span class="keyword">static_cast&lt;</span>WORD<span class="keyword">&gt;</span>(background);</div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>                info.wAttributes |= <span class="keyword">static_cast&lt;</span><a class="code hl_enumvalue" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a987b6bee3687c0a2dcf3413849457947">WORD</a><span class="keyword">&gt;</span>(background);</div>
 <div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>            }</div>
 <div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span> </div>
 <div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span>            SetConsoleTextAttribute(hTerminal, info.wAttributes);</div>
@@ -977,6 +977,7 @@ $(document).ready(function(){initNavTree('termcolor_8hh_source.html',''); initRe
 <div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span> </div>
 <div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span><span class="preprocessor">#endif </span><span class="comment">// TERMCOLOR_HPP_</span></div>
 <div class="ttc" id="ainclude_2frontend_2parser_2parser_8hh_html_aa73214aa5f2f94f63d90bb4e3d99fe53"><div class="ttname"><a href="include_2frontend_2parser_2parser_8hh.html#aa73214aa5f2f94f63d90bb4e3d99fe53">L</a></div><div class="ttdeci">#define L</div><div class="ttdef"><b>Definition:</b> <a href="include_2frontend_2parser_2parser_8hh_source.html#l00110">parser.hh:110</a></div></div>
+<div class="ttc" id="anamespacecompiler_1_1ir_html_a27e578532e191c34f41311dd373728c6a987b6bee3687c0a2dcf3413849457947"><div class="ttname"><a href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a987b6bee3687c0a2dcf3413849457947">compiler::ir::WORD</a></div><div class="ttdeci">@ WORD</div><div class="ttdef"><b>Definition:</b> <a href="ir_8hh_source.html#l00169">ir.hh:169</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

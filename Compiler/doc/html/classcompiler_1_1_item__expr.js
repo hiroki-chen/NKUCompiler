@@ -18,6 +18,12 @@ var classcompiler_1_1_item__expr =
     [ "Item_expr", "classcompiler_1_1_item__expr.html#afc5ceaa90cd1a74d6feb8d586d2b1735", null ],
     [ "Item_expr", "classcompiler_1_1_item__expr.html#a3b3c6e1a731c8610a68700c26866efa7", null ],
     [ "~Item_expr", "classcompiler_1_1_item__expr.html#a33508a12b9ec74d9efa6aee7ebe8ed68", null ],
+    [ "eval_cond", "classcompiler_1_1_item__expr.html#ac9034792ac8e88ad98963252a7aac1ca", null ],
+    [ "eval_cond_helper", "classcompiler_1_1_item__expr.html#ab643730026784b4ec214b42dc40a9abd", null ],
+    [ "eval_runtime", "classcompiler_1_1_item__expr.html#adbf8eec2a6762fe778f2dc08f864d50a", null ],
+    [ "eval_runtime", "classcompiler_1_1_item__expr.html#a2fd9e0f924ec06be0c5ea44b849bb007", null ],
+    [ "eval_runtime_helper", "classcompiler_1_1_item__expr.html#ab1b03d8ca0a35087379307665b2f7322", null ],
+    [ "eval_runtime_helper", "classcompiler_1_1_item__expr.html#af6e17ee78a4edce1d7254313391f064b", null ],
     [ "get_expr_type", "classcompiler_1_1_item__expr.html#ad4b9d671701f636b81def21a83fc3950", null ],
     [ "get_type", "classcompiler_1_1_item__expr.html#afb1a8bf0d879f45544c9e41800a36ae7", null ]
 ];

@@ -175,8 +175,8 @@ typedef union YYSTYPE
     compiler::Item_func_call_list*      item_func_call_list;
     compiler::Item_block*               item_block;
     compiler::Item_struct_body*         item_struct_body;
-    std::string*                        raw_string;
     double                              raw_number;
+    std::string*                        raw_string;
     char                                raw_char;
 }
 /* Line 1529 of yacc.c.  */

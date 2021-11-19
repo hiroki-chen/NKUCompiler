@@ -71,7 +71,7 @@ CHAR        '\\?.'
 "float"      { return FLOAT; } 
 "char"       { return CHAR; }
 "void"       { return VOID; }
-"my_string"     { return STRING; }
+"my_string"  { return STRING; }
 
 "if"         { return IF; }
 "else"       { return ELSE; }
@@ -88,7 +88,7 @@ CHAR        '\\?.'
 
 {HEX}        { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 16)); return HEX; }
 {OCTAL}      { yylval.raw_number = double(std::stoi(std::string(yytext, yyleng), nullptr, 8)); return OCTAL; }
-{DECIMAL}    { yylval.raw_number = std::stod(std::string(yytext, yyleng)); return DECIMAL; }
+{DECIMAL}    { yylval.raw_string = new std::string(yytext, yyleng); return DECIMAL; }
 
 "["          { return LSQUARE; }
 "]"          { return RSQUARE; }

@@ -165,3 +165,18 @@ compiler::ir::var_type compiler::to_ir_type(const basic_type& b_type) {
       throw compiler::unsupported_operation("Cannot convert this type to IR!");
   }
 }
+
+compiler::basic_type compiler::to_basic_type(
+    const compiler::ir::var_type& v_type) {
+  switch (v_type) {
+    case ir::var_type::i8:
+      return basic_type::CHAR_TYPE;
+    case ir::var_type::i32:
+      return basic_type::INT_TYPE;
+    case ir::var_type::DB:
+      return basic_type::REAL_TYPE;
+    default:
+      throw compiler::unsupported_operation(
+          "Cannot convert this type to basic type!");
+  }
+}

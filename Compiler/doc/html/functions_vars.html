@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 <h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
 <li>base&#160;:&#160;<a class="el" href="structcxxopts_1_1values_1_1parser__tool_1_1_integer_desc.html#a382f4c32680ded0fb611303f90ad0425">cxxopts::values::parser_tool::IntegerDesc</a></li>
-<li>block&#160;:&#160;<a class="el" href="classcompiler_1_1_symbol__block.html#a036a9888ec62209d833b81d15beee374">compiler::Symbol_block</a></li>
+<li>block&#160;:&#160;<a class="el" href="classcompiler_1_1_const__block.html#a5ac9ee6b6af25f2cd514c3d3287ebac7">compiler::Const_block</a>, <a class="el" href="classcompiler_1_1_symbol__block.html#a036a9888ec62209d833b81d15beee374">compiler::Symbol_block</a></li>
 <li>btype&#160;:&#160;<a class="el" href="union_y_y_s_t_y_p_e.html#a32fd74fd6adbbb14ef4aa132dd1da796">YYSTYPE</a></li>
 </ul>
 
@@ -103,6 +103,8 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
 <li>children&#160;:&#160;<a class="el" href="classcompiler_1_1_item__root.html#af53e93025839a28671f671ed0b7b96a1">compiler::Item_root</a></li>
 <li>condition&#160;:&#160;<a class="el" href="classcompiler_1_1_item__stmt__eif.html#af4dc153a50bc1335c28c2c6550fed754">compiler::Item_stmt_eif</a>, <a class="el" href="classcompiler_1_1_item__stmt__while.html#ae8f56c692893226ab3cab02e9b9c86ba">compiler::Item_stmt_while</a></li>
+<li>const_assign_table&#160;:&#160;<a class="el" href="classcompiler_1_1_symbol__table.html#a2f2be8c56b10b47b12d68266e2833231">compiler::Symbol_table</a></li>
+<li>const_table&#160;:&#160;<a class="el" href="classcompiler_1_1_symbol__table.html#ae5471dbd771b3fa179cfa44100f2926d">compiler::Symbol_table</a></li>
 </ul>
 
 
@@ -187,6 +189,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 <li>lhs&#160;:&#160;<a class="el" href="classcompiler_1_1_item__expr__binary.html#a5de4376a2db5c67817a20be403f43800">compiler::Item_expr_binary</a></li>
 <li>lineno&#160;:&#160;<a class="el" href="classcompiler_1_1_item.html#adfe26df6660160284563018887ee827c">compiler::Item</a></li>
 <li>loop_label&#160;:&#160;<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html#a97fb01f9a5fee84b9d7104b4413e08b5">compiler::ir::IRContext</a></li>
+<li>loop_variable&#160;:&#160;<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html#a0ba506a846055181e8330fd4c289f470">compiler::ir::IRContext</a></li>
 </ul>
 
 
@@ -201,7 +204,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 
 <h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
-<li>name&#160;:&#160;<a class="el" href="classcompiler_1_1_item__ident.html#a1a0770d3496d41dc40b18da57d12485e">compiler::Item_ident</a>, <a class="el" href="classcompiler_1_1_symbol.html#a871b984f1f888d32edb35d4916c131a9">compiler::Symbol</a>, <a class="el" href="structcxxopts_1_1_help_group_details.html#abc389252a862724a1404d3c22fda6fc2">cxxopts::HelpGroupDetails</a></li>
+<li>name&#160;:&#160;<a class="el" href="classcompiler_1_1_item__ident.html#a1a0770d3496d41dc40b18da57d12485e">compiler::Item_ident</a>, <a class="el" href="classcompiler_1_1_symbol.html#a0fa7586aaed83ac497c33ca6b7472bec">compiler::Symbol</a>, <a class="el" href="structcxxopts_1_1_help_group_details.html#abc389252a862724a1404d3c22fda6fc2">cxxopts::HelpGroupDetails</a></li>
 <li>negative&#160;:&#160;<a class="el" href="structcxxopts_1_1values_1_1parser__tool_1_1_integer_desc.html#a03eb11087b99130f7e098f8b6a3a5f50">cxxopts::values::parser_tool::IntegerDesc</a></li>
 </ul>
 
@@ -264,7 +267,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 <li>yy_input_file&#160;:&#160;<a class="el" href="structyy__buffer__state.html#a4843d1422e3276b636d475a3095bd948">yy_buffer_state</a></li>
 <li>yy_is_interactive&#160;:&#160;<a class="el" href="structyy__buffer__state.html#abf5c70eea75581b58c0ee7bd31b14490">yy_buffer_state</a></li>
 <li>yy_is_our_buffer&#160;:&#160;<a class="el" href="structyy__buffer__state.html#a80ce2431c70dc4f89ced487f18449465">yy_buffer_state</a></li>
-<li>yy_n_chars&#160;:&#160;<a class="el" href="structyy__buffer__state.html#a06406208824817acfec2183b79080945">yy_buffer_state</a></li>
+<li>yy_n_chars&#160;:&#160;<a class="el" href="structyy__buffer__state.html#afcc44872643f513e79b43c2b1f334a67">yy_buffer_state</a></li>
 <li>yy_nxt&#160;:&#160;<a class="el" href="structyy__trans__info.html#ae0715250c2bef261e596e77e0030f13e">yy_trans_info</a></li>
 <li>yy_verify&#160;:&#160;<a class="el" href="structyy__trans__info.html#a5c9f61e770deef50bd4e697310342fe9">yy_trans_info</a></li>
 <li>yyls&#160;:&#160;<a class="el" href="unionyyalloc.html#aa95d08464a98222a29a670a10463c082">yyalloc</a></li>

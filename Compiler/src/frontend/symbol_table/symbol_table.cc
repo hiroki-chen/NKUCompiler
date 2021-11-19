@@ -36,7 +36,7 @@ compiler::Symbol* compiler::Symbol_table::find_symbol(const std::string& name) {
 
   // Not found. Raise an error.
   std::ostringstream oss;
-  oss << "Error: Symbol " << name << " is not declaraed.";
+  oss << "Error: Symbol " << name << " is not declared";
   throw compiler::undeclared_symbol(oss.str());
   return nullptr;
 }
@@ -59,7 +59,7 @@ compiler::Symbol_const* compiler::Symbol_table::find_const(
 
   // Not found. Raise an error.
   std::ostringstream oss;
-  oss << "Error: Symbol " << name << " is not declaraed.";
+  oss << "Error: Symbol " << name << " is not declared";
   throw compiler::undeclared_symbol(oss.str());
   return nullptr;
 }
@@ -82,7 +82,7 @@ compiler::Symbol_const* compiler::Symbol_table::find_assign_const(
 
   // Not found. Raise an error.
   std::ostringstream oss;
-  oss << "Error: Symbol " << name << " is not declaraed.";
+  oss << "Error: Symbol " << name << " is not declared";
   throw compiler::undeclared_symbol(oss.str());
   return nullptr;
 }
@@ -161,6 +161,21 @@ void compiler::Const_block::add_const(const std::string& name,
   } else {
     block[name] = symbol;
   }
+}
+
+void compiler::Symbol_table::enter_scope() {
+  const_table.push_front(new compiler::Const_block());
+  const_assign_table.push_front(new compiler::Const_block());
+  symbol_table.push_front(new compiler::Symbol_block());
+}
+
+void compiler::Symbol_table::leave_scope() {
+  delete const_table.front();
+  delete const_assign_table.front();
+  delete symbol_table.front();
+  const_table.pop_front();
+  const_assign_table.pop_front();
+  symbol_table.pop_front();
 }
 
 compiler::Symbol_table::~Symbol_table() {

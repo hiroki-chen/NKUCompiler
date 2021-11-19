@@ -28,9 +28,9 @@ void compiler::Item_decl_var::generate_ir_helper(
     const std::string name_symbol = "@" + name;
     ir_list.emplace_back(compiler::ir::op_type::BEGIN_DATA, name_symbol);
     ir_list.emplace_back(
-        compiler::ir::op_type::WORD,
-        new compiler::ir::Operand(compiler::to_ir_type(b_type), name, "uninit",
-                                  true, false));
+        compiler::ir::op_type::GLOBAL,
+        new compiler::ir::Operand(compiler::to_ir_type(b_type), "", "0",
+                                  false, false));
     ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
 
     // Create a new symbol for the symbol table.
@@ -38,12 +38,12 @@ void compiler::Item_decl_var::generate_ir_helper(
         name_symbol, compiler::symbol_type::VAR_TYPE, false);
     ir_context->get_symbol_table()->add_symbol(name, symbol);
   } else {
-    const uint32_t scope_id =
-        ir_context->get_symbol_table()->get_top_scope_uuid();
-    const std::string name_symbol = "%" + std::to_string(scope_id) + name;
+    const uint32_t id =
+        ir_context->get_symbol_table()->get_available_id();
+    const std::string name_symbol = "%" + std::to_string(id) + name;
     // Create a temporary symbol for the symbol table.
     compiler::Symbol* const symbol =
-        new compiler::Symbol(name, compiler::symbol_type::VAR_TYPE, false);
+        new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE, false);
     ir_context->get_symbol_table()->add_symbol(name, symbol);
   }
 }

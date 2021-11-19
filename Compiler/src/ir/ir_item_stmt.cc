@@ -20,6 +20,8 @@
 #include <frontend/nodes/item_stmt.hh>
 #include <sstream>
 
+extern uint32_t opt_level;
+
 compiler::ir::Operand* compiler::Item_stmt::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
@@ -122,7 +124,41 @@ void compiler::Item_stmt_assign::generate_ir_helper(
 
   // Case 1: This identifier is a variable.
   if (Item_ident::ident_type::VARIABLE == type) {
+    ir::Operand* const rhs = expression->eval_runtime(ir_context, ir_list);
+    compiler::Symbol* const symbol =
+        ir_context->get_symbol_table()->find_symbol(identifier->get_name());
+
+    if (symbol->get_is_pointer() == true) {
+      throw compiler::unsupported_operation(
+          std::to_string(lineno) +
+          "Cannot assign an expression to a pointer-like object.");
+    }
+
+    if (rhs->get_is_var() == true) {
+    } else if (rhs->get_identifier().front() == '@') /* Global variable. */ {
+      ir_list.emplace_back(ir::op_type::MOV,
+                           new ir::Operand(rhs->get_identifier()));
+    } else /* Normal const expression. */ {
+      ir_list.emplace_back(
+          ir::op_type::MOV,
+          new ir::Operand(
+              "%" + std::to_string(
+                        ir_context->get_symbol_table()->get_available_id())),
+          rhs);
+
+      if (opt_level > 0) {
+        // TODO: Implement this.
+        compiler::Item_literal* const value = nullptr;
+        compiler::Symbol_const* const assign = new compiler::Symbol_const(
+            symbol->get_name(), compiler::symbol_type::VAR_TYPE, value);
+        ir_context->get_symbol_table()->assign_const(identifier->get_name(),
+                                                     assign);
+      }
+    }
   } else if (Item_ident::ident_type::ARRAY == type) {
+    // Get result.
+    ir::Operand* const res = identifier->eval_runtime(ir_context, ir_list);
+    // Call memcpy at runtime.
   }
 }
 
@@ -196,19 +232,32 @@ compiler::ir::Operand* compiler::Item_stmt_postfix::eval_runtime_helper(
 compiler::ir::Operand* compiler::Item_stmt_postfix::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
   if (identifier->get_ident_type() != compiler::Item_ident::ARRAY) {
-    throw compiler::unsupported_operation("Local variable is forbiddent.");
+    throw compiler::unsupported_operation("Local variable is forbidden.");
   }
   ir::Operand* const res = identifier->eval_runtime(ir_context);
   compiler::Symbol* const sym =
       ir_context->get_symbol_table()->find_symbol(identifier->get_name());
 
   if (sym->get_name()[0] == '%' || sym->get_type() == ARRAY_TYPE) {
-    throw compiler::unsupported_operation("Local variable is forbiddent.");
+    throw compiler::unsupported_operation("Local variable is forbidden.");
   }
   sym->set_name(
       "%" +
-      std::to_string(ir_context->get_symbol_table()->get_top_scope_uuid()));
+      std::to_string(ir_context->get_symbol_table()->get_available_id()));
 
   // TODO: insert const assign.
   return res;
+}
+
+void compiler::Item_stmt_return::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  if (expr != nullptr) {
+    ir::Operand* const return_value = expr->eval_runtime(ir_context, ir_list);
+    ir_list.emplace_back(ir::op_type::RET, return_value);
+  } else {
+    ir::Operand* const return_value =
+        new ir::Operand(ir::var_type::NONE, "", "", false, false);
+    ir_list.emplace_back(ir::op_type::RET, return_value);
+  }
 }
