@@ -57,6 +57,7 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond(
     stack.pop_back();
     return branch_ir;
   } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
     stack.pop_back();
     throw e;
   }
@@ -73,6 +74,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
     stack.pop_back();
     throw e;
   }
@@ -87,6 +89,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
     stack.pop_back();
     throw e;
   }

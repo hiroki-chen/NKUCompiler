@@ -16,6 +16,7 @@
  */
 #include <common/compile_excepts.hh>
 #include <cstring>
+#include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_stmt.hh>
 #include <sstream>
 
@@ -55,7 +56,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     ir_context->enter_scope();
     // Get the id of current scope.
     const uint32_t scope_uuid_cur =
-        (uint32_t)(ir_context->get_symbol_table().get_top_scope_uuid());
+        (uint32_t)(ir_context->get_symbol_table()->get_top_scope_uuid());
     const compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context, ir_list);
 
@@ -94,20 +95,21 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     // The actual symbol table is wrapped twice.
     const auto& symbol_table =
-        ir_context_if.get_symbol_table().get_symbol_table();
+        ir_context_if.get_symbol_table()->get_symbol_table();
     // Traverse the symbol table.
     for (auto iter = symbol_table.cend(); iter != symbol_table.cbegin();
          iter--) {
-      const compiler::symbol_table_type cur_table = (*iter)->get_block();
+      compiler::symbol_table_type* const cur_table = (*iter)->get_block();
 
-      for (auto& entry : cur_table) {
+      for (auto& entry : *cur_table) {
         const std::string name = entry.second->get_name();
         // TODO: FIND VARIABLE.
       }
     }
 
     ir_context->leave_scope();
-  } catch (...) {
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
     // FIXME: Determine which exception should be caught.
   }
 }
@@ -132,7 +134,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_context->enter_scope();
     // Create a loop label.
     const uint32_t scope_id =
-        ir_context->get_symbol_table().get_top_scope_uuid();
+        ir_context->get_symbol_table()->get_top_scope_uuid();
     ir_context->add_loop_label(std::to_string(scope_id));
 
     // Step 1: Copy the previous context.
@@ -156,4 +158,57 @@ void compiler::Item_stmt_while::generate_ir_helper(
   } catch (const std::exception& e) {
     std::cerr << e.what() << std::endl;
   }
+}
+
+void compiler::Item_stmt_postfix::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // number ++ => number = number + 1;
+  compiler::Item_literal* const number =
+      new compiler::Item_literal_int(lineno, 1);
+  compiler::Item_expr* const expr =
+      new compiler::Item_expr_binary(lineno, type, identifier, number);
+  compiler::Item_stmt* const assign =
+      new compiler::Item_stmt_assign(lineno, identifier, expr);
+  assign->generate_ir(ir_context, ir_list);
+
+  // Cleanup
+  delete assign;
+  delete expr;
+  delete number;
+}
+
+compiler::ir::Operand* compiler::Item_stmt_postfix::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  compiler::Symbol* const sym =
+      ir_context->get_symbol_table()->find_symbol(identifier->get_name());
+  compiler::Item_literal* const number =
+      new compiler::Item_literal_int(lineno, 1);
+  compiler::Item_expr* const expr =
+      new compiler::Item_expr_binary(lineno, type, identifier, number);
+  compiler::Item_stmt* const assign =
+      new compiler::Item_stmt_assign(lineno, identifier, expr);
+  assign->eval_runtime(ir_context, ir_list);
+  return new ir::Operand(sym->get_name());
+}
+
+compiler::ir::Operand* compiler::Item_stmt_postfix::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context) const {
+  if (identifier->get_ident_type() != compiler::Item_ident::ARRAY) {
+    throw compiler::unsupported_operation("Local variable is forbiddent.");
+  }
+  ir::Operand* const res = identifier->eval_runtime(ir_context);
+  compiler::Symbol* const sym =
+      ir_context->get_symbol_table()->find_symbol(identifier->get_name());
+
+  if (sym->get_name()[0] == '%' || sym->get_type() == ARRAY_TYPE) {
+    throw compiler::unsupported_operation("Local variable is forbiddent.");
+  }
+  sym->set_name(
+      "%" +
+      std::to_string(ir_context->get_symbol_table()->get_top_scope_uuid()));
+
+  // TODO: insert const assign.
+  return res;
 }

@@ -30,6 +30,16 @@ namespace compiler::ir {
  *
  */
 typedef class IRContext {
+ private:
+  /**
+   * @brief Register some statically linked functions to the global symbol
+   * table.
+   *
+   * @param functions
+   */
+  void register_library_function(
+      const std::vector<std::pair<std::string, Symbol*>>& functions);
+
  protected:
   /**
    * @brief The context will store a symbol table within itself.
@@ -126,9 +136,9 @@ typedef class IRContext {
    *        The outside functions and variables may need symbol_table and invoke
    * its interfaces.
    *
-   * @return Symbol_table
+   * @return Symbol_table*
    */
-  Symbol_table get_symbol_table(void) const { return symbol_table; }
+  Symbol_table* get_symbol_table(void) { return &symbol_table; }
 } IRContext;
 }  // namespace compiler::ir.
 

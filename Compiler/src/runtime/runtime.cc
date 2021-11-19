@@ -68,11 +68,11 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
                                 cxxopts::value<bool>()->default_value("false"))(
       "g,debug", "Enable debug mode",
       cxxopts::value<bool>()->default_value("false"))(
-      "t,tree", "Print the abstract syntax tree",
-      cxxopts::value<bool>()->default_value("false"))(
       "o,output", "The output file name.",
       cxxopts::value<std::string>()->default_value("a.out"))(
-      "print-ir", "eval_cond intermediate code",
+      "print-ir", "Print the intermediate representation of the source code",
+      cxxopts::value<bool>()->default_value("false"))(
+      "print-ast", "Print the abstract syntax tree",
       cxxopts::value<bool>()->default_value("false"))(
       "O,opt-level", "The level of optimization",
       cxxopts::value<int>()->default_value("0"))("h,help", "Get the guidance");
@@ -81,8 +81,8 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
 compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     : compile_on(result["compile"].as<bool>()),
       debug_on(result["debug"].as<bool>()),
-      print_ast(result["tree"].as<bool>()),
-      generate_ir(result["print-ir"].as<bool>()),
+      print_ast(result["print-ast"].as<bool>()),
+      print_ir(result["print-ir"].as<bool>()),
       opt_level(result["opt-level"].as<int>()) {
   ::opt_level = opt_level;
   const std::string input = result["source"].as<std::string>();
@@ -108,19 +108,40 @@ void compiler::Compiler_runtime::run(void) {
       yyparse();
       yylex_destroy();
 
-      if (print_ast) {
-        if (!output_file.is_open()) {
-          std::ostringstream oss;
-          const std::string file =
-              input_file[i].substr(input_file[i].find_last_of("/"));
+      std::string res;
+      std::ostringstream oss;
+      if (!output_file.is_open()) {
+        const std::string file =
+            input_file[i].substr(input_file[i].find_last_of("/"));
+        if (print_ast) {
           oss << base_path << "/output/" << file << ".ast";
           output_file.open(oss.str(), std::ios::out);
         }
-        std::string res = root->print_result(0, false);
-        output_file << res;
-        output_file.flush();
-        output_file.close();
+        if (print_ir) {
+          oss << base_path << "/output/" << file << ".ir";
+          output_file.open(oss.str(), std::ios::out);
+        }
       }
+
+      if (print_ast) {
+        res = root->print_result(0, false);
+      }
+      if (print_ir) {
+        compiler::ir::IRContext* const ir_context =
+            new compiler::ir::IRContext();
+        std::vector<compiler::ir::IR> ir_list;
+        root->generate_ir(ir_context, ir_list);
+
+        for (auto item : ir_list) {
+          item.emit_ir(oss, false);
+        }
+        
+        res = oss.str();
+      }
+
+      output_file << res;
+      output_file.flush();
+      output_file.close();
     }
 
   } catch (const std::exception& e) {

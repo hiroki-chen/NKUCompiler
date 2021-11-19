@@ -38,6 +38,7 @@ void compiler::Item::generate_ir(ir::IRContext* const ir_context,
     generate_ir_helper(ir_context, ir_list);
     stack.pop_back();
   } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
     stack.pop_back();
     // Exception is not handled.
     throw e;

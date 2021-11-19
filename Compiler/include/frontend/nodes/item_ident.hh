@@ -47,12 +47,6 @@ typedef class Item_ident : public Item_expr {
 
   virtual std::string get_name(void) const { return name; }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
-  }
-
   Item_ident() = delete;
 
   Item_ident(const uint32_t& lineno, const std::string& name);

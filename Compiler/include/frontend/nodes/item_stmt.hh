@@ -298,6 +298,17 @@ typedef class Item_stmt_postfix final : public Item_stmt {
 
   Item_ident* const identifier;
 
+  virtual void generate_ir_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override;
+
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context) const override;
+
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override;
+
  public:
   virtual Item_stmt::stmt_type get_stmt_type(void) const override {
     return Item_stmt::stmt_type::POSTFIX_STMT;
