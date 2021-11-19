@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/compile_excepts.hh>
 #include <frontend/nodes/item_expr.hh>
 
@@ -57,9 +58,9 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond(
     stack.pop_back();
     return branch_ir;
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
     stack.pop_back();
-    throw e;
+    exit(1);
   }
 }
 
@@ -74,9 +75,9 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
     stack.pop_back();
-    throw e;
+    exit(1);
   }
 }
 
@@ -89,9 +90,9 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
     stack.pop_back();
-    throw e;
+    exit(1);
   }
 }
 
@@ -161,8 +162,8 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     try {
       return eval_runtime_helper(ir_context);
     } catch (const std::exception& e) {
-      std::cerr << e.what() << std::endl;
-      throw e;
+      std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+      exit(1);
     }
   } else {
   }

@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/compile_excepts.hh>
 #include <cstring>
 #include <frontend/nodes/item_literal.hh>
@@ -40,8 +41,8 @@ void compiler::Item_block::generate_ir_helper(
     ir_context->leave_scope();
   } catch (const compiler::fatal_error& e) {
     // Scope is invalid.
-    std::cerr << "FATAL ERROR: " << e.what() << std::endl;
-    std::terminate();
+    std::cerr << termcolor::red << termcolor::bold << "FATAL ERROR: " << e.what() << std::endl;
+    exit(1);
   }
 }
 
@@ -111,7 +112,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
     // FIXME: Determine which exception should be caught.
   }
 }
@@ -131,7 +132,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
     if (symbol->get_is_pointer() == true) {
       throw compiler::unsupported_operation(
           std::to_string(lineno) +
-          "Cannot assign an expression to a pointer-like object.");
+          " Cannot assign an expression to a pointer-like object.");
     }
 
     if (rhs->get_is_var() == true) {
@@ -142,7 +143,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
       ir_list.emplace_back(
           ir::op_type::MOV,
           new ir::Operand(
-              "%" + std::to_string(
+              ir::local_sign + std::to_string(
                         ir_context->get_symbol_table()->get_available_id())),
           rhs);
 
@@ -192,7 +193,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
   }
 }
 
@@ -242,7 +243,7 @@ compiler::ir::Operand* compiler::Item_stmt_postfix::eval_runtime_helper(
     throw compiler::unsupported_operation("Local variable is forbidden.");
   }
   sym->set_name(
-      "%" +
+      ir::local_sign +
       std::to_string(ir_context->get_symbol_table()->get_available_id()));
 
   // TODO: insert const assign.

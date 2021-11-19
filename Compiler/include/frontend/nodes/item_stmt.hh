@@ -281,6 +281,23 @@ typedef class Item_stmt_eval final : public Item_stmt {
  protected:
   Item_expr* const expression;
 
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override {
+    return expression->eval_runtime(ir_context, ir_list);
+  }
+
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context) const override {
+    return expression->eval_runtime(ir_context);
+  }
+
+  virtual void generate_ir_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override {
+    eval_runtime(ir_context, ir_list);
+  }
+
  public:
   virtual Item_stmt::stmt_type get_stmt_type(void) const override {
     return Item_stmt::stmt_type::EVAL_STMT;

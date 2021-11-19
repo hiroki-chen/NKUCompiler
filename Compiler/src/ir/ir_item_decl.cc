@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/utils.hh>
 #include <frontend/nodes/item_decl.hh>
 
@@ -23,27 +24,26 @@ void compiler::Item_decl_var::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type) const {
   const std::string name = identifier->get_name();
+  compiler::ir::Operand* const default_value = new compiler::ir::Operand(
+      compiler::to_ir_type(b_type), "", "0", false, false);
+
   // Check current scope.
   if (ir_context->is_global_context() == true) {
-    const std::string name_symbol = "@" + name;
-    ir_list.emplace_back(compiler::ir::op_type::BEGIN_DATA, name_symbol);
-    ir_list.emplace_back(
-        compiler::ir::op_type::GLOBAL,
-        new compiler::ir::Operand(compiler::to_ir_type(b_type), "", "0",
-                                  false, false));
-    ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
+    const std::string name_symbol = ir::global_sign + name;
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL, default_value);
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
 
     // Create a new symbol for the symbol table.
     compiler::Symbol* const symbol = new compiler::Symbol(
         name_symbol, compiler::symbol_type::VAR_TYPE, false);
     ir_context->get_symbol_table()->add_symbol(name, symbol);
   } else {
-    const uint32_t id =
-        ir_context->get_symbol_table()->get_available_id();
-    const std::string name_symbol = "%" + std::to_string(id) + name;
+    const uint32_t id = ir_context->get_symbol_table()->get_available_id();
+    const std::string name_symbol = ir::local_sign + std::to_string(id) + name;
     // Create a temporary symbol for the symbol table.
-    compiler::Symbol* const symbol =
-        new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE, false);
+    compiler::Symbol* const symbol = new compiler::Symbol(
+        name_symbol, compiler::symbol_type::VAR_TYPE, false);
     ir_context->get_symbol_table()->add_symbol(name, symbol);
   }
 }
@@ -52,24 +52,31 @@ void compiler::Item_decl_var_init::generate_ir_helper(
     ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list,
     const basic_type& b_type) const {
   const std::string name = identifier->get_name();
+  std::string name_symbol;
+  ir::Operand* const result = expression->eval_runtime(ir_context);
   // Check current scope.
   if (ir_context->is_global_context()) {
-    const std::string name_symbol = "@" + name;
-    ir_list.emplace_back(compiler::ir::op_type::BEGIN_DATA, name_symbol);
-
-    // TODO: Eval runtime...
-
-    ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
+    name_symbol = ir::global_sign + name;
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL, result);
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
   } else {
     const uint32_t scope_id =
         ir_context->get_symbol_table()->get_top_scope_uuid();
-    const std::string name_symbol = "%" + std::to_string(scope_id) + name;
-
-    if (is_const == true) {
-      // symbol = new
-      // compiler::Symbol_const(name,compiler::symbol_type::VAR_TYPE);
-    } else {
-    }
+    name_symbol = ir::local_sign + std::to_string(scope_id) + name;
+  }
+  // Insert into symbol table.
+  compiler::Item_literal* const literal_value = ir::wrap_value(result);
+  compiler::Symbol* symbol = nullptr;
+  if (is_const == true) {
+    symbol = new compiler::Symbol_const(
+        name_symbol, compiler::symbol_type::VAR_TYPE, literal_value);
+    ir_context->get_symbol_table()->add_const(
+        identifier->get_name(), dynamic_cast<compiler::Symbol_const*>(symbol));
+  } else {
+    symbol = new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
+                                  literal_value);
+    ir_context->get_symbol_table()->add_symbol(identifier->get_name(), symbol);
   }
 }
 
@@ -81,9 +88,9 @@ void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
     generate_ir_helper(ir_context, ir_list, b_type);
     stack.pop_back();
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
     stack.pop_back();
-    throw e;
+    exit(1);
   }
 }
 

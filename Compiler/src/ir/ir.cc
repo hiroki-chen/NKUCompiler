@@ -104,25 +104,29 @@ compiler::ir::IR::IR(const op_type& operation, const std::string& label)
 
 void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   // Wrap std::ostream in a macro.
-  FORMAT(output, op_name[type]);
+  FORMAT(output, op_name[type], 0x10);
 
   // Emit IR of each operand. Deepmost callee.
   auto lambda_walk_ir = [&output, this](Operand* const operand) {
     if (operand != nullptr) {
       if (operand->get_type() == var_type::NONE) {
-        output << operand->get_identifier() << "\t";
+        FORMAT(output, operand->get_identifier(), 10);
       } else if (operand->get_is_var() == false) {
-        output << var_type_to_string(operand->get_type()) << ' '
-               << operand->get_value() << "\t";
+        FORMAT(output,
+               var_type_to_string(operand->get_type()) + " " +
+                   operand->get_value(),
+               10);
       } else if (operand->get_is_var() == true) {
-        output << var_type_to_string(operand->get_type()) << ' '
-               << operand->get_identifier() << "\t";
+        FORMAT(output,
+               var_type_to_string(operand->get_type()) + " " +
+                   operand->get_identifier(),
+               10);
       }
     }
   };
   walk_ir(lambda_walk_ir);
 
-  output << "\t" << label << std::endl;
+  FORMAT(output, label + "\n", 0);
 }
 
 void compiler::ir::IR::walk_ir(std::function<void(Operand* const)>&& callback,
@@ -209,9 +213,9 @@ compiler::ir::Operand* compiler::ir::dump_value(
     case Item_literal::REAL_TYPE: {
       compiler::Item_literal_real* const val_real =
           static_cast<compiler::Item_literal_real* const>(value);
-      return new compiler::ir::Operand(ir::var_type::DB, "",
-                                       std::to_string(val_real->get_double()),
-                                       false, false);
+      return new compiler::ir::Operand(
+          ir::var_type::DB, "", ir::convert_from_double(val_real->get_double()),
+          false, false);
     }
 
     case Item_literal::CHAR_TYPE: {
@@ -226,5 +230,20 @@ compiler::ir::Operand* compiler::ir::dump_value(
       throw compiler::unsupported_operation(
           "Cannot dump operand from type" +
           std::to_string(value->get_literal_type()));
+  }
+}
+
+compiler::Item_literal* compiler::ir::wrap_value(
+    compiler::ir::Operand* const operand) {
+  switch (operand->get_type()) {
+    case ir::var_type::i32:
+      return new compiler::Item_literal_int(0, std::stoi(operand->get_value()));
+    case ir::var_type::i8:
+      return new compiler::Item_literal_char(0, operand->get_value()[0]);
+    case ir::var_type::DB:
+      return new compiler::Item_literal_real(
+          0, ir::convert_from_string(operand->get_value()));
+    default:
+      throw compiler::unimplemented_error("Not yet supported!");
   }
 }

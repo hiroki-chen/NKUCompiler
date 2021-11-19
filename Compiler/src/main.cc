@@ -32,8 +32,9 @@ int main(int argc, const char** argv) {
     compiler_runtime = new Compiler_runtime(parser->get_result());
     compiler_runtime->run();
   } catch (const std::exception& e) {
-    std::cerr << termcolor::bold << termcolor::red << e.what()
+    std::cerr << termcolor::red << termcolor::bold << e.what()
               << termcolor::reset << std::endl;
+    exit(1);
   }
 
   return 0;
