@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/utils.hh>
 #include <frontend/nodes/item_func.hh>
 
@@ -42,7 +43,7 @@ void compiler::Item_func_def::generate_ir_helper(
     if (identifier->get_ident_type() == Item_ident::ARRAY) {
     } else {
       const std::string var =
-          "%" +
+          ir::local_sign +
           std::to_string(ir_context->get_symbol_table()->get_available_id());
       ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(var),
                            "$arg" + std::to_string(i));
@@ -75,9 +76,17 @@ void compiler::Item_func_def::generate_ir_helper(
 compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
+  // Check if the function name is valid.
+  try {
+    ir_context->get_symbol_table()->find_symbol(identifier->get_name());
+  } catch (const std::exception& e) {
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    exit(1);
+  }
+
   std::vector<ir::Operand*> operands;
   ir::Operand* const dst = new ir::Operand(
-      "%" +
+      ir::local_sign +
       std::to_string(ir_context->get_symbol_table()->get_available_id()));
 
   const std::vector<compiler::Item_expr*> args = arguments->get_arguments();

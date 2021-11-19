@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/compile_excepts.hh>
 #include <frontend/nodes/item_ident.hh>
 
@@ -36,7 +37,7 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       compiler::Symbol_const* symbol_assign = symbol_table->find_assign_const(symbol_cur->get_name());
       return compiler::ir::dump_value(symbol_assign->get_values()[0]);
     }
-    throw e;
+    exit(1);
   }
 }
 
@@ -59,7 +60,7 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       }
     }
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
-    throw e;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    exit(1);
   }
 }

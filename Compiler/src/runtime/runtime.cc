@@ -146,7 +146,7 @@ void compiler::Compiler_runtime::run(void) {
 
   } catch (const std::exception& e) {
     // Error handler.
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
   }
 }
 

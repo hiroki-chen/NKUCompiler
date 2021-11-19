@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/termcolor.hh>
 #include <common/compile_excepts.hh>
 #include <frontend/nodes/item.hh>
 
@@ -38,10 +39,10 @@ void compiler::Item::generate_ir(ir::IRContext* const ir_context,
     generate_ir_helper(ir_context, ir_list);
     stack.pop_back();
   } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
     stack.pop_back();
     // Exception is not handled.
-    throw e;
+    exit(1);
   }
 }
 

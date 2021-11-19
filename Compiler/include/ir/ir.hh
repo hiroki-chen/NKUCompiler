@@ -25,11 +25,14 @@
 #include <vector>
 
 #ifndef FORMAT
-#define FORMAT(output, str) \
-  { output << std::setw(0x10) << std::left << str << " "; }
+#define FORMAT(output, str, width) \
+  { output << std::setw(width) << std::left << str; }
 #endif
 
 namespace compiler::ir {
+static const std::string global_sign = "@";
+
+static const std::string local_sign = "%";
 /**
  * @brief Look-up table for enum type compiler::ir::op_type.
  *
@@ -90,10 +93,10 @@ static const char* op_name[46]{
     "MALLOC",
 
     // Delimiters.
-    "BEGIN_DATA",
+    "GLOBAL_BEGIN",
     "GLOBAL",
     "SPACE",
-    "END_DATA",
+    "GLOBAL_END",
     "BEGIN_FUNC",
     "END_FUNC",
     "BEGIN_STRUCT",
@@ -165,10 +168,10 @@ typedef enum op_type {
   MALLOC,
 
   // Delimiters.
-  BEGIN_DATA,
+  GLOBAL_BEGIN,
   GLOBAL,
   SPACE,
-  END_DATA,
+  GLOBAL_END,
   BEGIN_FUNC,
   END_FUNC,
   BEGIN_STRUCT,
@@ -391,5 +394,15 @@ std::string var_type_to_string(const var_type& type);
  * @return Operand*
  */
 Operand* dump_value(Item_literal* const value);
+
+/**
+ * @brief An inverse function of ir::dump_value.
+ * @note Usually used when you are trying to insert a symbol into the symbol
+ *       table. Use with care.
+ *
+ * @param operand
+ * @return Item_literal*
+ */
+Item_literal* wrap_value(Operand* const operand);
 }  // namespace compiler::ir
 #endif
