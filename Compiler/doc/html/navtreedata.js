@@ -68,19 +68,19 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_make_c_x_x_compiler_id_8cpp.html",
-"classcompiler_1_1_item__decl__var__init.html#a2ef9cce589c739615f8b0c0cca70d206",
-"classcompiler_1_1_item__ident.html#a00c3bb310e23a30e72adbdbc2f1aece4a745cd4768414836d882a1fa8c1616bfe",
-"classcompiler_1_1_item__literal__char.html#ad5da5288b009e7b76f84452428efa7d7",
-"classcompiler_1_1_item__stmt__return.html#a53ca27555ce8dad539ccb5dcfbe7541b",
-"classcompiler_1_1type__error.html#a9be0a3734869fd8640e4406b4af6595f",
-"classcxxopts_1_1values_1_1abstract__value.html#a0df330cac57a96d7ac25dd6a666d5b94",
-"globals_u.html",
-"ir_8hh.html#a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4",
-"lexer_8cc.html#ae5b01ac2fa5a6ad5fb97559638abe686",
-"namespacemembers_h.html",
-"parser_8cc.html#a8295e0aed07a8923d8363ce46c7b08e2",
-"src_2frontend_2parser_2parser_8hh.html#a15c9f7bd2f0e9686df5d9df4f3314aa9aea9cf595a990144ddbc93c208c1c5b58",
-"types_8hh.html#a70efda59ea975e441771c1e035914145"
+"classcompiler_1_1_item__decl__var.html#a9a7657d694bd3a9928ee1c01fe1ca978",
+"classcompiler_1_1_item__func__def__list.html#a03ea9fcd9d7edf6a0b645977f5188560",
+"classcompiler_1_1_item__literal.html#a821301dd64ceb06f14f234006140e1c6",
+"classcompiler_1_1_item__stmt__eif.html#ab3600c9c4de9e9ce0de8af17d740729f",
+"classcompiler_1_1ir_1_1_i_r_context.html#a218133e0eadd0d6daad234e6ba76d82d",
+"classcxxopts_1_1_parse_result.html#aa5f4a299ffec3be89782fc738ebd1065",
+"functions_func_f.html",
+"include_2frontend_2parser_2parser_8hh.html#a15c9f7bd2f0e9686df5d9df4f3314aa9af613d73b4e7b570ffd967df4a13c4225",
+"item__struct_8cc.html",
+"namespacecompiler.html#ab978429ecff83a3f97002bc5e429679ca090a9a0626c8d57c419c5fcaf6f1505a",
+"parser_8cc.html#a15c9f7bd2f0e9686df5d9df4f3314aa9a87fdcd2ffa8f71b49da9e0cfd4fb893f",
+"src_2frontend_2parser_2parser_8hh.html#a0f4d394a3ab4e09bff60f714c66dc5ee",
+"structcxxopts_1_1_help_option_details.html#ae9edda8b102865694f3b76ef162f0ead"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -3,6 +3,7 @@ var hierarchy =
     [ "cxxopts::values::parser_tool::ArguDesc", "structcxxopts_1_1values_1_1parser__tool_1_1_argu_desc.html", null ],
     [ "compiler::Command_parser", "classcompiler_1_1_command__parser.html", null ],
     [ "compiler::Compiler_runtime", "classcompiler_1_1_compiler__runtime.html", null ],
+    [ "compiler::Const_block", "classcompiler_1_1_const__block.html", null ],
     [ "std::enable_shared_from_this", null, [
       [ "cxxopts::Value", "classcxxopts_1_1_value.html", [
         [ "cxxopts::values::abstract_value< bool >", "classcxxopts_1_1values_1_1abstract__value.html", [

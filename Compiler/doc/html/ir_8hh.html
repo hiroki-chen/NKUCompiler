@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -87,13 +87,16 @@ $(document).ready(function(){initNavTree('ir_8hh.html',''); initResizable(); });
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">ir.hh File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;functional&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="types_8hh_source.html">common/types.hh</a>&gt;</code><br />
+<code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div>
 <p><a href="ir_8hh_source.html">Go to the source code of this file.</a></p>
@@ -119,7 +122,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a00e0d27085de736abbbc43c089fbf487"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ir_8hh.html#a00e0d27085de736abbbc43c089fbf487">FORMAT</a>(output,  str)</td></tr>
+<tr class="memitem:a00e0d27085de736abbbc43c089fbf487"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ir_8hh.html#a00e0d27085de736abbbc43c089fbf487">FORMAT</a>(output,  str)&#160;&#160;&#160;  { output &lt;&lt; std::setw(0x10) &lt;&lt; std::left &lt;&lt; str &lt;&lt; &quot; &quot;; }</td></tr>
 <tr class="separator:a00e0d27085de736abbbc43c089fbf487"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -127,9 +130,6 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a57bbb2a11665e7d64a6324d99c90fce1"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">compiler::ir::op_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a57bbb2a11665e7d64a6324d99c90fce1">compiler::ir::op_type</a></td></tr>
 <tr class="memdesc:a57bbb2a11665e7d64a6324d99c90fce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different operations.  <a href="namespacecompiler_1_1ir.html#a57bbb2a11665e7d64a6324d99c90fce1">More...</a><br /></td></tr>
 <tr class="separator:a57bbb2a11665e7d64a6324d99c90fce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8378a129107654aeb3ff06a8415164d9"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">compiler::ir::var_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a8378a129107654aeb3ff06a8415164d9">compiler::ir::var_type</a></td></tr>
-<tr class="memdesc:a8378a129107654aeb3ff06a8415164d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different variable types.  <a href="namespacecompiler_1_1ir.html#a8378a129107654aeb3ff06a8415164d9">More...</a><br /></td></tr>
-<tr class="separator:a8378a129107654aeb3ff06a8415164d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2c75241ce64a3aa3640d9b002f956b8"><td class="memItemLeft" align="right" valign="top">typedef class <a class="el" href="classcompiler_1_1ir_1_1_operand.html">compiler::ir::Operand</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#ac2c75241ce64a3aa3640d9b002f956b8">compiler::ir::Operand</a></td></tr>
 <tr class="memdesc:ac2c75241ce64a3aa3640d9b002f956b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for operand in the <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM.">IR</a>.  <a href="namespacecompiler_1_1ir.html#ac2c75241ce64a3aa3640d9b002f956b8">More...</a><br /></td></tr>
 <tr class="separator:ac2c75241ce64a3aa3640d9b002f956b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,73 +139,92 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a5895fb59592f783972fd007adaea2dff"><td class="memItemLeft" align="right" valign="top">typedef class <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">compiler::ir::IR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a5895fb59592f783972fd007adaea2dff">compiler::ir::IR</a></td></tr>
 <tr class="memdesc:a5895fb59592f783972fd007adaea2dff"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class for <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM.">IR</a> (Intermediate Representation). Some representation notations are taken from LLVM.  <a href="namespacecompiler_1_1ir.html#a5895fb59592f783972fd007adaea2dff">More...</a><br /></td></tr>
 <tr class="separator:a5895fb59592f783972fd007adaea2dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88aa346d611940b562b77e7fdb77199e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a88aa346d611940b562b77e7fdb77199e">compiler::ir::BranchIR</a> = std::pair&lt; <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">compiler::ir::op_type</a>, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">compiler::ir::op_type</a> &gt;</td></tr>
+<tr class="separator:a88aa346d611940b562b77e7fdb77199e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a27e578532e191c34f41311dd373728c6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">compiler::ir::op_type</a> { <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe">compiler::ir::NOP</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a49a2b3394968de7b56f99e8245b1f724">compiler::ir::ARG</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe">compiler::ir::NOP</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b">compiler::ir::IADD</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7">compiler::ir::ISUB</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2">compiler::ir::IMUL</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69">compiler::ir::IDIV</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6afcbf45c2b4350a0e18d0ef45a2622df2">compiler::ir::IMUL</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a44089c13592d214573701ce7f49f7f69">compiler::ir::IDIV</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ac00d3283905503d016f75323069b8393">compiler::ir::IMOD</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a7d708eb8af8a38f4186b096a2acb9346">compiler::ir::FADD</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99">compiler::ir::FSUB</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e">compiler::ir::FMUL</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a8b1fa13b3487c8f15322c6cf764f6b99">compiler::ir::FSUB</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a87bd51275977707c1226c3abf0c6ed9e">compiler::ir::FMUL</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aa5e4104c1540b137c25a4dcf56d53f76">compiler::ir::FDIV</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a51178327a4b243620b43446a46ce98db">compiler::ir::FNEG</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83">compiler::ir::MOV</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568">compiler::ir::CALL</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3997f1a05fdf23f5d344470a695eef83">compiler::ir::MOV</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6af64a117c86b459037454805155b24568">compiler::ir::CALL</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ae438619da937d53d9c3aae1fbacbf1a0">compiler::ir::RET</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a41977148c8adc71afac94f40683dc4b4">compiler::ir::JMP</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8">compiler::ir::JGE</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9">compiler::ir::JLE</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a2d63947ad20229e640e9d0b0bed755a8">compiler::ir::JGE</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9">compiler::ir::JLE</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6">compiler::ir::JEQ</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff">compiler::ir::JNE</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4">compiler::ir::JLT</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5">compiler::ir::JGT</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4">compiler::ir::JLT</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5">compiler::ir::JGT</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac">compiler::ir::BAND</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f">compiler::ir::BOR</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5">compiler::ir::BXOR</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f">compiler::ir::BNEG</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5">compiler::ir::BXOR</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6acab85d32da5130c251a8224a0e71492f">compiler::ir::BNEG</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aee780aab6f2f86db39a4496c75f2c796">compiler::ir::SHL</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a4fd82151e64bbb7d538d390cc03ae830">compiler::ir::LSHR</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326">compiler::ir::ASHR</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b">compiler::ir::LAND</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ae73f480b1e9d3ae6a372480e76d8a326">compiler::ir::ASHR</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ac5ecd8b5acc87d2fe99a014ebae0866b">compiler::ir::LAND</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3b4e94d8fcb831b0b337dd4f7b6246ee">compiler::ir::LOR</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a4c3925b97622203ea43a941f812614de">compiler::ir::LNOT</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1">compiler::ir::CMP</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3">compiler::ir::LOAD</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a42255864762cf9fe5cc8c02d6293eeb1">compiler::ir::CMP</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a653d34d5280a64e5b41fc79e445434b3">compiler::ir::LOAD</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07">compiler::ir::STORE</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be">compiler::ir::MALLOC</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9">compiler::ir::BEGIN_DATA</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347">compiler::ir::END_DATA</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122">compiler::ir::BEGIN_FUNC</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9">compiler::ir::BEGIN_DATA</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a987b6bee3687c0a2dcf3413849457947">compiler::ir::WORD</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ac9ebeb67a334acfbb99d3a0dca8d8f81">compiler::ir::SPACE</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347">compiler::ir::END_DATA</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122">compiler::ir::BEGIN_FUNC</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4">compiler::ir::END_FUNC</a>
 , <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b">compiler::ir::BEGIN_STRUCT</a>
+, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119">compiler::ir::END_STRUCT</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119">compiler::ir::END_STRUCT</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9">compiler::ir::LBL</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9">compiler::ir::LBL</a>
 <br />
  }</td></tr>
 <tr class="memdesc:a27e578532e191c34f41311dd373728c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different operations.  <a href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">More...</a><br /></td></tr>
 <tr class="separator:a27e578532e191c34f41311dd373728c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2988552954b6d039b75f3c191140786d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">compiler::ir::var_type</a> { <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222">compiler::ir::i32</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513">compiler::ir::i8</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170">compiler::ir::DB</a>
-, <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a">compiler::ir::FL</a>
- }</td></tr>
-<tr class="memdesc:a2988552954b6d039b75f3c191140786d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different variable types.  <a href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">More...</a><br /></td></tr>
-<tr class="separator:a2988552954b6d039b75f3c191140786d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a6e9f77a8902c71b8fa57baab8d9ac58b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a6e9f77a8902c71b8fa57baab8d9ac58b">compiler::ir::get_type_priority</a> (const var_type &amp;lhs, const var_type &amp;rhs)</td></tr>
+<tr class="separator:a6e9f77a8902c71b8fa57baab8d9ac58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace6c8784b511f75c640b5e85d83c14f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#ace6c8784b511f75c640b5e85d83c14f3">compiler::ir::check_valid_binary</a> (Operand *const lhs, Operand *const rhs)</td></tr>
+<tr class="memdesc:ace6c8784b511f75c640b5e85d83c14f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the binary expression is valid. E.g. 1 + '3', 0.4 * 5 is valid. 1 + "sdadas" is not valid.  <a href="namespacecompiler_1_1ir.html#ace6c8784b511f75c640b5e85d83c14f3">More...</a><br /></td></tr>
+<tr class="separator:ace6c8784b511f75c640b5e85d83c14f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5cd8730fab0b174730da1b41ece136f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#ae5cd8730fab0b174730da1b41ece136f">compiler::ir::convert_from_string</a> (const std::string &amp;num)</td></tr>
+<tr class="memdesc:ae5cd8730fab0b174730da1b41ece136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a heximal string to double.  <a href="namespacecompiler_1_1ir.html#ae5cd8730fab0b174730da1b41ece136f">More...</a><br /></td></tr>
+<tr class="separator:ae5cd8730fab0b174730da1b41ece136f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a657784fadb3043976dd9202ce3c18712"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a657784fadb3043976dd9202ce3c18712">compiler::ir::convert_from_double</a> (const double &amp;num)</td></tr>
+<tr class="memdesc:a657784fadb3043976dd9202ce3c18712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a double to hexical.  <a href="namespacecompiler_1_1ir.html#a657784fadb3043976dd9202ce3c18712">More...</a><br /></td></tr>
+<tr class="separator:a657784fadb3043976dd9202ce3c18712"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab57921ed577dc53f435295afc0301915"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#ab57921ed577dc53f435295afc0301915">compiler::ir::var_type_to_string</a> (const var_type &amp;type)</td></tr>
+<tr class="memdesc:ab57921ed577dc53f435295afc0301915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a variable type to its corresponding string.  <a href="namespacecompiler_1_1ir.html#ab57921ed577dc53f435295afc0301915">More...</a><br /></td></tr>
+<tr class="separator:ab57921ed577dc53f435295afc0301915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66645f0e4319ff6d8a74868f0c0b03eb"><td class="memItemLeft" align="right" valign="top">Operand *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a66645f0e4319ff6d8a74868f0c0b03eb">compiler::ir::dump_value</a> (Item_literal *const value)</td></tr>
+<tr class="memdesc:a66645f0e4319ff6d8a74868f0c0b03eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from a <a class="el" href="classcompiler_1_1_item__literal.html" title="Class for literals.">compiler::Item_literal</a> type to operand type.  <a href="namespacecompiler_1_1ir.html#a66645f0e4319ff6d8a74868f0c0b03eb">More...</a><br /></td></tr>
+<tr class="separator:a66645f0e4319ff6d8a74868f0c0b03eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a00e0d27085de736abbbc43c089fbf487" name="a00e0d27085de736abbbc43c089fbf487"></a>
@@ -229,15 +248,12 @@ Enumerations</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td>&#160;&#160;&#160;  { output &lt;&lt; std::setw(0x10) &lt;&lt; std::left &lt;&lt; str &lt;&lt; &quot; &quot;; }</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    {                                                       \</div>
-<div class="line">        output &lt;&lt; std::ios::left &lt;&lt; std::setw(0x10) &lt;&lt; str; \</div>
-<div class="line">    }</div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00026">26</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00028">28</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>

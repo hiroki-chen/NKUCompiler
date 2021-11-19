@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -90,6 +90,9 @@ $(document).ready(function(){initNavTree('classcompiler_1_1_symbol__block.html',
 </div><!--header-->
 <div class="contents">
 
+<p>Class for a single symbol table.  
+ <a href="classcompiler_1_1_symbol__block.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -98,6 +101,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a38db7cccb37087209f2cf2232fa888d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96d9c54583210cfc0d7215ac9c448dca"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol__block.html#a96d9c54583210cfc0d7215ac9c448dca">add_symbol</a> (const std::string &amp;name, <a class="el" href="classcompiler_1_1_symbol.html">Symbol</a> *const symbol)</td></tr>
 <tr class="separator:a96d9c54583210cfc0d7215ac9c448dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af90de2a5ae713bc28a788e642f04db02"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacecompiler.html#aa7fb2b62084a5b23f76371cc0e87fd9c">symbol_table_type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol__block.html#af90de2a5ae713bc28a788e642f04db02">get_block</a> (void)</td></tr>
+<tr class="separator:af90de2a5ae713bc28a788e642f04db02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -105,8 +110,9 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a036a9888ec62209d833b81d15beee374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00031">31</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
+<div class="textblock"><p >Class for a single symbol table. </p>
+
+<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00034">34</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a96d9c54583210cfc0d7215ac9c448dca" name="a96d9c54583210cfc0d7215ac9c448dca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a96d9c54583210cfc0d7215ac9c448dca">&#9670;&nbsp;</a></span>add_symbol()</h2>
@@ -142,7 +148,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html#l00077">77</a> of file <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html">symbol_table.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html#l00146">146</a> of file <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html">symbol_table.cc</a>.</p>
 
 </div>
 </div>
@@ -170,7 +176,35 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html#l00067">67</a> of file <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html">symbol_table.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html#l00127">127</a> of file <a class="el" href="src_2frontend_2symbol__table_2symbol__table_8cc_source.html">symbol_table.cc</a>.</p>
+
+</div>
+</div>
+<a id="af90de2a5ae713bc28a788e642f04db02" name="af90de2a5ae713bc28a788e642f04db02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af90de2a5ae713bc28a788e642f04db02">&#9670;&nbsp;</a></span>get_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="namespacecompiler.html#aa7fb2b62084a5b23f76371cc0e87fd9c">symbol_table_type</a> * compiler::Symbol_block::get_block </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00043">43</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
 
 </div>
 </div>
@@ -195,7 +229,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00033">33</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html#l00036">36</a> of file <a class="el" href="include_2frontend_2symbol__table_2symbol__table_8hh_source.html">symbol_table.hh</a>.</p>
 
 </div>
 </div>

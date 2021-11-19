@@ -5,6 +5,7 @@ var types_8hh =
     [ "decl_type", "types_8hh.html#a2d0993e29c3d89fc12525df510db53bf", null ],
     [ "symbol_type", "types_8hh.html#a46971f6aa1a82f70d8918d37f8d6f7e6", null ],
     [ "unary_type", "types_8hh.html#a4129c892fa8f80773c0e9d4e491babda", null ],
+    [ "var_type", "types_8hh.html#a8378a129107654aeb3ff06a8415164d9", null ],
     [ "basic_type", "types_8hh.html#ab978429ecff83a3f97002bc5e429679c", [
       [ "VOID_TYPE", "types_8hh.html#ab978429ecff83a3f97002bc5e429679ca20110368c693ba4cdc8bd3e0f76c2944", null ],
       [ "INT_TYPE", "types_8hh.html#ab978429ecff83a3f97002bc5e429679ca4b39e84849cccef7d23386263e9c9c69", null ],
@@ -50,5 +51,11 @@ var types_8hh =
       [ "UADD_TYPE", "types_8hh.html#a70efda59ea975e441771c1e035914145a8d29b27b81ace4c00bfc4a26d8919884", null ],
       [ "UDEREFER_TYPE", "types_8hh.html#a70efda59ea975e441771c1e035914145a5ab7b9414ce68a9e8a2fa24be04305c9", null ],
       [ "UREF_TYPE", "types_8hh.html#a70efda59ea975e441771c1e035914145ae2e8a8a8681a227bfc03aca7fb742068", null ]
+    ] ],
+    [ "var_type", "types_8hh.html#a2988552954b6d039b75f3c191140786d", [
+      [ "DB", "types_8hh.html#a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170", null ],
+      [ "i32", "types_8hh.html#a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222", null ],
+      [ "i8", "types_8hh.html#a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513", null ],
+      [ "NONE", "types_8hh.html#a2988552954b6d039b75f3c191140786dafd10280670a8cfb82fc07aa0ec20ae5a", null ]
     ] ]
 ];

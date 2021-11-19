@@ -110,7 +110,7 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   auto lambda_walk_ir = [&output, this](Operand* const operand) {
     if (operand != nullptr) {
       if (operand->get_type() == var_type::NONE) {
-        output << "\t";
+        output << operand->get_identifier() << "\t";
       } else if (operand->get_is_var() == false) {
         output << var_type_to_string(operand->get_type()) << ' '
                << operand->get_value() << "\t";

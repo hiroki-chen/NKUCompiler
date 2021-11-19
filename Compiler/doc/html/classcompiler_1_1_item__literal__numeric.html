@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -115,8 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af5cafe38c44f3d74398104adf8298347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75b18d45938398b8a26c076215ea40e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__literal__numeric.html#a75b18d45938398b8a26c076215ea40e9">Item_literal_numeric</a> (const uint32_t &amp;<a class="el" href="classcompiler_1_1_item.html#adfe26df6660160284563018887ee827c">lineno</a>, const double &amp;<a class="el" href="classcompiler_1_1_item__literal__numeric.html#a1d136dbcfb2966f54c39724af0990b0c">value</a>)</td></tr>
 <tr class="separator:a75b18d45938398b8a26c076215ea40e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f8c5680c933a83644090dd630068ddb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__literal__numeric.html#a3f8c5680c933a83644090dd630068ddb">generate_ir</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">compiler::ir::IR</a> &gt; &amp;ir_list) const override</td></tr>
-<tr class="separator:a3f8c5680c933a83644090dd630068ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a619edaac532fbdd57bb53cd95ae71895"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__literal__numeric.html#a619edaac532fbdd57bb53cd95ae71895">generate_ir</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">compiler::ir::IR</a> &gt; &amp;ir_list) const override</td></tr>
+<tr class="separator:a619edaac532fbdd57bb53cd95ae71895"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3de9cd4f71fd1004cf460523ba4a8945"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classcompiler_1_1_item__literal.html#a2709666dfba2e132d03c1d7660591a3a">Item_literal::literal_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__literal__numeric.html#a3de9cd4f71fd1004cf460523ba4a8945">get_literal_type</a> (void) const override=0</td></tr>
 <tr class="separator:a3de9cd4f71fd1004cf460523ba4a8945"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a66eba5224e5bcd478e0e7d199cf914"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__literal__numeric.html#a3a66eba5224e5bcd478e0e7d199cf914">print_result</a> (const uint32_t &amp;indent, const bool &amp;leaf) const override</td></tr>
@@ -140,6 +140,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3b3c6e1a731c8610a68700c26866efa7 inherit pub_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb1a8bf0d879f45544c9e41800a36ae7 inherit pub_methods_classcompiler_1_1_item__expr"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classcompiler_1_1_item.html#a04b10da5804b07ea48db43809ed485cc">Item::type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr.html#afb1a8bf0d879f45544c9e41800a36ae7">get_type</a> (void) const override</td></tr>
 <tr class="separator:afb1a8bf0d879f45544c9e41800a36ae7 inherit pub_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9034792ac8e88ad98963252a7aac1ca inherit pub_methods_classcompiler_1_1_item__expr"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacecompiler_1_1ir.html#a88aa346d611940b562b77e7fdb77199e">compiler::ir::BranchIR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr.html#ac9034792ac8e88ad98963252a7aac1ca">eval_cond</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">compiler::ir::IR</a> &gt; &amp;ir_list) const</td></tr>
+<tr class="memdesc:ac9034792ac8e88ad98963252a7aac1ca inherit pub_methods_classcompiler_1_1_item__expr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to eval_cond conditional IR in runtime.  <a href="classcompiler_1_1_item__expr.html#ac9034792ac8e88ad98963252a7aac1ca">More...</a><br /></td></tr>
+<tr class="separator:ac9034792ac8e88ad98963252a7aac1ca inherit pub_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbf8eec2a6762fe778f2dc08f864d50a inherit pub_methods_classcompiler_1_1_item__expr"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classcompiler_1_1ir_1_1_operand.html">compiler::ir::Operand</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr.html#adbf8eec2a6762fe778f2dc08f864d50a">eval_runtime</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const ir_context) const</td></tr>
+<tr class="memdesc:adbf8eec2a6762fe778f2dc08f864d50a inherit pub_methods_classcompiler_1_1_item__expr"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called when optimization level is set. We calculate the expression at runtime.  <a href="classcompiler_1_1_item__expr.html#adbf8eec2a6762fe778f2dc08f864d50a">More...</a><br /></td></tr>
+<tr class="separator:adbf8eec2a6762fe778f2dc08f864d50a inherit pub_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd9e0f924ec06be0c5ea44b849bb007 inherit pub_methods_classcompiler_1_1_item__expr"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classcompiler_1_1ir_1_1_operand.html">compiler::ir::Operand</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr.html#a2fd9e0f924ec06be0c5ea44b849bb007">eval_runtime</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">compiler::ir::IR</a> &gt; &amp;ir_list) const</td></tr>
+<tr class="memdesc:a2fd9e0f924ec06be0c5ea44b849bb007 inherit pub_methods_classcompiler_1_1_item__expr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emit an operand.  <a href="classcompiler_1_1_item__expr.html#a2fd9e0f924ec06be0c5ea44b849bb007">More...</a><br /></td></tr>
+<tr class="separator:a2fd9e0f924ec06be0c5ea44b849bb007 inherit pub_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33508a12b9ec74d9efa6aee7ebe8ed68 inherit pub_methods_classcompiler_1_1_item__expr"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr.html#a33508a12b9ec74d9efa6aee7ebe8ed68">~Item_expr</a> () override=default</td></tr>
 <tr class="separator:a33508a12b9ec74d9efa6aee7ebe8ed68 inherit pub_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classcompiler_1_1_item"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classcompiler_1_1_item')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classcompiler_1_1_item.html">compiler::Item</a></td></tr>
@@ -149,8 +158,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8c9c025c2cac612a42ba494f19ebf518 inherit pub_methods_classcompiler_1_1_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44ef0aee7be4ad0ace4d0af3a3e8315c inherit pub_methods_classcompiler_1_1_item"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html#a44ef0aee7be4ad0ace4d0af3a3e8315c">Item</a> (const uint32_t &amp;<a class="el" href="classcompiler_1_1_item.html#adfe26df6660160284563018887ee827c">lineno</a>)</td></tr>
 <tr class="separator:a44ef0aee7be4ad0ace4d0af3a3e8315c inherit pub_methods_classcompiler_1_1_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e92f93e6afc062b8ec562d537efceaf inherit pub_methods_classcompiler_1_1_item"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html#a6e92f93e6afc062b8ec562d537efceaf">generate_ir</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">ir::IR</a> &gt; &amp;ir_list) const</td></tr>
-<tr class="separator:a6e92f93e6afc062b8ec562d537efceaf inherit pub_methods_classcompiler_1_1_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa43063c88c732c5e14370fbea95743d2 inherit pub_methods_classcompiler_1_1_item"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html#aa43063c88c732c5e14370fbea95743d2">generate_ir</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">ir::IR</a> &gt; &amp;ir_list) const</td></tr>
+<tr class="separator:aa43063c88c732c5e14370fbea95743d2 inherit pub_methods_classcompiler_1_1_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05ff4a35cdb72114dcd3d9d3529a605a inherit pub_methods_classcompiler_1_1_item"><td class="memItemLeft" align="right" valign="top">virtual uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html#a05ff4a35cdb72114dcd3d9d3529a605a">get_lineno</a> (void) const</td></tr>
 <tr class="separator:a05ff4a35cdb72114dcd3d9d3529a605a inherit pub_methods_classcompiler_1_1_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad68ee87c4939bf5e77401f888fea7e83 inherit pub_methods_classcompiler_1_1_item"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html#ad68ee87c4939bf5e77401f888fea7e83">~Item</a> ()=default</td></tr>
@@ -211,11 +220,22 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:af2a83be114456eebff1f526e2961c533 inherit pub_types_classcompiler_1_1_item"><td class="memItemLeft" align="right" valign="top">typedef enum compiler::Item::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html#af2a83be114456eebff1f526e2961c533">type</a></td></tr>
 <tr class="memdesc:af2a83be114456eebff1f526e2961c533 inherit pub_types_classcompiler_1_1_item"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type of the item.  <a href="classcompiler_1_1_item.html#af2a83be114456eebff1f526e2961c533">More...</a><br /></td></tr>
 <tr class="separator:af2a83be114456eebff1f526e2961c533 inherit pub_types_classcompiler_1_1_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classcompiler_1_1_item__literal"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classcompiler_1_1_item__literal')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classcompiler_1_1_item__literal.html">compiler::Item_literal</a></td></tr>
+<tr class="memitem:ad49ebbf2e8d2ec7d732a2618122ef942 inherit pro_methods_classcompiler_1_1_item__literal"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classcompiler_1_1ir_1_1_operand.html">compiler::ir::Operand</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__literal.html#ad49ebbf2e8d2ec7d732a2618122ef942">eval_runtime_helper</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const ir_context) const override</td></tr>
+<tr class="separator:ad49ebbf2e8d2ec7d732a2618122ef942 inherit pro_methods_classcompiler_1_1_item__literal"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classcompiler_1_1_item__expr"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classcompiler_1_1_item__expr')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classcompiler_1_1_item__expr.html">compiler::Item_expr</a></td></tr>
+<tr class="memitem:ab643730026784b4ec214b42dc40a9abd inherit pro_methods_classcompiler_1_1_item__expr"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacecompiler_1_1ir.html#a88aa346d611940b562b77e7fdb77199e">ir::BranchIR</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr.html#ab643730026784b4ec214b42dc40a9abd">eval_cond_helper</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">compiler::ir::IR</a> &gt; &amp;ir_list) const</td></tr>
+<tr class="separator:ab643730026784b4ec214b42dc40a9abd inherit pro_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6e17ee78a4edce1d7254313391f064b inherit pro_methods_classcompiler_1_1_item__expr"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classcompiler_1_1ir_1_1_operand.html">ir::Operand</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item__expr.html#af6e17ee78a4edce1d7254313391f064b">eval_runtime_helper</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">compiler::ir::IR</a> &gt; &amp;ir_list) const</td></tr>
+<tr class="separator:af6e17ee78a4edce1d7254313391f064b inherit pro_methods_classcompiler_1_1_item__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classcompiler_1_1_item"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classcompiler_1_1_item')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classcompiler_1_1_item.html">compiler::Item</a></td></tr>
+<tr class="memitem:a10ef96db7a79bc17a4655a41bb511e3d inherit pro_methods_classcompiler_1_1_item"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_item.html#a10ef96db7a79bc17a4655a41bb511e3d">generate_ir_helper</a> (<a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">ir::IRContext</a> *const ir_context, std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">ir::IR</a> &gt; &amp;ir_list) const</td></tr>
+<tr class="separator:a10ef96db7a79bc17a4655a41bb511e3d inherit pro_methods_classcompiler_1_1_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Class for basic numbers. INT/DOUBLE/CHAR. </p>
 
-<p class="definition">Definition at line <a class="el" href="item__literal_8hh_source.html#l00058">58</a> of file <a class="el" href="item__literal_8hh_source.html">item_literal.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__literal_8hh_source.html#l00065">65</a> of file <a class="el" href="item__literal_8hh_source.html">item_literal.hh</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af5cafe38c44f3d74398104adf8298347" name="af5cafe38c44f3d74398104adf8298347"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af5cafe38c44f3d74398104adf8298347">&#9670;&nbsp;</a></span>Item_literal_numeric() <span class="overload">[1/2]</span></h2>
@@ -268,7 +288,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="item__literal_8cc_source.html#l00030">30</a> of file <a class="el" href="item__literal_8cc_source.html">item_literal.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__literal_8cc_source.html#l00027">27</a> of file <a class="el" href="item__literal_8cc_source.html">item_literal.cc</a>.</p>
 
 </div>
 </div>
@@ -298,8 +318,8 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3f8c5680c933a83644090dd630068ddb" name="a3f8c5680c933a83644090dd630068ddb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f8c5680c933a83644090dd630068ddb">&#9670;&nbsp;</a></span>generate_ir()</h2>
+<a id="a619edaac532fbdd57bb53cd95ae71895" name="a619edaac532fbdd57bb53cd95ae71895"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a619edaac532fbdd57bb53cd95ae71895">&#9670;&nbsp;</a></span>generate_ir()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -311,7 +331,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">virtual void compiler::Item_literal_numeric::generate_ir </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a> *const&#160;</td>
-          <td class="paramname"><em>context</em>, </td>
+          <td class="paramname"><em>ir_context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -332,11 +352,11 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="classcompiler_1_1_item__literal.html#ad3b77acc90c3e48b9615e6069d2f56b5">compiler::Item_literal</a>.</p>
+<p>Reimplemented from <a class="el" href="classcompiler_1_1_item__literal.html#ad3eef38c06bbf2b53e90968772c99143">compiler::Item_literal</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classcompiler_1_1_item__literal__int.html#abd57fe692823e2fcbcc97930cc5a1e6e">compiler::Item_literal_int</a>, <a class="el" href="classcompiler_1_1_item__literal__real.html#a7a65e31ee9285b4a6775d45dcf247414">compiler::Item_literal_real</a>, and <a class="el" href="classcompiler_1_1_item__literal__char.html#a033c0f126938da80c3f2c0b61234f7e3">compiler::Item_literal_char</a>.</p>
+<p>Reimplemented in <a class="el" href="classcompiler_1_1_item__literal__int.html#abca5a6d171b6fe31e3c9b20ce3e86353">compiler::Item_literal_int</a>, <a class="el" href="classcompiler_1_1_item__literal__real.html#a7bd396e0df876b5e850edbc2e050c561">compiler::Item_literal_real</a>, and <a class="el" href="classcompiler_1_1_item__literal__char.html#a56dec4121a60c021aeedd70331c87da4">compiler::Item_literal_char</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="item__literal_8hh_source.html#l00067">67</a> of file <a class="el" href="item__literal_8hh_source.html">item_literal.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__literal_8hh_source.html#l00074">74</a> of file <a class="el" href="item__literal_8hh_source.html">item_literal.hh</a>.</p>
 
 </div>
 </div>
@@ -410,7 +430,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classcompiler_1_1_item.html#a24a45e9504118e660be4f87a23a4b284">compiler::Item</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="item__literal_8cc_source.html#l00073">73</a> of file <a class="el" href="item__literal_8cc_source.html">item_literal.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__literal_8cc_source.html#l00056">56</a> of file <a class="el" href="item__literal_8cc_source.html">item_literal.cc</a>.</p>
 
 </div>
 </div>
@@ -435,7 +455,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="item__literal_8hh_source.html#l00060">60</a> of file <a class="el" href="item__literal_8hh_source.html">item_literal.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__literal_8hh_source.html#l00067">67</a> of file <a class="el" href="item__literal_8hh_source.html">item_literal.hh</a>.</p>
 
 </div>
 </div>

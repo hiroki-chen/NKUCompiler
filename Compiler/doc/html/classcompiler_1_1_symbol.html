@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -105,7 +105,7 @@ Inheritance diagram for compiler::Symbol:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afab98d14a85f481dc878232a356b450f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#afab98d14a85f481dc878232a356b450f">Symbol</a> ()=delete</td></tr>
 <tr class="separator:afab98d14a85f481dc878232a356b450f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6e54f55c52454a34b7728d0245dd954"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#ae6e54f55c52454a34b7728d0245dd954">Symbol</a> (const std::string &amp;<a class="el" href="classcompiler_1_1_symbol.html#a871b984f1f888d32edb35d4916c131a9">name</a>, const <a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a> &amp;<a class="el" href="classcompiler_1_1_symbol.html#af5a9b586f94b1d8caffb9b0c4c815702">type</a>, const bool &amp;<a class="el" href="classcompiler_1_1_symbol.html#a0b29a64eece367cec6bcde6f2e5c44fb">is_pointer</a>=false)</td></tr>
+<tr class="memitem:ae6e54f55c52454a34b7728d0245dd954"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#ae6e54f55c52454a34b7728d0245dd954">Symbol</a> (const std::string &amp;<a class="el" href="classcompiler_1_1_symbol.html#a0fa7586aaed83ac497c33ca6b7472bec">name</a>, const <a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a> &amp;<a class="el" href="classcompiler_1_1_symbol.html#af5a9b586f94b1d8caffb9b0c4c815702">type</a>, const bool &amp;<a class="el" href="classcompiler_1_1_symbol.html#a0b29a64eece367cec6bcde6f2e5c44fb">is_pointer</a>=false)</td></tr>
 <tr class="separator:ae6e54f55c52454a34b7728d0245dd954"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a713654168c669b6cfd4478f30d5102b9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#a713654168c669b6cfd4478f30d5102b9">set_value</a> (<a class="el" href="classcompiler_1_1_item__literal.html">Item_literal</a> *const literal)</td></tr>
 <tr class="separator:a713654168c669b6cfd4478f30d5102b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -115,6 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7b35f1436b5545f5cc2b3f80c87fafbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7290a10136617667f37c5edfa4020433"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#a7290a10136617667f37c5edfa4020433">get_name</a> (void) const</td></tr>
 <tr class="separator:a7290a10136617667f37c5edfa4020433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab143377c66839a552ef549b4eeed487a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#ab143377c66839a552ef549b4eeed487a">set_name</a> (const std::string &amp;<a class="el" href="classcompiler_1_1_symbol.html#a0fa7586aaed83ac497c33ca6b7472bec">name</a>)</td></tr>
+<tr class="separator:ab143377c66839a552ef549b4eeed487a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72ba7e222f9b5c89dd6fd07bb3565758"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#a72ba7e222f9b5c89dd6fd07bb3565758">get_type</a> (void) const</td></tr>
 <tr class="separator:a72ba7e222f9b5c89dd6fd07bb3565758"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecdb90634aed0b65a92afc77de699cf4"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#aecdb90634aed0b65a92afc77de699cf4">get_is_pointer</a> (void) const</td></tr>
@@ -126,8 +128,8 @@ Public Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:abc9fc73091e74cf97434153df8b63fe5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#abc9fc73091e74cf97434153df8b63fe5">shape</a></td></tr>
 <tr class="separator:abc9fc73091e74cf97434153df8b63fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a871b984f1f888d32edb35d4916c131a9"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#a871b984f1f888d32edb35d4916c131a9">name</a></td></tr>
-<tr class="separator:a871b984f1f888d32edb35d4916c131a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fa7586aaed83ac497c33ca6b7472bec"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#a0fa7586aaed83ac497c33ca6b7472bec">name</a></td></tr>
+<tr class="separator:a0fa7586aaed83ac497c33ca6b7472bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5a9b586f94b1d8caffb9b0c4c815702"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#af5a9b586f94b1d8caffb9b0c4c815702">type</a></td></tr>
 <tr class="separator:af5a9b586f94b1d8caffb9b0c4c815702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b29a64eece367cec6bcde6f2e5c44fb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1_symbol.html#a0b29a64eece367cec6bcde6f2e5c44fb">is_pointer</a></td></tr>
@@ -250,7 +252,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00056">56</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00057">57</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
 
 </div>
 </div>
@@ -278,7 +280,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00064">64</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00069">69</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
 
 </div>
 </div>
@@ -306,7 +308,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00060">60</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00063">63</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
 
 </div>
 </div>
@@ -334,7 +336,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00062">62</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00067">67</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
 
 </div>
 </div>
@@ -364,7 +366,35 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classcompiler_1_1_symbol__const.html#abcd3bffbcc8ad3f2553ac33d9e9cfa23">compiler::Symbol_const</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00058">58</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00061">61</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
+
+</div>
+</div>
+<a id="ab143377c66839a552ef549b4eeed487a" name="ab143377c66839a552ef549b4eeed487a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab143377c66839a552ef549b4eeed487a">&#9670;&nbsp;</a></span>set_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void compiler::Symbol::set_name </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00065">65</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
 
 </div>
 </div>
@@ -392,7 +422,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00054">54</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="symbol_8hh_source.html#l00055">55</a> of file <a class="el" href="symbol_8hh_source.html">symbol.hh</a>.</p>
 
 </div>
 </div>
@@ -421,8 +451,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a871b984f1f888d32edb35d4916c131a9" name="a871b984f1f888d32edb35d4916c131a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a871b984f1f888d32edb35d4916c131a9">&#9670;&nbsp;</a></span>name</h2>
+<a id="a0fa7586aaed83ac497c33ca6b7472bec" name="a0fa7586aaed83ac497c33ca6b7472bec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fa7586aaed83ac497c33ca6b7472bec">&#9670;&nbsp;</a></span>name</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -431,7 +461,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string compiler::Symbol::name</td>
+          <td class="memname">std::string compiler::Symbol::name</td>
         </tr>
       </table>
   </td>

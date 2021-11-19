@@ -11,6 +11,8 @@ var classcompiler_1_1_item__decl =
     [ "Item_decl", "classcompiler_1_1_item__decl.html#aacd54e1dd59c30ff444bb9cf427cd5c8", null ],
     [ "Item_decl", "classcompiler_1_1_item__decl.html#a8621efe87dd0c3fd2554d5d34243ed4a", null ],
     [ "~Item_decl", "classcompiler_1_1_item__decl.html#a47d8ec96fa85c67b0a2bbc8208b8489e", null ],
+    [ "generate_ir", "classcompiler_1_1_item__decl.html#ac844682e9b170ed8bd0732abc0800924", null ],
+    [ "generate_ir_helper", "classcompiler_1_1_item__decl.html#a38d1ea3491e78e593454efc3d85d5190", null ],
     [ "get_decl_type", "classcompiler_1_1_item__decl.html#ae80ef5f36fcb62a117d497a9972c2cf7", null ],
     [ "get_is_decl", "classcompiler_1_1_item__decl.html#a0eaa73e1b01e2f84e3597c0d4b1bc378", null ],
     [ "get_type", "classcompiler_1_1_item__decl.html#a585079d980f8b9e9ccaadc014a2281fd", null ],

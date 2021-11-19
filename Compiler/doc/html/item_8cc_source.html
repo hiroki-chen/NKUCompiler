@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -101,53 +101,37 @@ $(document).ready(function(){initNavTree('item_8cc_source.html',''); initResizab
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> You should have received a copy of the GNU General Public License</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;<a class="code" href="termcolor_8hh.html">common/termcolor.hh</a>&gt;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;<a class="code" href="compile__excepts_8hh.html">common/compile_excepts.hh</a>&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;<a class="code" href="compile__excepts_8hh.html">common/compile_excepts.hh</a>&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;<a class="code" href="termcolor_8hh.html">common/termcolor.hh</a>&gt;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;<a class="code" href="item_8hh.html">frontend/nodes/item.hh</a>&gt;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item.html#a44ef0aee7be4ad0ace4d0af3a3e8315c">   24</a></span><a class="code hl_function" href="classcompiler_1_1_item.html#a1c9b128a17b846848be27d4f360e497c">compiler::Item::Item</a>(<span class="keyword">const</span> uint32_t&amp; lineno)</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    : lineno(lineno)</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item__root.html#a698e480858348fa5e74f4d2a6e2b6718">   29</a></span><a class="code hl_function" href="classcompiler_1_1_item__root.html#a672aea1dfecdf50b860922307853e8b4">compiler::Item_root::Item_root</a>(<span class="keyword">const</span> uint32_t&amp; lineno)</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    : <a class="code hl_class" href="classcompiler_1_1_item.html">Item</a>(lineno)</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item__root.html#a2c4103a0272cc875c6ac6061f023f145">   34</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classcompiler_1_1_item__root.html#a2c4103a0272cc875c6ac6061f023f145">compiler::Item_root::add_child</a>(<a class="code hl_class" href="classcompiler_1_1_item.html">Item</a>* <span class="keyword">const</span> child)</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>{</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    children.emplace_back(child);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item__root.html#a5e9e9a8dfe701ef9881ddaf4ab65a776">   39</a></span>std::string <a class="code hl_function" href="classcompiler_1_1_item__root.html#a5e9e9a8dfe701ef9881ddaf4ab65a776">compiler::Item_root::print_result</a>(<span class="keyword">const</span> uint32_t&amp; indent, <span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; leaf)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    std::ostringstream oss;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    oss &lt;&lt; <span class="stringliteral">&quot;Program Root: &quot;</span> &lt;&lt; termcolor::reset &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; children.size(); i++) {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        oss &lt;&lt; children[i]-&gt;print_result(indent, i == children.size() - 1);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> oss.str();</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item__root.html#a8d540e08a5611dd13ba7ea084f9e06f7">   50</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classcompiler_1_1_item__root.html#a8d540e08a5611dd13ba7ea084f9e06f7">compiler::Item_root::generate_ir</a>(<a class="code hl_class" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a>* <span class="keyword">const</span> context, std::vector&lt;compiler::ir::IR&gt;&amp; ir_list)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">throw</span> <a class="code hl_typedef" href="namespacecompiler.html#a87fd48f09e2018a9b07942b8e7e4611b">compiler::unsupported_operation</a>(<span class="stringliteral">&quot;No IR for compiler::Item_root type!&quot;</span>);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
-<div class="ttc" id="aclasscompiler_1_1_item__root_html_a2c4103a0272cc875c6ac6061f023f145"><div class="ttname"><a href="classcompiler_1_1_item__root.html#a2c4103a0272cc875c6ac6061f023f145">compiler::Item_root::add_child</a></div><div class="ttdeci">virtual void add_child(Item *const child)</div><div class="ttdef"><b>Definition:</b> <a href="item_8cc_source.html#l00034">item.cc:34</a></div></div>
-<div class="ttc" id="aclasscompiler_1_1_item__root_html_a5e9e9a8dfe701ef9881ddaf4ab65a776"><div class="ttname"><a href="classcompiler_1_1_item__root.html#a5e9e9a8dfe701ef9881ddaf4ab65a776">compiler::Item_root::print_result</a></div><div class="ttdeci">virtual std::string print_result(const uint32_t &amp;indent, const bool &amp;leaf) const override</div><div class="ttdoc">Prints the the parse result as an abstract syntax tree.</div><div class="ttdef"><b>Definition:</b> <a href="item_8cc_source.html#l00039">item.cc:39</a></div></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item.html#a44ef0aee7be4ad0ace4d0af3a3e8315c">   23</a></span><a class="code hl_function" href="classcompiler_1_1_item.html#a1c9b128a17b846848be27d4f360e497c">compiler::Item::Item</a>(<span class="keyword">const</span> uint32_t&amp; lineno) : lineno(lineno) {}</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item__root.html#a698e480858348fa5e74f4d2a6e2b6718">   25</a></span><a class="code hl_function" href="classcompiler_1_1_item__root.html#a672aea1dfecdf50b860922307853e8b4">compiler::Item_root::Item_root</a>(<span class="keyword">const</span> uint32_t&amp; lineno) : <a class="code hl_class" href="classcompiler_1_1_item.html">Item</a>(lineno) {}</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item__root.html#a2c4103a0272cc875c6ac6061f023f145">   27</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classcompiler_1_1_item__root.html#a2c4103a0272cc875c6ac6061f023f145">compiler::Item_root::add_child</a>(<a class="code hl_class" href="classcompiler_1_1_item.html">Item</a>* <span class="keyword">const</span> child) {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  children.emplace_back(child);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classcompiler_1_1_item__root.html#a5e9e9a8dfe701ef9881ddaf4ab65a776">   31</a></span>std::string <a class="code hl_function" href="classcompiler_1_1_item__root.html#a5e9e9a8dfe701ef9881ddaf4ab65a776">compiler::Item_root::print_result</a>(<span class="keyword">const</span> uint32_t&amp; indent,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                                              <span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; leaf)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  std::ostringstream oss;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  oss &lt;&lt; <span class="stringliteral">&quot;Program Root: &quot;</span> &lt;&lt; termcolor::reset &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; children.size(); i++) {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    oss &lt;&lt; children[i]-&gt;print_result(indent, i == children.size() - 1);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keywordflow">return</span> oss.str();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
+<div class="ttc" id="aclasscompiler_1_1_item__root_html_a2c4103a0272cc875c6ac6061f023f145"><div class="ttname"><a href="classcompiler_1_1_item__root.html#a2c4103a0272cc875c6ac6061f023f145">compiler::Item_root::add_child</a></div><div class="ttdeci">virtual void add_child(Item *const child)</div><div class="ttdef"><b>Definition:</b> <a href="item_8cc_source.html#l00027">item.cc:27</a></div></div>
+<div class="ttc" id="aclasscompiler_1_1_item__root_html_a5e9e9a8dfe701ef9881ddaf4ab65a776"><div class="ttname"><a href="classcompiler_1_1_item__root.html#a5e9e9a8dfe701ef9881ddaf4ab65a776">compiler::Item_root::print_result</a></div><div class="ttdeci">virtual std::string print_result(const uint32_t &amp;indent, const bool &amp;leaf) const override</div><div class="ttdoc">Prints the the parse result as an abstract syntax tree.</div><div class="ttdef"><b>Definition:</b> <a href="item_8cc_source.html#l00031">item.cc:31</a></div></div>
 <div class="ttc" id="aclasscompiler_1_1_item__root_html_a672aea1dfecdf50b860922307853e8b4"><div class="ttname"><a href="classcompiler_1_1_item__root.html#a672aea1dfecdf50b860922307853e8b4">compiler::Item_root::Item_root</a></div><div class="ttdeci">Item_root()=delete</div></div>
-<div class="ttc" id="aclasscompiler_1_1_item__root_html_a8d540e08a5611dd13ba7ea084f9e06f7"><div class="ttname"><a href="classcompiler_1_1_item__root.html#a8d540e08a5611dd13ba7ea084f9e06f7">compiler::Item_root::generate_ir</a></div><div class="ttdeci">virtual void generate_ir(ir::IRContext *const ir_context, std::vector&lt; ir::IR &gt; &amp;ir_list) const override</div><div class="ttdef"><b>Definition:</b> <a href="item_8cc_source.html#l00050">item.cc:50</a></div></div>
 <div class="ttc" id="aclasscompiler_1_1_item_html"><div class="ttname"><a href="classcompiler_1_1_item.html">compiler::Item</a></div><div class="ttdoc">The most basic type for each node in the AST.</div><div class="ttdef"><b>Definition:</b> <a href="item_8hh_source.html#l00034">item.hh:34</a></div></div>
 <div class="ttc" id="aclasscompiler_1_1_item_html_a1c9b128a17b846848be27d4f360e497c"><div class="ttname"><a href="classcompiler_1_1_item.html#a1c9b128a17b846848be27d4f360e497c">compiler::Item::Item</a></div><div class="ttdeci">Item()=delete</div></div>
-<div class="ttc" id="aclasscompiler_1_1ir_1_1_i_r_context_html"><div class="ttname"><a href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a></div><div class="ttdoc">This is the context for generating intermediate representation. It may include: 1) Symbol tables; 2) ...</div><div class="ttdef"><b>Definition:</b> <a href="context_8hh_source.html#l00033">context.hh:33</a></div></div>
 <div class="ttc" id="acompile__excepts_8hh_html"><div class="ttname"><a href="compile__excepts_8hh.html">compile_excepts.hh</a></div></div>
 <div class="ttc" id="aitem_8hh_html"><div class="ttname"><a href="item_8hh.html">item.hh</a></div></div>
-<div class="ttc" id="anamespacecompiler_html_a87fd48f09e2018a9b07942b8e7e4611b"><div class="ttname"><a href="namespacecompiler.html#a87fd48f09e2018a9b07942b8e7e4611b">compiler::unsupported_operation</a></div><div class="ttdeci">compiler::unsupported_operation unsupported_operation</div></div>
 <div class="ttc" id="atermcolor_8hh_html"><div class="ttname"><a href="termcolor_8hh.html">termcolor.hh</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

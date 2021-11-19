@@ -54,6 +54,6 @@ var searchData=
   ['_7eoperand_5fptr_51',['~Operand_ptr',['../classcompiler_1_1ir_1_1_operand__ptr.html#a8de7fb4ba3715d848f01e364841e0187',1,'compiler::ir::Operand_ptr']]],
   ['_7estandard_5fvalue_52',['~standard_value',['../classcxxopts_1_1values_1_1standard__value_3_01bool_01_4.html#a6c8c8a456e2deda84f26939f0335fe8c',1,'cxxopts::values::standard_value&lt; bool &gt;']]],
   ['_7esymbol_53',['~Symbol',['../classcompiler_1_1_symbol.html#a100055bfbd6241aeeea5cac643a959b9',1,'compiler::Symbol']]],
-  ['_7esymbol_5ftable_54',['~Symbol_table',['../classcompiler_1_1_symbol__table.html#ab464aacd27dc48d1f2db9392e9a413b4',1,'compiler::Symbol_table::~Symbol_table()=default'],['../classcompiler_1_1_symbol__table.html#a9d22648142c6745c206293feb2c407b9',1,'compiler::Symbol_table::~Symbol_table()']]],
+  ['_7esymbol_5ftable_54',['~Symbol_table',['../classcompiler_1_1_symbol__table.html#ab6e3a44800daaa6a4f617365c40ac735',1,'compiler::Symbol_table::~Symbol_table()=default'],['../classcompiler_1_1_symbol__table.html#a9d22648142c6745c206293feb2c407b9',1,'compiler::Symbol_table::~Symbol_table()']]],
   ['_7evalue_55',['~Value',['../classcxxopts_1_1_value.html#afbbfc1c371d0b8bab3548be76523d12c',1,'cxxopts::Value']]]
 ];

@@ -4,12 +4,13 @@ var ir_8hh =
     [ "compiler::ir::Operand_ptr", "classcompiler_1_1ir_1_1_operand__ptr.html", "classcompiler_1_1ir_1_1_operand__ptr" ],
     [ "compiler::ir::IR", "classcompiler_1_1ir_1_1_i_r.html", "classcompiler_1_1ir_1_1_i_r" ],
     [ "FORMAT", "ir_8hh.html#a00e0d27085de736abbbc43c089fbf487", null ],
+    [ "BranchIR", "ir_8hh.html#a88aa346d611940b562b77e7fdb77199e", null ],
     [ "IR", "ir_8hh.html#a5895fb59592f783972fd007adaea2dff", null ],
     [ "op_type", "ir_8hh.html#a57bbb2a11665e7d64a6324d99c90fce1", null ],
     [ "Operand", "ir_8hh.html#ac2c75241ce64a3aa3640d9b002f956b8", null ],
     [ "Operand_ptr", "ir_8hh.html#af4e784269e47ac5f8fcc2e6527b8c79e", null ],
-    [ "var_type", "ir_8hh.html#a8378a129107654aeb3ff06a8415164d9", null ],
     [ "op_type", "ir_8hh.html#a27e578532e191c34f41311dd373728c6", [
+      [ "ARG", "ir_8hh.html#a27e578532e191c34f41311dd373728c6a49a2b3394968de7b56f99e8245b1f724", null ],
       [ "NOP", "ir_8hh.html#a27e578532e191c34f41311dd373728c6a62c8b830ef454996095cecdfe9bafcfe", null ],
       [ "IADD", "ir_8hh.html#a27e578532e191c34f41311dd373728c6a794e5ff9c9bade8ad180e59f4f07217b", null ],
       [ "ISUB", "ir_8hh.html#a27e578532e191c34f41311dd373728c6ab572d3f6c052152cef2c0417b46269e7", null ],
@@ -46,6 +47,8 @@ var ir_8hh =
       [ "STORE", "ir_8hh.html#a27e578532e191c34f41311dd373728c6adb59a454dc4f156cbff1be50a4754b07", null ],
       [ "MALLOC", "ir_8hh.html#a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be", null ],
       [ "BEGIN_DATA", "ir_8hh.html#a27e578532e191c34f41311dd373728c6ac943e997f13c12b8b9a3041fa5df91a9", null ],
+      [ "WORD", "ir_8hh.html#a27e578532e191c34f41311dd373728c6a987b6bee3687c0a2dcf3413849457947", null ],
+      [ "SPACE", "ir_8hh.html#a27e578532e191c34f41311dd373728c6ac9ebeb67a334acfbb99d3a0dca8d8f81", null ],
       [ "END_DATA", "ir_8hh.html#a27e578532e191c34f41311dd373728c6afaac6fd20506ae470c357406018d3347", null ],
       [ "BEGIN_FUNC", "ir_8hh.html#a27e578532e191c34f41311dd373728c6a66c1eba9380f4117081832eeca07f122", null ],
       [ "END_FUNC", "ir_8hh.html#a27e578532e191c34f41311dd373728c6abc27d6a1e16ab657484e5240546273d4", null ],
@@ -53,10 +56,10 @@ var ir_8hh =
       [ "END_STRUCT", "ir_8hh.html#a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119", null ],
       [ "LBL", "ir_8hh.html#a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9", null ]
     ] ],
-    [ "var_type", "ir_8hh.html#a2988552954b6d039b75f3c191140786d", [
-      [ "i32", "ir_8hh.html#a2988552954b6d039b75f3c191140786dad1043c2e6016d87d6e800b7aa87a3222", null ],
-      [ "i8", "ir_8hh.html#a2988552954b6d039b75f3c191140786dae2156e345d9d0e7da2029138662ed513", null ],
-      [ "DB", "ir_8hh.html#a2988552954b6d039b75f3c191140786da00af6a09c4d159794b837bdd0ee1c170", null ],
-      [ "FL", "ir_8hh.html#a2988552954b6d039b75f3c191140786da05d1dc4e77fadbf3659b19c85a26742a", null ]
-    ] ]
+    [ "check_valid_binary", "ir_8hh.html#ace6c8784b511f75c640b5e85d83c14f3", null ],
+    [ "convert_from_double", "ir_8hh.html#a657784fadb3043976dd9202ce3c18712", null ],
+    [ "convert_from_string", "ir_8hh.html#ae5cd8730fab0b174730da1b41ece136f", null ],
+    [ "dump_value", "ir_8hh.html#a66645f0e4319ff6d8a74868f0c0b03eb", null ],
+    [ "get_type_priority", "ir_8hh.html#a6e9f77a8902c71b8fa57baab8d9ac58b", null ],
+    [ "var_type_to_string", "ir_8hh.html#ab57921ed577dc53f435295afc0301915", null ]
 ];

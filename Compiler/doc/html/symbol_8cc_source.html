@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;1.0a</span>
+   <div id="projectname">NKU-Compiler<span id="projectnumber">&#160;v1.0</span>
    </div>
   </td>
  </tr>
@@ -103,30 +103,24 @@ $(document).ready(function(){initNavTree('symbol_8cc_source.html',''); initResiz
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;<a class="code" href="symbol_8hh.html">frontend/symbol_table/symbol.hh</a>&gt;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classcompiler_1_1_symbol.html#ae6e54f55c52454a34b7728d0245dd954">   19</a></span><a class="code hl_function" href="classcompiler_1_1_symbol.html#afab98d14a85f481dc878232a356b450f">compiler::Symbol::Symbol</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code hl_enumeration" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a>&amp; type, <span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; is_pointer)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    : name(name)</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    , type(type)</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    , is_pointer(is_pointer)</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>{</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classcompiler_1_1_symbol__const.html#a41e7a8685cca3295113b17cbe0b0e6ed">   26</a></span><a class="code hl_function" href="classcompiler_1_1_symbol__const.html#a48fa03e5ab4713cad98ecdbc9bf9984d">compiler::Symbol_const::Symbol_const</a>(</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">const</span> std::string&amp; name,</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">const</span> <a class="code hl_enumeration" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a>&amp; type,</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_class" href="classcompiler_1_1_item__literal.html">compiler::Item_literal</a>* <span class="keyword">const</span> <a class="code hl_function" href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">value</a>,</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; is_pointer,</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">const</span> std::vector&lt;Item_literal*&gt;&amp; values)</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    : <a class="code hl_class" href="classcompiler_1_1_symbol.html">Symbol</a>(name, type, is_pointer)</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    , values(values.begin(), values.end())</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    , <a class="code hl_function" href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">value</a>(<a class="code hl_function" href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">value</a>)</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>{</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
-<div class="ttc" id="aclasscompiler_1_1_item__literal_html"><div class="ttname"><a href="classcompiler_1_1_item__literal.html">compiler::Item_literal</a></div><div class="ttdoc">Class for literals.</div><div class="ttdef"><b>Definition:</b> <a href="item__literal_8hh_source.html#l00031">item_literal.hh:31</a></div></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classcompiler_1_1_symbol.html#ae6e54f55c52454a34b7728d0245dd954">   19</a></span><a class="code hl_function" href="classcompiler_1_1_symbol.html#afab98d14a85f481dc878232a356b450f">compiler::Symbol::Symbol</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code hl_enumeration" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a>&amp; type,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                         <span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; is_pointer)</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    : name(name), type(type), is_pointer(is_pointer) {}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classcompiler_1_1_symbol__const.html#a41e7a8685cca3295113b17cbe0b0e6ed">   23</a></span><a class="code hl_function" href="classcompiler_1_1_symbol__const.html#a48fa03e5ab4713cad98ecdbc9bf9984d">compiler::Symbol_const::Symbol_const</a>(<span class="keyword">const</span> std::string&amp; name,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                                     <span class="keyword">const</span> <a class="code hl_enumeration" href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">symbol_type</a>&amp; type,</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                                     <a class="code hl_class" href="classcompiler_1_1_item__literal.html">compiler::Item_literal</a>* <span class="keyword">const</span> <a class="code hl_function" href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">value</a>,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                                     <span class="keyword">const</span> <span class="keywordtype">bool</span>&amp; is_pointer,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                                     <span class="keyword">const</span> std::vector&lt;Item_literal*&gt;&amp; values)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    : <a class="code hl_class" href="classcompiler_1_1_symbol.html">Symbol</a>(name, type, is_pointer),</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      values(values.begin(), values.end()),</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>      <a class="code hl_function" href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">value</a>(<a class="code hl_function" href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">value</a>) {}</div>
+<div class="ttc" id="aclasscompiler_1_1_item__literal_html"><div class="ttname"><a href="classcompiler_1_1_item__literal.html">compiler::Item_literal</a></div><div class="ttdoc">Class for literals.</div><div class="ttdef"><b>Definition:</b> <a href="item__literal_8hh_source.html#l00030">item_literal.hh:30</a></div></div>
 <div class="ttc" id="aclasscompiler_1_1_symbol__const_html_a48fa03e5ab4713cad98ecdbc9bf9984d"><div class="ttname"><a href="classcompiler_1_1_symbol__const.html#a48fa03e5ab4713cad98ecdbc9bf9984d">compiler::Symbol_const::Symbol_const</a></div><div class="ttdeci">Symbol_const()=delete</div></div>
 <div class="ttc" id="aclasscompiler_1_1_symbol_html"><div class="ttname"><a href="classcompiler_1_1_symbol.html">compiler::Symbol</a></div><div class="ttdef"><b>Definition:</b> <a href="symbol_8hh_source.html#l00037">symbol.hh:37</a></div></div>
 <div class="ttc" id="aclasscompiler_1_1_symbol_html_afab98d14a85f481dc878232a356b450f"><div class="ttname"><a href="classcompiler_1_1_symbol.html#afab98d14a85f481dc878232a356b450f">compiler::Symbol::Symbol</a></div><div class="ttdeci">Symbol()=delete</div></div>
-<div class="ttc" id="anamespacecompiler_html_a965cf896d037cb61e5cf1d1cd3c700a4"><div class="ttname"><a href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">compiler::symbol_type</a></div><div class="ttdeci">symbol_type</div><div class="ttdef"><b>Definition:</b> <a href="types_8hh_source.html#l00064">types.hh:64</a></div></div>
-<div class="ttc" id="anamespacecxxopts_html_a6b58e451713ebbf12866c1cd8e0a66ab"><div class="ttname"><a href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">cxxopts::value</a></div><div class="ttdeci">std::shared_ptr&lt; Value &gt; value()</div><div class="ttdef"><b>Definition:</b> <a href="cxxopts_8hh_source.html#l01214">cxxopts.hh:1214</a></div></div>
+<div class="ttc" id="anamespacecompiler_html_a965cf896d037cb61e5cf1d1cd3c700a4"><div class="ttname"><a href="namespacecompiler.html#a965cf896d037cb61e5cf1d1cd3c700a4">compiler::symbol_type</a></div><div class="ttdeci">symbol_type</div><div class="ttdef"><b>Definition:</b> <a href="types_8hh_source.html#l00079">types.hh:79</a></div></div>
+<div class="ttc" id="anamespacecxxopts_html_a6b58e451713ebbf12866c1cd8e0a66ab"><div class="ttname"><a href="namespacecxxopts.html#a6b58e451713ebbf12866c1cd8e0a66ab">cxxopts::value</a></div><div class="ttdeci">std::shared_ptr&lt; Value &gt; value()</div><div class="ttdef"><b>Definition:</b> <a href="cxxopts_8hh_source.html#l00906">cxxopts.hh:906</a></div></div>
 <div class="ttc" id="asymbol_8hh_html"><div class="ttname"><a href="symbol_8hh.html">symbol.hh</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

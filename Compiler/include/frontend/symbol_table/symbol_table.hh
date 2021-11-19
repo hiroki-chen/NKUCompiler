@@ -71,6 +71,8 @@ typedef class Symbol_table {
  protected:
   int last_uuid;
 
+  uint32_t available_id;
+
   // Tables are pushed onto the front of the stack (here it is a list)
   std::list<Symbol_block*> symbol_table;
 
@@ -79,6 +81,8 @@ typedef class Symbol_table {
   std::list<Const_block*> const_assign_table;
 
  public:
+  Symbol_table() : available_id(0) {}
+
   virtual ~Symbol_table();
 
   virtual int get_top_scope_uuid() const {
@@ -103,14 +107,14 @@ typedef class Symbol_table {
 
   virtual void add_const(const std::string& name, Symbol_const* const symbol);
 
-  virtual void assign_const(const std::string& name, Symbol_const* const symbol);
+  virtual void assign_const(const std::string& name,
+                            Symbol_const* const symbol);
 
-  virtual void enter_scope() { symbol_table.push_front(new Symbol_block()); }
+  virtual void enter_scope();
 
-  virtual void leave_scope() {
-    delete (*symbol_table.begin());
-    symbol_table.pop_back();
-  }
+  virtual void leave_scope();
+
+  virtual uint32_t get_available_id(void) { return available_id ++;}
 } Symbol_table;
 }  // namespace compiler
 

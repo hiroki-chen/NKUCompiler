@@ -91,7 +91,7 @@ static const char* op_name[46]{
 
     // Delimiters.
     "BEGIN_DATA",
-    "WORD",
+    "GLOBAL",
     "SPACE",
     "END_DATA",
     "BEGIN_FUNC",
@@ -166,7 +166,7 @@ typedef enum op_type {
 
   // Delimiters.
   BEGIN_DATA,
-  WORD,
+  GLOBAL,
   SPACE,
   END_DATA,
   BEGIN_FUNC,
@@ -340,6 +340,8 @@ typedef class IR final {
    * @param verbose
    */
   void emit_ir(std::ostream& out = std::cout, const bool& verbose = false);
+
+  op_type get_op_type(void) const { return type; }
 } IR;
 
 using BranchIR = std::pair<compiler::ir::op_type, compiler::ir::op_type>;

@@ -8,9 +8,10 @@ var classcompiler_1_1_symbol =
     [ "get_name", "classcompiler_1_1_symbol.html#a7290a10136617667f37c5edfa4020433", null ],
     [ "get_type", "classcompiler_1_1_symbol.html#a72ba7e222f9b5c89dd6fd07bb3565758", null ],
     [ "is_const", "classcompiler_1_1_symbol.html#a7b35f1436b5545f5cc2b3f80c87fafbf", null ],
+    [ "set_name", "classcompiler_1_1_symbol.html#ab143377c66839a552ef549b4eeed487a", null ],
     [ "set_value", "classcompiler_1_1_symbol.html#a713654168c669b6cfd4478f30d5102b9", null ],
     [ "is_pointer", "classcompiler_1_1_symbol.html#a0b29a64eece367cec6bcde6f2e5c44fb", null ],
-    [ "name", "classcompiler_1_1_symbol.html#a871b984f1f888d32edb35d4916c131a9", null ],
+    [ "name", "classcompiler_1_1_symbol.html#a0fa7586aaed83ac497c33ca6b7472bec", null ],
     [ "shape", "classcompiler_1_1_symbol.html#abc9fc73091e74cf97434153df8b63fe5", null ],
     [ "type", "classcompiler_1_1_symbol.html#af5a9b586f94b1d8caffb9b0c4c815702", null ],
     [ "value", "classcompiler_1_1_symbol.html#a8b46107dbdce7a47f6ea81e71c510c0c", null ]

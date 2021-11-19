@@ -9,6 +9,7 @@ var annotated_dup =
       ] ],
       [ "Command_parser", "classcompiler_1_1_command__parser.html", "classcompiler_1_1_command__parser" ],
       [ "Compiler_runtime", "classcompiler_1_1_compiler__runtime.html", "classcompiler_1_1_compiler__runtime" ],
+      [ "Const_block", "classcompiler_1_1_const__block.html", "classcompiler_1_1_const__block" ],
       [ "fatal_error", "classcompiler_1_1fatal__error.html", "classcompiler_1_1fatal__error" ],
       [ "Item", "classcompiler_1_1_item.html", "classcompiler_1_1_item" ],
       [ "Item_block", "classcompiler_1_1_item__block.html", "classcompiler_1_1_item__block" ],

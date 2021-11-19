@@ -59,6 +59,14 @@ int handle_lib_get(const std::string& func_name);
  * @return ir::var_type
  */
 ir::var_type to_ir_type(const basic_type& b_type);
+
+/**
+ * @brief Convert a IR type back to its basic type.
+ * 
+ * @param v_type 
+ * @return basic_type 
+ */
+basic_type to_basic_type(const ir::var_type& v_type);
 }  // namespace compiler
 
 #endif

@@ -19,6 +19,7 @@ var classcompiler_1_1_item__stmt =
     [ "Item_stmt", "classcompiler_1_1_item__stmt.html#aacf54d96f2b876797405eb18f9f6865f", null ],
     [ "Item_stmt", "classcompiler_1_1_item__stmt.html#a43d9c98edd0496471d930cd07129cca6", null ],
     [ "~Item_stmt", "classcompiler_1_1_item__stmt.html#a0d1a3ef9845326e249560bf87dfab221", null ],
+    [ "eval_runtime_helper", "classcompiler_1_1_item__stmt.html#a07a6d6a18fecdff8338053d6ccd4b905", null ],
     [ "get_expr_type", "classcompiler_1_1_item__stmt.html#a8423c089b6ce3961d353b76f6f246b0a", null ],
     [ "get_stmt_type", "classcompiler_1_1_item__stmt.html#af2f890e4158e953a702ec7df64f5f4a8", null ]
 ];

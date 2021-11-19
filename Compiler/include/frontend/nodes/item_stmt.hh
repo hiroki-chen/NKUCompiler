@@ -231,6 +231,10 @@ typedef class Item_stmt_return final : public Item_stmt {
  protected:
   Item_expr* const expr;
 
+  virtual void generate_ir_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override;
+
  public:
   Item_stmt_return() = delete;
 

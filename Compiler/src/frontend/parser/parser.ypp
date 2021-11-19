@@ -85,8 +85,8 @@
     compiler::Item_func_call_list*      item_func_call_list;
     compiler::Item_block*               item_block;
     compiler::Item_struct_body*         item_struct_body;
-    std::string*                        raw_string;
     double                              raw_number;
+    std::string*                        raw_string;
     char                                raw_char;
 }
 
@@ -139,8 +139,8 @@
 %type <item_literal> LITERAL
 %type <item_ident_pointer> POINTER
 %type <item_struct_body> Body
-%type <raw_string> ID STRING
-%type <raw_number> HEX DECIMAL OCTAL
+%type <raw_string> ID STRING DECIMAL
+%type <raw_number> HEX OCTAL
 %type <raw_char> CHAR
 
 %start CompUnit
@@ -494,7 +494,15 @@ PrimaryExp: LPARENTHESIS Exp RPARENTHESIS           { $$ = $2; }
 
 LITERAL: HEX                                        { $$ = new compiler::Item_literal_int(yyget_lineno(), $1); }
       | OCTAL                                       { $$ = new compiler::Item_literal_int(yyget_lineno(), $1); }
-      | DECIMAL                                     { $$ = new compiler::Item_literal_real(yyget_lineno(), $1); }
+      | DECIMAL                                     
+        { 
+          if (($1)->find(".") != std::string::npos) {
+            $$ = new compiler::Item_literal_real(yyget_lineno(), std::stod(*$1)); 
+          } else {
+            $$ = new compiler::Item_literal_int(yyget_lineno(), std::stoi(*$1)); 
+          }
+          
+        }
       | CHAR                                        { $$ = new compiler::Item_literal_char(yyget_lineno(), $1); }
       | STRING                                      { $$ = new compiler::Item_literal_string(yyget_lineno(), *$1); }
       | TRUE                                        { $$ = new compiler::Item_literal_int(yyget_lineno(), 1); }

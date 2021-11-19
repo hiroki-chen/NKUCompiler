@@ -22,18 +22,50 @@ void compiler::Item_func_def::generate_ir_helper(
     std::vector<compiler::ir::IR>& ir_list) const {
   ir_context->enter_scope();
   const size_t argument_number = parameter->get_arg_number();
-  
+
   // BEGIN_FUNCTION.
   ir_list.emplace_back(
       ir::op_type::BEGIN_FUNC, nullptr,
-      new ir::Operand(to_ir_type(return_type), "", std::to_string(argument_number), false, false),
+      new ir::Operand(to_ir_type(return_type), "",
+                      std::to_string(argument_number), false, false),
       identifier->get_name());
 
   // Get all the arguments.
   const std::vector<Item_func_def_arg*> arguments = parameter->get_arguments();
   for (size_t i = 0; i < argument_number; i++) {
+    // Allocate variable to store the arguments.
     const compiler::Item_func_def_arg* const arg = arguments[i];
     const compiler::Item_ident* const identifier = arg->get_identifier();
+
+    // Handle array type.
+    // Currently we do not support non-array and non-variable type.
+    if (identifier->get_ident_type() == Item_ident::ARRAY) {
+    } else {
+      const std::string var =
+          "%" +
+          std::to_string(ir_context->get_symbol_table()->get_available_id());
+      ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(var),
+                           "$arg" + std::to_string(i));
+      ir_context->get_symbol_table()->add_symbol(
+          identifier->get_name(),
+          new compiler::Symbol(var, compiler::symbol_type::VAR_TYPE));
+    }
+  }
+
+  // Generate the IR for the function body.
+  func_body->generate_ir(ir_context, ir_list);
+  // No return type? Add it manually.
+  if (ir_list.back().get_op_type() != ir::op_type::RET) {
+    ir::Operand* return_value = nullptr;
+
+    if (return_type == compiler::basic_type::VOID_TYPE) {
+      return_value = new ir::Operand(ir::var_type::NONE, "", "", false, false);
+    } else {
+      return_value = new ir::Operand(compiler::to_ir_type(return_type), "", "0",
+                                     false, false);
+    }
+
+    ir_list.emplace_back(ir::op_type::RET, return_value);
   }
 
   ir_list.emplace_back(ir::op_type::END_FUNC, identifier->get_name());
@@ -46,7 +78,7 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
   std::vector<ir::Operand*> operands;
   ir::Operand* const dst = new ir::Operand(
       "%" +
-      std::to_string(ir_context->get_symbol_table()->get_top_scope_uuid()));
+      std::to_string(ir_context->get_symbol_table()->get_available_id()));
 
   const std::vector<compiler::Item_expr*> args = arguments->get_arguments();
   for (uint32_t i = 0; i < args.size(); i++) {
@@ -55,7 +87,8 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
 
   // Set arguments.
   for (uint32_t i = 0; i < args.size(); i++) {
-    ir::Operand* const arg_pos = new ir::Operand(ir::var_type::NONE, std::to_string(i), "", false, false);
+    ir::Operand* const arg_pos = new ir::Operand(
+        ir::var_type::NONE, std::to_string(i), "", false, false);
     ir_list.emplace_back(ir::op_type::ARG, arg_pos, identifier->get_name());
   }
 
