@@ -87,6 +87,10 @@ typedef class Item_ident_array final : public Item_ident {
   virtual std::string print_result(const uint32_t& indent,
                                    const bool& leaf) const override;
 
+  virtual std::vector<Item_expr*> get_array_shape(void) const {
+    return array_shape;
+  }
+
   virtual ~Item_ident_array() override = default;
 } Item_ident_array;
 

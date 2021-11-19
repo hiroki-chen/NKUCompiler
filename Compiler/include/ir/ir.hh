@@ -187,7 +187,7 @@ typedef enum op_type {
  */
 typedef class Operand {
  protected:
-  const var_type type;
+  var_type type;
 
   const std::string identifier;
 
@@ -220,6 +220,8 @@ typedef class Operand {
   virtual std::string get_identifier(void) const { return identifier; }
 
   virtual std::string get_value(void) const { return value; }
+
+  virtual void set_var_type(const var_type& type) { this->type = type; }
 
   virtual ~Operand() = default;
 } Operand;
@@ -386,6 +388,14 @@ std::string convert_from_double(const double& num);
  * @return std::string
  */
 std::string var_type_to_string(const var_type& type);
+
+/**
+ * @brief Get alignment in memory
+ * 
+ * @param type 
+ * @return uint32_t 
+ */
+uint32_t to_byte_length(const var_type& type);
 
 /**
  * @brief Converts from a compiler::Item_literal type to operand type.

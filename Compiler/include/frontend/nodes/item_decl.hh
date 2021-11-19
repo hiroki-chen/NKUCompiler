@@ -236,17 +236,15 @@ typedef class Item_decl_array : public Item_decl {
  protected:
   Item_ident_array* const identifier;
 
+  virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
+                                  std::vector<compiler::ir::IR>& ir_list,
+                                  const basic_type& b_type) const override;
+
  public:
   Item_decl_array() = delete;
 
   Item_decl_array(const uint32_t& lineno, Item_ident_array* const identifier,
                   const bool& is_decl = true);
-
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
-  }
 
   virtual Item_ident* get_identifier(void) const { return identifier; }
 

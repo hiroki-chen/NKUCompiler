@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
 #include <common/utils.hh>
 #include <frontend/nodes/item_decl.hh>
@@ -88,7 +89,8 @@ void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
     generate_ir_helper(ir_context, ir_list, b_type);
     stack.pop_back();
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
   }
@@ -99,5 +101,52 @@ void compiler::Item_stmt_decl::generate_ir_helper(
     std::vector<compiler::ir::IR>& ir_list) const {
   for (compiler::Item_decl* const declaration : declarations) {
     declaration->generate_ir(ir_context, ir_list, type);
+  }
+}
+
+void compiler::Item_decl_array::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list,
+    const compiler::basic_type& b_type) const {
+  try {
+    // Determine the shape of the array.
+    std::vector<ir::Operand*> array_shape;
+    for (compiler::Item_expr* const shape : identifier->get_array_shape()) {
+      ir::Operand* const value = shape->eval_runtime(ir_context, ir_list);
+      if (value->get_type() == ir::var_type::DB) {
+        throw compiler::fatal_error("Array shape cannot be a double type!");
+      }
+      array_shape.emplace_back(value);
+    }
+    uint32_t array_size = 0;
+    for (ir::Operand* const shape : array_shape) {
+      int size = 0;
+      if ((size = std::stoi(shape->get_value())) < 0) {
+        throw compiler::fatal_error("The array has negative shape!");
+      }
+      array_size *= (uint32_t)size;
+    }
+
+    ir::Operand* const operand_alloc =
+        new ir::Operand(ir::var_type::NONE,
+                        ir::var_type_to_string(compiler::to_ir_type(b_type)) +
+                            " * " + std::to_string(array_size),
+                        "");
+
+    // Handle global array type.
+    if (ir_context->is_global_context()) {
+      const std::string name = identifier->get_name();
+      const std::string name_symbol = ir::global_sign + name + "[]";
+      ir_context->get_symbol_table()->add_symbol(
+          name,
+          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE));
+      ir_list.emplace_back(ir::op_type::GLOBAL_BEGIN, name_symbol);
+      ir_list.emplace_back(ir::op_type::GLOBAL, operand_alloc);
+      ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
+    }
+  } catch (const std::exception& e) {
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
+    exit(1);
   }
 }
