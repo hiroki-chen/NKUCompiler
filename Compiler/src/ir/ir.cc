@@ -16,7 +16,9 @@
  */
 #include <common/compile_excepts.hh>
 #include <common/types.hh>
+#include <common/utils.hh>
 #include <frontend/nodes/item.hh>
+#include <frontend/nodes/item_literal.hh>
 #include <iomanip>
 #include <ir/ir.hh>
 #include <sstream>
@@ -26,6 +28,14 @@ compiler::ir::Operand::Operand()
       identifier(""),
       value(""),
       is_var(false),
+      is_ptr(false) {}
+
+// Construct an operand type from name.
+compiler::ir::Operand::Operand(const std::string& identifier)
+    : type(compiler::ir::var_type::NONE),
+      identifier(identifier),
+      value(""),
+      is_var(true),
       is_ptr(false) {}
 
 compiler::ir::Operand_ptr::Operand_ptr() : Operand(), shape(0) {}
@@ -97,21 +107,22 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   FORMAT(output, op_name[type]);
 
   // Emit IR of each operand. Deepmost callee.
-  auto lambda_walk_ir = [&](Operand* const operand) {
-    if (operand == nullptr) {
-      output << "\t" << label;
-      return;
+  auto lambda_walk_ir = [&output, this](Operand* const operand) {
+    if (operand != nullptr) {
+      if (operand->get_type() == var_type::NONE) {
+        output << "\t";
+      } else if (operand->get_is_var() == false) {
+        output << var_type_to_string(operand->get_type()) << ' '
+               << operand->get_value() << "\t";
+      } else if (operand->get_is_var() == true) {
+        output << var_type_to_string(operand->get_type()) << ' '
+               << operand->get_identifier() << "\t";
+      }
     }
-
-    const bool is_var = operand->get_is_var();
-    output << var_type_to_string(operand->get_type())
-           << (is_var == true ? operand->get_identifier()
-                              : operand->get_value())
-           << "\t" << label << std::endl;
   };
-
   walk_ir(lambda_walk_ir);
-  output << label << std::endl;
+
+  output << "\t" << label << std::endl;
 }
 
 void compiler::ir::IR::walk_ir(std::function<void(Operand* const)>&& callback,
@@ -181,5 +192,39 @@ std::string compiler::ir::var_type_to_string(
     default:
       throw compiler::unimplemented_error(
           "This type of variable is not yet supported!");
+  }
+}
+
+compiler::ir::Operand* compiler::ir::dump_value(
+    compiler::Item_literal* const value) {
+  switch (value->get_literal_type()) {
+    case Item_literal::INT_TYPE: {
+      compiler::Item_literal_int* const val_int =
+          static_cast<compiler::Item_literal_int* const>(value);
+      return new compiler::ir::Operand(ir::var_type::i32, "",
+                                       std::to_string(val_int->get_int()),
+                                       false, false);
+    }
+
+    case Item_literal::REAL_TYPE: {
+      compiler::Item_literal_real* const val_real =
+          static_cast<compiler::Item_literal_real* const>(value);
+      return new compiler::ir::Operand(ir::var_type::DB, "",
+                                       std::to_string(val_real->get_double()),
+                                       false, false);
+    }
+
+    case Item_literal::CHAR_TYPE: {
+      compiler::Item_literal_char* const val_char =
+          static_cast<compiler::Item_literal_char* const>(value);
+      return new compiler::ir::Operand(
+          ir::var_type::i8, "", std::to_string((int)val_char->get_char()),
+          false, false);
+    }
+
+    default:
+      throw compiler::unsupported_operation(
+          "Cannot dump operand from type" +
+          std::to_string(value->get_literal_type()));
   }
 }

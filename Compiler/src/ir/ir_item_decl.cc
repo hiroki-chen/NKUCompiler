@@ -36,15 +36,15 @@ void compiler::Item_decl_var::generate_ir_helper(
     // Create a new symbol for the symbol table.
     compiler::Symbol* const symbol = new compiler::Symbol(
         name_symbol, compiler::symbol_type::VAR_TYPE, false);
-    ir_context->get_symbol_table().add_symbol(name, symbol);
+    ir_context->get_symbol_table()->add_symbol(name, symbol);
   } else {
     const uint32_t scope_id =
-        ir_context->get_symbol_table().get_top_scope_uuid();
+        ir_context->get_symbol_table()->get_top_scope_uuid();
     const std::string name_symbol = "%" + std::to_string(scope_id) + name;
     // Create a temporary symbol for the symbol table.
     compiler::Symbol* const symbol =
         new compiler::Symbol(name, compiler::symbol_type::VAR_TYPE, false);
-    ir_context->get_symbol_table().add_symbol(name, symbol);
+    ir_context->get_symbol_table()->add_symbol(name, symbol);
   }
 }
 
@@ -62,7 +62,7 @@ void compiler::Item_decl_var_init::generate_ir_helper(
     ir_list.emplace_back(compiler::ir::op_type::END_DATA, name_symbol);
   } else {
     const uint32_t scope_id =
-        ir_context->get_symbol_table().get_top_scope_uuid();
+        ir_context->get_symbol_table()->get_top_scope_uuid();
     const std::string name_symbol = "%" + std::to_string(scope_id) + name;
 
     if (is_const == true) {
@@ -81,6 +81,7 @@ void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
     generate_ir_helper(ir_context, ir_list, b_type);
     stack.pop_back();
   } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
     stack.pop_back();
     throw e;
   }

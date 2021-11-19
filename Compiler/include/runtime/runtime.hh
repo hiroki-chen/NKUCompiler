@@ -68,7 +68,7 @@ typedef class Compiler_runtime {
 
   bool print_ast = false;
 
-  bool generate_ir = false;
+  bool print_ir = false;
 
   Item_root* root = nullptr;
 

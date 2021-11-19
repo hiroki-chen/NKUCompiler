@@ -17,7 +17,35 @@
 #include <common/compile_excepts.hh>
 #include <ir/context.hh>
 
-compiler::ir::IRContext::IRContext() { symbol_table.enter_scope(); }
+// Defines symbols for library functions.
+static const std::vector<std::pair<std::string, compiler::Symbol*>>
+    sysy_functions = {
+        {"getint", new compiler::Symbol(
+                       "getint", compiler::symbol_type::FUNC_TYPE, false)},
+        {"getch", new compiler::Symbol(
+                      "getch", compiler::symbol_type::FUNC_TYPE, false)},
+        {"getarray", new compiler::Symbol(
+                         "getarray", compiler::symbol_type::FUNC_TYPE, false)},
+        {"putint", new compiler::Symbol(
+                       "putint", compiler::symbol_type::FUNC_TYPE, false)},
+        {"putch", new compiler::Symbol(
+                      "putch", compiler::symbol_type::FUNC_TYPE, false)},
+        {"putarray", new compiler::Symbol(
+                         "putarray", compiler::symbol_type::FUNC_TYPE, false)},
+};
+
+compiler::ir::IRContext::IRContext() {
+  symbol_table.enter_scope();
+  register_library_function(sysy_functions);
+}
+
+void compiler::ir::IRContext::register_library_function(
+    const std::vector<std::pair<std::string, compiler::Symbol*>>& functions) {
+  compiler::Symbol_table* const symbol_table = get_symbol_table();
+  for (auto function : functions) {
+    symbol_table->add_symbol(function.first, function.second);
+  }
+}
 
 void compiler::ir::IRContext::enter_scope(void) {
   if (symbol_table.get_top_scope_uuid() == -1) {

@@ -34,12 +34,11 @@ class Item_literal;
  *
  */
 class Symbol_table;
-
 typedef class Symbol {
  protected:
   std::vector<uint32_t> shape;
 
-  const std::string name;
+  std::string name;
 
   const symbol_type type;
 
@@ -63,6 +62,8 @@ typedef class Symbol {
 
   virtual std::string get_name(void) const { return name; }
 
+  virtual void set_name(const std::string& name) { this->name = name; }
+
   virtual symbol_type get_type(void) const { return type; }
 
   virtual bool get_is_pointer(void) const { return is_pointer; }
@@ -84,6 +85,10 @@ typedef class Symbol_const : public Symbol {
                const std::vector<Item_literal*>& values = {});
 
   virtual bool is_const(void) const override { return true; }
+
+  virtual Item_literal* get_value(void) const { return value; }
+
+  virtual std::vector<Item_literal*> get_values(void) const { return values; }
 } Symbol_const;
 }  // namespace compiler
 

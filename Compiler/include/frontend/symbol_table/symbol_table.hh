@@ -25,6 +25,8 @@ namespace compiler {
 
 using symbol_table_type = std::unordered_map<std::string, Symbol*>;
 
+using const_table_type = std::unordered_map<std::string, Symbol_const*>;
+
 /**
  * @brief Class for a single symbol table.
  *
@@ -38,8 +40,25 @@ typedef class Symbol_block {
 
   virtual void add_symbol(const std::string& name, Symbol* const symbol);
 
-  virtual symbol_table_type get_block(void) const { return block; }
+  virtual symbol_table_type* get_block(void) { return &block; }
 } Symbol_block;
+
+/**
+ * @brief Stores some information about constant types which are needed at
+ * runtime evaluation.
+ *
+ */
+typedef class Const_block {
+ protected:
+  const_table_type block;
+
+ public:
+  virtual Symbol_const* find_const(const std::string& name);
+
+  virtual void add_const(const std::string& name, Symbol_const* const symbol);
+
+  virtual const_table_type* get_block(void) { return &block; }
+} Const_block;
 
 /**
  * @brief Class for symbol table.
@@ -52,12 +71,15 @@ typedef class Symbol_table {
  protected:
   int last_uuid;
 
+  // Tables are pushed onto the front of the stack (here it is a list)
   std::list<Symbol_block*> symbol_table;
 
+  std::list<Const_block*> const_table;
+
+  std::list<Const_block*> const_assign_table;
+
  public:
-  virtual ~Symbol_table() {
-    for (auto& cur : symbol_table) delete cur;
-  }
+  virtual ~Symbol_table();
 
   virtual int get_top_scope_uuid() const {
     return (int)symbol_table.size() - 1;
@@ -73,7 +95,15 @@ typedef class Symbol_table {
 
   virtual Symbol* find_symbol(const std::string& name);
 
+  virtual Symbol_const* find_const(const std::string& name);
+
+  virtual Symbol_const* find_assign_const(const std::string& name);
+
   virtual void add_symbol(const std::string& name, Symbol* const symbol);
+
+  virtual void add_const(const std::string& name, Symbol_const* const symbol);
+
+  virtual void assign_const(const std::string& name, Symbol_const* const symbol);
 
   virtual void enter_scope() { symbol_table.push_front(new Symbol_block()); }
 

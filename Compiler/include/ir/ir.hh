@@ -26,7 +26,7 @@
 
 #ifndef FORMAT
 #define FORMAT(output, str) \
-  { output << std::ios::left << std::setw(0x10) << str; }
+  { output << std::setw(0x10) << std::left << str << " "; }
 #endif
 
 namespace compiler::ir {
@@ -34,7 +34,8 @@ namespace compiler::ir {
  * @brief Look-up table for enum type compiler::ir::op_type.
  *
  */
-static const char* op_name[45]{
+static const char* op_name[46]{
+    "ARG",
     "NOP",
     // Basic algorithmic operations
     "IADD",
@@ -109,6 +110,7 @@ static const char* op_name[45]{
  *
  */
 typedef enum op_type {
+  ARG,
   NOP,
   // Basic algorithmic operations
   IADD,
@@ -200,6 +202,8 @@ typedef class Operand {
    */
   Operand();
 
+  Operand(const std::string& name);
+
   Operand(const var_type& type, const std::string& identifier,
           const std::string& value, const bool& is_var = true,
           const bool& is_ptr = false);
@@ -274,10 +278,11 @@ typedef class IR final {
   // chained = true) const;
 
   /**
-   * @brief Helper function for generating the IR. Since each variable /
-   * immediate value can be related to some other IRs, we need a callback
-   * function that could correctly "notify" the caller whether the source
-   * variable (src) should be written by the result (dst).
+   * @brief Helper function for generating the IR and prune needless branches.
+   * Since each variable / immediate value can be related to some other IRs, we
+   * need a callback function that could correctly "notify" the caller whether
+   * the source variable (src) should be written by the result (dst); thus we
+   * could delete useless branches.
    *
    * @param callback A callback function.
    * @param chained
@@ -303,7 +308,8 @@ typedef class IR final {
    * @param callback A lambda expression or a function object: the callback
    * function.
    * @param chained    Denote whether the result is related to another IR.
-   *                   Should be evaluated via callback.
+   *                   Should be evaluated via callback. If there is no incoming
+   *                   edges, the IR could be deleted.
    */
   void walk_ir(std::function<void(Operand* const)>&& callback,
                const bool& chained = true);
@@ -376,5 +382,12 @@ std::string convert_from_double(const double& num);
  */
 std::string var_type_to_string(const var_type& type);
 
+/**
+ * @brief Converts from a compiler::Item_literal type to operand type.
+ *
+ * @param value
+ * @return Operand*
+ */
+Operand* dump_value(Item_literal* const value);
 }  // namespace compiler::ir
 #endif
