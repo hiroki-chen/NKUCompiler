@@ -166,6 +166,18 @@ compiler::ir::var_type compiler::to_ir_type(const basic_type& b_type) {
   }
 }
 
+uint32_t compiler::to_byte_length(const compiler::basic_type& b_type) {
+  switch (b_type) {
+    case basic_type::CHAR_TYPE:
+      return 1;
+    case basic_type::INT_TYPE:
+    case basic_type::REAL_TYPE:
+      return 4;
+    default:
+      throw compiler::unsupported_operation("Cannot convert this type to byte!");
+  }
+}
+
 compiler::basic_type compiler::to_basic_type(
     const compiler::ir::var_type& v_type) {
   switch (v_type) {

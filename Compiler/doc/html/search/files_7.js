@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['termcolor_2ehh_0',['termcolor.hh',['../termcolor_8hh.html',1,'']]],
-  ['types_2ehh_1',['types.hh',['../types_8hh.html',1,'']]]
+  ['termcolor_2ehh',['termcolor.hh',['../termcolor_8hh.html',1,'']]],
+  ['types_2ehh',['types.hh',['../types_8hh.html',1,'']]]
 ];

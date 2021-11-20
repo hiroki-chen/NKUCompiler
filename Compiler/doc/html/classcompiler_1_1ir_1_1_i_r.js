@@ -6,5 +6,6 @@ var classcompiler_1_1ir_1_1_i_r =
     [ "IR", "classcompiler_1_1ir_1_1_i_r.html#ab5df0f767e360d7625900ca8080aa930", null ],
     [ "IR", "classcompiler_1_1ir_1_1_i_r.html#ad9736d00376507f196348b5c5669890e", null ],
     [ "IR", "classcompiler_1_1ir_1_1_i_r.html#ab21f32a4987de0c45ac1c93a4541062b", null ],
-    [ "emit_ir", "classcompiler_1_1ir_1_1_i_r.html#ab38b34d883093dbd500817df2d90ae58", null ]
+    [ "emit_ir", "classcompiler_1_1ir_1_1_i_r.html#ab38b34d883093dbd500817df2d90ae58", null ],
+    [ "get_op_type", "classcompiler_1_1ir_1_1_i_r.html#a2dff24b13971981e1a363d74e3c23784", null ]
 ];

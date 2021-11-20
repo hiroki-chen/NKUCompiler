@@ -14,8 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <common/termcolor.hh>
 #include <common/compile_excepts.hh>
+#include <common/termcolor.hh>
 #include <frontend/nodes/item_expr.hh>
 
 extern uint32_t opt_level;
@@ -58,7 +58,8 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond(
     stack.pop_back();
     return branch_ir;
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
   }
@@ -75,7 +76,8 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
   }
@@ -90,7 +92,8 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
   }
@@ -162,7 +165,8 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     try {
       return eval_runtime_helper(ir_context);
     } catch (const std::exception& e) {
-      std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+      std::cerr << termcolor::red << termcolor::bold << e.what()
+                << termcolor::reset << std::endl;
       exit(1);
     }
   } else {
@@ -205,6 +209,15 @@ compiler::ir::Operand* compiler::Item_expr_comma::eval_runtime_helper(
   compiler::ir::Operand* ans = nullptr;
   for (compiler::Item_expr* const expr : expressions) {
     ans = expr->eval_runtime(ir_context, ir_list);
+  }
+  return ans;
+}
+
+compiler::ir::Operand* compiler::Item_expr_comma::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context) const {
+  compiler::ir::Operand* ans = nullptr;
+  for (compiler::Item_expr* const expr : expressions) {
+    ans = expr->eval_runtime(ir_context);
   }
   return ans;
 }

@@ -134,6 +134,9 @@ typedef class Item_expr_comma final : public Item_expr {
       compiler::ir::IRContext* const ir_context,
       std::vector<compiler::ir::IR>& ir_list) const override;
 
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context) const override;
+
  public:
   Item_expr_comma() = delete;
 
@@ -142,12 +145,6 @@ typedef class Item_expr_comma final : public Item_expr {
   virtual void add_expression(Item_expr* const expression) {
     expressions.emplace_back(expression);
   };
-
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
-  }
 
   virtual Item_expr::expr_type get_expr_type(void) const override {
     return Item_expr::expr_type::COMMA_TYPE;

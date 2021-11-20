@@ -187,7 +187,7 @@ typedef enum op_type {
  */
 typedef class Operand {
  protected:
-  const var_type type;
+  var_type type;
 
   const std::string identifier;
 
@@ -220,6 +220,8 @@ typedef class Operand {
   virtual std::string get_identifier(void) const { return identifier; }
 
   virtual std::string get_value(void) const { return value; }
+
+  virtual void set_var_type(const var_type& type) { this->type = type; }
 
   virtual ~Operand() = default;
 } Operand;
@@ -388,21 +390,11 @@ std::string convert_from_double(const double& num);
 std::string var_type_to_string(const var_type& type);
 
 /**
- * @brief Converts from a compiler::Item_literal type to operand type.
- *
- * @param value
- * @return Operand*
+ * @brief Get alignment in memory
+ * 
+ * @param type 
+ * @return uint32_t 
  */
-Operand* dump_value(Item_literal* const value);
-
-/**
- * @brief An inverse function of ir::dump_value.
- * @note Usually used when you are trying to insert a symbol into the symbol
- *       table. Use with care.
- *
- * @param operand
- * @return Item_literal*
- */
-Item_literal* wrap_value(Operand* const operand);
+uint32_t to_byte_length(const var_type& type);
 }  // namespace compiler::ir
 #endif

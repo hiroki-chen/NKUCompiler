@@ -47,10 +47,7 @@ void print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os);
  */
 bool is_dir(const std::string& file_path);
 
-// For the parser?
-void handle_lib_put(const std::string& func_name, const int& value);
-
-int handle_lib_get(const std::string& func_name);
+uint32_t to_byte_length(const basic_type& type);
 
 /**
  * @brief Converts a basic_type to its corresponding IR type.

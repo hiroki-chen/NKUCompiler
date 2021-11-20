@@ -1,17 +1,19 @@
 var item__literal_8hh =
 [
-    [ "compiler::Item_literal", "classcompiler_1_1_item__literal.html", "classcompiler_1_1_item__literal" ],
-    [ "compiler::Item_literal_numeric", "classcompiler_1_1_item__literal__numeric.html", "classcompiler_1_1_item__literal__numeric" ],
-    [ "compiler::Item_literal_int", "classcompiler_1_1_item__literal__int.html", "classcompiler_1_1_item__literal__int" ],
-    [ "compiler::Item_literal_real", "classcompiler_1_1_item__literal__real.html", "classcompiler_1_1_item__literal__real" ],
-    [ "compiler::Item_literal_char", "classcompiler_1_1_item__literal__char.html", "classcompiler_1_1_item__literal__char" ],
-    [ "compiler::Item_literal_string", "classcompiler_1_1_item__literal__string.html", "classcompiler_1_1_item__literal__string" ],
-    [ "compiler::Item_literal_array_init", "classcompiler_1_1_item__literal__array__init.html", "classcompiler_1_1_item__literal__array__init" ],
-    [ "Item_literal", "item__literal_8hh.html#a17930d3f5727f54200b69c1050e355c4", null ],
-    [ "Item_literal_array_init", "item__literal_8hh.html#aab71879930442f32669a3a27dd076d77", null ],
-    [ "Item_literal_char", "item__literal_8hh.html#a166c778d4322aaf735d0e9729ade5b07", null ],
-    [ "Item_literal_int", "item__literal_8hh.html#ae921bebeea1be86cd04b27123b881601", null ],
-    [ "Item_literal_numeric", "item__literal_8hh.html#a37861f37755f7bff3da107620440b702", null ],
-    [ "Item_literal_real", "item__literal_8hh.html#a3c7e523711fa6b6abc53e2b0ed703149", null ],
-    [ "Item_literal_string", "item__literal_8hh.html#a962d96aa09cc0624d9aec87f4af2f048", null ]
+    [ "Item_literal", "classcompiler_1_1_item__literal.html", "classcompiler_1_1_item__literal" ],
+    [ "Item_literal_numeric", "classcompiler_1_1_item__literal__numeric.html", "classcompiler_1_1_item__literal__numeric" ],
+    [ "Item_literal_int", "classcompiler_1_1_item__literal__int.html", "classcompiler_1_1_item__literal__int" ],
+    [ "Item_literal_real", "classcompiler_1_1_item__literal__real.html", "classcompiler_1_1_item__literal__real" ],
+    [ "Item_literal_char", "classcompiler_1_1_item__literal__char.html", "classcompiler_1_1_item__literal__char" ],
+    [ "Item_literal_string", "classcompiler_1_1_item__literal__string.html", "classcompiler_1_1_item__literal__string" ],
+    [ "Item_literal_array_init", "classcompiler_1_1_item__literal__array__init.html", "classcompiler_1_1_item__literal__array__init" ],
+    [ "Item_literal", "item__literal_8hh.html#a9b8250b565cc982965c11c2da766327d", null ],
+    [ "Item_literal_array_init", "item__literal_8hh.html#aa93a5743636dac5ff301d9ceaed37d3c", null ],
+    [ "Item_literal_char", "item__literal_8hh.html#a646de0b9eecd061486cc3dd052e75e90", null ],
+    [ "Item_literal_int", "item__literal_8hh.html#ae37b66a783a5f19f1222150a26e6bd83", null ],
+    [ "Item_literal_numeric", "item__literal_8hh.html#a34cebf8c610cdd2577a6348579d404b3", null ],
+    [ "Item_literal_real", "item__literal_8hh.html#aa90cb98bc073e9e4b6d3c733f5c05900", null ],
+    [ "Item_literal_string", "item__literal_8hh.html#aa3fd6871292f21362aa811aa1d40e2d5", null ],
+    [ "dump_value", "item__literal_8hh.html#a66645f0e4319ff6d8a74868f0c0b03eb", null ],
+    [ "wrap_value", "item__literal_8hh.html#a6230ac9467cc7f144dcd27226568a028", null ]
 ];

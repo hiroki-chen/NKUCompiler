@@ -247,3 +247,15 @@ compiler::Item_literal* compiler::ir::wrap_value(
       throw compiler::unimplemented_error("Not yet supported!");
   }
 }
+
+uint32_t compiler::ir::to_byte_length(const compiler::ir::var_type& type) {
+  switch (type) {
+    case ir::var_type::i32:
+    case ir::var_type::DB:
+      return 4;
+    case ir::var_type::i8:
+      return 1;
+    default:
+      throw compiler::unimplemented_error("Not yet supported!");
+  }
+}

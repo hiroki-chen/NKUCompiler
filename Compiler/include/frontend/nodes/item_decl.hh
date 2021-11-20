@@ -236,17 +236,20 @@ typedef class Item_decl_array : public Item_decl {
  protected:
   Item_ident_array* const identifier;
 
+  virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
+                                  std::vector<compiler::ir::IR>& ir_list,
+                                  const basic_type& b_type) const override;
+
+  virtual uint32_t calculate_array_size(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type,
+      std::vector<ir::Operand*>& shape) const;
+
  public:
   Item_decl_array() = delete;
 
   Item_decl_array(const uint32_t& lineno, Item_ident_array* const identifier,
                   const bool& is_decl = true);
-
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
-  }
 
   virtual Item_ident* get_identifier(void) const { return identifier; }
 
@@ -266,8 +269,34 @@ typedef class Item_decl_array_init final : public Item_decl_array {
 
   Item_literal_array_init* const init_value;
 
+  virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
+                                  std::vector<compiler::ir::IR>& ir_list,
+                                  const basic_type& b_type) const override;
+
+  /**
+   * @brief Recursively handle the initial values for an array. There could be
+   * nested initial values.
+   *
+   * @param value_list
+   * @param init_value
+   * @param index
+   * @param ir_context
+   * @param ir_list
+   * @param var_type
+   */
+  virtual void init_helper(
+      const std::vector<compiler::Item_literal_array_init*> value_list,
+      std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list,
+      const compiler::ir::var_type& var_type) const;
+
  public:
   virtual bool get_is_const(void) const { return is_const; }
+
+  virtual Item_literal_array_init* get_initial_value(void) const {
+    return init_value;
+  }
 
   Item_decl_array_init() = delete;
 
@@ -275,12 +304,6 @@ typedef class Item_decl_array_init final : public Item_decl_array {
                        Item_ident_array* const identifier,
                        Item_literal_array_init* const init_value,
                        const bool& is_const, const bool& is_decl = false);
-
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
-  }
 
   virtual std::string print_result(const uint32_t& indent,
                                    const bool& leaf) const override;

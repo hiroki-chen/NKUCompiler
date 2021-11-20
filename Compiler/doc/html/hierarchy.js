@@ -4,7 +4,7 @@ var hierarchy =
     [ "compiler::Command_parser", "classcompiler_1_1_command__parser.html", null ],
     [ "compiler::Compiler_runtime", "classcompiler_1_1_compiler__runtime.html", null ],
     [ "compiler::Const_block", "classcompiler_1_1_const__block.html", null ],
-    [ "std::enable_shared_from_this", null, [
+    [ "enable_shared_from_this", null, [
       [ "cxxopts::Value", "classcxxopts_1_1_value.html", [
         [ "cxxopts::values::abstract_value< bool >", "classcxxopts_1_1values_1_1abstract__value.html", [
           [ "cxxopts::values::standard_value< bool >", "classcxxopts_1_1values_1_1standard__value_3_01bool_01_4.html", null ]
@@ -14,7 +14,7 @@ var hierarchy =
         ] ]
       ] ]
     ] ],
-    [ "std::exception", null, [
+    [ "exception", null, [
       [ "compiler::fatal_error", "classcompiler_1_1fatal__error.html", null ],
       [ "compiler::parse_error", "classcompiler_1_1parse__error.html", null ],
       [ "compiler::redefined_symbol", "classcompiler_1_1redefined__symbol.html", null ],
@@ -24,6 +24,7 @@ var hierarchy =
       [ "compiler::unknown_character", "classcompiler_1_1unknown__character.html", null ],
       [ "compiler::unsupported_operation", "classcompiler_1_1unsupported__operation.html", null ],
       [ "cxxopts::OptionException", "classcxxopts_1_1_option_exception.html", [
+        [ "cxxopts::option_has_no_value_exception", "classcxxopts_1_1option__has__no__value__exception.html", null ],
         [ "cxxopts::OptionParseException", "classcxxopts_1_1_option_parse_exception.html", [
           [ "cxxopts::argument_incorrect_type", "classcxxopts_1_1argument__incorrect__type.html", null ],
           [ "cxxopts::missing_argument_exception", "classcxxopts_1_1missing__argument__exception.html", null ],
@@ -37,8 +38,7 @@ var hierarchy =
         [ "cxxopts::OptionSpecException", "classcxxopts_1_1_option_spec_exception.html", [
           [ "cxxopts::invalid_option_format_error", "classcxxopts_1_1invalid__option__format__error.html", null ],
           [ "cxxopts::option_exists_error", "classcxxopts_1_1option__exists__error.html", null ]
-        ] ],
-        [ "cxxopts::option_has_no_value_exception", "classcxxopts_1_1option__has__no__value__exception.html", null ]
+        ] ]
       ] ]
     ] ],
     [ "cxxopts::HelpGroupDetails", "structcxxopts_1_1_help_group_details.html", null ],

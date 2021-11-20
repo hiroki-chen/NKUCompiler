@@ -17,8 +17,9 @@
 #include <frontend/symbol_table/symbol.hh>
 
 compiler::Symbol::Symbol(const std::string& name, const symbol_type& type,
-                         const bool& is_pointer)
-    : name(name), type(type), is_pointer(is_pointer) {}
+                         const bool& is_pointer,
+                         const std::vector<ir::Operand*>& shape)
+    : name(name), type(type), is_pointer(is_pointer), shape(shape) {}
 
 compiler::Symbol_const::Symbol_const(const std::string& name,
                                      const symbol_type& type,

@@ -17,6 +17,7 @@
 #include <common/termcolor.hh>
 #include <common/compile_excepts.hh>
 #include <frontend/nodes/item_ident.hh>
+#include <frontend/nodes/item_literal.hh>
 
 extern uint32_t opt_level;
 
