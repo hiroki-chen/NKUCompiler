@@ -179,6 +179,7 @@ typedef enum op_type {
 
   // Jump labels.
   LBL,
+  PHI_MOVE,
 } op_type;
 
 /**
@@ -279,6 +280,12 @@ typedef class IR final {
 
   uint32_t lineno;
 
+  /**
+   * @brief Used to generate phi_move type.
+   *
+   */
+  std::vector<IR>::iterator phi;
+
   // void emit_helper(decltype<compiler::ir::isvar> callback, const bool&
   // chained = true) const;
 
@@ -346,6 +353,12 @@ typedef class IR final {
    */
   void emit_ir(std::ostream& out = std::cout, const bool& verbose = false);
 
+  void set_phi_block(const std::vector<ir::IR>::iterator& phi_block) {
+    phi = phi_block;
+  }
+
+  std::vector<ir::IR>::iterator get_phi_block(void) const { return phi; }
+
   op_type get_op_type(void) const { return type; }
 } IR;
 
@@ -391,9 +404,9 @@ std::string var_type_to_string(const var_type& type);
 
 /**
  * @brief Get alignment in memory
- * 
- * @param type 
- * @return uint32_t 
+ *
+ * @param type
+ * @return uint32_t
  */
 uint32_t to_byte_length(const var_type& type);
 }  // namespace compiler::ir

@@ -36,7 +36,7 @@ compiler::Symbol* compiler::Symbol_table::find_symbol(const std::string& name) {
 
   // Not found. Raise an error.
   std::ostringstream oss;
-  oss << "Error: Symbol " << name << " is not declared";
+  oss << "Error: Symbol \"" << name << "\" is not declared.";
   throw compiler::undeclared_symbol(oss.str());
   return nullptr;
 }
@@ -59,7 +59,7 @@ compiler::Symbol_const* compiler::Symbol_table::find_const(
 
   // Not found. Raise an error.
   std::ostringstream oss;
-  oss << "Error: Symbol " << name << " is not declared";
+  oss << "Error: Symbol \"" << name << "\" is not declared.";
   throw compiler::undeclared_symbol(oss.str());
   return nullptr;
 }
@@ -82,7 +82,7 @@ compiler::Symbol_const* compiler::Symbol_table::find_assign_const(
 
   // Not found. Raise an error.
   std::ostringstream oss;
-  oss << "Error: Symbol " << name << " is not declared";
+  oss << "Error: Symbol \"" << name << "\" is not declared.";
   throw compiler::undeclared_symbol(oss.str());
   return nullptr;
 }
@@ -146,8 +146,8 @@ compiler::Symbol_const* compiler::Const_block::find_const(
 void compiler::Symbol_block::add_symbol(const std::string& name,
                                         Symbol* const symbol) {
   if (find_symbol(name)) {
-    throw compiler::redefined_symbol("Symbol " + name +
-                                     " has been already defined.");
+    throw compiler::redefined_symbol("Error: Symbol \"" + name +
+                                     "\" has been already defined.");
   } else {
     block[name] = symbol;
   }
@@ -156,8 +156,8 @@ void compiler::Symbol_block::add_symbol(const std::string& name,
 void compiler::Const_block::add_const(const std::string& name,
                                       Symbol_const* const symbol) {
   if (find_const(name)) {
-    throw compiler::redefined_symbol("Symbol " + name +
-                                     " has been already defined.");
+    throw compiler::redefined_symbol("Error: Symbol \"" + name +
+                                     "\" has been already defined.");
   } else {
     block[name] = symbol;
   }

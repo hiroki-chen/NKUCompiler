@@ -89,7 +89,7 @@ void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
     generate_ir_helper(ir_context, ir_list, b_type);
     stack.pop_back();
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what()
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
@@ -172,7 +172,7 @@ void compiler::Item_decl_array::generate_ir_helper(
                                true, array_shape));
     }
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what()
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     exit(1);
   }
@@ -220,7 +220,7 @@ void compiler::Item_decl_array_init::generate_ir_helper(
                   ir_list, compiler::to_ir_type(b_type));
     }
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what()
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     exit(1);
   }
@@ -288,7 +288,8 @@ void compiler::Item_decl_array_init::init_helper(
           cur_size++;
           try {
             if (is_const) {
-              lambda_handle_init_const(value->get_value()->eval_runtime(ir_context));
+              lambda_handle_init_const(
+                  value->get_value()->eval_runtime(ir_context));
             } else {
               lambda_handle_init(value->get_value()->eval_runtime(ir_context));
             }

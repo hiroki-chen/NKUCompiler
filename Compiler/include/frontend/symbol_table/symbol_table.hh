@@ -18,7 +18,7 @@
 #define SYMBOL_TABLE_HH
 
 #include <frontend/symbol_table/symbol.hh>
-#include <list>
+#include <deque>
 #include <unordered_map>
 
 namespace compiler {
@@ -75,14 +75,14 @@ typedef class Symbol_table {
    * @brief This structure records the available id for local variables.
    * 
    */
-  std::list<uint32_t> available_id;
+  std::deque<uint32_t> available_id;
 
   // Tables are pushed onto the front of the stack (here it is a list)
-  std::list<Symbol_block*> symbol_table;
+  std::deque<Symbol_block*> symbol_table;
 
-  std::list<Const_block*> const_table;
+  std::deque<Const_block*> const_table;
 
-  std::list<Const_block*> const_assign_table;
+  std::deque<Const_block*> const_assign_table;
 
  public:
   Symbol_table() {}
@@ -97,7 +97,7 @@ typedef class Symbol_table {
 
   virtual Symbol_block* get_spec_block(const uint32_t& index);
 
-  virtual std::list<Symbol_block*> get_symbol_table(void) {
+  virtual std::deque<Symbol_block*> get_symbol_table(void) {
     return symbol_table;
   }
 

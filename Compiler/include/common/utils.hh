@@ -59,11 +59,27 @@ ir::var_type to_ir_type(const basic_type& b_type);
 
 /**
  * @brief Convert a IR type back to its basic type.
- * 
- * @param v_type 
- * @return basic_type 
+ *
+ * @param v_type
+ * @return basic_type
  */
 basic_type to_basic_type(const ir::var_type& v_type);
+
+/**
+ * @brief A helper function that inserts into the vector without copy
+ * constructor..
+ *
+ * @tparam ItemType
+ * @param dst
+ * @param src
+ */
+template <class ItemType>
+void insert_with_move(std::vector<ItemType>& dst,
+                      const std::vector<ItemType>& src) {
+  for (const auto& item : src) {
+    dst.emplace_back(std::move(item));
+  }
+}
 }  // namespace compiler
 
 #endif
