@@ -274,20 +274,29 @@ typedef class Item_decl_array_init final : public Item_decl_array {
                                   const basic_type& b_type) const override;
 
   /**
-   * @brief A recursive helper function that calculates the initial value for the array declaration.
+   * @brief Recursively handle the initial values for an array. There could be
+   * nested initial values.
    *
+   * @param value_list
    * @param init_value
    * @param index
    * @param ir_context
    * @param ir_list
+   * @param var_type
    */
-  virtual void init_helper(std::vector<compiler::ir::Operand*>& init_value,
-                           const uint32_t& index,
-                           compiler::ir::IRContext* const ir_context,
-                           std::vector<compiler::ir::IR>& ir_list) const;
+  virtual void init_helper(
+      const std::vector<compiler::Item_literal_array_init*> value_list,
+      std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list,
+      const compiler::ir::var_type& var_type) const;
 
  public:
   virtual bool get_is_const(void) const { return is_const; }
+
+  virtual Item_literal_array_init* get_initial_value(void) const {
+    return init_value;
+  }
 
   Item_decl_array_init() = delete;
 

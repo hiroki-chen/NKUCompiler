@@ -274,7 +274,7 @@ Ident: ID       { $$ = new compiler::Item_ident(yyget_lineno(), *$1); }
 ArrayInitValHelper: ArrayInitValHelper COMMA ArrayInitVal     { $$ = $1; $$->add_value($3); }
                   | ArrayInitValHelper COMMA Exp              {
                                                                 $$ = $1;
-                                                                compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $3, false);
+                                                                compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $3, true);
                                                                 $$->add_value(array_init);
                                                               }
                   | ArrayInitVal                              { $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); $$->add_value($1); }

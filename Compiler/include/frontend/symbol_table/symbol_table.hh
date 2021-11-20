@@ -71,7 +71,11 @@ typedef class Symbol_table {
  protected:
   int last_uuid;
 
-  uint32_t available_id;
+  /**
+   * @brief This structure records the available id for local variables.
+   * 
+   */
+  std::list<uint32_t> available_id;
 
   // Tables are pushed onto the front of the stack (here it is a list)
   std::list<Symbol_block*> symbol_table;
@@ -81,7 +85,7 @@ typedef class Symbol_table {
   std::list<Const_block*> const_assign_table;
 
  public:
-  Symbol_table() : available_id(0) {}
+  Symbol_table() {}
 
   virtual ~Symbol_table();
 
@@ -114,7 +118,7 @@ typedef class Symbol_table {
 
   virtual void leave_scope();
 
-  virtual uint32_t get_available_id(void) { return available_id ++;}
+  virtual uint32_t get_available_id(void) { return available_id.front() ++;}
 } Symbol_table;
 }  // namespace compiler
 

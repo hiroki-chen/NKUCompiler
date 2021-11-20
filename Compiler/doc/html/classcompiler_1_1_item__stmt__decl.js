@@ -4,7 +4,7 @@ var classcompiler_1_1_item__stmt__decl =
     [ "Item_stmt_decl", "classcompiler_1_1_item__stmt__decl.html#a25c5bbe367b03d060d470e704cc19ef4", null ],
     [ "add_declaration", "classcompiler_1_1_item__stmt__decl.html#aca4fe7959965c8c82154e55702521a83", null ],
     [ "generate_ir_helper", "classcompiler_1_1_item__stmt__decl.html#a40dedea5f1f40d1264b72f34a9bc1581", null ],
-    [ "get_declarataions", "classcompiler_1_1_item__stmt__decl.html#adc3fbc04cdb860233092adb82115e640", null ],
+    [ "get_declarataions", "classcompiler_1_1_item__stmt__decl.html#aced3fad5621ab0f1b3f714540e0c9630", null ],
     [ "get_stmt_type", "classcompiler_1_1_item__stmt__decl.html#a2ea5b718cfb76109e5ff90c119e2abb1", null ],
     [ "print_result", "classcompiler_1_1_item__stmt__decl.html#af726d9e0c57f472e59211027e3a4ef9f", null ],
     [ "declarations", "classcompiler_1_1_item__stmt__decl.html#a3263928b5e8ac8ba1c2ccf7cb91ca0d0", null ],

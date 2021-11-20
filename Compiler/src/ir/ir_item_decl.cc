@@ -201,7 +201,9 @@ void compiler::Item_decl_array_init::generate_ir_helper(
           new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
                                true, array_shape));
       ir_list.emplace_back(ir::op_type::GLOBAL_BEGIN, name_symbol);
-      // TODO: Handle init type.
+      // Handle init values.
+      init_helper(init_value->get_value_list(), initial_values, 0, ir_context,
+                  ir_list, compiler::to_ir_type(b_type));
       ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
     } else {
       const std::string name_symbol =
@@ -214,7 +216,8 @@ void compiler::Item_decl_array_init::generate_ir_helper(
       ir_list.emplace_back(ir::op_type::MALLOC, new ir::Operand(name_symbol),
                            operand_alloc);
 
-      // TODO: Handle init type.
+      init_helper(init_value->get_value_list(), initial_values, 0, ir_context,
+                  ir_list, compiler::to_ir_type(b_type));
     }
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << e.what()
@@ -224,9 +227,85 @@ void compiler::Item_decl_array_init::generate_ir_helper(
 }
 
 void compiler::Item_decl_array_init::init_helper(
+    const std::vector<compiler::Item_literal_array_init*> value_list,
     std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
-  // TODO: Implement me.
-  throw;
+    std::vector<compiler::ir::IR>& ir_list,
+    const ir::var_type& var_type) const {
+  auto lambda_handle_init = [&](ir::Operand* const array_size,
+                                const bool& malloc = false) {
+    // Get the length of the array item.
+    const uint32_t byte_length = ir::to_byte_length(var_type);
+    if (malloc == true) {
+      // Iterate through the size of the array.
+      const uint32_t size = std::stoul(array_size->get_value());
+      for (uint32_t i = 0; i < size; i++) {
+        init_value.emplace_back(
+            new ir::Operand(var_type, "", "0", false, false));
+      }
+      if (ir_context->is_global_context()) {
+        ir_list.emplace_back(
+            ir::op_type::SPACE,
+            new ir::Operand(std::to_string(byte_length * size)));
+      }
+    } else {
+      init_value.emplace_back(new ir::Operand(var_type, "", "0", false, false));
+      if (ir_context->is_global_context()) {
+        ir_list.emplace_back(ir::op_type::SPACE, array_size);
+      } else {
+        const std::string array_name_local =
+            ir_context->get_symbol_table()
+                ->find_symbol(get_identifier()->get_name())
+                ->get_name();
+        const uint32_t ind = byte_length * (init_value.size() - 1);
+        ir_list.emplace_back(
+            ir::op_type::STORE, nullptr, new ir::Operand(array_name_local),
+            new ir::Operand(ir::var_type::i32, "", std::to_string(ind), false,
+                            false));
+      }
+    }
+  };
+
+  auto lambda_handle_init_const = [&](const bool& malloc = false) -> bool {
+    // TODO: Implement me.
+    return false;
+  };
+
+  // Main.
+  const std::vector<compiler::Item_expr*> shape = identifier->get_array_shape();
+  if (index < shape.size()) {
+    uint32_t size = 1, cur_size = 0;
+    for (std::vector<compiler::Item_expr*>::const_iterator iter =
+             shape.cbegin() + index;
+         iter != shape.end(); iter++) {
+      size *= std::stoul((*iter)->eval_runtime(ir_context)->get_value());
+      const uint32_t res =
+          std::stoul(shape[index]->eval_runtime(ir_context)->get_value());
+      const uint32_t cur = size / res;
+
+      for (compiler::Item_literal_array_init* const value : value_list) {
+        if (value->get_is_numeric()) {
+          cur_size++;
+          try {
+            if (is_const) {
+              lambda_handle_init_const(value->get_value()->eval_runtime(ir_context));
+            } else {
+              lambda_handle_init(value->get_value()->eval_runtime(ir_context));
+            }
+          } catch (...) {
+          }
+        } else {
+          if (cur_size % cur != 0) {
+            if (is_const) {
+            } else {
+            }
+          }
+        }
+
+        init_helper(value->get_value_list(), init_value, index + 1, ir_context,
+                    ir_list, var_type);
+        cur_size += cur;
+      }
+    }
+  }
 }

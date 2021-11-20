@@ -2126,7 +2126,7 @@ yyreduce:
 #line 275 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.ypp" /* yacc.c:1646  */
     {
                                                                 (yyval.item_literal_array_init) = (yyvsp[-2].item_literal_array_init);
-                                                                compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), (yyvsp[0].item_expr), false);
+                                                                compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), (yyvsp[0].item_expr), true);
                                                                 (yyval.item_literal_array_init)->add_value(array_init);
                                                               }
 #line 2133 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.cc" /* yacc.c:1646  */

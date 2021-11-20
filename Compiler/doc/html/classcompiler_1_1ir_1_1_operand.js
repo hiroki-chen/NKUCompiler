@@ -9,9 +9,10 @@ var classcompiler_1_1ir_1_1_operand =
     [ "get_is_var", "classcompiler_1_1ir_1_1_operand.html#ad193c8ded516331cde2f78f52762376a", null ],
     [ "get_type", "classcompiler_1_1ir_1_1_operand.html#ae7931fb159adcc42d5bb25bc90ab2eba", null ],
     [ "get_value", "classcompiler_1_1ir_1_1_operand.html#a751faf85146a7753ada218318285b7b2", null ],
+    [ "set_var_type", "classcompiler_1_1ir_1_1_operand.html#ad596df57bea16b0f30292f2d046e2561", null ],
     [ "identifier", "classcompiler_1_1ir_1_1_operand.html#a7dfc0f5a6e039ef1674ffd693ae77a3c", null ],
     [ "is_ptr", "classcompiler_1_1ir_1_1_operand.html#adb82fe1707731658d198beef1cc986e6", null ],
     [ "is_var", "classcompiler_1_1ir_1_1_operand.html#a953a71abee991c5f1866d5af8b4c1b66", null ],
-    [ "type", "classcompiler_1_1ir_1_1_operand.html#aa1a53f27dd9c09930d72efcc8c91cd37", null ],
+    [ "type", "classcompiler_1_1ir_1_1_operand.html#a40aa8f6c8b4a02f028371f51df526e9a", null ],
     [ "value", "classcompiler_1_1ir_1_1_operand.html#aa68dd9cc1730ba9ee346aefd53dc3d3d", null ]
 ];

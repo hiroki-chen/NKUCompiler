@@ -214,18 +214,20 @@ typedef class Item_literal_array_init : public Item_literal {
   Item_expr* const expression;
 
   std::vector<Item_literal_array_init*> value_list;
-
+  
  public:
   virtual Item_literal::literal_type get_literal_type(void) const override {
     return Item_literal::literal_type::ARRAY_INIT;
   }
 
+  virtual Item_expr* get_value(void) const { return expression; }
+
   virtual void add_value(Item_literal_array_init* const value);
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
+  virtual bool get_is_numeric(void) const { return is_numeric; }
+
+  virtual std::vector<Item_literal_array_init*> get_value_list(void) const {
+    return value_list;
   }
 
   Item_literal_array_init() = delete;

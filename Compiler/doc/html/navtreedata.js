@@ -1,33 +1,9 @@
-/*
- @licstart  The following is the entire license notice for the JavaScript code in this file.
-
- The MIT License (MIT)
-
- Copyright (C) 1997-2020 by Dimitri van Heesch
-
- Permission is hereby granted, free of charge, to any person obtaining a copy of this software
- and associated documentation files (the "Software"), to deal in the Software without restriction,
- including without limitation the rights to use, copy, modify, merge, publish, distribute,
- sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all copies or
- substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
- BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
- @licend  The above is the entire license notice for the JavaScript code in this file
-*/
 var NAVTREE =
 [
   [ "NKU-Compiler", "index.html", [
-    [ "Basic Framework for Project Compiler", "md__r_e_a_d_m_e.html", null ],
-    [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+    [ "Basic Framework for Project Compiler", "autotoc_md0.html", null ],
+    [ "Namespaces", null, [
+      [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", "namespacemembers_dup" ],
         [ "Functions", "namespacemembers_func.html", null ],
@@ -50,8 +26,8 @@ var NAVTREE =
         [ "Enumerator", "functions_eval.html", null ]
       ] ]
     ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
+    [ "Files", null, [
+      [ "File List", "files.html", "files" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
@@ -59,7 +35,7 @@ var NAVTREE =
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", "globals_defs" ]
+        [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
   ] ]
@@ -68,19 +44,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_make_c_x_x_compiler_id_8cpp.html",
-"classcompiler_1_1_item__decl__var.html#a9a7657d694bd3a9928ee1c01fe1ca978",
-"classcompiler_1_1_item__func__def__list.html#a03ea9fcd9d7edf6a0b645977f5188560",
-"classcompiler_1_1_item__literal.html#a821301dd64ceb06f14f234006140e1c6",
-"classcompiler_1_1_item__stmt__eif.html#ab3600c9c4de9e9ce0de8af17d740729f",
-"classcompiler_1_1ir_1_1_i_r_context.html#a218133e0eadd0d6daad234e6ba76d82d",
-"classcxxopts_1_1_parse_result.html#aa5f4a299ffec3be89782fc738ebd1065",
-"functions_func_f.html",
-"include_2frontend_2parser_2parser_8hh.html#a15c9f7bd2f0e9686df5d9df4f3314aa9af613d73b4e7b570ffd967df4a13c4225",
-"item__struct_8cc.html",
-"namespacecompiler.html#ab978429ecff83a3f97002bc5e429679ca090a9a0626c8d57c419c5fcaf6f1505a",
-"parser_8cc.html#a15c9f7bd2f0e9686df5d9df4f3314aa9a87fdcd2ffa8f71b49da9e0cfd4fb893f",
-"src_2frontend_2parser_2parser_8hh.html#a0f4d394a3ab4e09bff60f714c66dc5ee",
-"structcxxopts_1_1_help_option_details.html#ae9edda8b102865694f3b76ef162f0ead"
+"classcompiler_1_1_item__func__call__list.html#ae9ec4232bda5ad0aac0b9dccc8c56f2a",
+"classcompiler_1_1_item__stmt__assign.html#acf797e216c2001cbf9ab5a88940a9959",
+"classcxxopts_1_1_option_parser.html#a0b61e22df2480c2c91f2793f3c1452ff",
+"functions_t.html",
+"ir_8hh.html#a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be",
+"lexer_8cc.html#ac571eade4cca933e8ccdf6759c527fe7",
+"parser_8cc.html#a1a9dc526fd390d4808252bd631c4c2f7",
+"src_2frontend_2parser_2parser_8hh.html#a15c9f7bd2f0e9686df5d9df4f3314aa9aef31cc6fe9479955961311ee18ac205f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
