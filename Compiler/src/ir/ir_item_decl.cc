@@ -104,28 +104,40 @@ void compiler::Item_stmt_decl::generate_ir_helper(
   }
 }
 
+uint32_t compiler::Item_decl_array::calculate_array_size(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list, const compiler::basic_type& b_type,
+    std::vector<ir::Operand*>& array_shape) const {
+  // Determine the shape of the array.
+  for (compiler::Item_expr* const shape : identifier->get_array_shape()) {
+    ir::Operand* const value = shape->eval_runtime(ir_context, ir_list);
+    if (value->get_type() == ir::var_type::DB) {
+      throw compiler::fatal_error("Array shape cannot be a double type!");
+    }
+    array_shape.emplace_back(value);
+  }
+
+  uint32_t array_size = 1;
+  for (ir::Operand* const shape : array_shape) {
+    int size = 0;
+    if ((size = std::stoi(shape->get_value())) < 0) {
+      throw compiler::fatal_error("The array has negative shape!");
+    }
+    array_size *= (uint32_t)size;
+  }
+
+  return array_size;
+}
+
 void compiler::Item_decl_array::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list,
     const compiler::basic_type& b_type) const {
   try {
-    // Determine the shape of the array.
+    // Determine the size of the array.
     std::vector<ir::Operand*> array_shape;
-    for (compiler::Item_expr* const shape : identifier->get_array_shape()) {
-      ir::Operand* const value = shape->eval_runtime(ir_context, ir_list);
-      if (value->get_type() == ir::var_type::DB) {
-        throw compiler::fatal_error("Array shape cannot be a double type!");
-      }
-      array_shape.emplace_back(value);
-    }
-    uint32_t array_size = 0;
-    for (ir::Operand* const shape : array_shape) {
-      int size = 0;
-      if ((size = std::stoi(shape->get_value())) < 0) {
-        throw compiler::fatal_error("The array has negative shape!");
-      }
-      array_size *= (uint32_t)size;
-    }
+    const uint32_t array_size =
+        calculate_array_size(ir_context, ir_list, b_type, array_shape);
 
     ir::Operand* const operand_alloc =
         new ir::Operand(ir::var_type::NONE,
@@ -134,19 +146,87 @@ void compiler::Item_decl_array::generate_ir_helper(
                         "");
 
     // Handle global array type.
+    const std::string name = identifier->get_name();
     if (ir_context->is_global_context()) {
-      const std::string name = identifier->get_name();
       const std::string name_symbol = ir::global_sign + name + "[]";
       ir_context->get_symbol_table()->add_symbol(
           name,
-          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE));
+          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
+                               false, array_shape));
       ir_list.emplace_back(ir::op_type::GLOBAL_BEGIN, name_symbol);
       ir_list.emplace_back(ir::op_type::GLOBAL, operand_alloc);
+      ir_list.emplace_back(
+          ir::op_type::SPACE,
+          new ir::Operand(std::to_string(
+              ir::to_byte_length(compiler::to_ir_type(b_type)) * array_size)));
       ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
+      // Handle local array type.
+    } else {
+      const std::string name_symbol =
+          ir::local_sign +
+          std::to_string(ir_context->get_symbol_table()->get_available_id()) +
+          name + "[]";
+      ir_context->get_symbol_table()->add_symbol(
+          name,
+          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
+                               true, array_shape));
     }
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << e.what()
               << termcolor::reset << std::endl;
     exit(1);
   }
+}
+
+void compiler::Item_decl_array_init::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type) const {
+  try {
+    std::vector<ir::Operand*> array_shape;
+    const uint32_t array_size =
+        calculate_array_size(ir_context, ir_list, b_type, array_shape);
+    ir::Operand* const operand_alloc =
+        new ir::Operand(ir::var_type::NONE,
+                        ir::var_type_to_string(compiler::to_ir_type(b_type)) +
+                            " * " + std::to_string(array_size),
+                        "");
+
+    // Handle initial value type.
+    const std::string name = identifier->get_name();
+    std::vector<ir::Operand*> initial_values;
+    if (ir_context->is_global_context()) {
+      const std::string name_symbol = ir::global_sign + name;
+      ir_context->get_symbol_table()->add_symbol(
+          name,
+          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
+                               true, array_shape));
+      ir_list.emplace_back(ir::op_type::GLOBAL_BEGIN, name_symbol);
+      // TODO: Handle init type.
+      ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
+    } else {
+      const std::string name_symbol =
+          ir::local_sign +
+          std::to_string(ir_context->get_symbol_table()->get_available_id());
+      ir_context->get_symbol_table()->add_symbol(
+          name,
+          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
+                               true, array_shape));
+      ir_list.emplace_back(ir::op_type::MALLOC, new ir::Operand(name_symbol),
+                           operand_alloc);
+
+      // TODO: Handle init type.
+    }
+  } catch (const std::exception& e) {
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
+    exit(1);
+  }
+}
+
+void compiler::Item_decl_array_init::init_helper(
+    std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // TODO: Implement me.
+  throw;
 }

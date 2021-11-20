@@ -18,6 +18,7 @@
 #define SYMBOL_HH
 
 #include <common/types.hh>
+#include <ir/ir.hh>
 #include <string>
 #include <vector>
 
@@ -36,7 +37,7 @@ class Item_literal;
 class Symbol_table;
 typedef class Symbol {
  protected:
-  std::vector<uint32_t> shape;
+  std::vector<ir::Operand*> shape;
 
   std::string name;
 
@@ -50,13 +51,16 @@ typedef class Symbol {
   Symbol() = delete;
 
   Symbol(const std::string& name, const symbol_type& type,
-         const bool& is_pointer = false);
+         const bool& is_pointer = false,
+         const std::vector<ir::Operand*>& shape = {});
 
   virtual void set_value(Item_literal* const literal) { this->value = literal; }
 
-  virtual void add_shape(const uint32_t& shape) {
+  virtual void add_shape(ir::Operand* const shape) {
     this->shape.emplace_back(shape);
   }
+
+  virtual std::vector<ir::Operand*> get_shape(void) const { return shape; }
 
   virtual bool is_const(void) const { return false; }
 

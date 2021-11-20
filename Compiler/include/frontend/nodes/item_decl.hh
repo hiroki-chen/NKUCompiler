@@ -240,6 +240,11 @@ typedef class Item_decl_array : public Item_decl {
                                   std::vector<compiler::ir::IR>& ir_list,
                                   const basic_type& b_type) const override;
 
+  virtual uint32_t calculate_array_size(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type,
+      std::vector<ir::Operand*>& shape) const;
+
  public:
   Item_decl_array() = delete;
 
@@ -264,6 +269,23 @@ typedef class Item_decl_array_init final : public Item_decl_array {
 
   Item_literal_array_init* const init_value;
 
+  virtual void generate_ir_helper(compiler::ir::IRContext* const ir_context,
+                                  std::vector<compiler::ir::IR>& ir_list,
+                                  const basic_type& b_type) const override;
+
+  /**
+   * @brief A recursive helper function that calculates the initial value for the array declaration.
+   *
+   * @param init_value
+   * @param index
+   * @param ir_context
+   * @param ir_list
+   */
+  virtual void init_helper(std::vector<compiler::ir::Operand*>& init_value,
+                           const uint32_t& index,
+                           compiler::ir::IRContext* const ir_context,
+                           std::vector<compiler::ir::IR>& ir_list) const;
+
  public:
   virtual bool get_is_const(void) const { return is_const; }
 
@@ -273,12 +295,6 @@ typedef class Item_decl_array_init final : public Item_decl_array {
                        Item_ident_array* const identifier,
                        Item_literal_array_init* const init_value,
                        const bool& is_const, const bool& is_decl = false);
-
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
-  }
 
   virtual std::string print_result(const uint32_t& indent,
                                    const bool& leaf) const override;

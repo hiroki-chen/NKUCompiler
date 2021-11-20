@@ -238,6 +238,26 @@ typedef class Item_literal_array_init : public Item_literal {
 
   virtual ~Item_literal_array_init() override = default;
 } Item_literal_array_init;
+
+namespace ir {
+/**
+ * @brief Converts from a compiler::Item_literal type to operand type.
+ *
+ * @param value
+ * @return Operand*
+ */
+Operand* dump_value(Item_literal* const value);
+
+/**
+ * @brief An inverse function of ir::dump_value.
+ * @note Usually used when you are trying to insert a symbol into the symbol
+ *       table. Use with care.
+ *
+ * @param operand
+ * @return Item_literal*
+ */
+Item_literal* wrap_value(Operand* const operand);
+}  // namespace ir
 }  // namespace compiler
 
 #endif
