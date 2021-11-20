@@ -61,7 +61,7 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       }
     }
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what() << termcolor::reset << std::endl;
     exit(1);
   }
 }

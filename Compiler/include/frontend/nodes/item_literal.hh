@@ -28,6 +28,15 @@ namespace compiler {
  *
  */
 typedef class Item_literal : public Item_expr {
+ protected:
+  using Item_expr::eval_runtime_helper;
+
+  virtual ir::Operand* eval_runtime_helper(
+      ir::IRContext* const ir_context,
+      std::vector<ir::IR>& ir_list) const override {
+    return eval_runtime_helper(ir_context);
+  }
+
  public:
   typedef enum literal_type {
     INT_TYPE,
@@ -83,13 +92,13 @@ typedef class Item_literal_numeric : public Item_literal {
 
 typedef class Item_literal_int final : public Item_literal_numeric {
  protected:
-  virtual compiler::ir::Operand* eval_runtime(
+  virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
 
-  virtual compiler::ir::Operand* eval_runtime(
+  virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
       std::vector<compiler::ir::IR>& ir_list) const override {
-    return eval_runtime(ir_context);
+    return eval_runtime_helper(ir_context);
   }
 
  public:
@@ -114,13 +123,13 @@ typedef class Item_literal_int final : public Item_literal_numeric {
 
 typedef class Item_literal_real final : public Item_literal_numeric {
  protected:
-  virtual compiler::ir::Operand* eval_runtime(
+  virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
 
-  virtual compiler::ir::Operand* eval_runtime(
+  virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
       std::vector<compiler::ir::IR>& ir_list) const override {
-    return eval_runtime(ir_context);
+    return eval_runtime_helper(ir_context);
   }
 
  public:
@@ -147,13 +156,13 @@ typedef class Item_literal_real final : public Item_literal_numeric {
 
 typedef class Item_literal_char final : public Item_literal_numeric {
  protected:
-  virtual compiler::ir::Operand* eval_runtime(
+  virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
 
-  virtual compiler::ir::Operand* eval_runtime(
+  virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
       std::vector<compiler::ir::IR>& ir_list) const override {
-    return eval_runtime(ir_context);
+    return eval_runtime_helper(ir_context);
   }
 
  public:
@@ -214,7 +223,7 @@ typedef class Item_literal_array_init : public Item_literal {
   Item_expr* const expression;
 
   std::vector<Item_literal_array_init*> value_list;
-  
+
  public:
   virtual Item_literal::literal_type get_literal_type(void) const override {
     return Item_literal::literal_type::ARRAY_INIT;

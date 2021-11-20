@@ -39,7 +39,7 @@ void compiler::Item::generate_ir(ir::IRContext* const ir_context,
     generate_ir_helper(ir_context, ir_list);
     stack.pop_back();
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what() << termcolor::reset << std::endl;
     stack.pop_back();
     // Exception is not handled.
     exit(1);

@@ -14,8 +14,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <common/termcolor.hh>
+#include <common/utils.hh>
 #include <common/compile_excepts.hh>
+#include <common/termcolor.hh>
 #include <cstring>
 #include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_stmt.hh>
@@ -41,7 +42,8 @@ void compiler::Item_block::generate_ir_helper(
     ir_context->leave_scope();
   } catch (const compiler::fatal_error& e) {
     // Scope is invalid.
-    std::cerr << termcolor::red << termcolor::bold << "FATAL ERROR: " << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold
+              << "FATAL ERROR: " << e.what() << std::endl;
     exit(1);
   }
 }
@@ -67,7 +69,8 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     if (branch_ir.first == compiler::ir::JMP) {
       if_branch->generate_ir(ir_context, ir_list);
       return;
-    } else if (branch_ir.second == compiler::ir::JMP) {
+    }
+    if (branch_ir.second == compiler::ir::JMP) {
       else_branch->generate_ir(ir_context, ir_list);
       return;
     }
@@ -75,7 +78,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     // If branches cannot be evaluated at runtime, we should create IRs for each
     // branch.
     std::ostringstream oss;
-    oss << ".L." << scope_uuid_cur << "_eif";
+    oss << ".LBB" << scope_uuid_cur << "_ELSE";
     ir_list.emplace_back(branch_ir.second, oss.str());
     oss.str("");
     oss.flush();
@@ -92,27 +95,67 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     ir_context_else.leave_scope();
 
     std::vector<compiler::ir::IR> ir_end;
-    oss << ".L." << scope_uuid_cur << "_endif";
-    ir_list.emplace_back(branch_ir.second, oss.str());
+    oss << ".LBB" << scope_uuid_cur << "_END_IF";
     ir_end.emplace_back(compiler::ir::op_type::LBL, oss.str());
 
-    // The actual symbol table is wrapped twice.
-    const auto& symbol_table =
+    const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
-    // Traverse the symbol table.
-    for (auto iter = symbol_table.cend(); iter != symbol_table.cbegin();
-         iter--) {
-      compiler::symbol_table_type* const cur_table = (*iter)->get_block();
 
-      for (auto& entry : *cur_table) {
-        const std::string name = entry.second->get_name();
-        // TODO: FIND VARIABLE.
+    for (uint32_t i = 0; i < symbol_table_if.size(); i++) {
+      for (auto symbol_pair : *(symbol_table_if[i]->get_block())) {
+        const auto symbol_table =
+            ir_context_else.get_symbol_table()->get_symbol_table()[i];
+        // Check if this symbol is related to the else block.
+        const auto symbol_else =
+            *(symbol_table->get_block()->find(symbol_pair.second->get_name()));
+
+        if (symbol_pair.second->get_name().compare(
+                symbol_else.second->get_name()) != 0) {
+          // Get name from the previous context.
+          compiler::Symbol* const symbol =
+              ir_context->get_symbol_table()->find_symbol(symbol_pair.first);
+
+          if (symbol->get_is_pointer()) {
+            throw compiler::fatal_error("PHI MOVE WITH POINTER TYPE.");
+          }
+
+          if (symbol->get_name()[0] == ir::local_sign[0]) {
+            symbol->set_name(
+                ir::local_sign +
+                std::to_string(
+                    ir_context->get_symbol_table()->get_available_id()));
+          }
+
+          // Set phi blocks.
+          ir_if.emplace_back(ir::op_type::PHI_MOVE,
+                             new ir::Operand(symbol->get_name()),
+                             new ir::Operand(symbol_pair.second->get_name()));
+          ir_if.back().set_phi_block(ir_end.begin());
+          ir_else.emplace_back(ir::op_type::PHI_MOVE,
+                               new ir::Operand(symbol->get_name()),
+                               new ir::Operand(symbol_else.second->get_name()));
+          ir_else.back().set_phi_block(ir_end.begin());
+        }
       }
     }
 
+    // Append to the ir_list.
+    compiler::insert_with_move(ir_list, ir_if);
+    if (ir_else.empty() == false) {
+      ir_list.emplace_back(
+          ir::op_type::JMP,
+          new ir::Operand(".LBB" + std::to_string(scope_uuid_cur) +
+                          "_END_IF"));
+    }
+    ir_list.emplace_back(ir::op_type::LBL,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE");
+    compiler::insert_with_move(ir_list, ir_else);
+    compiler::insert_with_move(ir_list, ir_end);
+
     ir_context->leave_scope();
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
+              << termcolor::reset << std::endl;
     // FIXME: Determine which exception should be caught.
   }
 }
@@ -143,8 +186,9 @@ void compiler::Item_stmt_assign::generate_ir_helper(
       ir_list.emplace_back(
           ir::op_type::MOV,
           new ir::Operand(
-              ir::local_sign + std::to_string(
-                        ir_context->get_symbol_table()->get_available_id())),
+              ir::local_sign +
+              std::to_string(
+                  ir_context->get_symbol_table()->get_available_id())),
           rhs);
 
       if (opt_level > 0) {
@@ -193,7 +237,8 @@ void compiler::Item_stmt_while::generate_ir_helper(
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
+              << termcolor::reset << std::endl;
   }
 }
 

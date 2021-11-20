@@ -25,15 +25,18 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
   compiler::ir::BranchIR branch_ir;
-  ir_list.emplace_back(compiler::ir::op_type::CMP, new compiler::ir::Operand(),
-                       eval_runtime_helper(ir_context, ir_list));
+  ir_list.emplace_back(
+      compiler::ir::op_type::CMP, eval_runtime_helper(ir_context, ir_list),
+      new compiler::ir::Operand(ir::var_type::i32, "", "0", false, false));
 
-  // Set jne and jmp.
+  // Set jne and jeq.
   branch_ir.first = compiler::ir::op_type::JNE;
-  branch_ir.second = compiler::ir::op_type::JMP;
+  branch_ir.second = compiler::ir::op_type::JEQ;
   return branch_ir;
 }
 
+// If this virtual function of some expression is not implemented, an error will
+// be thrown.
 compiler::ir::Operand* compiler::Item_expr::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
@@ -58,7 +61,7 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond(
     stack.pop_back();
     return branch_ir;
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what()
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
@@ -76,7 +79,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what()
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
@@ -92,7 +95,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     stack.pop_back();
     return operand;
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what()
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);

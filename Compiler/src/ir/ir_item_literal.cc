@@ -24,19 +24,19 @@ void compiler::Item_literal::generate_ir(
   throw compiler::unsupported_operation("Cannot generate IR for literal type!");
 }
 
-compiler::ir::Operand* compiler::Item_literal_int::eval_runtime(
+compiler::ir::Operand* compiler::Item_literal_int::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
   return new compiler::ir::Operand(
       ir::var_type::i32, "", std::to_string(get_int()), false, false);
 }
 
-compiler::ir::Operand* compiler::Item_literal_char::eval_runtime(
+compiler::ir::Operand* compiler::Item_literal_char::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
   return new compiler::ir::Operand(
       ir::var_type::i8, "", std::to_string(get_char()), false, false);
 }
 
-compiler::ir::Operand* compiler::Item_literal_real::eval_runtime(
+compiler::ir::Operand* compiler::Item_literal_real::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
   return new compiler::ir::Operand(
       ir::var_type::DB, "", std::to_string(get_double()), false, false);
