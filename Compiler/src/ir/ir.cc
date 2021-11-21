@@ -104,7 +104,9 @@ compiler::ir::IR::IR(const op_type& operation, const std::string& label)
 
 void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   // Wrap std::ostream in a macro.
-  FORMAT(output, op_name[type], 0x10);
+  if (type != ir::op_type::LBL) {
+    FORMAT(output, op_name[type], 0x10);
+  }
 
   // Emit IR of each operand. Deepmost callee.
   auto lambda_walk_ir = [&output, this](Operand* const operand) {
@@ -259,3 +261,10 @@ uint32_t compiler::ir::to_byte_length(const compiler::ir::var_type& type) {
       throw compiler::unimplemented_error("Not yet supported!");
   }
 }
+
+compiler::ir::Operand::Operand(const compiler::ir::Operand& operand)
+    : type(operand.type),
+      identifier(operand.identifier),
+      is_ptr(operand.is_ptr),
+      is_var(operand.is_var),
+      value(operand.value) {}

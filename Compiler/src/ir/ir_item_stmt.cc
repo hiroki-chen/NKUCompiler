@@ -14,9 +14,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <common/utils.hh>
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
+#include <common/utils.hh>
 #include <cstring>
 #include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_stmt.hh>
@@ -84,15 +84,21 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     oss.flush();
 
     std::vector<compiler::ir::IR> ir_if, ir_else;
-    compiler::ir::IRContext ir_context_if, ir_context_else;
+    compiler::ir::IRContext ir_context_if(*ir_context);
+    compiler::ir::IRContext ir_context_else(*ir_context);
 
     ir_context_if.enter_scope();
     if_branch->generate_ir(&ir_context_if, ir_if);
     ir_context_if.leave_scope();
 
+    ir_context_else.get_symbol_table()->set_available_id(
+        ir_context_if.get_symbol_table()->get_available_id());
     ir_context_else.enter_scope();
     else_branch->generate_ir(&ir_context_else, ir_else);
     ir_context_else.leave_scope();
+
+    ir_context->get_symbol_table()->set_available_id(
+        ir_context_else.get_symbol_table()->get_available_id());
 
     std::vector<compiler::ir::IR> ir_end;
     oss << ".LBB" << scope_uuid_cur << "_END_IF";
@@ -107,10 +113,11 @@ void compiler::Item_stmt_eif::generate_ir_helper(
             ir_context_else.get_symbol_table()->get_symbol_table()[i];
         // Check if this symbol is related to the else block.
         const auto symbol_else =
-            *(symbol_table->get_block()->find(symbol_pair.second->get_name()));
+            symbol_table->get_block()->find(symbol_pair.second->get_name());
 
-        if (symbol_pair.second->get_name().compare(
-                symbol_else.second->get_name()) != 0) {
+        if (symbol_else != symbol_table->get_block()->end() &&
+            symbol_pair.second->get_name().compare(
+                symbol_else->second->get_name()) != 0) {
           // Get name from the previous context.
           compiler::Symbol* const symbol =
               ir_context->get_symbol_table()->find_symbol(symbol_pair.first);
@@ -131,9 +138,9 @@ void compiler::Item_stmt_eif::generate_ir_helper(
                              new ir::Operand(symbol->get_name()),
                              new ir::Operand(symbol_pair.second->get_name()));
           ir_if.back().set_phi_block(ir_end.begin());
-          ir_else.emplace_back(ir::op_type::PHI_MOVE,
-                               new ir::Operand(symbol->get_name()),
-                               new ir::Operand(symbol_else.second->get_name()));
+          ir_else.emplace_back(
+              ir::op_type::PHI_MOVE, new ir::Operand(symbol->get_name()),
+              new ir::Operand(symbol_else->second->get_name()));
           ir_else.back().set_phi_block(ir_end.begin());
         }
       }
@@ -144,8 +151,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     if (ir_else.empty() == false) {
       ir_list.emplace_back(
           ir::op_type::JMP,
-          new ir::Operand(".LBB" + std::to_string(scope_uuid_cur) +
-                          "_END_IF"));
+          new ir::Operand(".LBB" + std::to_string(scope_uuid_cur) + "_END_IF"));
     }
     ir_list.emplace_back(ir::op_type::LBL,
                          ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE");
@@ -193,9 +199,8 @@ void compiler::Item_stmt_assign::generate_ir_helper(
 
       if (opt_level > 0) {
         // TODO: Implement this.
-        compiler::Item_literal* const value = nullptr;
         compiler::Symbol_const* const assign = new compiler::Symbol_const(
-            symbol->get_name(), compiler::symbol_type::VAR_TYPE, value);
+            symbol->get_name(), compiler::symbol_type::VAR_TYPE, "");
         ir_context->get_symbol_table()->assign_const(identifier->get_name(),
                                                      assign);
       }

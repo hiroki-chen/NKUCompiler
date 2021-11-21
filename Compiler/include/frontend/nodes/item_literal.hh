@@ -48,6 +48,8 @@ typedef class Item_literal : public Item_expr {
 
   virtual Item_literal::literal_type get_literal_type(void) const = 0;
 
+  virtual std::string dump_value(void) const { return " "; }
+
   virtual Item_expr::expr_type get_expr_type(void) const override {
     return Item_expr::expr_type::LITERAL_TYPE;
   }
@@ -81,6 +83,8 @@ typedef class Item_literal_numeric : public Item_literal {
       std::vector<compiler::ir::IR>& ir_list) const override {
     return;
   }
+
+  virtual std::string dump_value(void) const override { return std::to_string(value); }
 
   virtual Item_literal::literal_type get_literal_type(void) const override = 0;
 

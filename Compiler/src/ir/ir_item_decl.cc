@@ -71,7 +71,7 @@ void compiler::Item_decl_var_init::generate_ir_helper(
   compiler::Symbol* symbol = nullptr;
   if (is_const == true) {
     symbol = new compiler::Symbol_const(
-        name_symbol, compiler::symbol_type::VAR_TYPE, literal_value);
+        name_symbol, compiler::symbol_type::VAR_TYPE, literal_value->dump_value());
     ir_context->get_symbol_table()->add_const(
         identifier->get_name(), dynamic_cast<compiler::Symbol_const*>(symbol));
   } else {

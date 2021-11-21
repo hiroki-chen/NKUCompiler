@@ -30,13 +30,13 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       throw compiler::fatal_error(
           "Cannot evaluate pointer / array type. What: " + name);
     } else {
-      return compiler::ir::dump_value(symbol->get_values()[0]);
+      return new ir::Operand(ir::var_type::NONE, "", symbol->get_values()[0], false, false);
     }
   } catch (const std::exception& e) {
     if (opt_level > 0) {
       compiler::Symbol* const symbol_cur = symbol_table->find_symbol(name);
       compiler::Symbol_const* symbol_assign = symbol_table->find_assign_const(symbol_cur->get_name());
-      return compiler::ir::dump_value(symbol_assign->get_values()[0]);
+      return new ir::Operand(ir::var_type::NONE, "", symbol_assign->get_values()[0], false, false);
     }
     exit(1);
   }
@@ -54,7 +54,7 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       return new compiler::ir::Operand(symbol->get_name());
     } else {
       try {
-        return compiler::ir::dump_value(symbol->get_values()[0]);
+        return new ir::Operand(ir::var_type::NONE, "", symbol->get_values()[0], false, false);
       } catch (const std::exception& e) {
         // Cannot dump value... We return its name.
         return new compiler::ir::Operand(name);
