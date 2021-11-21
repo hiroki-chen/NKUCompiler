@@ -39,6 +39,11 @@ compiler::ir::IRContext::IRContext() {
   register_library_function(sysy_functions);
 }
 
+compiler::ir::IRContext::IRContext(const IRContext& ir_context)
+    : symbol_table(ir_context.symbol_table),
+      loop_variable(ir_context.loop_variable),
+      loop_label(ir_context.loop_label) {}
+
 void compiler::ir::IRContext::register_library_function(
     const std::vector<std::pair<std::string, compiler::Symbol*>>& functions) {
   compiler::Symbol_table* const symbol_table = get_symbol_table();

@@ -68,6 +68,13 @@ typedef class IRContext {
   IRContext();
 
   /**
+   * @brief Construct a new IRContext object. Dump a context.
+   * 
+   * @param ir_context 
+   */
+  IRContext(const IRContext& ir_context);
+
+  /**
    * @brief Called when a new scope is encountered and we should enter a new
    * scope.
    *

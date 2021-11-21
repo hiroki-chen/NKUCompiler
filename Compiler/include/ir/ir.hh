@@ -32,7 +32,7 @@
 namespace compiler::ir {
 static const std::string global_sign = "@";
 
-static const std::string local_sign = "%";
+static const std::string local_sign = "%t";
 /**
  * @brief Look-up table for enum type compiler::ir::op_type.
  *
@@ -205,6 +205,8 @@ typedef class Operand {
    *
    */
   Operand();
+
+  Operand(const Operand& operand);
 
   Operand(const std::string& name);
 
