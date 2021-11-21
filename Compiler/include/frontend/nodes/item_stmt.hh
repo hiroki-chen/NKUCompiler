@@ -73,6 +73,13 @@ typedef class Item_stmt_assign final : public Item_stmt {
       compiler::ir::IRContext* const ir_context,
       std::vector<compiler::ir::IR>& ir_list) const override;
 
+  virtual ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context) const override;
+
+  virtual ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override;
+
  public:
   Item_stmt_assign() = delete;
 

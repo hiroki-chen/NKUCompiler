@@ -108,9 +108,9 @@ void compiler::Item_stmt_eif::generate_ir_helper(
         ir_context_if.get_symbol_table()->get_symbol_table();
 
     for (uint32_t i = 0; i < symbol_table_if.size(); i++) {
+      const auto symbol_table =
+          ir_context_else.get_symbol_table()->get_symbol_table()[i];
       for (auto symbol_pair : *(symbol_table_if[i]->get_block())) {
-        const auto symbol_table =
-            ir_context_else.get_symbol_table()->get_symbol_table()[i];
         // Check if this symbol is related to the else block.
         const auto symbol_else =
             symbol_table->get_block()->find(symbol_pair.first);
@@ -166,6 +166,61 @@ void compiler::Item_stmt_eif::generate_ir_helper(
   }
 }
 
+compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context) const {
+  try {
+    // Cannot evaluate an array / global symbol.
+    if (identifier->get_ident_type() ==
+        compiler::Item_ident::ident_type::ARRAY) {
+      throw compiler::unsupported_operation(
+          "Error: Cannot evaluate an array type!");
+    }
+    compiler::Symbol* const symbol =
+        ir_context->get_symbol_table()->find_symbol(identifier->get_name());
+    if (symbol->get_name()[0] == ir::global_sign[0]) {
+      throw compiler::unsupported_operation(
+          "Error: Cannot evaluate a global symbol!");
+    } else if (symbol->get_type() == compiler::symbol_type::ARRAY_TYPE) {
+      throw compiler::unsupported_operation(
+          "Error: Cannot evaluate an array type!");
+    }
+
+    ir::Operand* result = expression->eval_runtime(ir_context);
+    compiler::Symbol_const* symbol_const = new compiler::Symbol_const(
+        result->get_value(), compiler::symbol_type::VAR_TYPE,
+        result->get_value(), false);
+    const std::string symbol_name =
+        ir::local_sign +
+        std::to_string(ir_context->get_symbol_table()->get_available_id());
+    symbol->set_name(symbol_name);
+    ir_context->get_symbol_table()->assign_const(symbol_name, symbol_const);
+
+    return result;
+  } catch (const std::exception& e) {
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
+    exit(1);
+  }
+}
+
+compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  generate_ir(ir_context, ir_list);
+
+  if (identifier->get_ident_type() == compiler::Item_ident::ident_type::ARRAY) {
+    if (ir_list.back().get_op_type() != ir::op_type::STORE) {
+      throw compiler::fatal_error("Error: Unknown error!");
+    }
+
+  } else {
+    if (ir_list.back().get_dst()->get_is_var() == false) {
+      throw compiler::fatal_error("Error: Unknown error!");
+    }
+  }
+  return ir_list.back().get_dst();
+}
+
 void compiler::Item_stmt_assign::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
@@ -180,15 +235,27 @@ void compiler::Item_stmt_assign::generate_ir_helper(
 
     if (symbol->get_is_pointer() == true) {
       throw compiler::unsupported_operation(
-          std::to_string(lineno) +
-          " Cannot assign an expression to a pointer-like object.");
+          "Error: Cannot assign an expression to a pointer-like object!");
     }
-
+    const std::string name = rhs->get_identifier();
     if (rhs->get_is_var() == true) {
+      if (name[0] == '%' &&
+          (symbol->get_name()[0] == ir::local_sign[0] ||
+           symbol->get_name().substr(0, 4) == ir::arg_sign) &&
+          symbol->get_name()[0] != ir::global_sign[0]) {
+        if (ir_context->is_loop_context()) {
+        } else {
+          symbol->set_name(name);
+        }
+      }
     } else if (rhs->get_identifier().front() == '@') /* Global variable. */ {
+      symbol->set_name(rhs->get_identifier());
       ir_list.emplace_back(ir::op_type::MOV,
                            new ir::Operand(rhs->get_identifier()));
     } else /* Normal const expression. */ {
+      symbol->set_name(
+          ir::local_sign +
+          std::to_string(ir_context->get_symbol_table()->get_available_id()));
       ir_list.emplace_back(
           ir::op_type::MOV,
           new ir::Operand(
@@ -198,7 +265,6 @@ void compiler::Item_stmt_assign::generate_ir_helper(
           rhs);
 
       if (opt_level > 0) {
-        // TODO: Implement this.
         compiler::Symbol_const* const assign = new compiler::Symbol_const(
             symbol->get_name(), compiler::symbol_type::VAR_TYPE, "");
         ir_context->get_symbol_table()->assign_const(identifier->get_name(),
