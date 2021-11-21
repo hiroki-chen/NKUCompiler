@@ -135,7 +135,7 @@ void compiler::Compiler_runtime::run(void) {
         for (auto item : ir_list) {
           item.emit_ir(oss, false);
         }
-        
+
         res = oss.str();
       }
 
@@ -146,7 +146,8 @@ void compiler::Compiler_runtime::run(void) {
 
   } catch (const std::exception& e) {
     // Error handler.
-    std::cerr << termcolor::red << termcolor::bold << e.what() << termcolor::reset << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
   }
 }
 

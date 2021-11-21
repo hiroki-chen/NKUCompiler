@@ -107,8 +107,8 @@ static const char* op_name[46]{
     // Jump labels.
     "LBL",
 
-    // PHI_MOVE
-    "PHI_MOVE",
+    // PHI
+    "PHI",
 };
 /**
  * @brief Defines different operations.
@@ -181,7 +181,7 @@ typedef enum op_type {
 
   // Jump labels.
   LBL,
-  PHI_MOVE,
+  PHI,
 } op_type;
 
 /**
@@ -366,6 +366,12 @@ typedef class IR final {
   op_type get_op_type(void) const { return type; }
 
   Operand* get_dst(void) const { return dst; }
+
+  Operand* get_op1(void) const { return operand_a; }
+
+  Operand* get_op2(void) const { return operand_b; }
+
+  Operand* get_op3(void) const { return operand_c; }
 } IR;
 
 using BranchIR = std::pair<compiler::ir::op_type, compiler::ir::op_type>;

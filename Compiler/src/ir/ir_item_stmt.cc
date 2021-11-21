@@ -102,7 +102,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     std::vector<compiler::ir::IR> ir_end;
     oss << ".LBB" << scope_uuid_cur << "_END_IF";
-    ir_end.emplace_back(compiler::ir::op_type::LBL, oss.str());
+    ir_end.emplace_back(compiler::ir::op_type::LBL, oss.str() + ":");
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
@@ -134,12 +134,12 @@ void compiler::Item_stmt_eif::generate_ir_helper(
           }
 
           // Set phi blocks.
-          ir_if.emplace_back(ir::op_type::PHI_MOVE,
+          ir_if.emplace_back(ir::op_type::PHI,
                              new ir::Operand(symbol->get_name()),
                              new ir::Operand(symbol_pair.second->get_name()));
           ir_if.back().set_phi_block(ir_end.begin());
           ir_else.emplace_back(
-              ir::op_type::PHI_MOVE, new ir::Operand(symbol->get_name()),
+              ir::op_type::PHI, new ir::Operand(symbol->get_name()),
               new ir::Operand(symbol_else->second->get_name()));
           ir_else.back().set_phi_block(ir_end.begin());
         }
@@ -154,7 +154,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
           new ir::Operand(".LBB" + std::to_string(scope_uuid_cur) + "_END_IF"));
     }
     ir_list.emplace_back(ir::op_type::LBL,
-                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE");
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE:");
     compiler::insert_with_move(ir_list, ir_else);
     compiler::insert_with_move(ir_list, ir_end);
 
@@ -239,6 +239,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
     }
     const std::string name = rhs->get_identifier();
     if (rhs->get_is_var() == true) {
+      // Local <= Variable. ok. SSA update symbol name.
       if (name[0] == '%' &&
           (symbol->get_name()[0] == ir::local_sign[0] ||
            symbol->get_name().substr(0, 4) == ir::arg_sign) &&
@@ -274,7 +275,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
   } else if (Item_ident::ident_type::ARRAY == type) {
     // Get result.
     ir::Operand* const res = identifier->eval_runtime(ir_context, ir_list);
-    // Call memcpy at runtime.
+    throw compiler::unimplemented_error("Sorry, this is not yet supported:(");
   }
 }
 
@@ -300,7 +301,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     std::vector<compiler::ir::IR> ir_conditional;
     ir_conditional.emplace_back(
         compiler::ir::op_type::LBL,
-        ".L.LOOP_" + ir_context->get_top_loop_label() + "_BEGIN");
+        ".L.LOOP_" + ir_context->get_top_loop_label() + "_BEGIN：");
     const compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context_conditional, ir_conditional);
 
