@@ -113,9 +113,9 @@ void compiler::Item_stmt_eif::generate_ir_helper(
             ir_context_else.get_symbol_table()->get_symbol_table()[i];
         // Check if this symbol is related to the else block.
         const auto symbol_else =
-            symbol_table->get_block()->find(symbol_pair.second->get_name());
+            symbol_table->get_block()->find(symbol_pair.first);
 
-        if (symbol_else != symbol_table->get_block()->end() &&
+        if (/*symbol_else != symbol_table->get_block()->end() &&*/
             symbol_pair.second->get_name().compare(
                 symbol_else->second->get_name()) != 0) {
           // Get name from the previous context.
