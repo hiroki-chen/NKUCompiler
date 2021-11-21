@@ -30,7 +30,7 @@ void compiler::Item_decl_var::generate_ir_helper(
 
   // Check current scope.
   if (ir_context->is_global_context() == true) {
-    const std::string name_symbol = ir::global_sign + name;
+    const std::string name_symbol = ir::global_sign;
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL, default_value);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
@@ -41,7 +41,7 @@ void compiler::Item_decl_var::generate_ir_helper(
     ir_context->get_symbol_table()->add_symbol(name, symbol);
   } else {
     const uint32_t id = ir_context->get_symbol_table()->get_available_id();
-    const std::string name_symbol = ir::local_sign + std::to_string(id) + name;
+    const std::string name_symbol = ir::local_sign + std::to_string(id);
     // Create a temporary symbol for the symbol table.
     compiler::Symbol* const symbol = new compiler::Symbol(
         name_symbol, compiler::symbol_type::VAR_TYPE, false);
@@ -57,27 +57,34 @@ void compiler::Item_decl_var_init::generate_ir_helper(
   ir::Operand* const result = expression->eval_runtime(ir_context);
   // Check current scope.
   if (ir_context->is_global_context()) {
-    name_symbol = ir::global_sign + name;
+    name_symbol = ir::global_sign;
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL, result);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
   } else {
     const uint32_t scope_id =
         ir_context->get_symbol_table()->get_top_scope_uuid();
-    name_symbol = ir::local_sign + std::to_string(scope_id) + name;
+    name_symbol = ir::local_sign + std::to_string(scope_id);
   }
   // Insert into symbol table.
-  compiler::Item_literal* const literal_value = ir::wrap_value(result);
   compiler::Symbol* symbol = nullptr;
   if (is_const == true) {
-    symbol = new compiler::Symbol_const(
-        name_symbol, compiler::symbol_type::VAR_TYPE, literal_value->dump_value());
+    symbol =
+        new compiler::Symbol_const(name_symbol, compiler::symbol_type::VAR_TYPE,
+                                   result->get_value(), false);
     ir_context->get_symbol_table()->add_const(
         identifier->get_name(), dynamic_cast<compiler::Symbol_const*>(symbol));
   } else {
     symbol = new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
-                                  literal_value);
+                                  false);
+    symbol->set_value(result->get_value());
     ir_context->get_symbol_table()->add_symbol(identifier->get_name(), symbol);
+  }
+
+  if (ir_context->is_global_context() == false) {
+    compiler::Item_stmt_assign* const assignment =
+        new compiler::Item_stmt_assign(lineno, identifier, expression);
+    assignment->generate_ir(ir_context, ir_list);
   }
 }
 

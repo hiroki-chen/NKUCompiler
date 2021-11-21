@@ -52,7 +52,7 @@ void compiler::Item_func_def::generate_ir_helper(
             ir::local_sign +
             std::to_string(ir_context->get_symbol_table()->get_available_id());
         ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(var),
-                             "$arg" + std::to_string(i));
+                             ir::arg_sign + std::to_string(i));
         ir_context->get_symbol_table()->add_symbol(
             identifier->get_name(),
             new compiler::Symbol(var, compiler::symbol_type::VAR_TYPE));
@@ -76,7 +76,7 @@ void compiler::Item_func_def::generate_ir_helper(
       ir_list.emplace_back(ir::op_type::RET, return_value);
     }
 
-    ir_list.emplace_back(ir::op_type::END_FUNC, identifier->get_name());
+    ir_list.emplace_back(ir::op_type::END_FUNC);
     ir_context->leave_scope();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()

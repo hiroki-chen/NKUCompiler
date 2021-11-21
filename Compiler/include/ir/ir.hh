@@ -33,6 +33,8 @@ namespace compiler::ir {
 static const std::string global_sign = "@";
 
 static const std::string local_sign = "%t";
+
+static const std::string arg_sign = "$arg";
 /**
  * @brief Look-up table for enum type compiler::ir::op_type.
  *
@@ -362,6 +364,8 @@ typedef class IR final {
   std::vector<ir::IR>::iterator get_phi_block(void) const { return phi; }
 
   op_type get_op_type(void) const { return type; }
+
+  Operand* get_dst(void) const { return dst; }
 } IR;
 
 using BranchIR = std::pair<compiler::ir::op_type, compiler::ir::op_type>;
