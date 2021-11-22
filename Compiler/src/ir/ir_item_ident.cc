@@ -14,8 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <common/termcolor.hh>
 #include <common/compile_excepts.hh>
+#include <common/termcolor.hh>
 #include <frontend/nodes/item_ident.hh>
 #include <frontend/nodes/item_literal.hh>
 
@@ -30,23 +30,27 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       throw compiler::fatal_error(
           "Cannot evaluate pointer / array type. What: " + name);
     } else {
-      return new ir::Operand(ir::var_type::NONE, "", symbol->get_values()[0], false, false);
+      return new ir::Operand(ir::var_type::NONE, "", symbol->get_value(), false,
+                             false);
     }
   } catch (const std::exception& e) {
+    compiler::Symbol* const symbol_cur = symbol_table->find_symbol(name);
     if (opt_level > 0) {
-      compiler::Symbol* const symbol_cur = symbol_table->find_symbol(name);
-      compiler::Symbol_const* symbol_assign = symbol_table->find_assign_const(symbol_cur->get_name());
-      return new ir::Operand(ir::var_type::NONE, "", symbol_assign->get_values()[0], false, false);
+      compiler::Symbol_const* symbol_assign =
+          symbol_table->find_assign_const(symbol_cur->get_name());
+      return new ir::Operand(ir::var_type::NONE, "",
+                             symbol_assign->get_values()[0], false, false);
+    } else {
+      return new ir::Operand(symbol_cur->get_name());
     }
-    exit(1);
   }
 }
 
 compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
+  compiler::Symbol_table* const symbol_table = ir_context->get_symbol_table();
   try {
-    compiler::Symbol_table* const symbol_table = ir_context->get_symbol_table();
     compiler::Symbol_const* const symbol =
         symbol_table->find_assign_const(name);
 
@@ -54,14 +58,15 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       return new compiler::ir::Operand(symbol->get_name());
     } else {
       try {
-        return new ir::Operand(ir::var_type::NONE, "", symbol->get_values()[0], false, false);
+        return new ir::Operand(ir::var_type::NONE, "", symbol->get_values()[0],
+                               false, false);
       } catch (const std::exception& e) {
         // Cannot dump value... We return its name.
         return new compiler::ir::Operand(name);
       }
     }
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what() << termcolor::reset << std::endl;
-    exit(1);
+    compiler::Symbol* const symbol = symbol_table->find_symbol(name);
+    return new compiler::ir::Operand(symbol->get_name());
   }
 }

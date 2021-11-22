@@ -250,7 +250,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class for while statement. </p>
 
-<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00136">136</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00143">143</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a120bdfc6200cba114a3b858ad8a4268a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a120bdfc6200cba114a3b858ad8a4268a">&#9670;&nbsp;</a></span>Item_stmt_while() <span class="overload">[1/2]</span></h2>
@@ -380,7 +380,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Generate the IR for while block. </p>
-<dl class="section note"><dt>Note</dt><dd>The structure of the while block (also the same for 'for' statement.) is given as follows: .L.scope_WHILE .L.COND CMP JNE DO JEQ END .L.DO DO_SOMETHING BREAK CONITNUE .L.CONITNUE JMP COND .L.END</dd>
+<dl class="section note"><dt>Note</dt><dd>The structure of the while block (also the same for 'for' statement.) is given as follows: .L.scope_LOOP_BEGIN: .L.scope_COND: CMP JNE DO JEQ END .L.scope_DO: DO_SOMETHING BREAK CONITNUE .L.scope_CONITNUE: JMP COND .L.scope_END:</dd>
 <dd>
 Insert phi_move before <code>jne END</code>、<code>break;</code>、<code>continue</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -391,7 +391,7 @@ Insert phi_move before <code>jne END</code>、<code>break;</code>、<code>contin
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ir__item__stmt_8cc_source.html#l00166">166</a> of file <a class="el" href="ir__item__stmt_8cc_source.html">ir_item_stmt.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir__item__stmt_8cc_source.html#l00288">288</a> of file <a class="el" href="ir__item__stmt_8cc_source.html">ir_item_stmt.cc</a>.</p>
 
 </div>
 </div>
@@ -421,7 +421,7 @@ Insert phi_move before <code>jne END</code>、<code>break;</code>、<code>contin
 
 <p>Implements <a class="el" href="classcompiler_1_1_item__stmt.html#af2f890e4158e953a702ec7df64f5f4a8">compiler::Item_stmt</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00170">170</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00183">183</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
 
 </div>
 </div>
@@ -490,7 +490,7 @@ Insert phi_move before <code>jne END</code>、<code>break;</code>、<code>contin
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00138">138</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00145">145</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
 
 </div>
 </div>
@@ -514,7 +514,7 @@ Insert phi_move before <code>jne END</code>、<code>break;</code>、<code>contin
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00142">142</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00149">149</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
 
 </div>
 </div>
@@ -538,7 +538,7 @@ Insert phi_move before <code>jne END</code>、<code>break;</code>、<code>contin
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00140">140</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="item__stmt_8hh_source.html#l00147">147</a> of file <a class="el" href="item__stmt_8hh_source.html">item_stmt.hh</a>.</p>
 
 </div>
 </div>

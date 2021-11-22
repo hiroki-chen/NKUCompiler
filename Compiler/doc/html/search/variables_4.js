@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['data_5fwindow_5faddress',['DATA_WINDOW_ADDRESS',['../namespacelldbinit.html#af98162ba7cf6f7bf31e9169ccab410e4',1,'lldbinit']]],
   ['declarations',['declarations',['../classcompiler_1_1_item__stmt__decl.html#a3263928b5e8ac8ba1c2ccf7cb91ca0d0',1,'compiler::Item_stmt_decl']]],
   ['default_5fvalue',['default_value',['../structcxxopts_1_1_help_option_details.html#aa59a81e78fb7e785dd8b61ab21233db8',1,'cxxopts::HelpOptionDetails']]],
   ['desc',['desc',['../structcxxopts_1_1_help_option_details.html#a7c83455289612b05713b87154877caec',1,'cxxopts::HelpOptionDetails']]],

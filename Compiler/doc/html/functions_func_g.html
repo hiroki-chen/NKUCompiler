@@ -98,7 +98,6 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 , <a class="el" href="classcompiler_1_1_item__literal__numeric.html#a619edaac532fbdd57bb53cd95ae71895">compiler::Item_literal_numeric</a>
 , <a class="el" href="classcompiler_1_1_item__literal__real.html#a7bd396e0df876b5e850edbc2e050c561">compiler::Item_literal_real</a>
 , <a class="el" href="classcompiler_1_1_item__literal__string.html#a0a19c1a3649c3f562a572e13b2ad141d">compiler::Item_literal_string</a>
-, <a class="el" href="classcompiler_1_1_item__stmt__break.html#a05c2f46df7a7954f89c90d044b7c4f72">compiler::Item_stmt_break</a>
 , <a class="el" href="classcompiler_1_1_item__struct__body.html#ab739807f0d37dc0a71e43cd3bb66bf11">compiler::Item_struct_body</a>
 </li>
 <li>generate_ir_helper()
@@ -112,6 +111,8 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 , <a class="el" href="classcompiler_1_1_item__func__def.html#af590de22b7f18314ef6707e131cfce07">compiler::Item_func_def</a>
 , <a class="el" href="classcompiler_1_1_item__root.html#a6c9ff628f00526d9f34fc650d253f2fd">compiler::Item_root</a>
 , <a class="el" href="classcompiler_1_1_item__stmt__assign.html#acf797e216c2001cbf9ab5a88940a9959">compiler::Item_stmt_assign</a>
+, <a class="el" href="classcompiler_1_1_item__stmt__break.html#a7da63b6949033b49aae2b2337bb41b8c">compiler::Item_stmt_break</a>
+, <a class="el" href="classcompiler_1_1_item__stmt__continue.html#a204a6cea9dc1112b3a018cd5dc3e1185">compiler::Item_stmt_continue</a>
 , <a class="el" href="classcompiler_1_1_item__stmt__decl.html#a40dedea5f1f40d1264b72f34a9bc1581">compiler::Item_stmt_decl</a>
 , <a class="el" href="classcompiler_1_1_item__stmt__eif.html#a5e122a1080228ccc4b0bb3eb53d75513">compiler::Item_stmt_eif</a>
 , <a class="el" href="classcompiler_1_1_item__stmt__eval.html#a6f789a68909dc3e313ae293c022ded72">compiler::Item_stmt_eval</a>
@@ -178,6 +179,12 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>get_double()
 : <a class="el" href="classcompiler_1_1_item__literal__real.html#a2e313ad52d7544f64fd07f9576874eed">compiler::Item_literal_real</a>
+</li>
+<li>get_dst()
+: <a class="el" href="classcompiler_1_1ir_1_1_i_r.html#a34010f33bacd650a5a1a412cd7f02fd4">compiler::ir::IR</a>
+</li>
+<li>get_edges()
+: <a class="el" href="classcompiler_1_1ir_1_1_c_f_g__builder.html#a172c527f8501807ddeaf55a36e2405e3">compiler::ir::CFG_builder</a>
 </li>
 <li>get_expr_type()
 : <a class="el" href="classcompiler_1_1_item__expr.html#ad4b9d671701f636b81def21a83fc3950">compiler::Item_expr</a>
@@ -250,6 +257,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>get_is_var()
 : <a class="el" href="classcompiler_1_1ir_1_1_operand.html#ad193c8ded516331cde2f78f52762376a">compiler::ir::Operand</a>
 </li>
+<li>get_label()
+: <a class="el" href="classcompiler_1_1ir_1_1_i_r.html#a65c3231cfd7944f288bd9a8063f4641e">compiler::ir::IR</a>
+</li>
 <li>get_last_find_uuid()
 : <a class="el" href="classcompiler_1_1_symbol__table.html#a70135825f380ae74a21273ee651bc5e3">compiler::Symbol_table</a>
 </li>
@@ -265,12 +275,27 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 , <a class="el" href="classcompiler_1_1_item__literal__real.html#a1d4883bf2b0679489c649d287cfc9003">compiler::Item_literal_real</a>
 , <a class="el" href="classcompiler_1_1_item__literal__string.html#a4b84e853b1426e41fc21986ce10e5408">compiler::Item_literal_string</a>
 </li>
+<li>get_look_up_table()
+: <a class="el" href="classcompiler_1_1ir_1_1_c_f_g__builder.html#a207a0d43f00e7ee915b5db406c5fb8fa">compiler::ir::CFG_builder</a>
+</li>
 <li>get_name()
 : <a class="el" href="classcompiler_1_1_item__ident.html#ab982b5062091c50991c00282a091ca5b">compiler::Item_ident</a>
 , <a class="el" href="classcompiler_1_1_symbol.html#a7290a10136617667f37c5edfa4020433">compiler::Symbol</a>
 </li>
+<li>get_op1()
+: <a class="el" href="classcompiler_1_1ir_1_1_i_r.html#ac62e032738e7405bda1f351877c95a64">compiler::ir::IR</a>
+</li>
+<li>get_op2()
+: <a class="el" href="classcompiler_1_1ir_1_1_i_r.html#adbfd9fdc7783a555d64b0f712a8cca5a">compiler::ir::IR</a>
+</li>
+<li>get_op3()
+: <a class="el" href="classcompiler_1_1ir_1_1_i_r.html#a6b664a24d7530f92481ac6f3afc6ca7f">compiler::ir::IR</a>
+</li>
 <li>get_op_type()
 : <a class="el" href="classcompiler_1_1ir_1_1_i_r.html#a2dff24b13971981e1a363d74e3c23784">compiler::ir::IR</a>
+</li>
+<li>get_phi_block()
+: <a class="el" href="classcompiler_1_1ir_1_1_i_r.html#a12f806d7d126a7cbd58c49c650ea2692">compiler::ir::IR</a>
 </li>
 <li>get_real()
 : <a class="el" href="classcompiler_1_1_item__ident.html#afd78add980fad9f5338db12d60049009">compiler::Item_ident</a>
@@ -308,7 +333,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 </li>
 <li>get_symbol_table()
 : <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html#aef262daf043a285f2befbb6c58bfd046">compiler::ir::IRContext</a>
-, <a class="el" href="classcompiler_1_1_symbol__table.html#aea48559bc9c509318ab10c01f520ba32">compiler::Symbol_table</a>
+, <a class="el" href="classcompiler_1_1_symbol__table.html#aabdebd8841b65a6fed51fd26b5b44e8e">compiler::Symbol_table</a>
 </li>
 <li>get_top_loop_label()
 : <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html#a39c949b0a26c45c172286c50e03f2715">compiler::ir::IRContext</a>
@@ -332,13 +357,13 @@ $(document).ready(function(){initNavTree('functions_func_g.html','');});
 <li>get_value()
 : <a class="el" href="classcompiler_1_1ir_1_1_operand.html#a751faf85146a7753ada218318285b7b2">compiler::ir::Operand</a>
 , <a class="el" href="classcompiler_1_1_item__literal__array__init.html#af6ad7dd41256cc380fea14b8ddc75ed1">compiler::Item_literal_array_init</a>
-, <a class="el" href="classcompiler_1_1_symbol__const.html#a8180d0cac2462e0210c9bf98ac8ceb81">compiler::Symbol_const</a>
+, <a class="el" href="classcompiler_1_1_symbol__const.html#a60a5220cb76f5b48c59ae1157d8cd7e6">compiler::Symbol_const</a>
 </li>
 <li>get_value_list()
 : <a class="el" href="classcompiler_1_1_item__literal__array__init.html#a88d71086c4806c6dcbdaa3262dd29637">compiler::Item_literal_array_init</a>
 </li>
 <li>get_values()
-: <a class="el" href="classcompiler_1_1_symbol__const.html#affab3ce6ffaa1643a974d0f1ffde029a">compiler::Symbol_const</a>
+: <a class="el" href="classcompiler_1_1_symbol__const.html#a490849fc3db20d5b1c8948ed4e7923b9">compiler::Symbol_const</a>
 </li>
 <li>group_help()
 : <a class="el" href="classcxxopts_1_1_options.html#ab5ebc9a3f07419d8b5a58d55c9929f09">cxxopts::Options</a>
