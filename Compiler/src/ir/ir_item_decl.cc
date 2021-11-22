@@ -55,7 +55,7 @@ void compiler::Item_decl_var_init::generate_ir_helper(
   try {
     const std::string name = identifier->get_name();
     std::string name_symbol;
-    ir::Operand* const result = expression->eval_runtime(ir_context);
+    ir::Operand* const result = expression->eval_runtime(ir_context, ir_list);
     // Check current scope.
     if (ir_context->is_global_context()) {
       name_symbol = ir::global_sign;

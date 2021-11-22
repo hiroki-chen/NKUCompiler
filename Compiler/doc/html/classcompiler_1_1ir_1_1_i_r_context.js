@@ -1,6 +1,7 @@
 var classcompiler_1_1ir_1_1_i_r_context =
 [
     [ "IRContext", "classcompiler_1_1ir_1_1_i_r_context.html#ae739d94aa93631c45009d3ff5dc320ef", null ],
+    [ "IRContext", "classcompiler_1_1ir_1_1_i_r_context.html#aa51f7c280cefbf59fc86f11903e15653", null ],
     [ "add_loop_label", "classcompiler_1_1ir_1_1_i_r_context.html#a022597746fca8e3ffcb625906f03b061", null ],
     [ "add_loop_var", "classcompiler_1_1ir_1_1_i_r_context.html#a370711d34b0699f23c15296e363f2b17", null ],
     [ "enter_scope", "classcompiler_1_1ir_1_1_i_r_context.html#abc42fa06f474d4cde72a21cbef3094a0", null ],

@@ -18,6 +18,7 @@
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
 #include <common/utils.hh>
+#include <ir/cfg.hh>
 #include <runtime/runtime.hh>
 /* For filesystem. */
 #include <filesystem>
@@ -110,6 +111,7 @@ void compiler::Compiler_runtime::run(void) {
 
       std::string res;
       std::ostringstream oss;
+      std::vector<compiler::ir::IR> ir_list;
       if (!output_file.is_open()) {
         const std::string file =
             input_file[i].substr(input_file[i].find_last_of("/"));
@@ -129,7 +131,7 @@ void compiler::Compiler_runtime::run(void) {
       if (print_ir) {
         compiler::ir::IRContext* const ir_context =
             new compiler::ir::IRContext();
-        std::vector<compiler::ir::IR> ir_list;
+        
         root->generate_ir(ir_context, ir_list);
 
         for (auto item : ir_list) {
@@ -142,6 +144,16 @@ void compiler::Compiler_runtime::run(void) {
       output_file << res;
       output_file.flush();
       output_file.close();
+      compiler::ir::CFG_builder* const cfg_builder =
+          new compiler::ir::CFG_builder(ir_list);
+      // DEBUG
+      auto table = cfg_builder->get_look_up_table();
+      for (auto item : table) {
+        std::cout << item.first << ":\n";
+        for (auto ir : item.second) {
+          ir->emit_ir();
+        }
+      }
     }
 
   } catch (const std::exception& e) {

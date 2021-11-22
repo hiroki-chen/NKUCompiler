@@ -35,6 +35,7 @@ void compiler::Item_func_def::generate_ir_helper(
         new ir::Operand(to_ir_type(return_type), "",
                         std::to_string(argument_number), false, false),
         ir::global_sign + identifier->get_name());
+    ir_list.emplace_back(ir::op_type::LBL, ".LB_" + identifier->get_name() + "_BEGIN:");
 
     // Get all the arguments.
     const std::vector<Item_func_def_arg*> arguments =

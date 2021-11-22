@@ -1,5 +1,6 @@
 var utils_8hh =
 [
+    [ "insert_with_move", "utils_8hh.html#a15d156cca38afbb9790a6cb801297e6f", null ],
     [ "is_dir", "utils_8hh.html#a669b4a7b1c78cf69bcbc75c0123b6cfb", null ],
     [ "print_indent", "utils_8hh.html#a55a566e8e34f8cce7a51232585c45f0a", null ],
     [ "to_basic_type", "utils_8hh.html#a42bd6e21066a13c91af2a7f7818f5b3a", null ],

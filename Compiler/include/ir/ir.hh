@@ -29,6 +29,11 @@
   { output << std::setw(width) << std::left << str; }
 #endif
 
+#ifndef OPERAND_VALUE
+#define OPERAND_VALUE(val) \
+  new ir::Operand(ir::var_type::i32, "", val, false, false)
+#endif
+
 namespace compiler::ir {
 static const std::string global_sign = "@";
 
@@ -39,7 +44,7 @@ static const std::string arg_sign = "$arg";
  * @brief Look-up table for enum type compiler::ir::op_type.
  *
  */
-static const char* op_name[46]{
+static const char* op_name[]{
     "ARG",
     "NOP",
     // Basic algorithmic operations
@@ -69,13 +74,13 @@ static const char* op_name[46]{
     "JLE",
     "JEQ",
     "JNE",
-    "JLT",
-    "JGT",
+    "JL",
+    "JG",
 
     // Bit operations.
-    "BAND",
-    "BOR",
-    "BXOR",
+    "AND",
+    "OR",
+    "XOR",
     "BNEG",
     "SHL",
     "LSHR",
@@ -109,6 +114,12 @@ static const char* op_name[46]{
 
     // PHI
     "PHI",
+    "MOVNE",
+    "MOVEQ",
+    "MOVGT",
+    "MOVLT",
+    "MOVGE",
+    "MOVLE",
 };
 /**
  * @brief Defines different operations.
@@ -144,8 +155,8 @@ typedef enum op_type {
   JLE,
   JEQ,
   JNE,
-  JLT,
-  JGT,
+  JL,
+  JG,
 
   // Bit operations.
   BAND,
@@ -182,6 +193,14 @@ typedef enum op_type {
   // Jump labels.
   LBL,
   PHI,
+
+  // MOV CONDITIONAL.
+  MOVNE,
+  MOVEQ,
+  MOVGT,
+  MOVLT,
+  MOVGE,
+  MOVLE,
 } op_type;
 
 /**
@@ -372,6 +391,8 @@ typedef class IR final {
   Operand* get_op2(void) const { return operand_b; }
 
   Operand* get_op3(void) const { return operand_c; }
+
+  std::string get_label(void) const { return label; }
 } IR;
 
 using BranchIR = std::pair<compiler::ir::op_type, compiler::ir::op_type>;

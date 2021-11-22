@@ -99,6 +99,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae739d94aa93631c45009d3ff5dc320ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html#ae739d94aa93631c45009d3ff5dc320ef">IRContext</a> ()</td></tr>
 <tr class="memdesc:ae739d94aa93631c45009d3ff5dc320ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html" title="This is the context for generating intermediate representation. It may include: 1) Symbol tables; 2) ...">IRContext</a> object. It will also create a global context?  <a href="#ae739d94aa93631c45009d3ff5dc320ef">More...</a><br /></td></tr>
 <tr class="separator:ae739d94aa93631c45009d3ff5dc320ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51f7c280cefbf59fc86f11903e15653"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html#aa51f7c280cefbf59fc86f11903e15653">IRContext</a> (const <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">IRContext</a> &amp;ir_context)</td></tr>
+<tr class="memdesc:aa51f7c280cefbf59fc86f11903e15653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html" title="This is the context for generating intermediate representation. It may include: 1) Symbol tables; 2) ...">IRContext</a> object. Dump a context.  <a href="#aa51f7c280cefbf59fc86f11903e15653">More...</a><br /></td></tr>
+<tr class="separator:aa51f7c280cefbf59fc86f11903e15653"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc42fa06f474d4cde72a21cbef3094a0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html#abc42fa06f474d4cde72a21cbef3094a0">enter_scope</a> (void)</td></tr>
 <tr class="memdesc:abc42fa06f474d4cde72a21cbef3094a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when a new scope is encountered and we should enter a new scope.  <a href="#abc42fa06f474d4cde72a21cbef3094a0">More...</a><br /></td></tr>
 <tr class="separator:abc42fa06f474d4cde72a21cbef3094a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,7 +145,7 @@ Protected Attributes</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00032">32</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae739d94aa93631c45009d3ff5dc320ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae739d94aa93631c45009d3ff5dc320ef">&#9670;&nbsp;</a></span>IRContext()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae739d94aa93631c45009d3ff5dc320ef">&#9670;&nbsp;</a></span>IRContext() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,6 +162,34 @@ Protected Attributes</h2></td></tr>
 <p>Construct a new <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html" title="This is the context for generating intermediate representation. It may include: 1) Symbol tables; 2) ...">IRContext</a> object. It will also create a global context? </p>
 
 <p class="definition">Definition at line <a class="el" href="context_8cc_source.html#l00037">37</a> of file <a class="el" href="context_8cc_source.html">context.cc</a>.</p>
+
+</div>
+</div>
+<a id="aa51f7c280cefbf59fc86f11903e15653"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa51f7c280cefbf59fc86f11903e15653">&#9670;&nbsp;</a></span>IRContext() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">compiler::ir::IRContext::IRContext </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">IRContext</a> &amp;&#160;</td>
+          <td class="paramname"><em>ir_context</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html" title="This is the context for generating intermediate representation. It may include: 1) Symbol tables; 2) ...">IRContext</a> object. Dump a context. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ir_context</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="context_8cc_source.html#l00042">42</a> of file <a class="el" href="context_8cc_source.html">context.cc</a>.</p>
 
 </div>
 </div>
@@ -195,7 +226,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00111">111</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00118">118</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
 
 </div>
 </div>
@@ -231,7 +262,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00121">121</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00128">128</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
 
 </div>
 </div>
@@ -261,7 +292,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Called when a new scope is encountered and we should enter a new scope. </p>
 
-<p class="definition">Definition at line <a class="el" href="context_8cc_source.html#l00050">50</a> of file <a class="el" href="context_8cc_source.html">context.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8cc_source.html#l00055">55</a> of file <a class="el" href="context_8cc_source.html">context.cc</a>.</p>
 
 </div>
 </div>
@@ -292,7 +323,7 @@ Protected Attributes</h2></td></tr>
 <p>Get the symbol table object. The outside functions and variables may need symbol_table and invoke its interfaces. </p>
 <dl class="section return"><dt>Returns</dt><dd>Symbol_table* </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00141">141</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00148">148</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
 
 </div>
 </div>
@@ -323,7 +354,7 @@ Protected Attributes</h2></td></tr>
 <p>Get the top loop label object. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00130">130</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00137">137</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
 
 </div>
 </div>
@@ -357,7 +388,7 @@ Protected Attributes</h2></td></tr>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00101">101</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00108">108</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
 
 </div>
 </div>
@@ -390,7 +421,7 @@ false </dd></dl>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00092">92</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8hh_source.html#l00099">99</a> of file <a class="el" href="context_8hh_source.html">context.hh</a>.</p>
 
 </div>
 </div>
@@ -420,7 +451,7 @@ false </dd></dl>
 
 <p>If a scope is left, then we need to call the function and do some garbage cleaning work. </p>
 
-<p class="definition">Definition at line <a class="el" href="context_8cc_source.html#l00057">57</a> of file <a class="el" href="context_8cc_source.html">context.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="context_8cc_source.html#l00062">62</a> of file <a class="el" href="context_8cc_source.html">context.cc</a>.</p>
 
 </div>
 </div>

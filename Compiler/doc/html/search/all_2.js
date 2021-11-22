@@ -23,5 +23,6 @@ var searchData=
   ['break',['BREAK',['../include_2frontend_2parser_2parser_8hh.html#a15c9f7bd2f0e9686df5d9df4f3314aa9a9524d094809858b9e4f778763913568a',1,'BREAK():&#160;parser.hh'],['../parser_8cc.html#a15c9f7bd2f0e9686df5d9df4f3314aa9a9524d094809858b9e4f778763913568a',1,'BREAK():&#160;parser.cc'],['../src_2frontend_2parser_2parser_8hh.html#a15c9f7bd2f0e9686df5d9df4f3314aa9a9524d094809858b9e4f778763913568a',1,'BREAK():&#160;parser.hh']]],
   ['break_5fstmt',['BREAK_STMT',['../classcompiler_1_1_item__stmt.html#a401c44703a990bf529393d90815c8501a783a4ad33a8e7b2d263848b0bd82f291',1,'compiler::Item_stmt']]],
   ['btype',['btype',['../union_y_y_s_t_y_p_e.html#a32fd74fd6adbbb14ef4aa132dd1da796',1,'YYSTYPE']]],
+  ['build',['BUILD',['../namespacelldbinit.html#a4af00311dd46a21fb7bc7f8e52c2f944',1,'lldbinit']]],
   ['bxor',['BXOR',['../namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5',1,'compiler::ir']]]
 ];

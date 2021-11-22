@@ -151,13 +151,19 @@ typedef class Item_stmt_while final : public Item_stmt {
   /**
    * @brief Generate the IR for while block.
    * @note The structure of the while block (also the same for 'for' statement.)
-   * is given as follows: .L.scope_WHILE .L.COND CMP JNE DO JEQ END .L.DO
+   * is given as follows:
+   * .L.scope_LOOP_BEGIN:
+   * .L.scope_COND:
+   *      CMP
+   *      JNE DO
+   *      JEQ END
+   * .L.scope_DO:
    *      DO_SOMETHING
    *      BREAK
    *      CONITNUE
-   * .L.CONITNUE
+   * .L.scope_CONITNUE:
    *      JMP COND
-   * .L.END
+   * .L.scope_END:
    *
    * @note Insert phi_move before `jne END`、`break;`、`continue`.
    *
@@ -189,6 +195,10 @@ typedef class Item_stmt_while final : public Item_stmt {
  *
  */
 typedef class Item_stmt_break final : public Item_stmt {
+ protected:
+  virtual void generate_ir_helper(ir::IRContext* const ir_context,
+                                  std::vector<ir::IR>& ir_list) const override;
+
  public:
   Item_stmt_break() = delete;
 
@@ -201,12 +211,6 @@ typedef class Item_stmt_break final : public Item_stmt {
   virtual std::string print_result(const uint32_t& indent,
                                    const bool& leaf) const override;
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
-    return;
-  }
-
   virtual ~Item_stmt_break() override = default;
 } Item_stmt_break;
 
@@ -215,6 +219,10 @@ typedef class Item_stmt_break final : public Item_stmt {
  *
  */
 typedef class Item_stmt_continue final : public Item_stmt {
+ protected:
+  virtual void generate_ir_helper(ir::IRContext* const ir_context,
+                                  std::vector<ir::IR>& ir_list) const override;
+
  public:
   Item_stmt_continue() = delete;
 

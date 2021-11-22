@@ -92,6 +92,12 @@ $(document).ready(function(){initNavTree('namespacecompiler_1_1ir.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_c_f_g__builder.html">CFG_builder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class for building the cfg from raw TAC (Three Address Code).  <a href="classcompiler_1_1ir_1_1_c_f_g__builder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcompiler_1_1ir_1_1_edge.html">Edge</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An edge in the CFG.  <a href="structcompiler_1_1ir_1_1_edge.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcompiler_1_1ir_1_1_i_r.html">IR</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class for <a class="el" href="classcompiler_1_1ir_1_1_i_r.html" title="The class for IR (Intermediate Representation). Some representation notations are taken from LLVM...">IR</a> (Intermediate Representation). Some representation notations are taken from LLVM.  <a href="classcompiler_1_1ir_1_1_i_r.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,6 +116,15 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a39c7e5c4cd6031c2d43bb2fdf758f362"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">compiler::ir::var_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a39c7e5c4cd6031c2d43bb2fdf758f362">var_type</a></td></tr>
 <tr class="memdesc:a39c7e5c4cd6031c2d43bb2fdf758f362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different variable types.  <a href="#a39c7e5c4cd6031c2d43bb2fdf758f362">More...</a><br /></td></tr>
 <tr class="separator:a39c7e5c4cd6031c2d43bb2fdf758f362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeea5ee696dcd24b9b131c3aaec8ef0ae"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#aeea5ee696dcd24b9b131c3aaec8ef0ae">cfg_block</a> = std::vector&lt; <a class="el" href="classcompiler_1_1ir_1_1_i_r.html">IR</a> * &gt;</td></tr>
+<tr class="memdesc:aeea5ee696dcd24b9b131c3aaec8ef0ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic block in a control flow graph.  <a href="#aeea5ee696dcd24b9b131c3aaec8ef0ae">More...</a><br /></td></tr>
+<tr class="separator:aeea5ee696dcd24b9b131c3aaec8ef0ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d17a3836e472ca226865273a6401ab9"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structcompiler_1_1ir_1_1_edge.html">compiler::ir::Edge</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a8d17a3836e472ca226865273a6401ab9">Edge</a></td></tr>
+<tr class="memdesc:a8d17a3836e472ca226865273a6401ab9"><td class="mdescLeft">&#160;</td><td class="mdescRight">An edge in the CFG.  <a href="#a8d17a3836e472ca226865273a6401ab9">More...</a><br /></td></tr>
+<tr class="separator:a8d17a3836e472ca226865273a6401ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa34414221d4d5031fa50b0235a293d"><td class="memItemLeft" align="right" valign="top">typedef class <a class="el" href="classcompiler_1_1ir_1_1_c_f_g__builder.html">compiler::ir::CFG_builder</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#aeaa34414221d4d5031fa50b0235a293d">CFG_builder</a></td></tr>
+<tr class="memdesc:aeaa34414221d4d5031fa50b0235a293d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class for building the cfg from raw TAC (Three Address Code).  <a href="#aeaa34414221d4d5031fa50b0235a293d">More...</a><br /></td></tr>
+<tr class="separator:aeaa34414221d4d5031fa50b0235a293d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dc9570d52b67dc9b946941a426ce46a"><td class="memItemLeft" align="right" valign="top">typedef class <a class="el" href="classcompiler_1_1ir_1_1_i_r_context.html">compiler::ir::IRContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler_1_1ir.html#a4dc9570d52b67dc9b946941a426ce46a">IRContext</a></td></tr>
 <tr class="memdesc:a4dc9570d52b67dc9b946941a426ce46a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the context for generating intermediate representation. It may include: 1) <a class="el" href="classcompiler_1_1_symbol.html">Symbol</a> tables; 2) Loop labels; 3) Jump labels;.  <a href="#a4dc9570d52b67dc9b946941a426ce46a">More...</a><br /></td></tr>
 <tr class="separator:a4dc9570d52b67dc9b946941a426ce46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,8 +178,8 @@ Enumerations</h2></td></tr>
 <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6">JEQ</a>, 
 <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff">JNE</a>, 
 <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4">JLT</a>, 
-<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5">JGT</a>, 
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a70168efbbd68bf4d3e17f6e2f36f25ef">JL</a>, 
+<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a7f1cdce2e9b4a3b4c28d333f0ce7805d">JG</a>, 
 <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac">BAND</a>, 
 <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f">BOR</a>, 
 <br />
@@ -193,7 +208,15 @@ Enumerations</h2></td></tr>
 <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b">BEGIN_STRUCT</a>, 
 <a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119">END_STRUCT</a>, 
 <br />
-&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9">LBL</a>
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9">LBL</a>, 
+<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6ac641d5977a138e12e7597e635c4985b7">PHI</a>, 
+<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a375133a0073998ede322c7c7582b7033">MOVNE</a>, 
+<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a4cbac376f6c7e8c610cd403390e669e6">MOVEQ</a>, 
+<br />
+&#160;&#160;<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6aefb031f761a572994955c9ab83206224">MOVGT</a>, 
+<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6abdb70e4fe658a70a2044efde756c8546">MOVLT</a>, 
+<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a88fcc8c27b2863172bec973a48ec37e4">MOVGE</a>, 
+<a class="el" href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6a954645023d460ed085bb98aa279a009f">MOVLE</a>
 <br />
  }<tr class="memdesc:a27e578532e191c34f41311dd373728c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines different operations.  <a href="namespacecompiler_1_1ir.html#a27e578532e191c34f41311dd373728c6">More...</a><br /></td></tr>
 </td></tr>
@@ -238,7 +261,57 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00352">352</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00398">398</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+
+</div>
+</div>
+<a id="aeea5ee696dcd24b9b131c3aaec8ef0ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeea5ee696dcd24b9b131c3aaec8ef0ae">&#9670;&nbsp;</a></span>cfg_block</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacecompiler_1_1ir.html#aeea5ee696dcd24b9b131c3aaec8ef0ae">compiler::ir::cfg_block</a> = typedef std::vector&lt;<a class="el" href="classcompiler_1_1ir_1_1_i_r.html">IR</a>*&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Basic block in a control flow graph. </p>
+
+<p class="definition">Definition at line <a class="el" href="cfg_8hh_source.html#l00028">28</a> of file <a class="el" href="cfg_8hh_source.html">cfg.hh</a>.</p>
+
+</div>
+</div>
+<a id="aeaa34414221d4d5031fa50b0235a293d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaa34414221d4d5031fa50b0235a293d">&#9670;&nbsp;</a></span>CFG_builder</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef class <a class="el" href="classcompiler_1_1ir_1_1_c_f_g__builder.html">compiler::ir::CFG_builder</a>  <a class="el" href="classcompiler_1_1ir_1_1_c_f_g__builder.html">compiler::ir::CFG_builder</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A class for building the cfg from raw TAC (Three Address Code). </p>
+
+</div>
+</div>
+<a id="a8d17a3836e472ca226865273a6401ab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d17a3836e472ca226865273a6401ab9">&#9670;&nbsp;</a></span>Edge</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structcompiler_1_1ir_1_1_edge.html">compiler::ir::Edge</a>  <a class="el" href="structcompiler_1_1ir_1_1_edge.html">compiler::ir::Edge</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>An edge in the CFG. </p>
 
 </div>
 </div>
@@ -382,8 +455,8 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6ada57815aeecc6eb5a45d300b0571d4a9"></a>JLE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a28b5aed264c025d5203ddfd80f0b2fc6"></a>JEQ&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a3ef20021d055eccffe55ad6ca65134ff"></a>JNE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6ab62ce77bdd292fce0556f9c46ee654a4"></a>JLT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a3e91d1e42431cbbd8aeea18b70f921b5"></a>JGT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a70168efbbd68bf4d3e17f6e2f36f25ef"></a>JL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a7f1cdce2e9b4a3b4c28d333f0ce7805d"></a>JG&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6aa6a7d7976f8bcaf24e28743239cf50ac"></a>BAND&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a765fbe30e7d25665b5f45c51f30d867f"></a>BOR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6ad4c9d9457486addec7d6920bb49fa4b5"></a>BXOR&#160;</td><td class="fielddoc"></td></tr>
@@ -407,9 +480,16 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6ab112892f3d2a19bdfb12f364b82e639b"></a>BEGIN_STRUCT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a7b61df6977212ac0ebdc58467f2af119"></a>END_STRUCT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6aa76cad56fdbd76f2026e7347cbe5f7a9"></a>LBL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6ac641d5977a138e12e7597e635c4985b7"></a>PHI&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a375133a0073998ede322c7c7582b7033"></a>MOVNE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a4cbac376f6c7e8c610cd403390e669e6"></a>MOVEQ&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6aefb031f761a572994955c9ab83206224"></a>MOVGT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6abdb70e4fe658a70a2044efde756c8546"></a>MOVLT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a88fcc8c27b2863172bec973a48ec37e4"></a>MOVGE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a27e578532e191c34f41311dd373728c6a954645023d460ed085bb98aa279a009f"></a>MOVLE&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00115">115</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8hh_source.html#l00128">128</a> of file <a class="el" href="ir_8hh_source.html">ir.hh</a>.</p>
 
 </div>
 </div>
@@ -477,7 +557,7 @@ Functions</h2></td></tr>
 <dd>
 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00162">162</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00166">166</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -506,7 +586,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00178">178</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00183">183</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -535,7 +615,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00173">173</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00178">178</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -564,7 +644,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Operand* </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00202">202</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00207">207</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -594,7 +674,7 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00158">158</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00162">162</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -623,7 +703,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>uint32_t </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00251">251</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00256">256</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -652,7 +732,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00185">185</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00190">190</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>
@@ -682,7 +762,7 @@ false </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Item_literal* </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00236">236</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ir_8cc_source.html#l00241">241</a> of file <a class="el" href="ir_8cc_source.html">ir.cc</a>.</p>
 
 </div>
 </div>

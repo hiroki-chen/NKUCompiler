@@ -44,14 +44,15 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_make_c_x_x_compiler_id_8cpp.html",
-"classcompiler_1_1_item__func__call__list.html#ae9ec4232bda5ad0aac0b9dccc8c56f2a",
-"classcompiler_1_1_item__stmt__assign.html#acf797e216c2001cbf9ab5a88940a9959",
-"classcxxopts_1_1_option_parser.html#a0b61e22df2480c2c91f2793f3c1452ff",
-"functions_t.html",
-"ir_8hh.html#a27e578532e191c34f41311dd373728c6a9f0215b792d5bcd1972fa2c2d62858be",
-"lexer_8cc.html#ac571eade4cca933e8ccdf6759c527fe7",
-"parser_8cc.html#a1a9dc526fd390d4808252bd631c4c2f7",
-"src_2frontend_2parser_2parser_8hh.html#a15c9f7bd2f0e9686df5d9df4f3314aa9aef31cc6fe9479955961311ee18ac205f"
+"classcompiler_1_1_item__func__call.html#aacb1e5280226a9a35405c4b4612f9cf9",
+"classcompiler_1_1_item__stmt.html#a401c44703a990bf529393d90815c8501adf48553f0fbf2f3e2cd0e024a3b517fa",
+"classcompiler_1_1undeclared__symbol.html#ae69f4c6f3e12529d6d27c00512acff00",
+"functions_c.html",
+"include_2frontend_2parser_2parser_8hh_source.html",
+"lexer_8cc.html#a70f82d43d4797bb2a50f7678ddbfbda5",
+"main_8cc.html#a217dbf8b442f20279ea00b898af96f52",
+"parser_8cc.html#a7d535939e93253736c6eeda569d24de5",
+"structcxxopts_1_1_help_group_details.html#a42db1cc0f95adbda0b1d73ca54ffb468"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

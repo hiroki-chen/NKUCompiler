@@ -77,11 +77,14 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     // If branches cannot be evaluated at runtime, we should create IRs for each
     // branch.
-    std::ostringstream oss;
-    oss << ".LBB" << scope_uuid_cur << "_ELSE";
-    ir_list.emplace_back(branch_ir.second, oss.str());
-    oss.str("");
-    oss.flush();
+    ir_list.emplace_back(branch_ir.second,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE");
+    ir_list.emplace_back(ir::op_type::JMP,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_IF");
+
+    // Generate a label for if branch.
+    ir_list.emplace_back(ir::op_type::LBL,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_IF:");
 
     std::vector<compiler::ir::IR> ir_if, ir_else;
     compiler::ir::IRContext ir_context_if(*ir_context);
@@ -101,8 +104,8 @@ void compiler::Item_stmt_eif::generate_ir_helper(
         ir_context_else.get_symbol_table()->get_available_id());
 
     std::vector<compiler::ir::IR> ir_end;
-    oss << ".LBB" << scope_uuid_cur << "_END_IF";
-    ir_end.emplace_back(compiler::ir::op_type::LBL, oss.str() + ":");
+    ir_end.emplace_back(compiler::ir::op_type::LBL,
+                        ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF:");
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
@@ -155,14 +158,16 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     }
     ir_list.emplace_back(ir::op_type::LBL,
                          ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE:");
+
     compiler::insert_with_move(ir_list, ir_else);
+    ir_list.emplace_back(ir::op_type::JMP,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF");
     compiler::insert_with_move(ir_list, ir_end);
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
-    // FIXME: Determine which exception should be caught.
   }
 }
 
@@ -291,21 +296,24 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_context->add_loop_label(std::to_string(scope_id));
 
     // Step 1: Copy the previous context.
-    const uint32_t size = sizeof(*ir_context);
-    unsigned char* backup = new unsigned char[size];
-    memcpy(backup, static_cast<void*>(ir_context), size);
-    compiler::ir::IRContext* const ir_context_conditional =
-        reinterpret_cast<compiler::ir::IRContext*>(backup);
+    compiler::ir::IRContext* const ir_context_backup =
+        new compiler::ir::IRContext(*ir_context);
+    std::vector<ir::IR> ir_list_before;
 
     // Step 2: Create condition.
+    compiler::ir::IRContext* const ir_context_conditional =
+        new compiler::ir::IRContext(*ir_context_backup);
     std::vector<compiler::ir::IR> ir_conditional;
     ir_conditional.emplace_back(
         compiler::ir::op_type::LBL,
-        ".L.LOOP_" + ir_context->get_top_loop_label() + "_BEGIN：");
+        ".LB" + ir_context->get_top_loop_label() + "LOOP_BEGIN：");
     const compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context_conditional, ir_conditional);
 
-    // TODO: Step 3: DO Block...
+    // Step 3: Create jump instruction.
+    std::vector<compiler::ir::IR> ir_jump;
+    ir_jump.emplace_back(ir::op_type::JMP,
+                         ".LB" + std::to_string(scope_id) + "LOOP_END");
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
@@ -378,4 +386,18 @@ void compiler::Item_stmt_return::generate_ir_helper(
         new ir::Operand(ir::var_type::NONE, "", "", false, false);
     ir_list.emplace_back(ir::op_type::RET, return_value);
   }
+}
+
+void compiler::Item_stmt_break::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // TODO
+  return;
+}
+
+void compiler::Item_stmt_continue::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // TODO
+  return;
 }
