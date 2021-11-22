@@ -417,16 +417,18 @@ void compiler::Item_stmt_break::generate_ir_helper(
   ir_context->break_symbol.top().emplace_back(*ir_context->get_symbol_table());
 
   // Handle phi move.
-  for (auto phi_block : ir_context->break_phi_block.top()) {
-    // Get the symbol_table.
-    auto symbol_table = ir_context->get_symbol_table()
-                            ->get_symbol_table()[phi_block.first.first]
-                            ->get_block();
-    const std::string phi_name =
-        symbol_table->find(phi_block.second)->second->get_name();
+  if (!ir_context->break_phi_block.empty()) {
+    for (auto phi_block : ir_context->break_phi_block.top()) {
+      // Get the symbol_table.
+      auto symbol_table = ir_context->get_symbol_table()
+                              ->get_symbol_table()[phi_block.first.first]
+                              ->get_block();
+      const std::string phi_name =
+          symbol_table->find(phi_block.second)->second->get_name();
 
-    ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
-                         new ir::Operand(phi_name));
+      ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
+                           new ir::Operand(phi_name));
+    }
   }
 
   ir_list.emplace_back(ir::op_type::JMP,
@@ -445,16 +447,18 @@ void compiler::Item_stmt_continue::generate_ir_helper(
       *ir_context->get_symbol_table());
 
   // Handle phi move.
-  for (auto phi_block : ir_context->continue_phi_block.top()) {
-    // Get the symbol_table.
-    auto symbol_table = ir_context->get_symbol_table()
-                            ->get_symbol_table()[phi_block.first.first]
-                            ->get_block();
-    const std::string phi_name =
-        symbol_table->find(phi_block.second)->second->get_name();
+  if (!ir_context->continue_phi_block.empty()) {
+    for (auto phi_block : ir_context->continue_phi_block.top()) {
+      // Get the symbol_table.
+      auto symbol_table = ir_context->get_symbol_table()
+                              ->get_symbol_table()[phi_block.first.first]
+                              ->get_block();
+      const std::string phi_name =
+          symbol_table->find(phi_block.second)->second->get_name();
 
-    ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
-                         new ir::Operand(phi_name));
+      ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
+                           new ir::Operand(phi_name));
+    }
   }
 
   ir_list.emplace_back(
