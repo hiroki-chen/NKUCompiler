@@ -152,20 +152,23 @@ typedef class Item_stmt_while final : public Item_stmt {
    * @brief Generate the IR for while block.
    * @note The structure of the while block (also the same for 'for' statement.)
    * is given as follows:
-   * .L.scope_LOOP_BEGIN:
-   * .L.scope_COND:
+   * .LB_scope_LOOP_BEGIN:
+   * .LB_scope_COND:
    *      CMP
    *      JNE DO
+   *      PHI_MOVE
    *      JEQ END
-   * .L.scope_DO:
+   * .LB_scope_DO:
    *      DO_SOMETHING
+   *      PHI_MOVE
    *      BREAK
+   *      PHI_MOVE
    *      CONITNUE
-   * .L.scope_CONITNUE:
+   * .LB_scope_CONITNUE:
    *      JMP COND
-   * .L.scope_END:
+   * .LB_scope_END:
    *
-   * @note Insert phi_move before `jne END`、`break;`、`continue`.
+   * @note Insert phi_move before `JEQ END`、`break`、`continue`.
    *
    * @param context
    * @param ir_list

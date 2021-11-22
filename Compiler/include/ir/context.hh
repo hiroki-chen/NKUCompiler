@@ -18,6 +18,7 @@
 #define CONTEXT_HH
 
 #include <frontend/symbol_table/symbol_table.hh>
+#include <map>
 #include <stack>
 
 namespace compiler::ir {
@@ -61,6 +62,35 @@ typedef class IRContext {
 
  public:
   /**
+   * @brief A temporary symbol table for continue statements.
+   *
+   */
+  std::stack<std::vector<Symbol_table>> continue_symbol;
+
+  /**
+   * @brief A temporary symbol table for break statements.
+   *
+   */
+  std::stack<std::vector<Symbol_table>> break_symbol;
+
+  /**
+   * @brief A phi block look up table for continue statement.
+   * @note Usage:
+   *      [<symbol_table_id>][variable_name] -> [<symbol_name>];
+   *
+   */
+  std::stack<std::map<std::pair<uint32_t, std::string>, std::string>>
+      continue_phi_block;
+
+  /**
+   * @brief A phi block look up table for break statement.
+   *
+   */
+  std::stack<std::map<std::pair<uint32_t, std::string>, std::string>>
+      break_phi_block;
+  //======================= END OF VARIABLE ===================
+
+  /**
    * @brief Construct a new IRContext object. It will also create a global
    * context?
    *
@@ -69,8 +99,8 @@ typedef class IRContext {
 
   /**
    * @brief Construct a new IRContext object. Dump a context.
-   * 
-   * @param ir_context 
+   *
+   * @param ir_context
    */
   IRContext(const IRContext& ir_context);
 
