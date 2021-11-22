@@ -22,6 +22,11 @@
 #include <stack>
 
 namespace compiler::ir {
+
+using phi_tag = std::map<std::pair<uint32_t, std::string>, std::string>;
+
+using phi_block_type = std::stack<phi_tag>;
+
 /**
  * @brief This is the context for generating intermediate representation.
  *        It may include:
@@ -30,6 +35,7 @@ namespace compiler::ir {
  *        3) Jump labels;
  *
  */
+
 typedef class IRContext {
  private:
   /**
@@ -79,15 +85,13 @@ typedef class IRContext {
    *      [<symbol_table_id>][variable_name] -> [<symbol_name>];
    *
    */
-  std::stack<std::map<std::pair<uint32_t, std::string>, std::string>>
-      continue_phi_block;
+  phi_block_type continue_phi_block;
 
   /**
    * @brief A phi block look up table for break statement.
    *
    */
-  std::stack<std::map<std::pair<uint32_t, std::string>, std::string>>
-      break_phi_block;
+  phi_block_type break_phi_block;
   //======================= END OF VARIABLE ===================
 
   /**
@@ -157,6 +161,11 @@ typedef class IRContext {
    */
   virtual void add_loop_var(const std::string& var) {
     loop_variable.top().emplace_back(var);
+  }
+
+  virtual void pop_loop_var(void) {
+    loop_variable.pop();
+    loop_label.pop();
   }
 
   /**

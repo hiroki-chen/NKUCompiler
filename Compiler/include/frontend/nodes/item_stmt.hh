@@ -392,6 +392,20 @@ typedef class Item_block final : public Item_stmt {
 
   virtual ~Item_block() override = default;
 } Item_block;
+
+/**
+ * @brief Create phi blocks for real context based on the information collected
+ * in the fake context.
+ *
+ * @param ir_context_fake
+ * @param ir_context_real
+ * @param ir_context_dst
+ */
+void handle_phi_move(ir::IRContext* const ir_context_a,
+                     ir::IRContext* const ir_context_b,
+                     ir::IRContext* const ir_context_dst);
+
+void handle_phi_move(ir::IRContext* const ir_context, const bool& type = false);
 }  // namespace compiler
 
 #endif

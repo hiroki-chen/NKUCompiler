@@ -45,7 +45,7 @@ static const std::string arg_sign = "$arg";
  *
  */
 static const char* op_name[]{
-    "ARG",
+    "PUSH",
     "NOP",
     // Basic algorithmic operations
     "IADD",
@@ -126,7 +126,7 @@ static const char* op_name[]{
  *
  */
 typedef enum op_type {
-  ARG,
+  PUSH,
   NOP,
   // Basic algorithmic operations
   IADD,
