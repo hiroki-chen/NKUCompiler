@@ -204,37 +204,37 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
       case NEQ_TYPE: {
         ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
         ir_list.emplace_back(ir::op_type::MOVNE, dst, OPERAND_VALUE("1"),
-                             OPERAND_VALUE("1"));
+                             OPERAND_VALUE("0"));
         break;
       }
       case EQ_TYPE: {
         ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
         ir_list.emplace_back(ir::op_type::MOVEQ, dst, OPERAND_VALUE("1"),
-                             OPERAND_VALUE("1"));
+                             OPERAND_VALUE("0"));
         break;
       }
       case G_TYPE: {
         ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
         ir_list.emplace_back(ir::op_type::MOVGT, dst, OPERAND_VALUE("1"),
-                             OPERAND_VALUE("1"));
+                             OPERAND_VALUE("0"));
         break;
       }
       case L_TYPE: {
         ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
         ir_list.emplace_back(ir::op_type::MOVLT, dst, OPERAND_VALUE("1"),
-                             OPERAND_VALUE("1"));
+                             OPERAND_VALUE("0"));
         break;
       }
       case LE_TYPE: {
         ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
         ir_list.emplace_back(ir::op_type::MOVLE, dst, OPERAND_VALUE("1"),
-                             OPERAND_VALUE("1"));
+                             OPERAND_VALUE("0"));
         break;
       }
       case GE_TYPE: {
         ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
         ir_list.emplace_back(ir::op_type::MOVGE, dst, OPERAND_VALUE("1"),
-                             OPERAND_VALUE("1"));
+                             OPERAND_VALUE("0"));
         break;
       }
       case BITAND_TYPE: {

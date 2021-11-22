@@ -103,9 +103,10 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     ir_context->get_symbol_table()->set_available_id(
         ir_context_else.get_symbol_table()->get_available_id());
 
-    std::vector<compiler::ir::IR> ir_end;
-    ir_end.emplace_back(compiler::ir::op_type::LBL,
-                        ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF:");
+    std::vector<compiler::ir::IR> ir_list_end;
+    ir_list_end.emplace_back(
+        compiler::ir::op_type::LBL,
+        ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF:");
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
@@ -140,11 +141,11 @@ void compiler::Item_stmt_eif::generate_ir_helper(
           ir_if.emplace_back(ir::op_type::PHI,
                              new ir::Operand(symbol->get_name()),
                              new ir::Operand(symbol_pair.second->get_name()));
-          ir_if.back().set_phi_block(ir_end.begin());
+          ir_if.back().set_phi_block(ir_list_end.begin());
           ir_else.emplace_back(
               ir::op_type::PHI, new ir::Operand(symbol->get_name()),
               new ir::Operand(symbol_else->second->get_name()));
-          ir_else.back().set_phi_block(ir_end.begin());
+          ir_else.back().set_phi_block(ir_list_end.begin());
         }
       }
     }
@@ -162,7 +163,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     compiler::insert_with_move(ir_list, ir_else);
     ir_list.emplace_back(ir::op_type::JMP,
                          ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF");
-    compiler::insert_with_move(ir_list, ir_end);
+    compiler::insert_with_move(ir_list, ir_list_end);
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
@@ -296,25 +297,235 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_context->add_loop_label(std::to_string(scope_id));
 
     // Step 1: Copy the previous context.
-    compiler::ir::IRContext* const ir_context_backup =
+    compiler::ir::IRContext* ir_context_backup =
         new compiler::ir::IRContext(*ir_context);
-    std::vector<ir::IR> ir_list_before;
+    std::vector<ir::IR> ir_list_backup;
 
     // Step 2: Create condition.
-    compiler::ir::IRContext* const ir_context_conditional =
+    compiler::ir::IRContext* ir_context_condition =
         new compiler::ir::IRContext(*ir_context_backup);
-    std::vector<compiler::ir::IR> ir_conditional;
-    ir_conditional.emplace_back(
+    std::vector<compiler::ir::IR> ir_list_condition;
+    ir_list_condition.emplace_back(
         compiler::ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "LOOP_BEGIN：");
-    const compiler::ir::BranchIR branch_ir =
-        condition->eval_cond(ir_context_conditional, ir_conditional);
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN:");
 
-    // Step 3: Create jump instruction.
-    std::vector<compiler::ir::IR> ir_jump;
-    ir_jump.emplace_back(ir::op_type::JMP,
-                         ".LB" + std::to_string(scope_id) + "LOOP_END");
+    compiler::ir::BranchIR branch_ir =
+        condition->eval_cond(ir_context_condition, ir_list_condition);
+    
 
+    // Step 3: Set up jump instruction.
+    std::vector<compiler::ir::IR> ir_list_jump;
+    ir_list_jump.emplace_back(branch_ir.second,
+                              ".LB" + std::to_string(scope_id) + "_LOOP_END");
+
+    // Step 4: Create the do body, and then generate ir from it.
+    ir::IRContext* ir_context_do = new ir::IRContext(*ir_context_condition);
+    std::vector<ir::IR> ir_list_do;
+    ir_context_do->continue_symbol.push({});
+    ir_context_do->break_symbol.push({});
+    ir_context_do->continue_phi_block.push({});
+    ir_context_do->break_phi_block.push({});
+    statement->generate_ir(ir_context_do, ir_list_do);
+    ir_context_do->continue_symbol.top().emplace_back(
+        *ir_context_do->get_symbol_table());
+
+    // Step 5: Real do body.
+    ir::IRContext* ir_context_do_real =
+        new ir::IRContext(*ir_context_condition);
+    std::vector<ir::IR> ir_list_do_real;
+    ir_context_do_real->continue_symbol.push({});
+    ir_context_do_real->break_symbol.push({});
+    ir_context_do_real->continue_phi_block.push({});
+    ir_context_do_real->break_phi_block.push({});
+    // Handle phi move.
+    compiler::handle_phi_move(ir_context_do, ir_context_do, ir_context_do_real);
+    compiler::handle_phi_move(ir_context_condition, ir_context_do,
+                              ir_context_do_real);
+    // Insert label.
+    ir_list_do_real.emplace_back(
+        ir::op_type::LBL,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY:");
+    statement->generate_ir(ir_context_do_real, ir_list_do_real);
+    // Insert phi blocks.
+    for (auto& phi_block : ir_context_do_real->continue_phi_block.top()) {
+      auto table = ir_context_do_real->get_symbol_table()
+                       ->get_symbol_table()[phi_block.first.first]
+                       ->get_block();
+      const std::string symbol_name =
+          table->find(phi_block.first.second)->second->get_name();
+      ir_list_do_real.emplace_back(ir::op_type::PHI,
+                                   new ir::Operand(phi_block.second),
+                                   new ir::Operand(symbol_name));
+    }
+
+    // Step 6: phi move with break and continue.
+    compiler::handle_phi_move(ir_context_do_real, true);
+    compiler::handle_phi_move(ir_context_do_real, false);
+
+    // Step7: Pop them out.
+    ir_context_do_real->break_phi_block.pop();
+    ir_context_do_real->continue_phi_block.pop();
+    ir_context_do_real->break_symbol.pop();
+    ir_context_do_real->continue_symbol.pop();
+
+    // Step 8: Continue statement.
+    ir::IRContext* ir_context_continue = new ir::IRContext(*ir_context_do_real);
+    std::vector<ir::IR> ir_list_continue;
+    ir_list_continue.emplace_back(
+        ir::op_type::JMP,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_CONTINUE");
+    ir_list_condition.clear();
+    ir_list_condition.emplace_back(
+        ir::op_type::LBL,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN:");
+    // Handle phi move.
+    auto symbol_table =
+        ir_context_backup->get_symbol_table()->get_symbol_table();
+    for (uint32_t i = 0; i < symbol_table.size(); i++) {
+      for (auto symbol_prev : *symbol_table[i]->get_block()) {
+        auto symbol_table_continue = ir_context_continue->get_symbol_table()
+                                         ->get_symbol_table()[i]
+                                         ->get_block();
+
+        auto symbol_continue = symbol_table_continue->find(symbol_prev.first);
+        if (symbol_continue == symbol_table_continue->end()) {
+          throw compiler::fatal_error(
+              "Error: Unknown error when generating phi blocks!");
+        }
+        if (symbol_continue->second->get_name() !=
+            symbol_prev.second->get_name()) {
+          const std::string symbol_name_new =
+              ir::local_sign +
+              std::to_string(
+                  ir_context_backup->get_symbol_table()->get_available_id());
+          ir_list_backup.emplace_back(
+              ir::op_type::PHI, new ir::Operand(symbol_name_new),
+              new ir::Operand(symbol_prev.second->get_name()));
+          ir_list_backup.back().set_phi_block(ir_list_condition.begin());
+          ir_list_continue.emplace_back(
+              ir::op_type::PHI, new ir::Operand(symbol_name_new),
+              new ir::Operand(symbol_continue->second->get_name()));
+          auto symbol_table_backup = ir_context_backup->get_symbol_table()
+                                         ->get_symbol_table()[i]
+                                         ->get_block();
+          symbol_table_backup->find(symbol_prev.first)
+              ->second->set_name(symbol_name_new);
+          ir_context_backup->add_loop_var(symbol_name_new);
+        }
+      }
+    }
+
+    ir_list_continue.emplace_back(
+        ir::op_type::JMP,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
+    ir_list_continue.emplace_back(
+        ir::op_type::LBL,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END:");
+
+    //============================= END PRE-PREPARATION
+    //============================= BEGIN REAL WHILE STATEMENT
+    // Step 1: WHILE CONDITION.
+    delete ir_context_condition;
+    ir_context_condition = new ir::IRContext(*ir_context_backup);
+    branch_ir = condition->eval_cond(ir_context_condition, ir_list_condition);
+
+    // Step 2: JUMP LABEL.
+    ir_list_jump.clear();
+    ir_list_jump.emplace_back(
+        branch_ir.second,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
+
+    // Step 3: DO BODY.
+    delete ir_context_do;
+    ir_context_do = new ir::IRContext(*ir_context_condition);
+    ir_list_do.clear();
+    ir_context_do->continue_symbol.push({});
+    ir_context_do->break_symbol.push({});
+    ir_context_do->continue_phi_block.push({});
+    ir_context_do->break_phi_block.push({});
+    statement->generate_ir(ir_context_do, ir_list_do);
+    ir_context_do->continue_symbol.top().emplace_back(
+        *ir_context_do->get_symbol_table());
+
+    // Step 4: REAL DO.
+    delete ir_context_do_real;
+    ir_context_do_real = new ir::IRContext(*ir_context_condition);
+    ir_list_do_real.clear();
+    ir_list_continue.clear();
+    ir_list_continue.emplace_back(ir::op_type::NOP);
+    std::vector<ir::IR> ir_list_end;
+    ir_list_end.emplace_back(
+        ir::op_type::LBL,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END:");
+    ir_context_do_real->continue_symbol.push({});
+    ir_context_do_real->break_symbol.push({});
+    ir_context_do_real->continue_phi_block.push({});
+    ir_context_do_real->break_phi_block.push({});
+    compiler::handle_phi_move(ir_context_do, ir_context_do, ir_context_do_real);
+    compiler::handle_phi_move(ir_context_condition, ir_context_do,
+                              ir_context_do_real);
+
+    ir_list_do_real.emplace_back(
+        ir::op_type::LBL,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY:");
+    statement->generate_ir(ir_context_do_real, ir_list_do_real);
+    compiler::handle_phi_move(ir_context_do_real, true);
+    compiler::handle_phi_move(ir_context_do_real, false);
+
+    ir_context_do_real->break_phi_block.pop();
+    ir_context_do_real->continue_phi_block.pop();
+    ir_context_do_real->break_symbol.pop();
+    ir_context_do_real->continue_symbol.pop();
+
+    // Step 4: CONTINUE.
+    delete ir_context_continue;
+    ir_context_continue = new ir::IRContext(*ir_context_do_real);
+    ir_list_continue.emplace_back(
+        ir::op_type::LBL,
+        new ir::Operand(".LB" + ir_context->get_top_loop_label() +
+                        "_LOOP_CONTINUE:"));
+
+    for (uint32_t i = 0; i < symbol_table.size(); i++) {
+      for (auto symbol_prev : *symbol_table[i]->get_block()) {
+        auto symbol_table_continue = ir_context_continue->get_symbol_table()
+                                         ->get_symbol_table()[i]
+                                         ->get_block();
+
+        auto symbol_continue = symbol_table_continue->find(symbol_prev.first);
+        if (symbol_continue == symbol_table_continue->end()) {
+          throw compiler::fatal_error(
+              "Error: Unknown error when generating phi blocks!");
+        }
+        if (symbol_continue->second->get_name() !=
+            symbol_prev.second->get_name()) {
+          ir_list_continue.emplace_back(
+              ir::op_type::PHI, new ir::Operand(symbol_prev.second->get_name()),
+              new ir::Operand(symbol_continue->second->get_name()));
+          ir_list_continue.back().set_phi_block(ir_list_condition.begin());
+        }
+      }
+    }
+
+    ir_list_continue.emplace_back(
+        ir::op_type::JMP,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
+
+    // TODO: Optimize loop.
+
+    // Append to the ir_list.
+    compiler::insert_with_move(ir_list, ir_list_backup);
+    compiler::insert_with_move(ir_list, ir_list_condition);
+    compiler::insert_with_move(ir_list, ir_list_jump);
+    compiler::insert_with_move(ir_list, ir_list_do_real);
+    compiler::insert_with_move(ir_list, ir_list_continue);
+    compiler::insert_with_move(ir_list, ir_list_end);
+
+    *ir_context = *ir_context_condition;
+    ir_context->get_symbol_table()->set_available_id(
+        ir_context_continue->get_symbol_table()->get_available_id());
+
+    // Leave the scope.
+    ir_context->pop_loop_var();
     ir_context->leave_scope();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
@@ -391,13 +602,107 @@ void compiler::Item_stmt_return::generate_ir_helper(
 void compiler::Item_stmt_break::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
-  // TODO
-  return;
+  // Check if the context is correct. Break statement cannot break to a non-loop
+  // envionment.
+  if (ir_context->is_loop_context() == false) {
+    throw compiler::unsupported_operation(
+        "Error: Break statement in a non-loop envionment!");
+  }
+
+  ir_context->break_symbol.top().emplace_back(*ir_context->get_symbol_table());
+
+  // Handle phi move.
+  if (!ir_context->break_phi_block.empty()) {
+    for (auto phi_block : ir_context->break_phi_block.top()) {
+      // Get the symbol_table.
+      auto symbol_table = ir_context->get_symbol_table()
+                              ->get_symbol_table()[phi_block.first.first]
+                              ->get_block();
+      const std::string phi_name =
+          symbol_table->find(phi_block.second)->second->get_name();
+
+      ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
+                           new ir::Operand(phi_name));
+    }
+  }
+
+  ir_list.emplace_back(ir::op_type::JMP,
+                       ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
 }
 
 void compiler::Item_stmt_continue::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
-  // TODO
-  return;
+  if (ir_context->is_loop_context() == false) {
+    throw compiler::unsupported_operation(
+        "Error: Continue statement in a non-loop envionment!");
+  }
+
+  ir_context->continue_symbol.top().emplace_back(
+      *ir_context->get_symbol_table());
+
+  // Handle phi move.
+  if (!ir_context->continue_phi_block.empty()) {
+    for (auto phi_block : ir_context->continue_phi_block.top()) {
+      // Get the symbol_table.
+      auto symbol_table = ir_context->get_symbol_table()
+                              ->get_symbol_table()[phi_block.first.first]
+                              ->get_block();
+      const std::string phi_name =
+          symbol_table->find(phi_block.second)->second->get_name();
+
+      ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
+                           new ir::Operand(phi_name));
+    }
+  }
+
+  ir_list.emplace_back(
+      ir::op_type::JMP,
+      ".LB" + ir_context->get_top_loop_label() + "_LOOP_CONTINUE");
+}
+
+void compiler::handle_phi_move(ir::IRContext* const ir_context_a,
+                               ir::IRContext* const ir_context_b,
+                               ir::IRContext* const ir_context_dst) {
+  const auto table = ir_context_a->get_symbol_table()->get_symbol_table();
+  for (uint32_t i = 0; i < table.size(); i++) {
+    for (auto symbol : *table[i]->get_block()) {
+      auto table_temp = ir_context_b->continue_symbol.top();
+      for (uint32_t j = 0; j < table_temp.size(); j++) {
+        // Find in temporary symbol table.
+        auto this_table = table_temp[j].get_symbol_table()[i]->get_block();
+        const std::string symbol_name_cur = symbol.second->get_name();
+
+        auto iter = this_table->find(symbol.first);
+        if (iter == this_table->end()) {
+          throw compiler::fatal_error(
+              "Error: Unkown error when generating phi blocks");
+        }
+        // Same variable is assigned more than twice.
+        if (symbol_name_cur.compare(iter->second->get_name()) != 0) {
+          const auto tag_pair = std::make_pair(i, symbol.first);
+          const auto phi_pair = std::make_pair(
+              tag_pair,
+              ir::local_sign + std::to_string(ir_context_dst->get_symbol_table()
+                                                  ->get_top_scope_uuid()));
+          ir_context_dst->continue_phi_block.top().insert(phi_pair);
+          break;
+        }
+      }
+    }
+  }
+}
+
+void compiler::handle_phi_move(compiler::ir::IRContext* const ir_context,
+                               const bool& type) {
+  ir::phi_tag phi = (type == true ? ir_context->continue_phi_block.top()
+                                  : ir_context->break_phi_block.top());
+  for (auto& phi_block : phi) {
+    auto table = ir_context->get_symbol_table()
+                     ->get_symbol_table()[phi_block.first.first]
+                     ->get_block();
+    compiler::Symbol* const symbol =
+        table->find(phi_block.first.second)->second;
+    symbol->set_name(phi_block.second);
+  }
 }

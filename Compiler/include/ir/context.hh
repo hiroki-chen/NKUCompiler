@@ -18,9 +18,15 @@
 #define CONTEXT_HH
 
 #include <frontend/symbol_table/symbol_table.hh>
+#include <map>
 #include <stack>
 
 namespace compiler::ir {
+
+using phi_tag = std::map<std::pair<uint32_t, std::string>, std::string>;
+
+using phi_block_type = std::stack<phi_tag>;
+
 /**
  * @brief This is the context for generating intermediate representation.
  *        It may include:
@@ -29,6 +35,7 @@ namespace compiler::ir {
  *        3) Jump labels;
  *
  */
+
 typedef class IRContext {
  private:
   /**
@@ -61,6 +68,33 @@ typedef class IRContext {
 
  public:
   /**
+   * @brief A temporary symbol table for continue statements.
+   *
+   */
+  std::stack<std::vector<Symbol_table>> continue_symbol;
+
+  /**
+   * @brief A temporary symbol table for break statements.
+   *
+   */
+  std::stack<std::vector<Symbol_table>> break_symbol;
+
+  /**
+   * @brief A phi block look up table for continue statement.
+   * @note Usage:
+   *      [<symbol_table_id>][variable_name] -> [<symbol_name>];
+   *
+   */
+  phi_block_type continue_phi_block;
+
+  /**
+   * @brief A phi block look up table for break statement.
+   *
+   */
+  phi_block_type break_phi_block;
+  //======================= END OF VARIABLE ===================
+
+  /**
    * @brief Construct a new IRContext object. It will also create a global
    * context?
    *
@@ -69,8 +103,8 @@ typedef class IRContext {
 
   /**
    * @brief Construct a new IRContext object. Dump a context.
-   * 
-   * @param ir_context 
+   *
+   * @param ir_context
    */
   IRContext(const IRContext& ir_context);
 
@@ -127,6 +161,11 @@ typedef class IRContext {
    */
   virtual void add_loop_var(const std::string& var) {
     loop_variable.top().emplace_back(var);
+  }
+
+  virtual void pop_loop_var(void) {
+    loop_variable.pop();
+    loop_label.pop();
   }
 
   /**

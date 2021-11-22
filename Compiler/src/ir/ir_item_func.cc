@@ -110,9 +110,8 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
 
   // Set arguments.
   for (uint32_t i = 0; i < args.size(); i++) {
-    ir::Operand* const arg_pos = new ir::Operand(
-        ir::var_type::NONE, std::to_string(i), "", false, false);
-    ir_list.emplace_back(ir::op_type::ARG, arg_pos, identifier->get_name());
+    ir::Operand* arg = args[i]->eval_runtime(ir_context, ir_list);
+    ir_list.emplace_back(ir::op_type::PUSH, arg);
   }
 
   ir_list.emplace_back(ir::op_type::CALL, dst, identifier->get_name());
