@@ -14,9 +14,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <common/utils.hh>
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
+#include <common/utils.hh>
 #include <cstring>
 #include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_stmt.hh>
@@ -77,40 +77,50 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     // If branches cannot be evaluated at runtime, we should create IRs for each
     // branch.
-    std::ostringstream oss;
-    oss << ".LBB" << scope_uuid_cur << "_ELSE";
-    ir_list.emplace_back(branch_ir.second, oss.str());
-    oss.str("");
-    oss.flush();
+    ir_list.emplace_back(branch_ir.second,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE");
+    ir_list.emplace_back(ir::op_type::JMP,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_IF");
+
+    // Generate a label for if branch.
+    ir_list.emplace_back(ir::op_type::LBL,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_IF:");
 
     std::vector<compiler::ir::IR> ir_if, ir_else;
-    compiler::ir::IRContext ir_context_if, ir_context_else;
+    compiler::ir::IRContext ir_context_if(*ir_context);
+    compiler::ir::IRContext ir_context_else(*ir_context);
 
     ir_context_if.enter_scope();
     if_branch->generate_ir(&ir_context_if, ir_if);
     ir_context_if.leave_scope();
 
+    ir_context_else.get_symbol_table()->set_available_id(
+        ir_context_if.get_symbol_table()->get_available_id());
     ir_context_else.enter_scope();
     else_branch->generate_ir(&ir_context_else, ir_else);
     ir_context_else.leave_scope();
 
+    ir_context->get_symbol_table()->set_available_id(
+        ir_context_else.get_symbol_table()->get_available_id());
+
     std::vector<compiler::ir::IR> ir_end;
-    oss << ".LBB" << scope_uuid_cur << "_END_IF";
-    ir_end.emplace_back(compiler::ir::op_type::LBL, oss.str());
+    ir_end.emplace_back(compiler::ir::op_type::LBL,
+                        ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF:");
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
 
     for (uint32_t i = 0; i < symbol_table_if.size(); i++) {
+      const auto symbol_table =
+          ir_context_else.get_symbol_table()->get_symbol_table()[i];
       for (auto symbol_pair : *(symbol_table_if[i]->get_block())) {
-        const auto symbol_table =
-            ir_context_else.get_symbol_table()->get_symbol_table()[i];
         // Check if this symbol is related to the else block.
         const auto symbol_else =
-            *(symbol_table->get_block()->find(symbol_pair.second->get_name()));
+            symbol_table->get_block()->find(symbol_pair.first);
 
-        if (symbol_pair.second->get_name().compare(
-                symbol_else.second->get_name()) != 0) {
+        if (/*symbol_else != symbol_table->get_block()->end() &&*/
+            symbol_pair.second->get_name().compare(
+                symbol_else->second->get_name()) != 0) {
           // Get name from the previous context.
           compiler::Symbol* const symbol =
               ir_context->get_symbol_table()->find_symbol(symbol_pair.first);
@@ -127,13 +137,13 @@ void compiler::Item_stmt_eif::generate_ir_helper(
           }
 
           // Set phi blocks.
-          ir_if.emplace_back(ir::op_type::PHI_MOVE,
+          ir_if.emplace_back(ir::op_type::PHI,
                              new ir::Operand(symbol->get_name()),
                              new ir::Operand(symbol_pair.second->get_name()));
           ir_if.back().set_phi_block(ir_end.begin());
-          ir_else.emplace_back(ir::op_type::PHI_MOVE,
-                               new ir::Operand(symbol->get_name()),
-                               new ir::Operand(symbol_else.second->get_name()));
+          ir_else.emplace_back(
+              ir::op_type::PHI, new ir::Operand(symbol->get_name()),
+              new ir::Operand(symbol_else->second->get_name()));
           ir_else.back().set_phi_block(ir_end.begin());
         }
       }
@@ -144,20 +154,76 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     if (ir_else.empty() == false) {
       ir_list.emplace_back(
           ir::op_type::JMP,
-          new ir::Operand(".LBB" + std::to_string(scope_uuid_cur) +
-                          "_END_IF"));
+          new ir::Operand(".LBB" + std::to_string(scope_uuid_cur) + "_END_IF"));
     }
     ir_list.emplace_back(ir::op_type::LBL,
-                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE");
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE:");
+
     compiler::insert_with_move(ir_list, ir_else);
+    ir_list.emplace_back(ir::op_type::JMP,
+                         ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF");
     compiler::insert_with_move(ir_list, ir_end);
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
-    // FIXME: Determine which exception should be caught.
   }
+}
+
+compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context) const {
+  try {
+    // Cannot evaluate an array / global symbol.
+    if (identifier->get_ident_type() ==
+        compiler::Item_ident::ident_type::ARRAY) {
+      throw compiler::unsupported_operation(
+          "Error: Cannot evaluate an array type!");
+    }
+    compiler::Symbol* const symbol =
+        ir_context->get_symbol_table()->find_symbol(identifier->get_name());
+    if (symbol->get_name()[0] == ir::global_sign[0]) {
+      throw compiler::unsupported_operation(
+          "Error: Cannot evaluate a global symbol!");
+    } else if (symbol->get_type() == compiler::symbol_type::ARRAY_TYPE) {
+      throw compiler::unsupported_operation(
+          "Error: Cannot evaluate an array type!");
+    }
+
+    ir::Operand* result = expression->eval_runtime(ir_context);
+    compiler::Symbol_const* symbol_const = new compiler::Symbol_const(
+        result->get_value(), compiler::symbol_type::VAR_TYPE,
+        result->get_value(), false);
+    const std::string symbol_name =
+        ir::local_sign +
+        std::to_string(ir_context->get_symbol_table()->get_available_id());
+    symbol->set_name(symbol_name);
+    ir_context->get_symbol_table()->assign_const(symbol_name, symbol_const);
+
+    return result;
+  } catch (const std::exception& e) {
+    std::cerr << termcolor::red << termcolor::bold << e.what()
+              << termcolor::reset << std::endl;
+    exit(1);
+  }
+}
+
+compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  generate_ir(ir_context, ir_list);
+
+  if (identifier->get_ident_type() == compiler::Item_ident::ident_type::ARRAY) {
+    if (ir_list.back().get_op_type() != ir::op_type::STORE) {
+      throw compiler::fatal_error("Error: Unknown error!");
+    }
+
+  } else {
+    if (ir_list.back().get_dst()->get_is_var() == false) {
+      throw compiler::fatal_error("Error: Unknown error!");
+    }
+  }
+  return ir_list.back().get_dst();
 }
 
 void compiler::Item_stmt_assign::generate_ir_helper(
@@ -174,15 +240,28 @@ void compiler::Item_stmt_assign::generate_ir_helper(
 
     if (symbol->get_is_pointer() == true) {
       throw compiler::unsupported_operation(
-          std::to_string(lineno) +
-          " Cannot assign an expression to a pointer-like object.");
+          "Error: Cannot assign an expression to a pointer-like object!");
     }
-
+    const std::string name = rhs->get_identifier();
     if (rhs->get_is_var() == true) {
+      // Local <= Variable. ok. SSA update symbol name.
+      if (name[0] == '%' &&
+          (symbol->get_name()[0] == ir::local_sign[0] ||
+           symbol->get_name().substr(0, 4) == ir::arg_sign) &&
+          symbol->get_name()[0] != ir::global_sign[0]) {
+        if (ir_context->is_loop_context()) {
+        } else {
+          symbol->set_name(name);
+        }
+      }
     } else if (rhs->get_identifier().front() == '@') /* Global variable. */ {
+      symbol->set_name(rhs->get_identifier());
       ir_list.emplace_back(ir::op_type::MOV,
                            new ir::Operand(rhs->get_identifier()));
     } else /* Normal const expression. */ {
+      symbol->set_name(
+          ir::local_sign +
+          std::to_string(ir_context->get_symbol_table()->get_available_id()));
       ir_list.emplace_back(
           ir::op_type::MOV,
           new ir::Operand(
@@ -192,10 +271,8 @@ void compiler::Item_stmt_assign::generate_ir_helper(
           rhs);
 
       if (opt_level > 0) {
-        // TODO: Implement this.
-        compiler::Item_literal* const value = nullptr;
         compiler::Symbol_const* const assign = new compiler::Symbol_const(
-            symbol->get_name(), compiler::symbol_type::VAR_TYPE, value);
+            symbol->get_name(), compiler::symbol_type::VAR_TYPE, "");
         ir_context->get_symbol_table()->assign_const(identifier->get_name(),
                                                      assign);
       }
@@ -203,7 +280,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
   } else if (Item_ident::ident_type::ARRAY == type) {
     // Get result.
     ir::Operand* const res = identifier->eval_runtime(ir_context, ir_list);
-    // Call memcpy at runtime.
+    throw compiler::unimplemented_error("Sorry, this is not yet supported:(");
   }
 }
 
@@ -219,21 +296,24 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_context->add_loop_label(std::to_string(scope_id));
 
     // Step 1: Copy the previous context.
-    const uint32_t size = sizeof(*ir_context);
-    unsigned char* backup = new unsigned char[size];
-    memcpy(backup, static_cast<void*>(ir_context), size);
-    compiler::ir::IRContext* const ir_context_conditional =
-        reinterpret_cast<compiler::ir::IRContext*>(backup);
+    compiler::ir::IRContext* const ir_context_backup =
+        new compiler::ir::IRContext(*ir_context);
+    std::vector<ir::IR> ir_list_before;
 
     // Step 2: Create condition.
+    compiler::ir::IRContext* const ir_context_conditional =
+        new compiler::ir::IRContext(*ir_context_backup);
     std::vector<compiler::ir::IR> ir_conditional;
     ir_conditional.emplace_back(
         compiler::ir::op_type::LBL,
-        ".L.LOOP_" + ir_context->get_top_loop_label() + "_BEGIN");
+        ".LB" + ir_context->get_top_loop_label() + "LOOP_BEGIN：");
     const compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context_conditional, ir_conditional);
 
-    // TODO: Step 3: DO Block...
+    // Step 3: Create jump instruction.
+    std::vector<compiler::ir::IR> ir_jump;
+    ir_jump.emplace_back(ir::op_type::JMP,
+                         ".LB" + std::to_string(scope_id) + "LOOP_END");
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
@@ -306,4 +386,18 @@ void compiler::Item_stmt_return::generate_ir_helper(
         new ir::Operand(ir::var_type::NONE, "", "", false, false);
     ir_list.emplace_back(ir::op_type::RET, return_value);
   }
+}
+
+void compiler::Item_stmt_break::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // TODO
+  return;
+}
+
+void compiler::Item_stmt_continue::generate_ir_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  // TODO
+  return;
 }

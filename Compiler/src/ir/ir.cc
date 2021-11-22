@@ -104,7 +104,11 @@ compiler::ir::IR::IR(const op_type& operation, const std::string& label)
 
 void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   // Wrap std::ostream in a macro.
-  FORMAT(output, op_name[type], 0x10);
+  if (type == ir::op_type::BEGIN_FUNC || type == ir::op_type::END_FUNC) {
+    FORMAT(output, op_name[type], 0x10);
+  } else if (type != ir::op_type::LBL) {
+    FORMAT(output, std::string("  ") + op_name[type], 0x10);
+  }
 
   // Emit IR of each operand. Deepmost callee.
   auto lambda_walk_ir = [&output, this](Operand* const operand) {
@@ -161,12 +165,13 @@ bool compiler::ir::get_type_priority(const var_type& lhs, const var_type& rhs) {
 
 bool compiler::ir::check_valid_binary(compiler::ir::Operand* const lhs,
                                       compiler::ir::Operand* const rhs) {
-  if (lhs->get_type() == compiler::ir::var_type::NONE ||
-      lhs->get_type() == compiler::ir::var_type::NONE) {
+  // TODO: Implement me!
+  /*if (lhs->get_type() == compiler::ir::var_type::NONE ||
+      rhs->get_type() == compiler::ir::var_type::NONE) {
     return false;
-  } else if ((lhs->get_is_ptr() & rhs->get_is_var()) == 0) {
+  } else if ((lhs->get_is_ptr() | rhs->get_is_var()) == 0) {
     return false;
-  }
+  }*/
   return true;
 }
 
@@ -259,3 +264,10 @@ uint32_t compiler::ir::to_byte_length(const compiler::ir::var_type& type) {
       throw compiler::unimplemented_error("Not yet supported!");
   }
 }
+
+compiler::ir::Operand::Operand(const compiler::ir::Operand& operand)
+    : type(operand.type),
+      identifier(operand.identifier),
+      is_ptr(operand.is_ptr),
+      is_var(operand.is_var),
+      value(operand.value) {}

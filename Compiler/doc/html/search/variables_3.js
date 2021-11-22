@@ -1,8 +1,30 @@
 var searchData=
 [
   ['children',['children',['../classcompiler_1_1_item__root.html#af53e93025839a28671f671ed0b7b96a1',1,'compiler::Item_root']]],
+  ['color_5fcpuflags',['COLOR_CPUFLAGS',['../namespacelldbinit.html#abcce7e416c607c5076e7e91e3ff37f4d',1,'lldbinit']]],
+  ['color_5fcurrent_5fpc',['COLOR_CURRENT_PC',['../namespacelldbinit.html#a75818bd8f3ee25b0fcd7c9a8704556e6',1,'lldbinit']]],
+  ['color_5fhighlight_5fline',['COLOR_HIGHLIGHT_LINE',['../namespacelldbinit.html#ab29720c156fdeab27b1ebdcb2b5e9a58',1,'lldbinit']]],
+  ['color_5fregname',['COLOR_REGNAME',['../namespacelldbinit.html#aa35460961db5e5d8d7d80070c736e309',1,'lldbinit']]],
+  ['color_5fregval',['COLOR_REGVAL',['../namespacelldbinit.html#a4dfa8fc382f17eb628a0fa272d320e09',1,'lldbinit']]],
+  ['color_5fregval_5fmodified',['COLOR_REGVAL_MODIFIED',['../namespacelldbinit.html#aa36b0af1f5a7c50cb782a87462591be2',1,'lldbinit']]],
+  ['color_5fseparator',['COLOR_SEPARATOR',['../namespacelldbinit.html#a64fc9d9003f09304e663916da3c2c924',1,'lldbinit']]],
+  ['color_5fsymbol_5fname',['COLOR_SYMBOL_NAME',['../namespacelldbinit.html#a534dd31626a893039329db5ac36e05a2',1,'lldbinit']]],
+  ['colors',['COLORS',['../namespacelldbinit.html#a5d542cbf49ff0c44719d8c77ea03f1f6',1,'lldbinit']]],
   ['compiler_5fruntime',['compiler_runtime',['../parser_8cc.html#afeab15da0d57a789d97a13dc719a688e',1,'compiler_runtime():&#160;main.cc'],['../main_8cc.html#a57fba29e53278d704dc567e490b3c225',1,'compiler_runtime():&#160;main.cc']]],
   ['condition',['condition',['../classcompiler_1_1_item__stmt__eif.html#af4dc153a50bc1335c28c2c6550fed754',1,'compiler::Item_stmt_eif::condition()'],['../classcompiler_1_1_item__stmt__while.html#ae8f56c692893226ab3cab02e9b9c86ba',1,'compiler::Item_stmt_while::condition()']]],
-  ['const_5fassign_5ftable',['const_assign_table',['../classcompiler_1_1_symbol__table.html#a2f2be8c56b10b47b12d68266e2833231',1,'compiler::Symbol_table']]],
-  ['const_5ftable',['const_table',['../classcompiler_1_1_symbol__table.html#ae5471dbd771b3fa179cfa44100f2926d',1,'compiler::Symbol_table']]]
+  ['config_5fdisassembly_5fline_5fcount',['CONFIG_DISASSEMBLY_LINE_COUNT',['../namespacelldbinit.html#a74512bf179ab366368f6304d36ab83ba',1,'lldbinit']]],
+  ['config_5fdisplay_5fdata_5fwindow',['CONFIG_DISPLAY_DATA_WINDOW',['../namespacelldbinit.html#a95fa58cf8086ddc074623c7a4490b852',1,'lldbinit']]],
+  ['config_5fdisplay_5fdisassembly_5fbytes',['CONFIG_DISPLAY_DISASSEMBLY_BYTES',['../namespacelldbinit.html#a7c98e91151978117b7cec42f855a2ac6',1,'lldbinit']]],
+  ['config_5fdisplay_5fflow_5fwindow',['CONFIG_DISPLAY_FLOW_WINDOW',['../namespacelldbinit.html#ad88f0865805ee83e66fd3c8bd7b11b0a',1,'lldbinit']]],
+  ['config_5fdisplay_5fstack_5fwindow',['CONFIG_DISPLAY_STACK_WINDOW',['../namespacelldbinit.html#a89ea7e54f277fab817c9097bd5f52f1f',1,'lldbinit']]],
+  ['config_5fenable_5fcolor',['CONFIG_ENABLE_COLOR',['../namespacelldbinit.html#a1159697e6d5c618687356dc9969df254',1,'lldbinit']]],
+  ['config_5fenable_5fregister_5fshortcuts',['CONFIG_ENABLE_REGISTER_SHORTCUTS',['../namespacelldbinit.html#aeb82e513f7656da4682b843f6559a435',1,'lldbinit']]],
+  ['config_5fkeystone_5favailable',['CONFIG_KEYSTONE_AVAILABLE',['../namespacelldbinit.html#ae1fb13d86176e5a0735f6f1bae2bd72e',1,'lldbinit']]],
+  ['config_5flog_5flevel',['CONFIG_LOG_LEVEL',['../namespacelldbinit.html#a0ede875a2d9850eeee2d7d00db03621e',1,'lldbinit']]],
+  ['config_5fuse_5fcustom_5fdisassembly_5fformat',['CONFIG_USE_CUSTOM_DISASSEMBLY_FORMAT',['../namespacelldbinit.html#a73b893b54045575b4c104dbc1ce9f96d',1,'lldbinit']]],
+  ['const_5fassign_5ftable',['const_assign_table',['../classcompiler_1_1_symbol__table.html#af400a65a28f4af6cdc425cfdcb1c429e',1,'compiler::Symbol_table']]],
+  ['const_5ftable',['const_table',['../classcompiler_1_1_symbol__table.html#a1b106bc54d553ddfe503285e86af8333',1,'compiler::Symbol_table']]],
+  ['crack_5fcmds',['crack_cmds',['../namespacelldbinit.html#ab6281f69728bd6edb13dd0af70ada6b8',1,'lldbinit']]],
+  ['crack_5fcmds_5fnoret',['crack_cmds_noret',['../namespacelldbinit.html#a0519a4f503020470042a08fee480e3da',1,'lldbinit']]],
+  ['custom_5fdisassembly_5fformat',['CUSTOM_DISASSEMBLY_FORMAT',['../namespacelldbinit.html#a0ef72f0724f30b08761ef06ef1e20763',1,'lldbinit']]]
 ];

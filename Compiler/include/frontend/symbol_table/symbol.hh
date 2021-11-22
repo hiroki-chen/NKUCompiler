@@ -45,7 +45,7 @@ typedef class Symbol {
 
   bool is_pointer;  // Array is pointer type.
 
-  Item_literal* value;
+  std::string value;
 
  public:
   Symbol() = delete;
@@ -54,7 +54,9 @@ typedef class Symbol {
          const bool& is_pointer = false,
          const std::vector<ir::Operand*>& shape = {});
 
-  virtual void set_value(Item_literal* const literal) { this->value = literal; }
+  Symbol(const Symbol& symbol);
+
+  virtual void set_value(const std::string& value) { this->value = value; }
 
   virtual void add_shape(ir::Operand* const shape) {
     this->shape.emplace_back(shape);
@@ -77,22 +79,24 @@ typedef class Symbol {
 
 typedef class Symbol_const : public Symbol {
  protected:
-  std::vector<Item_literal*> values;
+  std::vector<std::string> values;
 
-  Item_literal* value;
+  std::string value;
 
  public:
   Symbol_const() = delete;
 
   Symbol_const(const std::string& name, const symbol_type& type,
-               Item_literal* const value, const bool& is_pointer = false,
-               const std::vector<Item_literal*>& values = {});
+               const std::string& value, const bool& is_pointer = false,
+               const std::vector<std::string>& values = {});
+
+  Symbol_const(const Symbol_const& symbol_const);
 
   virtual bool is_const(void) const override { return true; }
 
-  virtual Item_literal* get_value(void) const { return value; }
+  virtual std::string get_value(void) const { return value; }
 
-  virtual std::vector<Item_literal*> get_values(void) const { return values; }
+  virtual std::vector<std::string> get_values(void) const { return values; }
 } Symbol_const;
 }  // namespace compiler
 

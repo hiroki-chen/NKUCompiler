@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fatal_5ferror',['fatal_error',['../classcompiler_1_1fatal__error.html',1,'compiler']]]
+  ['edge',['Edge',['../structcompiler_1_1ir_1_1_edge.html',1,'compiler::ir']]]
 ];

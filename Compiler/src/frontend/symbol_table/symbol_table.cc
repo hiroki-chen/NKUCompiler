@@ -164,7 +164,6 @@ void compiler::Const_block::add_const(const std::string& name,
 }
 
 void compiler::Symbol_table::enter_scope() {
-  available_id.push_front(0);
   const_table.push_front(new compiler::Const_block());
   const_assign_table.push_front(new compiler::Const_block());
   symbol_table.push_front(new compiler::Symbol_block());
@@ -177,7 +176,6 @@ void compiler::Symbol_table::leave_scope() {
   const_table.pop_front();
   const_assign_table.pop_front();
   symbol_table.pop_front();
-  available_id.pop_front();
 }
 
 compiler::Symbol_table::~Symbol_table() {
@@ -191,5 +189,35 @@ compiler::Symbol_table::~Symbol_table() {
   for (size_t i = 0; i < csize; i++) {
     delete const_table.back();
     const_table.pop_back();
+  }
+}
+
+compiler::Symbol_block::Symbol_block(
+    const compiler::Symbol_block& symbol_block) {
+  // Dump symbol from symbol_block.
+  for (auto symbol : symbol_block.block) {
+    block[symbol.first] = new compiler::Symbol(*symbol.second);
+  }
+}
+
+compiler::Const_block::Const_block(const compiler::Const_block& const_block) {
+  // Dump symbol from symbol_block.
+  for (auto symbol : const_block.block) {
+    block[symbol.first] = new compiler::Symbol_const(*symbol.second);
+  }
+}
+
+compiler::Symbol_table::Symbol_table(const compiler::Symbol_table& symbol_table)
+    : available_id(symbol_table.available_id) {
+  for (auto item : symbol_table.symbol_table) {
+    this->symbol_table.emplace_back(new compiler::Symbol_block(*item));
+  }
+
+  for (auto item : symbol_table.const_table) {
+    this->const_table.emplace_back(new compiler::Const_block(*item));
+  }
+
+  for (auto item : symbol_table.const_assign_table) {
+    this->const_assign_table.emplace_back(new compiler::Const_block(*item));
   }
 }

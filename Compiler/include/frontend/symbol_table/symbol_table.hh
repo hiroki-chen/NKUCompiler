@@ -17,8 +17,8 @@
 #ifndef SYMBOL_TABLE_HH
 #define SYMBOL_TABLE_HH
 
-#include <frontend/symbol_table/symbol.hh>
 #include <deque>
+#include <frontend/symbol_table/symbol.hh>
 #include <unordered_map>
 
 namespace compiler {
@@ -36,6 +36,10 @@ typedef class Symbol_block {
   symbol_table_type block;
 
  public:
+  Symbol_block() = default;
+
+  Symbol_block(const Symbol_block& symbol_block);
+
   virtual Symbol* find_symbol(const std::string& name);
 
   virtual void add_symbol(const std::string& name, Symbol* const symbol);
@@ -53,6 +57,10 @@ typedef class Const_block {
   const_table_type block;
 
  public:
+  Const_block() = default;
+
+  Const_block(const Const_block& const_block);
+
   virtual Symbol_const* find_const(const std::string& name);
 
   virtual void add_const(const std::string& name, Symbol_const* const symbol);
@@ -73,9 +81,9 @@ typedef class Symbol_table {
 
   /**
    * @brief This structure records the available id for local variables.
-   * 
+   *
    */
-  std::deque<uint32_t> available_id;
+  uint32_t available_id;
 
   // Tables are pushed onto the front of the stack (here it is a list)
   std::deque<Symbol_block*> symbol_table;
@@ -85,7 +93,9 @@ typedef class Symbol_table {
   std::deque<Const_block*> const_assign_table;
 
  public:
-  Symbol_table() {}
+  Symbol_table() = default;
+
+  Symbol_table(const Symbol_table& symbol_table);
 
   virtual ~Symbol_table();
 
@@ -118,7 +128,9 @@ typedef class Symbol_table {
 
   virtual void leave_scope();
 
-  virtual uint32_t get_available_id(void) { return available_id.front() ++;}
+  virtual uint32_t get_available_id(void) { return available_id++; }
+
+  virtual void set_available_id(const uint32_t& id) { available_id = id; }
 } Symbol_table;
 }  // namespace compiler
 

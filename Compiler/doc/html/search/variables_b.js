@@ -7,5 +7,6 @@ var searchData=
   ['m_5fresult',['m_result',['../classcxxopts_1_1values_1_1abstract__value.html#a0df330cac57a96d7ac25dd6a666d5b94',1,'cxxopts::values::abstract_value']]],
   ['m_5fstore',['m_store',['../classcxxopts_1_1values_1_1abstract__value.html#ab5b256909ddbb516bd46d197dadf073e',1,'cxxopts::values::abstract_value']]],
   ['major',['major',['../namespacecxxopts.html#ae722cb9457c284596136a40555eef19e',1,'cxxopts']]],
-  ['minor',['minor',['../namespacecxxopts.html#aecaf1c73662b522ae01a195dede9ed38',1,'cxxopts']]]
+  ['minor',['minor',['../namespacecxxopts.html#aecaf1c73662b522ae01a195dede9ed38',1,'cxxopts']]],
+  ['modules_5flist',['modules_list',['../namespacelldbinit.html#ad215e9b6c886b13b10240569059804c6',1,'lldbinit']]]
 ];

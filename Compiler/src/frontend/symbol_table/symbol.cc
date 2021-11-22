@@ -21,11 +21,23 @@ compiler::Symbol::Symbol(const std::string& name, const symbol_type& type,
                          const std::vector<ir::Operand*>& shape)
     : name(name), type(type), is_pointer(is_pointer), shape(shape) {}
 
+compiler::Symbol::Symbol(const Symbol& symbol)
+    : name(symbol.name), type(symbol.type), is_pointer(symbol.is_pointer) {
+  for (auto item : symbol.shape) {
+    shape.emplace_back(new compiler::ir::Operand(*item));
+  }
+}
+
 compiler::Symbol_const::Symbol_const(const std::string& name,
                                      const symbol_type& type,
-                                     compiler::Item_literal* const value,
+                                     const std::string& value,
                                      const bool& is_pointer,
-                                     const std::vector<Item_literal*>& values)
+                                     const std::vector<std::string>& values)
     : Symbol(name, type, is_pointer),
       values(values.begin(), values.end()),
       value(value) {}
+
+compiler::Symbol_const::Symbol_const(const Symbol_const& symbol_const)
+    : Symbol(symbol_const),
+      value(symbol_const.value),
+      values(symbol_const.values.begin(), symbol_const.values.end()) {}

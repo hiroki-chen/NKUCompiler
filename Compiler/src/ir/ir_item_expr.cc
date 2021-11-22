@@ -18,6 +18,8 @@
 #include <common/termcolor.hh>
 #include <frontend/nodes/item_expr.hh>
 
+// TODO: Type check unary / binary expressions.
+
 extern uint32_t opt_level;
 extern compiler::NodeStack stack;
 
@@ -109,13 +111,15 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
   // 1. numeric + numeric;
   // 2. numeric + pointer;
   // 3. pointer + pointer;
-  // 4. Array cannot be added to any other types.
+  // 4. Array cannot be added to any other types, unless it is access through
+  // indexing.
   compiler::ir::Operand* const expr_left = lhs->eval_runtime(ir_context);
   compiler::ir::Operand* const expr_right = rhs->eval_runtime(ir_context);
   // Check type compatibility.
 
   if (!compiler::ir::check_valid_binary(expr_left, expr_right)) {
-    throw compiler::unsupported_operation("Type incompatible!");
+    throw compiler::unsupported_operation(
+        "Error: Operand types are incompatible!");
   }
 
   switch (type) {
@@ -140,24 +144,6 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
   }
 }
 
-compiler::ir::BranchIR compiler::Item_expr_binary::eval_cond_helper(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const
-
-{
-  if (opt_level > 0) {
-    auto cond_res = eval_runtime(ir_context);
-    bool flag = std::stoi(cond_res->get_value(), 0, 16);
-
-    if (flag == true) {
-      return std::make_pair(ir::op_type::JMP, ir::op_type::NOP);
-    } else {
-      return std::make_pair(ir::op_type::NOP, ir::op_type::JMP);
-    }
-  } else {
-    // TODO: Implement non-optimized version.
-  }
-}
 
 compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
@@ -172,38 +158,151 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
                 << termcolor::reset << std::endl;
       exit(1);
     }
+    // Generate IR.
   } else {
+    ir::Operand* const dst = new ir::Operand(
+        ir::local_sign +
+        std::to_string(ir_context->get_symbol_table()->get_available_id()));
+    ir::Operand* left = nullptr;
+    ir::Operand* right = nullptr;
+
+    if (type != LAND_TYPE && type != LOR_TYPE) {
+      if (opt_level > 0) {
+        left = lhs->eval_runtime(ir_context);
+        right = rhs->eval_runtime(ir_context);
+      } else {
+        left = lhs->eval_runtime(ir_context, ir_list);
+        right = rhs->eval_runtime(ir_context, ir_list);
+      }
+    }
+
+    switch (type) {
+      // TODO: Implement implicit type convertion.
+      case ADD_TYPE: {
+        ir_list.emplace_back(ir::op_type::IADD, dst, left, right);
+        break;
+      }
+      case SUB_TYPE: {
+        ir_list.emplace_back(ir::op_type::ISUB, dst, left, right);
+        break;
+      }
+      case MUL_TYPE: {
+        // Can do optimization.
+        ir_list.emplace_back(ir::op_type::IMUL, dst, left, right);
+        break;
+      }
+      case DIV_TYPE: {
+        // Can do optimization.
+        ir_list.emplace_back(ir::op_type::IDIV, dst, left, right);
+        break;
+      }
+      case MOD_TYPE: {
+        // a mod b => a - ceil(a / b) * b.
+        ir_list.emplace_back(ir::op_type::IMOD, dst, left, right);
+        break;
+      }
+      case NEQ_TYPE: {
+        ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+        ir_list.emplace_back(ir::op_type::MOVNE, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("1"));
+        break;
+      }
+      case EQ_TYPE: {
+        ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+        ir_list.emplace_back(ir::op_type::MOVEQ, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("1"));
+        break;
+      }
+      case G_TYPE: {
+        ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+        ir_list.emplace_back(ir::op_type::MOVGT, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("1"));
+        break;
+      }
+      case L_TYPE: {
+        ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+        ir_list.emplace_back(ir::op_type::MOVLT, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("1"));
+        break;
+      }
+      case LE_TYPE: {
+        ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+        ir_list.emplace_back(ir::op_type::MOVLE, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("1"));
+        break;
+      }
+      case GE_TYPE: {
+        ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+        ir_list.emplace_back(ir::op_type::MOVGE, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("1"));
+        break;
+      }
+      case BITAND_TYPE: {
+        ir_list.emplace_back(ir::op_type::BAND, dst, left, right);
+        break;
+      }
+      case BITOR_TYPE: {
+        ir_list.emplace_back(ir::op_type::BOR, dst, left, right);
+        break;
+      }
+      case BITXOR_TYPE: {
+        ir_list.emplace_back(ir::op_type::BXOR, dst, left, right);
+        break;
+      }
+
+      default:
+        throw compiler::unsupported_operation(
+            "Error: Unrecognized binary type!");
+    }
+    return dst;
   }
 }
 
 compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
-  // TODO: implement this.
-  return nullptr;
+  if (opt_level > 0) {
+    return eval_runtime_helper(ir_context);
+  } else {
+    // Create a dst operand.
+    ir::Operand* const dst = new ir::Operand(
+        ir::local_sign +
+        std::to_string(ir_context->get_symbol_table()->get_available_id()));
+
+    switch (type) {
+      case LNOT_TYPE: {
+        ir_list.emplace_back(ir::op_type::CMP, nullptr, OPERAND_VALUE("1"),
+                             expr->eval_runtime(ir_context, ir_list));
+        ir_list.emplace_back(ir::op_type::MOVNE, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("1"));
+        break;
+      }
+      case BITNEG_TYPE: {
+        ir_list.emplace_back(ir::op_type::BNEG, dst,
+                             expr->eval_runtime(ir_context, ir_list));
+        break;
+      }
+      case UMINUS_TYPE: {
+        ir_list.emplace_back(ir::op_type::ISUB, dst, OPERAND_VALUE("1"),
+                             expr->eval_runtime(ir_context, ir_list));
+        break;
+      }
+      case UADD_TYPE: {
+        // No need to generate any IR for it.
+        break;
+      }
+      default: {
+        throw compiler::fatal_error("Error: Unknown Unary expression type!");
+      }
+    }
+    return dst;
+  }
 }
 
 compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
-  // TODO: implement this.
+  // TODO: implement this. The same as the type "ADD".
   return nullptr;
-}
-
-compiler::ir::BranchIR compiler::Item_expr_unary::eval_cond_helper(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
-  if (opt_level > 0) {
-    auto cond_res = eval_runtime(ir_context);
-    bool flag = std::stoi(cond_res->get_value(), 0, 16);
-
-    if (flag == true) {
-      return std::make_pair(ir::op_type::JMP, ir::op_type::NOP);
-    } else {
-      return std::make_pair(ir::op_type::NOP, ir::op_type::JMP);
-    }
-  } else {
-    // TODO: Implement non-optimized version.
-  }
 }
 
 compiler::ir::Operand* compiler::Item_expr_comma::eval_runtime_helper(

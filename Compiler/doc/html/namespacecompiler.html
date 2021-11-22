@@ -517,6 +517,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a42bd6e21066a13c91af2a7f7818f5b3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacecompiler.html#ab978429ecff83a3f97002bc5e429679c">basic_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a42bd6e21066a13c91af2a7f7818f5b3a">to_basic_type</a> (const <a class="el" href="namespacecompiler_1_1ir.html#a2988552954b6d039b75f3c191140786d">ir::var_type</a> &amp;v_type)</td></tr>
 <tr class="memdesc:a42bd6e21066a13c91af2a7f7818f5b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a IR type back to its basic type.  <a href="#a42bd6e21066a13c91af2a7f7818f5b3a">More...</a><br /></td></tr>
 <tr class="separator:a42bd6e21066a13c91af2a7f7818f5b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d156cca38afbb9790a6cb801297e6f"><td class="memTemplParams" colspan="2">template&lt;class ItemType &gt; </td></tr>
+<tr class="memitem:a15d156cca38afbb9790a6cb801297e6f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#a15d156cca38afbb9790a6cb801297e6f">insert_with_move</a> (std::vector&lt; ItemType &gt; &amp;dst, const std::vector&lt; ItemType &gt; &amp;src)</td></tr>
+<tr class="memdesc:a15d156cca38afbb9790a6cb801297e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper function that inserts into the vector without copy constructor..  <a href="#a15d156cca38afbb9790a6cb801297e6f">More...</a><br /></td></tr>
+<tr class="separator:a15d156cca38afbb9790a6cb801297e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace19f0378f105a9a7c96ee30661e74ff"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecompiler.html#ace19f0378f105a9a7c96ee30661e74ff">process_input</a> (const std::string &amp;input)</td></tr>
 <tr class="separator:ace19f0378f105a9a7c96ee30661e74ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -1726,6 +1730,53 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a15d156cca38afbb9790a6cb801297e6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d156cca38afbb9790a6cb801297e6f">&#9670;&nbsp;</a></span>insert_with_move()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class ItemType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void compiler::insert_with_move </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; ItemType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; ItemType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>src</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A helper function that inserts into the vector without copy constructor.. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ItemType</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td></td></tr>
+    <tr><td class="paramname">src</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="utils_8hh_source.html#l00077">77</a> of file <a class="el" href="utils_8hh_source.html">utils.hh</a>.</p>
+
+</div>
+</div>
 <a id="a669b4a7b1c78cf69bcbc75c0123b6cfb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a669b4a7b1c78cf69bcbc75c0123b6cfb">&#9670;&nbsp;</a></span>is_dir()</h2>
 
@@ -1820,7 +1871,7 @@ false </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="runtime_8cc_source.html#l00035">35</a> of file <a class="el" href="runtime_8cc_source.html">runtime.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runtime_8cc_source.html#l00036">36</a> of file <a class="el" href="runtime_8cc_source.html">runtime.cc</a>.</p>
 
 </div>
 </div>
