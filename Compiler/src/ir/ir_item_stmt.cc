@@ -298,22 +298,38 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Step 1: Copy the previous context.
     compiler::ir::IRContext* const ir_context_backup =
         new compiler::ir::IRContext(*ir_context);
-    std::vector<ir::IR> ir_list_before;
+    std::vector<ir::IR> ir_list_backup;
 
     // Step 2: Create condition.
-    compiler::ir::IRContext* const ir_context_conditional =
+    compiler::ir::IRContext* const ir_context_condition =
         new compiler::ir::IRContext(*ir_context_backup);
-    std::vector<compiler::ir::IR> ir_conditional;
-    ir_conditional.emplace_back(
+    std::vector<compiler::ir::IR> ir_list_condition;
+    ir_list_condition.emplace_back(
         compiler::ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "LOOP_BEGIN：");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN:");
     const compiler::ir::BranchIR branch_ir =
-        condition->eval_cond(ir_context_conditional, ir_conditional);
+        condition->eval_cond(ir_context_condition, ir_list_condition);
 
-    // Step 3: Create jump instruction.
+    // Step 3: Set up jump instruction.
     std::vector<compiler::ir::IR> ir_jump;
-    ir_jump.emplace_back(ir::op_type::JMP,
-                         ".LB" + std::to_string(scope_id) + "LOOP_END");
+    ir_jump.emplace_back(branch_ir.second,
+                         ".LB" + std::to_string(scope_id) + "_LOOP_END");
+
+    // Step 4: Create the do body, and then generate ir from it.
+    ir::IRContext* const ir_context_do = ir_context_condition;
+    std::vector<ir::IR> ir_list_do;
+    ir_context_do->continue_symbol.push({});
+    ir_context_do->break_symbol.push({});
+    statement->generate_ir(ir_context_do, ir_list_do);
+    ir_context_do->continue_symbol.top().emplace_back(
+        *ir_context_do->get_symbol_table());
+
+    // Step 5: Real do body.
+    ir::IRContext* const ir_context_do_real = ir_context_condition;
+    std::vector<ir::IR> ir_list_do_real;
+    ir_context_do_real->continue_symbol.push({});
+    ir_context_do_real->break_symbol.push({});
+    // Handle phi move.
 
     ir_context->leave_scope();
   } catch (const std::exception& e) {
@@ -391,13 +407,61 @@ void compiler::Item_stmt_return::generate_ir_helper(
 void compiler::Item_stmt_break::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
-  // TODO
-  return;
+  // Check if the context is correct. Break statement cannot break to a non-loop
+  // envionment.
+  if (ir_context->is_loop_context() == false) {
+    throw compiler::unsupported_operation(
+        "Error: Break statement in a non-loop envionment!");
+  }
+
+  ir_context->break_symbol.top().emplace_back(*ir_context->get_symbol_table());
+
+  // Handle phi move.
+  if (!ir_context->break_phi_block.empty()) {
+    for (auto phi_block : ir_context->break_phi_block.top()) {
+      // Get the symbol_table.
+      auto symbol_table = ir_context->get_symbol_table()
+                              ->get_symbol_table()[phi_block.first.first]
+                              ->get_block();
+      const std::string phi_name =
+          symbol_table->find(phi_block.second)->second->get_name();
+
+      ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
+                           new ir::Operand(phi_name));
+    }
+  }
+
+  ir_list.emplace_back(ir::op_type::JMP,
+                       ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
 }
 
 void compiler::Item_stmt_continue::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
-  // TODO
-  return;
+  if (ir_context->is_loop_context() == false) {
+    throw compiler::unsupported_operation(
+        "Error: Continue statement in a non-loop envionment!");
+  }
+
+  ir_context->continue_symbol.top().emplace_back(
+      *ir_context->get_symbol_table());
+
+  // Handle phi move.
+  if (!ir_context->continue_phi_block.empty()) {
+    for (auto phi_block : ir_context->continue_phi_block.top()) {
+      // Get the symbol_table.
+      auto symbol_table = ir_context->get_symbol_table()
+                              ->get_symbol_table()[phi_block.first.first]
+                              ->get_block();
+      const std::string phi_name =
+          symbol_table->find(phi_block.second)->second->get_name();
+
+      ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(phi_block.second),
+                           new ir::Operand(phi_name));
+    }
+  }
+
+  ir_list.emplace_back(
+      ir::op_type::JMP,
+      ".LB" + ir_context->get_top_loop_label() + "_LOOP_CONTINUE");
 }

@@ -42,7 +42,11 @@ compiler::ir::IRContext::IRContext() {
 compiler::ir::IRContext::IRContext(const IRContext& ir_context)
     : symbol_table(ir_context.symbol_table),
       loop_variable(ir_context.loop_variable),
-      loop_label(ir_context.loop_label) {}
+      loop_label(ir_context.loop_label),
+      break_symbol(ir_context.break_symbol),
+      continue_symbol(ir_context.continue_symbol),
+      continue_phi_block(ir_context.continue_phi_block),
+      break_phi_block(ir_context.break_phi_block) {}
 
 void compiler::ir::IRContext::register_library_function(
     const std::vector<std::pair<std::string, compiler::Symbol*>>& functions) {
