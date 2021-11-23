@@ -28,8 +28,8 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond_helper(
     std::vector<compiler::ir::IR>& ir_list) const {
   compiler::ir::BranchIR branch_ir;
   ir_list.emplace_back(
-      compiler::ir::op_type::CMP, eval_runtime_helper(ir_context, ir_list),
-      new compiler::ir::Operand(ir::var_type::i32, "", "0", false, false));
+      compiler::ir::op_type::CMP, eval_runtime(ir_context, ir_list),
+      OPERAND_VALUE("0"));
 
   // Set jne and jeq.
   branch_ir.first = compiler::ir::op_type::JNE;
@@ -70,6 +70,17 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond(
   }
 }
 
+compiler::ir::Operand* compiler::Item_expr_cond::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<ir::IR>& ir_list) const {
+  return expr->eval_runtime(ir_context, ir_list);
+}
+
+compiler::ir::Operand* compiler::Item_expr_cond::eval_runtime_helper(
+    compiler::ir::IRContext* const ir_context) const {
+  return expr->eval_runtime(ir_context);
+}
+
 compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
@@ -101,6 +112,65 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
               << termcolor::reset << std::endl;
     stack.pop_back();
     exit(1);
+  }
+}
+
+compiler::ir::BranchIR compiler::Item_expr_binary::eval_cond_helper(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list) const {
+  if (opt_level > 0) {
+    ir::Operand* const result = eval_runtime(ir_context);
+
+    if (std::stod(result->get_value()) != 0.0) {
+      return std::make_pair(ir::op_type::JMP, ir::op_type::NOP);
+    } else {
+      return std::make_pair(ir::op_type::NOP, ir::op_type::JMP);
+    }
+  }
+
+  ir::Operand* left = nullptr;
+  ir::Operand* right = nullptr;
+  if (type != LAND_TYPE && type != LOR_TYPE) {
+    if (opt_level > 0) {
+      left = lhs->eval_runtime(ir_context);
+      right = rhs->eval_runtime(ir_context);
+    } else {
+      left = lhs->eval_runtime(ir_context, ir_list);
+      right = rhs->eval_runtime(ir_context, ir_list);
+    }
+  }
+
+  switch (type) {
+    case EQ_TYPE: {
+      ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+      return std::make_pair(ir::op_type::JEQ, ir::op_type::JNE);
+    }
+    case NEQ_TYPE: {
+      ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+      return std::make_pair(ir::op_type::JNE, ir::op_type::JEQ);
+    }
+    case G_TYPE: {
+      ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+      return std::make_pair(ir::op_type::JG, ir::op_type::JLE);
+    }
+    case L_TYPE: {
+      ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+      return std::make_pair(ir::op_type::JL, ir::op_type::JGE);
+    }
+    case GE_TYPE: {
+      ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+      return std::make_pair(ir::op_type::JGE, ir::op_type::JL);
+    }
+    case LE_TYPE: {
+      ir_list.emplace_back(ir::op_type::CMP, nullptr, left, right);
+      return std::make_pair(ir::op_type::JLE, ir::op_type::JG);
+    }
+    default: {
+      ir_list.emplace_back(ir::op_type::CMP, nullptr,
+                           eval_runtime(ir_context, ir_list),
+                           OPERAND_VALUE("0"));
+      return std::make_pair(ir::op_type::JNE, ir::op_type::JEQ);
+    }
   }
 }
 
@@ -143,7 +213,6 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
       throw compiler::unsupported_operation("Unknown binary type!");
   }
 }
-
 
 compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,

@@ -335,23 +335,38 @@ ReturnStmt: RETURN SEMICOLON            { $$ = new compiler::Item_stmt_return(yy
           | RETURN Exp SEMICOLON        { $$ = new compiler::Item_stmt_return(yyget_lineno(), $2); }
           ;
 
-eIfStmt: IF LPARENTHESIS Exp RPARENTHESIS Stmt      { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, new compiler::Item_stmt_void(yyget_lineno())); }
-       | IF LPARENTHESIS Exp RPARENTHESIS Stmt ELSE Stmt       { $$ = new compiler::Item_stmt_eif(yyget_lineno(), $3, $5, $7); }
+eIfStmt: IF LPARENTHESIS Exp RPARENTHESIS Stmt      
+{
+    compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), $3);
+    $$ = new compiler::Item_stmt_eif(yyget_lineno(), condition, $5, new compiler::Item_stmt_void(yyget_lineno())); 
+}
+       | IF LPARENTHESIS Exp RPARENTHESIS Stmt ELSE Stmt       
+{ compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), $3);
+  $$ = new compiler::Item_stmt_eif(yyget_lineno(), condition, $5, $7); 
+}
        ;
 
 ExpStmt: Exp SEMICOLON      { $$ = new compiler::Item_stmt_eval(yyget_lineno(), $1); }
        | SEMICOLON          { $$ = new compiler::Item_stmt_void(yyget_lineno()); }
        ;
 
-WhileStmt:  WHILE LPARENTHESIS Exp RPARENTHESIS Stmt                    { $$ = new compiler::Item_stmt_while(yyget_lineno(), $3, $5); }
-         |  DO BLOCK WHILE LPARENTHESIS Exp RPARENTHESIS SEMICOLON      { $$ = new compiler::Item_stmt_while(yyget_lineno(), $5, $2, true); }
+WhileStmt:  WHILE LPARENTHESIS Exp RPARENTHESIS Stmt                    
+{
+    compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), $3);
+    $$ = new compiler::Item_stmt_while(yyget_lineno(), condition, $5); 
+}
+         |  DO BLOCK WHILE LPARENTHESIS Exp RPARENTHESIS SEMICOLON      
+{   compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), $5);
+    $$ = new compiler::Item_stmt_while(yyget_lineno(), condition, $2, true); 
+}
          ;
 
 ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
          {
              compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
              block->add_item($3);
-             compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(), static_cast<compiler::Item_expr*>($4), $6);
+             compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>($4));
+             compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(), condition, $6);
              block->add_item(while_stmt);
              $$ = block;
          }
@@ -360,7 +375,8 @@ ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
            compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
            block->add_item($3);
            $7->add_item(static_cast<compiler::Item_stmt*>($5));
-           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>($4), $7);
+           compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>($4));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),condition, $7);
            block->add_item(while_stmt);
            $$ = block;
        }
@@ -368,7 +384,8 @@ ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
        {
            compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
            block->add_item($3);
-           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>($4), $6);
+            compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>($4));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(), condition, $6);
            block->add_item(while_stmt);
            $$ = block;
        }
@@ -377,7 +394,8 @@ ForStmt: FOR LPARENTHESIS ExpStmt ExpStmt RPARENTHESIS BLOCK
            compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
            block->add_item($3);
            $7->add_item(static_cast<compiler::Item_stmt*>($5));
-           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>($4), $7);
+        compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>($4));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),condition, $7);
            block->add_item(while_stmt);
            $$ = block;
        }
