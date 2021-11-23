@@ -31,7 +31,7 @@ compiler::Item_stmt_eval::Item_stmt_eval(const uint32_t& lineno,
     : Item_stmt(lineno), expression(expression) {}
 
 compiler::Item_stmt_eif::Item_stmt_eif(const uint32_t& lineno,
-                                       Item_expr* const condition,
+                                       Item_expr_cond* const condition,
                                        Item_stmt* const if_branch,
                                        Item_stmt* const else_branch)
     : Item_stmt(lineno),
@@ -40,7 +40,7 @@ compiler::Item_stmt_eif::Item_stmt_eif(const uint32_t& lineno,
       else_branch(else_branch) {}
 
 compiler::Item_stmt_while::Item_stmt_while(const uint32_t& lineno,
-                                           Item_expr* const condition,
+                                           Item_expr_cond* const condition,
                                            Item_stmt* const statement,
                                            const bool& is_do_while)
     : Item_stmt(lineno),

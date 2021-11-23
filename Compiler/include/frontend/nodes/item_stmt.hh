@@ -102,7 +102,7 @@ typedef class Item_stmt_assign final : public Item_stmt {
  */
 typedef class Item_stmt_eif final : public Item_stmt {
  protected:
-  Item_expr* const condition;
+  Item_expr_cond* const condition;
 
   Item_stmt* const if_branch;
 
@@ -123,7 +123,7 @@ typedef class Item_stmt_eif final : public Item_stmt {
    * @param if_branch
    * @param else_branch
    */
-  Item_stmt_eif(const uint32_t& lineno, Item_expr* const condition,
+  Item_stmt_eif(const uint32_t& lineno, Item_expr_cond* const condition,
                 Item_stmt* const if_branch, Item_stmt* const else_branch);
 
   virtual Item_stmt::stmt_type get_stmt_type(void) const override {
@@ -142,7 +142,7 @@ typedef class Item_stmt_eif final : public Item_stmt {
  */
 typedef class Item_stmt_while final : public Item_stmt {
  protected:
-  Item_expr* const condition;
+  Item_expr_cond* const condition;
 
   Item_stmt* const statement;  // while body
 
@@ -180,7 +180,7 @@ typedef class Item_stmt_while final : public Item_stmt {
  public:
   Item_stmt_while() = delete;
 
-  Item_stmt_while(const uint32_t& lineno, Item_expr* const condition,
+  Item_stmt_while(const uint32_t& lineno, Item_expr_cond* const condition,
                   Item_stmt* const statement, const bool& is_do_while = false);
 
   virtual Item_stmt::stmt_type get_stmt_type(void) const override {

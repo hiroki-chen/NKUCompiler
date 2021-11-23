@@ -111,6 +111,13 @@ typedef class Item_expr_cond final : public Item_expr {
  protected:
   Item_expr* const expr;
 
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<ir::IR>& ir_list) const override;
+
+  virtual compiler::ir::Operand* eval_runtime_helper(
+      compiler::ir::IRContext* const ir_context) const override;
+
  public:
   virtual Item_expr::expr_type get_expr_type(void) const override {
     return Item_expr::COND_TYPE;
@@ -175,6 +182,9 @@ typedef class Item_expr_binary final : public Item_expr {
       compiler::ir::IRContext* const ir_context,
       std::vector<compiler::ir::IR>& ir_list) const override;
 
+  virtual compiler::ir::BranchIR eval_cond_helper(
+      compiler::ir::IRContext* const ir_context,
+      std::vector<compiler::ir::IR>& ir_list) const override;
 
  public:
   virtual Item_expr::expr_type get_expr_type(void) const override {
