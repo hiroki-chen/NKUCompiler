@@ -47,12 +47,15 @@ typedef class Symbol {
 
   std::string value;
 
+  ir::var_type var_type;
+
  public:
   Symbol() = delete;
 
   Symbol(const std::string& name, const symbol_type& type,
          const bool& is_pointer = false,
-         const std::vector<ir::Operand*>& shape = {});
+         const std::vector<ir::Operand*>& shape = {},
+         const ir::var_type& var_type = ir::var_type::i32);
 
   Symbol(const Symbol& symbol);
 
@@ -74,6 +77,8 @@ typedef class Symbol {
 
   virtual bool get_is_pointer(void) const { return is_pointer; }
 
+  virtual ir::var_type get_var_type(void) const { return var_type; }
+
   virtual ~Symbol() = default;
 } Symbol;
 
@@ -88,7 +93,9 @@ typedef class Symbol_const : public Symbol {
 
   Symbol_const(const std::string& name, const symbol_type& type,
                const std::string& value, const bool& is_pointer = false,
-               const std::vector<std::string>& values = {});
+               const std::vector<ir::Operand*>& shape = {},
+               const std::vector<std::string>& values = {},
+               const ir::var_type& var_type = ir::var_type::i32);
 
   Symbol_const(const Symbol_const& symbol_const);
 

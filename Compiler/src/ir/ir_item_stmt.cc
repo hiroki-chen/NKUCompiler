@@ -285,6 +285,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
   }
 }
 
+// FIXME: phi move does not work.
 void compiler::Item_stmt_while::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {

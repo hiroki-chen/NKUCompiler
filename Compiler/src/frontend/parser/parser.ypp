@@ -289,17 +289,23 @@ ArrayInitValHelper: ArrayInitValHelper COMMA ArrayInitVal     { $$ = $1; $$->add
                                                                 $$->add_value(array_init);
                                                                 $$->add_value($3);
                                                               }
-                  | CommaExp                                  { 
-                                                                 $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); 
-                                                                 compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $1, true);
-                                                                 $$->add_value(array_init);
-                                                              }
-                  | CommaExp COMMA ArrayInitVal               {
-                                                                 $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); 
-                                                                 compiler::Item_literal_array_init* const array_init = new compiler::Item_literal_array_init(yyget_lineno(), $1, true);
-                                                                 $$->add_value(array_init);
-                                                                 $$->add_value($3);
-                                                              }
+                  | CommaExp                                  
+                  { 
+                    $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false);
+                    for (auto expr : $1->get_expressions()) {
+                        $$->add_value(new compiler::Item_literal_array_init(yyget_lineno(), expr, true));
+                    }
+                    delete $1;                                                
+                  }
+                  | CommaExp COMMA ArrayInitVal               
+                  {
+                    $$ = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); 
+                    for (auto expr : $1->get_expressions()) {
+                        $$->add_value(new compiler::Item_literal_array_init(yyget_lineno(), expr, true));
+                    }
+                    $$->add_value($3);
+                    delete $1;
+                  }
                   ;
 
 BLOCK: LBRACE RBRACE                    { $$ = new compiler::Item_block(yyget_lineno()); }
