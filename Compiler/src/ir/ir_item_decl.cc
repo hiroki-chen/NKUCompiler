@@ -57,41 +57,36 @@ void compiler::Item_decl_var_init::generate_ir_helper(
   try {
     const std::string name = identifier->get_name();
     std::string name_symbol;
-    ir::Operand* const result = expression->eval_runtime(ir_context, ir_list);
     // Check current scope.
     if (ir_context->is_global_context()) {
+      ir::Operand* const result = expression->eval_runtime(ir_context, ir_list);
       name_symbol = ir::global_sign;
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL, result);
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
+
+      if (is_const) {
+        compiler::Symbol_const* const symbol = new compiler::Symbol_const(
+            name_symbol, compiler::symbol_type::VAR_TYPE, result->get_value(),
+            false, {}, {}, compiler::to_ir_type(b_type));
+        ir_context->get_symbol_table()->add_const(
+            identifier->get_name(),
+            dynamic_cast<compiler::Symbol_const*>(symbol));
+      }
     } else {
       const uint32_t scope_id =
           ir_context->get_symbol_table()->get_top_scope_uuid();
       name_symbol = ir::local_sign + std::to_string(scope_id);
-    }
-    // Insert into symbol table.
-    compiler::Symbol* symbol = nullptr;
-    if (is_const == true) {
-      symbol = new compiler::Symbol_const(
-          name_symbol, compiler::symbol_type::VAR_TYPE, result->get_value(),
-          false, {}, {}, compiler::to_ir_type(b_type));
-      ir_context->get_symbol_table()->add_const(
-          identifier->get_name(),
-          dynamic_cast<compiler::Symbol_const*>(symbol));
-    } else {
-      symbol =
+      compiler::Symbol* const symbol =
           new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
                                false, {}, compiler::to_ir_type(b_type));
-      symbol->set_value(result->get_value());
       ir_context->get_symbol_table()->add_symbol(identifier->get_name(),
                                                  symbol);
-    }
-
-    if (ir_context->is_global_context() == false) {
       compiler::Item_stmt_assign* const assignment =
           new compiler::Item_stmt_assign(lineno, identifier, expression);
       assignment->generate_ir(ir_context, ir_list);
     }
+
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << e.what() << std::endl;
     exit(1);

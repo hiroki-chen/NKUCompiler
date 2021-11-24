@@ -95,7 +95,7 @@ static const char* op_name[]{
     "CMP",
 
     // Memory related operations.
-    "LOAD",
+    "LDR",
     "STR",
     "MALLOC",
 
@@ -176,7 +176,7 @@ typedef enum op_type {
   CMP,
 
   // Memory related operations.
-  LOAD,
+  LDR,
   STR,
   MALLOC,
 
