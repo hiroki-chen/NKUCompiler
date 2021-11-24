@@ -19,6 +19,7 @@
 
 #include <common/types.hh>
 #include <regex>
+#include <sstream>
 #include <string>
 
 namespace compiler {
