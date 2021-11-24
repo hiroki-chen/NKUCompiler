@@ -107,7 +107,7 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
     return;
   }
   // Wrap std::ostream in a macro.
-  if (type == ir::op_type::BEGIN_FUNC || type == ir::op_type::GLOBAL_BEGIN) {
+  if (type == ir::op_type::FUNC || type == ir::op_type::GLOBAL_BEGIN) {
     FORMAT(output, op_name[type], 0x10);
   } else if (type == ir::op_type::LBL) {
     output << std::endl;

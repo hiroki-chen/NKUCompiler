@@ -29,6 +29,20 @@ std::string to_string(const compiler::unary_type& type);
 std::string to_string(const compiler::binary_type& type);
 
 /**
+ * @brief Concatenate variables to a string, using parameter pack.
+ *
+ * @tparam Args
+ * @param args
+ * @return std::string
+ */
+template <class... Args>
+std::string concatenate(Args&&... args) {
+  std::ostringstream oss;
+  (oss << ... << std::forward<Args>(args));
+  return oss.str();
+}
+
+/**
  * @brief Print indentation for each node in the AST.
  *
  * @param indent
