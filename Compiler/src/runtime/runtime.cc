@@ -135,7 +135,7 @@ void compiler::Compiler_runtime::run(void) {
         root->generate_ir(ir_context, ir_list);
 
         for (auto item : ir_list) {
-          item.emit_ir(oss, false);
+          item.emit_ir(std::cout, false);
         }
 
         res = oss.str();

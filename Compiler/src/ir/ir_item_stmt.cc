@@ -282,9 +282,12 @@ void compiler::Item_stmt_assign::generate_ir_helper(
       }
     }
   } else if (Item_ident::ident_type::ARRAY == type) {
+    // Assign to an array.
     // Get result.
-    ir::Operand* const res = identifier->eval_runtime(ir_context, ir_list);
-    throw compiler::unimplemented_error("Sorry, this is not yet supported:(");
+    ir::Operand* const res = expression->eval_runtime(ir_context, ir_list);
+    compiler::Item_ident_array* const array_ident =
+        static_cast<compiler::Item_ident_array*>(identifier);
+    array_ident->assign_to_array(ir_context, ir_list, res);
   }
 }
 
