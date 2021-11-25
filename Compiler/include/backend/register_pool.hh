@@ -17,6 +17,8 @@
 #ifndef REGISTER_POOL_HH
 #define REGISTER_POOL_HH
 
+#include <unordered_map>
+
 // For ARM-v7 32-bit backend.
 
 /**
@@ -29,7 +31,36 @@ namespace compiler::reg {
  *
  */
 typedef class Register_pool {
-  // ADD SOMETHING.
+private:
+  /**
+   * @brief A hash map that stores the availability of each registers of ARM.
+   * 
+   */
+  std::unordered_map<std::string, bool> register_free_map;
+
+  /**
+   * @brief Records the number of free registers.
+   * 
+   */
+  uint32_t free_registers;
+
+public:
+  /**
+   * @brief Get a free register from the register pool.
+   * 
+   * @return std::string 
+   */
+  std::string get_free_register(void);
+
+  /**
+   * @brief Set an occupied register to be free.
+   * 
+   * @param reg_name 
+   */
+  void set_free_register(const std::string& reg_name);
+
+  uint32_t free_num(void) { return free_registers; }
+  
 } Register_pool;
 }  // namespace compiler::reg
 
