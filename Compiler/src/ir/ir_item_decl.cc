@@ -20,6 +20,7 @@
 #include <frontend/nodes/item_decl.hh>
 
 extern compiler::NodeStack stack;
+extern uint32_t opt_level;
 
 void compiler::Item_decl_var::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
@@ -41,10 +42,11 @@ void compiler::Item_decl_var::generate_ir_helper(
     ir_context->get_symbol_table()->add_symbol(name, symbol);
   } else {
     const uint32_t id = ir_context->get_symbol_table()->get_available_id();
-    const std::string name_symbol = ir::local_sign + std::to_string(id);
+    const std::string name_symbol = compiler::concatenate(ir::local_sign, id);
     // Create a temporary symbol for the symbol table.
-    compiler::Symbol* const symbol = new compiler::Symbol(
-        name_symbol, compiler::symbol_type::VAR_TYPE, false);
+    compiler::Symbol* const symbol =
+        new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
+                             false, {}, compiler::to_ir_type(b_type));
     ir_context->get_symbol_table()->add_symbol(name, symbol);
   }
 }
@@ -55,41 +57,36 @@ void compiler::Item_decl_var_init::generate_ir_helper(
   try {
     const std::string name = identifier->get_name();
     std::string name_symbol;
-    ir::Operand* const result = expression->eval_runtime(ir_context, ir_list);
     // Check current scope.
     if (ir_context->is_global_context()) {
+      ir::Operand* const result = expression->eval_runtime(ir_context, ir_list);
       name_symbol = ir::global_sign;
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL, result);
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
+
+      if (is_const) {
+        compiler::Symbol_const* const symbol = new compiler::Symbol_const(
+            name_symbol, compiler::symbol_type::VAR_TYPE, result->get_value(),
+            false, {}, {}, compiler::to_ir_type(b_type));
+        ir_context->get_symbol_table()->add_const(
+            identifier->get_name(),
+            dynamic_cast<compiler::Symbol_const*>(symbol));
+      }
     } else {
       const uint32_t scope_id =
           ir_context->get_symbol_table()->get_top_scope_uuid();
       name_symbol = ir::local_sign + std::to_string(scope_id);
-    }
-    // Insert into symbol table.
-    compiler::Symbol* symbol = nullptr;
-    if (is_const == true) {
-      symbol = new compiler::Symbol_const(name_symbol,
-                                          compiler::symbol_type::VAR_TYPE,
-                                          result->get_value(), false);
-      ir_context->get_symbol_table()->add_const(
-          identifier->get_name(),
-          dynamic_cast<compiler::Symbol_const*>(symbol));
-    } else {
-      symbol = new compiler::Symbol(name_symbol,
-                                    compiler::symbol_type::VAR_TYPE, false);
-      symbol->set_value(result->get_value());
+      compiler::Symbol* const symbol =
+          new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
+                               false, {}, compiler::to_ir_type(b_type));
       ir_context->get_symbol_table()->add_symbol(identifier->get_name(),
                                                  symbol);
-    }
-
-    if (ir_context->is_global_context() == false) {
-      
       compiler::Item_stmt_assign* const assignment =
           new compiler::Item_stmt_assign(lineno, identifier, expression);
       assignment->generate_ir(ir_context, ir_list);
     }
+
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << e.what() << std::endl;
     exit(1);
@@ -154,37 +151,36 @@ void compiler::Item_decl_array::generate_ir_helper(
     const uint32_t array_size =
         calculate_array_size(ir_context, ir_list, b_type, array_shape);
 
-    ir::Operand* const operand_alloc =
-        new ir::Operand(ir::var_type::NONE,
-                        ir::var_type_to_string(compiler::to_ir_type(b_type)) +
-                            " * " + std::to_string(array_size),
-                        "");
+    ir::Operand* const operand_alloc_notation = new ir::Operand(
+        ir::var_type::i32, "",
+        std::to_string(compiler::to_byte_length(b_type) * array_size), false,
+        false);
 
     // Handle global array type.
     const std::string name = identifier->get_name();
     if (ir_context->is_global_context()) {
-      const std::string name_symbol = ir::global_sign + name + "[]";
+      const std::string name_symbol = ir::global_sign + name;
       ir_context->get_symbol_table()->add_symbol(
           name,
           new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
                                false, array_shape));
       ir_list.emplace_back(ir::op_type::GLOBAL_BEGIN, name_symbol);
-      ir_list.emplace_back(ir::op_type::GLOBAL, operand_alloc);
       ir_list.emplace_back(
-          ir::op_type::SPACE,
-          new ir::Operand(std::to_string(
-              ir::to_byte_length(compiler::to_ir_type(b_type)) * array_size)));
+          ir::op_type::GLOBAL,
+          ir::var_type_to_string(compiler::to_ir_type(b_type)) + " * " +
+              std::to_string(array_size));
+      ir_list.emplace_back(ir::op_type::SPACE, operand_alloc_notation);
       ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
       // Handle local array type.
     } else {
       const std::string name_symbol =
           ir::local_sign +
           std::to_string(ir_context->get_symbol_table()->get_available_id()) +
-          name + "[]";
+          name;
       ir_context->get_symbol_table()->add_symbol(
-          name,
-          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
-                               true, array_shape));
+          name, new compiler::Symbol(
+                    name_symbol, compiler::symbol_type::ARRAY_TYPE, true,
+                    array_shape, compiler::to_ir_type(b_type)));
     }
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
@@ -200,11 +196,10 @@ void compiler::Item_decl_array_init::generate_ir_helper(
     std::vector<ir::Operand*> array_shape;
     const uint32_t array_size =
         calculate_array_size(ir_context, ir_list, b_type, array_shape);
-    ir::Operand* const operand_alloc =
-        new ir::Operand(ir::var_type::NONE,
-                        ir::var_type_to_string(compiler::to_ir_type(b_type)) +
-                            " * " + std::to_string(array_size),
-                        "");
+    ir::Operand* const operand_alloc_notation = new ir::Operand(
+        compiler::to_ir_type(b_type), "",
+        std::to_string(compiler::to_byte_length(b_type) * array_size), false,
+        false);
 
     // Handle initial value type.
     const std::string name = identifier->get_name();
@@ -212,9 +207,9 @@ void compiler::Item_decl_array_init::generate_ir_helper(
     if (ir_context->is_global_context()) {
       const std::string name_symbol = ir::global_sign + name;
       ir_context->get_symbol_table()->add_symbol(
-          name,
-          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
-                               true, array_shape));
+          name, new compiler::Symbol(
+                    name_symbol, compiler::symbol_type::ARRAY_TYPE, true,
+                    array_shape, compiler::to_ir_type(b_type)));
       ir_list.emplace_back(ir::op_type::GLOBAL_BEGIN, name_symbol);
       // Handle init values.
       init_helper(init_value->get_value_list(), initial_values, 0, ir_context,
@@ -225,12 +220,12 @@ void compiler::Item_decl_array_init::generate_ir_helper(
           ir::local_sign +
           std::to_string(ir_context->get_symbol_table()->get_available_id());
       ir_context->get_symbol_table()->add_symbol(
-          name,
-          new compiler::Symbol(name_symbol, compiler::symbol_type::ARRAY_TYPE,
-                               true, array_shape));
-      ir_list.emplace_back(ir::op_type::MALLOC, new ir::Operand(name_symbol),
-                           operand_alloc);
-
+          name, new compiler::Symbol(
+                    name_symbol, compiler::symbol_type::ARRAY_TYPE, true,
+                    array_shape, compiler::to_ir_type(b_type)));
+      ir_list.emplace_back(ir::op_type::MALLOC, nullptr,
+                           new ir::Operand(name_symbol),
+                           operand_alloc_notation);
       init_helper(init_value->get_value_list(), initial_values, 0, ir_context,
                   ir_list, compiler::to_ir_type(b_type));
     }
@@ -247,36 +242,39 @@ void compiler::Item_decl_array_init::init_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list,
     const ir::var_type& var_type) const {
-  auto lambda_handle_init = [&](ir::Operand* const array_size,
+  auto lambda_handle_init = [&](ir::Operand* const value,
                                 const bool& malloc = false) {
     // Get the length of the array item.
     const uint32_t byte_length = ir::to_byte_length(var_type);
     if (malloc == true) {
-      // Iterate through the size of the array.
-      const uint32_t size = std::stoul(array_size->get_value());
-      for (uint32_t i = 0; i < size; i++) {
-        init_value.emplace_back(
-            new ir::Operand(var_type, "", "0", false, false));
-      }
       if (ir_context->is_global_context()) {
+        // Iterate through the size of the array.
+        const uint32_t size = std::stoul(value->get_value());
+        std::cout << "size: " << size << std::endl;
+        for (uint32_t i = 0; i < size; i++) {
+          init_value.emplace_back(
+              new ir::Operand(var_type, "", "0", false, false));
+        }
         ir_list.emplace_back(
             ir::op_type::SPACE,
             new ir::Operand(std::to_string(byte_length * size)));
       }
     } else {
-      init_value.emplace_back(new ir::Operand(var_type, "", "0", false, false));
+      init_value.emplace_back(OPERAND_VALUE("0"));
       if (ir_context->is_global_context()) {
-        ir_list.emplace_back(ir::op_type::SPACE, array_size);
+        ir_list.emplace_back(ir::op_type::SPACE, value);
       } else {
         const std::string array_name_local =
             ir_context->get_symbol_table()
                 ->find_symbol(get_identifier()->get_name())
                 ->get_name();
         const uint32_t ind = byte_length * (init_value.size() - 1);
-        ir_list.emplace_back(
-            ir::op_type::STORE, nullptr, new ir::Operand(array_name_local),
-            new ir::Operand(ir::var_type::i32, "", std::to_string(ind), false,
-                            false));
+        // STR <ARRAY_NAME> i8 <POSITION> <TYPE> <VALUE>;
+        ir_list.emplace_back(ir::op_type::STR,
+                             new ir::Operand(array_name_local),
+                             new ir::Operand(ir::var_type::i8, "",
+                                             std::to_string(ind), false, false),
+                             value);
       }
     }
   };
@@ -288,40 +286,49 @@ void compiler::Item_decl_array_init::init_helper(
 
   // Main.
   const std::vector<compiler::Item_expr*> shape = identifier->get_array_shape();
+
   if (index < shape.size()) {
     uint32_t size = 1, cur_size = 0;
-    for (std::vector<compiler::Item_expr*>::const_iterator iter =
-             shape.cbegin() + index;
-         iter != shape.end(); iter++) {
+    for (auto iter = shape.cbegin() + index; iter != shape.end(); iter++) {
       size *= std::stoul((*iter)->eval_runtime(ir_context)->get_value());
-      const uint32_t res =
-          std::stoul(shape[index]->eval_runtime(ir_context)->get_value());
-      const uint32_t cur = size / res;
+    }
+    const uint32_t res =
+        std::stoul(shape[index]->eval_runtime(ir_context)->get_value());
+    const uint32_t cur = size / res;
+    // std::cout << "Size for this shape: " << size << std::endl;
 
-      for (compiler::Item_literal_array_init* const value : value_list) {
-        if (value->get_is_numeric()) {
-          cur_size++;
-          try {
-            if (is_const) {
-              lambda_handle_init_const(
-                  value->get_value()->eval_runtime(ir_context));
-            } else {
-              lambda_handle_init(value->get_value()->eval_runtime(ir_context));
-            }
-          } catch (...) {
-          }
+    for (compiler::Item_literal_array_init* const value : value_list) {
+      if (value->get_is_numeric()) {
+        cur_size++;
+        ir::Operand* val = nullptr;
+        if (opt_level > 0) {
+          val = value->get_value()->eval_runtime(ir_context);
         } else {
-          if (cur_size % cur != 0) {
-            if (is_const) {
-            } else {
-            }
+          val = value->get_value()->eval_runtime(ir_context, ir_list);
+        }
+        if (is_const) {
+          lambda_handle_init_const(val);
+        } else {
+          lambda_handle_init(val);
+        }
+      } else {
+        if (cur_size % cur != 0) {
+          if (is_const) {
+          } else {
+            lambda_handle_init(
+                OPERAND_VALUE(std::to_string(cur - (cur_size % cur))), true);
           }
         }
-
-        init_helper(value->get_value_list(), init_value, index + 1, ir_context,
-                    ir_list, var_type);
-        cur_size += cur;
       }
+
+      init_helper(value->get_value_list(), init_value, index + 1, ir_context,
+                  ir_list, var_type);
+      cur_size += cur;
+    }
+    if (is_const) {
+    } else {
+      // lambda_handle_init(OPERAND_VALUE(std::to_string(size - cur_size)),
+      // true);
     }
   }
 }

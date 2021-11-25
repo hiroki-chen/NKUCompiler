@@ -20,6 +20,15 @@
 #include <stdexcept>
 #include <string>
 
+#ifndef PANIC
+#define PANIC(lineno, error)                                                  \
+  {                                                                           \
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << error \
+              << termcolor::reset << std::endl;                               \
+    exit(1);                                                                  \
+  }
+#endif
+
 namespace compiler {
 /**
  * @brief Maybe we could ignore the function yyerror and implement our exception

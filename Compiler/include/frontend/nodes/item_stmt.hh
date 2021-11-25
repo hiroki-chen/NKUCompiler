@@ -401,8 +401,8 @@ typedef class Item_block final : public Item_stmt {
  * @param ir_context_real
  * @param ir_context_dst
  */
-void handle_phi_move(ir::IRContext* const ir_context_a,
-                     ir::IRContext* const ir_context_b,
+void handle_phi_move(ir::IRContext* const ir_context_fake,
+                     ir::IRContext* const ir_context_real,
                      ir::IRContext* const ir_context_dst);
 
 void handle_phi_move(ir::IRContext* const ir_context, const bool& type = false);

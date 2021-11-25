@@ -157,6 +157,8 @@ typedef class Item_expr_comma final : public Item_expr {
     return Item_expr::expr_type::COMMA_TYPE;
   }
 
+  virtual std::vector<Item_expr*> get_expressions(void) const { return expressions; }
+
   virtual std::string print_result(const uint32_t& indent,
                                    const bool& leaf) const override;
 

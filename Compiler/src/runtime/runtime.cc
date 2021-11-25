@@ -136,6 +136,7 @@ void compiler::Compiler_runtime::run(void) {
 
         for (auto item : ir_list) {
           item.emit_ir(oss, false);
+          item.emit_ir(std::cerr, false);
         }
 
         res = oss.str();
@@ -144,16 +145,16 @@ void compiler::Compiler_runtime::run(void) {
       output_file << res;
       output_file.flush();
       output_file.close();
-      compiler::ir::CFG_builder* const cfg_builder =
-          new compiler::ir::CFG_builder(ir_list);
-      // DEBUG
-      auto table = cfg_builder->get_look_up_table();
-      for (auto item : table) {
-        std::cout << item.first << ":\n";
-        for (auto ir : item.second) {
-          ir->emit_ir();
-        }
-      }
+      // compiler::ir::CFG_builder* const cfg_builder =
+      //     new compiler::ir::CFG_builder(ir_list);
+      // // DEBUG
+      // auto table = cfg_builder->get_look_up_table();
+      // for (auto item : table) {
+      //   std::cout << item.first << ":\n";
+      //   for (auto ir : item.second) {
+      //     ir->emit_ir();
+      //   }
+      // }
     }
 
   } catch (const std::exception& e) {

@@ -95,8 +95,8 @@ static const char* op_name[]{
     "CMP",
 
     // Memory related operations.
-    "LOAD",
-    "STORE",
+    "LDR",
+    "STR",
     "MALLOC",
 
     // Delimiters.
@@ -104,7 +104,7 @@ static const char* op_name[]{
     "GLOBAL",
     "SPACE",
     "GLOBAL_END",
-    "BEGIN_FUNC",
+    "FUNC",
     "END_FUNC",
     "BEGIN_STRUCT",
     "END_STRUCT",
@@ -176,8 +176,8 @@ typedef enum op_type {
   CMP,
 
   // Memory related operations.
-  LOAD,
-  STORE,
+  LDR,
+  STR,
   MALLOC,
 
   // Delimiters.
@@ -185,7 +185,7 @@ typedef enum op_type {
   GLOBAL,
   SPACE,
   GLOBAL_END,
-  BEGIN_FUNC,
+  FUNC,
   END_FUNC,
   BEGIN_STRUCT,
   END_STRUCT,

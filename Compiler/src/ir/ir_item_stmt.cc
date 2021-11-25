@@ -77,14 +77,15 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     // If branches cannot be evaluated at runtime, we should create IRs for each
     // branch.
-    ir_list.emplace_back(branch_ir.second,
-                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE");
+    ir_list.emplace_back(
+        branch_ir.second,
+        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE"));
     ir_list.emplace_back(ir::op_type::JMP,
-                         ".LBB" + std::to_string(scope_uuid_cur) + "_IF");
+                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF"));
 
     // Generate a label for if branch.
     ir_list.emplace_back(ir::op_type::LBL,
-                         ".LBB" + std::to_string(scope_uuid_cur) + "_IF:");
+                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF:"));
 
     std::vector<compiler::ir::IR> ir_if, ir_else;
     compiler::ir::IRContext ir_context_if(*ir_context);
@@ -106,7 +107,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     std::vector<compiler::ir::IR> ir_list_end;
     ir_list_end.emplace_back(
         compiler::ir::op_type::LBL,
-        ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF:");
+        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF:"));
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
@@ -153,16 +154,18 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     // Append to the ir_list.
     compiler::insert_with_move(ir_list, ir_if);
     if (ir_else.empty() == false) {
-      ir_list.emplace_back(
-          ir::op_type::JMP,
-          new ir::Operand(".LBB" + std::to_string(scope_uuid_cur) + "_END_IF"));
+      ir_list.emplace_back(ir::op_type::JMP,
+                           new ir::Operand(compiler::concatenate(
+                               ".LBB", scope_uuid_cur, "_END_IF")));
     }
-    ir_list.emplace_back(ir::op_type::LBL,
-                         ".LBB" + std::to_string(scope_uuid_cur) + "_ELSE:");
+    ir_list.emplace_back(
+        ir::op_type::LBL,
+        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE:"));
 
     compiler::insert_with_move(ir_list, ir_else);
-    ir_list.emplace_back(ir::op_type::JMP,
-                         ".LBB" + std::to_string(scope_uuid_cur) + "_END_IF");
+    ir_list.emplace_back(
+        ir::op_type::JMP,
+        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF:"));
     compiler::insert_with_move(ir_list, ir_list_end);
 
     ir_context->leave_scope();
@@ -215,7 +218,7 @@ compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
   generate_ir(ir_context, ir_list);
 
   if (identifier->get_ident_type() == compiler::Item_ident::ident_type::ARRAY) {
-    if (ir_list.back().get_op_type() != ir::op_type::STORE) {
+    if (ir_list.back().get_op_type() != ir::op_type::STR) {
       throw compiler::fatal_error("Error: Unknown error!");
     }
 
@@ -279,12 +282,16 @@ void compiler::Item_stmt_assign::generate_ir_helper(
       }
     }
   } else if (Item_ident::ident_type::ARRAY == type) {
+    // Assign to an array.
     // Get result.
-    ir::Operand* const res = identifier->eval_runtime(ir_context, ir_list);
-    throw compiler::unimplemented_error("Sorry, this is not yet supported:(");
+    ir::Operand* const res = expression->eval_runtime(ir_context, ir_list);
+    compiler::Item_ident_array* const array_ident =
+        static_cast<compiler::Item_ident_array*>(identifier);
+    array_ident->assign_to_array(ir_context, ir_list, res);
   }
 }
 
+// FIXME: phi move does not work.
 void compiler::Item_stmt_while::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
     std::vector<compiler::ir::IR>& ir_list) const {
@@ -311,12 +318,11 @@ void compiler::Item_stmt_while::generate_ir_helper(
 
     compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context_condition, ir_list_condition);
-    
 
     // Step 3: Set up jump instruction.
     std::vector<compiler::ir::IR> ir_list_jump;
-    ir_list_jump.emplace_back(branch_ir.second,
-                              ".LB" + std::to_string(scope_id) + "_LOOP_END");
+    ir_list_jump.emplace_back(
+        branch_ir.second, compiler::concatenate(".LB", scope_id, ".LOOP_END"));
 
     // Step 4: Create the do body, and then generate ir from it.
     ir::IRContext* ir_context_do = new ir::IRContext(*ir_context_condition);
@@ -683,8 +689,9 @@ void compiler::handle_phi_move(ir::IRContext* const ir_context_a,
           const auto tag_pair = std::make_pair(i, symbol.first);
           const auto phi_pair = std::make_pair(
               tag_pair,
-              ir::local_sign + std::to_string(ir_context_dst->get_symbol_table()
-                                                  ->get_top_scope_uuid()));
+              compiler::concatenate(
+                  ir::local_sign,
+                  ir_context_dst->get_symbol_table()->get_top_scope_uuid()));
           ir_context_dst->continue_phi_block.top().insert(phi_pair);
           break;
         }

@@ -18,8 +18,13 @@
 
 compiler::Symbol::Symbol(const std::string& name, const symbol_type& type,
                          const bool& is_pointer,
-                         const std::vector<ir::Operand*>& shape)
-    : name(name), type(type), is_pointer(is_pointer), shape(shape) {}
+                         const std::vector<ir::Operand*>& shape,
+                         const ir::var_type& var_type)
+    : name(name),
+      type(type),
+      is_pointer(is_pointer),
+      shape(shape),
+      var_type(var_type) {}
 
 compiler::Symbol::Symbol(const Symbol& symbol)
     : name(symbol.name), type(symbol.type), is_pointer(symbol.is_pointer) {
@@ -28,12 +33,11 @@ compiler::Symbol::Symbol(const Symbol& symbol)
   }
 }
 
-compiler::Symbol_const::Symbol_const(const std::string& name,
-                                     const symbol_type& type,
-                                     const std::string& value,
-                                     const bool& is_pointer,
-                                     const std::vector<std::string>& values)
-    : Symbol(name, type, is_pointer),
+compiler::Symbol_const::Symbol_const(
+    const std::string& name, const symbol_type& type, const std::string& value,
+    const bool& is_pointer, const std::vector<ir::Operand*>& shape,
+    const std::vector<std::string>& values, const ir::var_type& var_type)
+    : Symbol(name, type, is_pointer, shape, var_type),
       values(values.begin(), values.end()),
       value(value) {}
 
