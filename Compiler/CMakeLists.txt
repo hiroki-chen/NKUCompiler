@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.10.0 FATAL_ERROR)
 
 # Set the project name and version.
-project(Takanashi_compiler VERSION 1.0 LANGUAGES CXX)
+project(compiler VERSION 1.0 LANGUAGES CXX)
 
 # C++ standard settings.
 set(CMAKE_CXX_STANDARD 17)

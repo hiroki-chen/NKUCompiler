@@ -55,14 +55,13 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
   options = new cxxopts::Options(
       "Compiler", "--------- Compiler by Takanashi Guidance ---------");
 
-  options->custom_help("[INPUT FILE] [OTHER...]");
+  options->custom_help("[INPUT FILE POSITIONAL] [OTHER...]");
 
-  options->add_options("INPUT FILE")(
-      "s,source",
-      "The location of all the input source files. If it a directory, then all "
-      "the files in the "
-      "direcotry will be read in.",
-      cxxopts::value<std::string>()->default_value("test/test.sy"));
+  options->add_options("INPUT FILE POSITIONAL")(
+      "s,source", "The path of the source file",
+      cxxopts::value<std::string>()->default_value("./test/test.sy"));
+
+  options->parse_positional({"source"});
 
   options->add_options("OTHER")("c,compile",
                                 "Output the object file rather than executable",
@@ -75,8 +74,10 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
       cxxopts::value<bool>()->default_value("false"))(
       "print-ast", "Print the abstract syntax tree",
       cxxopts::value<bool>()->default_value("false"))(
-      "O,opt-level", "The level of optimization",
-      cxxopts::value<int>()->default_value("0"))("h,help", "Get the guidance");
+      "O2", "Enable Optimization",
+      cxxopts::value<int>()->default_value("0"))("h,help", "Get the guidance")(
+      "S,assembly", "Generate assembly code",
+      cxxopts::value<bool>()->default_value("false"));
 }
 
 compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
@@ -84,7 +85,8 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
       debug_on(result["debug"].as<bool>()),
       print_ast(result["print-ast"].as<bool>()),
       print_ir(result["print-ir"].as<bool>()),
-      opt_level(result["opt-level"].as<int>()) {
+      opt_level(result["O2"].as<int>()),
+      generate_assembly(result["assembly"].as<bool>()) {
   ::opt_level = opt_level;
   const std::string input = result["source"].as<std::string>();
 
@@ -131,7 +133,7 @@ void compiler::Compiler_runtime::run(void) {
       if (print_ir) {
         compiler::ir::IRContext* const ir_context =
             new compiler::ir::IRContext();
-        
+
         root->generate_ir(ir_context, ir_list);
 
         for (auto item : ir_list) {
