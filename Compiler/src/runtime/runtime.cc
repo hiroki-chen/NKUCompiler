@@ -74,7 +74,7 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
       cxxopts::value<bool>()->default_value("false"))(
       "print-ast", "Print the abstract syntax tree",
       cxxopts::value<bool>()->default_value("false"))(
-      "O2", "Enable Optimization",
+      "O,opt-level", "Enable Optimization",
       cxxopts::value<int>()->default_value("0"))("h,help", "Get the guidance")(
       "S,assembly", "Generate assembly code",
       cxxopts::value<bool>()->default_value("false"));
@@ -85,7 +85,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
       debug_on(result["debug"].as<bool>()),
       print_ast(result["print-ast"].as<bool>()),
       print_ir(result["print-ir"].as<bool>()),
-      opt_level(result["O2"].as<int>()),
+      opt_level(result["opt-level"].as<int>()),
       generate_assembly(result["assembly"].as<bool>()) {
   ::opt_level = opt_level;
   const std::string input = result["source"].as<std::string>();
