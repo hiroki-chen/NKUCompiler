@@ -17,6 +17,7 @@
 #ifndef UTILS_HH
 #define UTILS_HH
 
+#include <common/compile_excepts.hh>
 #include <common/types.hh>
 #include <regex>
 #include <sstream>
@@ -41,6 +42,33 @@ std::string concatenate(Args&&... args) {
   std::ostringstream oss;
   (oss << ... << std::forward<Args>(args));
   return oss.str();
+}
+
+/**
+ * @brief Generate an instruction for the ARM assembly.
+ * 
+ * Example: const std::string instruction = compiler::generate_assembly("MOV", "r0", "[sp, #16]");
+ *
+ * @tparam Operator
+ * @tparam Args
+ * @param op      The type of the operator.    
+ * @param args    The argument of the instruction.
+ * @return std::string
+ */
+template <class Operator, class... Args>
+std::string generate_assembly(Operator&& op, Args&&... args) {
+  if constexpr (!(std::is_same_v<std::string,
+                                 typename std::decay<Operator>::type> ||
+                  std::is_same_v<const char*,
+                                 typename std::decay<Operator>::type>)) {
+    throw compiler::fatal_error("The first argument must be a string!");
+  }
+  std::ostringstream oss;
+  oss << op << std::string(6, ' ');
+  ((oss << std::forward<Args>(args) << ", "), ...);
+
+  // Trim the last comma.
+  return oss.str().substr(0, oss.str().find_last_of(','));
 }
 
 /**
