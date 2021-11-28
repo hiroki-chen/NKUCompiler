@@ -138,11 +138,19 @@ void compiler::Compiler_runtime::run(void) {
 
         for (auto item : ir_list) {
           item.emit_ir(oss, false);
-          // item.emit_ir(std::cerr, false);
+#ifdef COMPILER_DEBUG
+          item.emit_ir(std::cerr, false);
+#endif
         }
 
         res = oss.str();
       }
+
+      compiler::ir::CFG_builder* const cfg_builder =
+          new compiler::ir::CFG_builder(ir_list);
+#ifdef COMPILER_DEBUG
+      cfg_builder->print_cfg();
+#endif
 
       output_file << res;
       output_file.flush();

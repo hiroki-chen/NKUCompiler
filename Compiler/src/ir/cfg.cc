@@ -16,29 +16,111 @@
  */
 #include <ir/cfg.hh>
 
-compiler::ir::CFG_builder::CFG_builder(
-    const compiler::ir::ir_list& ir_list) {
-  uint32_t i = 0, id = 0;
-  do {
-    if (ir_list[i].get_op_type() == FUNC ||
-        ir_list[i].get_op_type() == LBL) {
-      
-      name_to_id[ir_list[i].get_label()] = id;
-      ir::cfg_block block;
+static void construct_mapping(const compiler::ir::ir_list& ir_list,
+                              std::map<std::string, uint32_t>& name_to_id,
+                              std::map<uint32_t, std::string>& id_to_name,
+                              compiler::ir::cfg& blocks) {
+  // TODO: Need to save global definition.
+  // Create mapping while constructing basic blocks for the CFG.
+  // Scan the whole ir_list to construct basic blocks and the id.
+  uint32_t id = 0;
 
-      uint32_t j = i + 1;
-      while (j < ir_list.size() && ir_list[j].get_op_type() != LBL &&
-             ir_list[j].get_op_type() != END_FUNC) {
-        block.emplace_back(const_cast<ir::IR*>(&ir_list[j]));
-        j++;
+  size_t i = 0;
+  while (i < ir_list.size()) {
+    if (ir_list[i].get_op_type() == compiler::ir::op_type::FUNC) {
+      // Build a new CFG for a function.
+      id = 0;
+      const std::string function_name = std::move(ir_list[i].get_label());
+
+      // Prepare block.
+      std::vector<std::pair<uint32_t, compiler::ir::cfg_block>> block_body;
+
+      // Construct block body.
+      size_t j = i + 1;
+      while (j < ir_list.size() &&
+             ir_list[j].get_op_type() != compiler::ir::op_type::END_FUNC) {
+        // Check if this is a label.
+        if (ir_list[j].get_op_type() == compiler::ir::op_type::LBL) {
+          // Prepare for the basic block.
+          name_to_id[ir_list[j].get_label()] = id;
+          id_to_name[id] = ir_list[j].get_label();
+          compiler::ir::cfg_block basic_block;
+
+          // Construct basic block.
+          size_t k = j + 1;
+          while (k < ir_list.size() &&
+                 ir_list[k].get_op_type() != compiler::ir::op_type::LBL &&
+                 ir_list[k].get_op_type() != compiler::ir::op_type::END_FUNC) {
+            basic_block.emplace_back(ir_list[k]);
+            k++;
+          }
+          // Reset index.
+          j = k;
+          block_body.emplace_back(id++, basic_block);
+        }
       }
       i = j;
-      look_up_table[id++] = block;
-    } else if (ir_list[i].get_op_type() == END_FUNC) {
+      blocks[function_name] = std::move(block_body);
+    } else {
       i++;
     }
-  } while (i < ir_list.size());
-
+  }
 }
+
+static void analyze_control_flow(
+    const compiler::ir::cfg& blocks,
+    const std::map<std::string, uint32_t>& name_to_id,
+    std::map<std::string, std::vector<compiler::ir::Edge>>& edges) {
+  for (auto item : blocks) {
+    const std::string name = item.first;
+
+    // Analyze the control flow by jump-related instructions.
+    const auto blocks = item.second;
+    for (auto basic_block : blocks) {
+      const uint32_t id = basic_block.first;
+      // Iterate through the instruction lists.
+      for (auto ir : basic_block.second) {
+        // Check if there is any jump-related instructions.
+        if (compiler::ir::is_jump(ir.get_op_type())) {
+          // Extract edge information for building the edge.
+          const std::string jump_dst = std::move(ir.get_label());
+          const uint32_t jump_dst_id = name_to_id.at(jump_dst);
+          const bool type = ir.get_op_type() == compiler::ir::JMP;
+
+          // Add an edge to the edge map.
+          edges[name].emplace_back(id, jump_dst_id, type);
+        }
+      }
+    }
+  }
+}
+
+compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
+  // The CFG builder constructs the control flow graph as follows:
+  // 1. It first scans the ir list and constructs a mapping from the label name
+  //    to the label id.
+  // 2. It scans the ir list again and add edges from one block to another block
+  //    according to the jumo-related instructions.
+  // 3. It analyzes the control flow and tries to prune needless / dead blocks;
+  //    that is, blocks that have no entry point.
+
+  // Construct blocks and their mappings.
+  construct_mapping(ir_list, name_to_id, id_to_name, blocks);
+  // Analyze the control flow.
+  analyze_control_flow(blocks, name_to_id, edges);
+  // Prune useless control flows or merge continuous basic blocks.
+}
+
+#ifdef COMPILER_DEBUG
+void compiler::ir::CFG_builder::print_cfg(void) const {
+  for (auto item : edges) {
+    std::cout << item.first << ": " << std::endl;
+    for (auto edge : item.second) {
+      std::cout << edge.from << " -> " << edge.to << " type: " << edge.type
+                << std::endl;
+    }
+  }
+}
+#endif
 
 void compiler::ir::CFG_builder::prettier_ir(std::ostream& out) { ; }

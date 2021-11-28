@@ -28,6 +28,10 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
 endif ()
 
+IF(COMPILER_DEBUG)
+    ADD_DEFINITIONS(-DCOMPILER_DEBUG)
+ENDIF(COMPILER_DEBUG)
+
 if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
     message("In-source builds are not allowed.")
 endif ()
