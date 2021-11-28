@@ -23,9 +23,10 @@ extern compiler::NodeStack stack;
 extern uint32_t opt_level;
 
 void compiler::Item_decl_var::generate_ir_helper(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type) const {
+    compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
+    const basic_type& b_type) const {
   const std::string name = identifier->get_name();
+
   compiler::ir::Operand* const default_value = new compiler::ir::Operand(
       compiler::to_ir_type(b_type), "", "0", false, false);
 
@@ -52,10 +53,11 @@ void compiler::Item_decl_var::generate_ir_helper(
 }
 
 void compiler::Item_decl_var_init::generate_ir_helper(
-    ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list,
+    ir::IRContext* const ir_context, ir::ir_list& ir_list,
     const basic_type& b_type) const {
   try {
     const std::string name = identifier->get_name();
+
     std::string name_symbol;
     // Check current scope.
     if (ir_context->is_global_context()) {
@@ -82,19 +84,21 @@ void compiler::Item_decl_var_init::generate_ir_helper(
                                false, {}, compiler::to_ir_type(b_type));
       ir_context->get_symbol_table()->add_symbol(identifier->get_name(),
                                                  symbol);
+
       compiler::Item_stmt_assign* const assignment =
           new compiler::Item_stmt_assign(lineno, identifier, expression);
       assignment->generate_ir(ir_context, ir_list);
     }
 
   } catch (const std::exception& e) {
-    std::cerr << termcolor::red << termcolor::bold << e.what() << std::endl;
+    std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
+              << termcolor::reset << std::endl;
     exit(1);
   }
 }
 
 void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
-                                      std::vector<compiler::ir::IR>& ir_list,
+                                      compiler::ir::ir_list& ir_list,
                                       const basic_type& b_type) const {
   stack.emplace_back(static_cast<Item*>(const_cast<Item_decl*>(this)));
   try {
@@ -110,15 +114,15 @@ void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
 
 void compiler::Item_stmt_decl::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   for (compiler::Item_decl* const declaration : declarations) {
     declaration->generate_ir(ir_context, ir_list, type);
   }
 }
 
 uint32_t compiler::Item_decl_array::calculate_array_size(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list, const compiler::basic_type& b_type,
+    compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
+    const compiler::basic_type& b_type,
     std::vector<ir::Operand*>& array_shape) const {
   // Determine the shape of the array.
   for (compiler::Item_expr* const shape : identifier->get_array_shape()) {
@@ -142,8 +146,7 @@ uint32_t compiler::Item_decl_array::calculate_array_size(
 }
 
 void compiler::Item_decl_array::generate_ir_helper(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list,
+    compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
     const compiler::basic_type& b_type) const {
   try {
     // Determine the size of the array.
@@ -190,8 +193,8 @@ void compiler::Item_decl_array::generate_ir_helper(
 }
 
 void compiler::Item_decl_array_init::generate_ir_helper(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list, const basic_type& b_type) const {
+    compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
+    const basic_type& b_type) const {
   try {
     std::vector<ir::Operand*> array_shape;
     const uint32_t array_size =
@@ -239,8 +242,7 @@ void compiler::Item_decl_array_init::generate_ir_helper(
 void compiler::Item_decl_array_init::init_helper(
     const std::vector<compiler::Item_literal_array_init*> value_list,
     std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
-    compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list,
+    compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
     const ir::var_type& var_type) const {
   auto lambda_handle_init = [&](ir::Operand* const value,
                                 const bool& malloc = false) {

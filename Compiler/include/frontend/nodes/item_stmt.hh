@@ -27,7 +27,7 @@ typedef class Item_stmt : public Item_expr {
  protected:
   virtual ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   typedef enum stmt_type {
@@ -71,14 +71,14 @@ typedef class Item_stmt_assign final : public Item_stmt {
 
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
   virtual ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
 
   virtual ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   Item_stmt_assign() = delete;
@@ -110,7 +110,7 @@ typedef class Item_stmt_eif final : public Item_stmt {
 
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   Item_stmt_eif() = delete;
@@ -175,7 +175,7 @@ typedef class Item_stmt_while final : public Item_stmt {
    */
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   Item_stmt_while() = delete;
@@ -200,7 +200,7 @@ typedef class Item_stmt_while final : public Item_stmt {
 typedef class Item_stmt_break final : public Item_stmt {
  protected:
   virtual void generate_ir_helper(ir::IRContext* const ir_context,
-                                  std::vector<ir::IR>& ir_list) const override;
+                                  ir::ir_list& ir_list) const override;
 
  public:
   Item_stmt_break() = delete;
@@ -224,7 +224,7 @@ typedef class Item_stmt_break final : public Item_stmt {
 typedef class Item_stmt_continue final : public Item_stmt {
  protected:
   virtual void generate_ir_helper(ir::IRContext* const ir_context,
-                                  std::vector<ir::IR>& ir_list) const override;
+                                  ir::ir_list& ir_list) const override;
 
  public:
   Item_stmt_continue() = delete;
@@ -251,7 +251,7 @@ typedef class Item_stmt_return final : public Item_stmt {
 
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   Item_stmt_return() = delete;
@@ -278,7 +278,7 @@ typedef class Item_stmt_void final : public Item_stmt {
  protected:
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   Item_stmt_void() = delete;
@@ -301,7 +301,7 @@ typedef class Item_stmt_eval final : public Item_stmt {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return expression->eval_runtime(ir_context, ir_list);
   }
 
@@ -312,7 +312,7 @@ typedef class Item_stmt_eval final : public Item_stmt {
 
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     eval_runtime(ir_context, ir_list);
   }
 
@@ -339,14 +339,14 @@ typedef class Item_stmt_postfix final : public Item_stmt {
 
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   virtual Item_stmt::stmt_type get_stmt_type(void) const override {
@@ -374,7 +374,7 @@ typedef class Item_block final : public Item_stmt {
 
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   Item_block() = delete;

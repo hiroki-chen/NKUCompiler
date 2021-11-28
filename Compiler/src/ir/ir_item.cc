@@ -26,14 +26,14 @@
 compiler::NodeStack stack;
 
 void compiler::Item_root::generate_ir_helper(
-    ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list) const {
+    ir::IRContext* const ir_context, ir::ir_list& ir_list) const {
   for (Item* const child : children) {
     child->generate_ir(ir_context, ir_list);
   }
 }
 
 void compiler::Item::generate_ir(ir::IRContext* const ir_context,
-                                 std::vector<ir::IR>& ir_list) const {
+                                 ir::ir_list& ir_list) const {
   stack.emplace_back(const_cast<Item*>(this));
   try {
     generate_ir_helper(ir_context, ir_list);
@@ -47,7 +47,7 @@ void compiler::Item::generate_ir(ir::IRContext* const ir_context,
 }
 
 void compiler::Item::generate_ir_helper(ir::IRContext* const ir_context,
-                                        std::vector<ir::IR>& ir_list) const {
+                                        ir::ir_list& ir_list) const {
   throw compiler::unsupported_operation(
       "Cannot generate IR for an abstract class!");
 }

@@ -201,9 +201,9 @@ VarDef: VarDefNormal
       | VarDefArray
       ;
 
-VarDefNormal: Ident ASSIGN Exp             { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, false); }
+VarDefNormal: Ident ASSIGN LOrExp             { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, false); }
             | Ident                        { $$ = new compiler::Item_decl_var(yyget_lineno(), $1); }
-            | POINTER ASSIGN Exp           { $$ = new compiler::Item_decl_pointer_init(yyget_lineno(), $1, $3, false); }
+            | POINTER ASSIGN LOrExp           { $$ = new compiler::Item_decl_pointer_init(yyget_lineno(), $1, $3, false); }
             | POINTER                      { $$ = new compiler::Item_decl_pointer(yyget_lineno(), $1); }
             ;
 

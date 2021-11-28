@@ -18,14 +18,58 @@
 #include <common/utils.hh>
 #include <frontend/nodes/item_func.hh>
 
+static void check_return_type(compiler::ir::IRContext* const ir_context,
+                              compiler::ir::ir_list& ir_list,
+                              const compiler::basic_type& return_type) {
+  // Check return type.
+  // No return type? Add it manually.
+  if (ir_list.back().get_op_type() != compiler::ir::op_type::RET) {
+    compiler::ir::Operand* return_value = nullptr;
+
+    if (return_type != compiler::basic_type::VOID_TYPE) {
+      return_value = new compiler::ir::Operand(
+          compiler::to_ir_type(return_type), "", "0", false, false);
+    }
+
+    ir_list.emplace_back(compiler::ir::op_type::RET, return_value);
+  } else {
+    // Check if return type matches the definition.
+    // Get the return statement first.
+    const compiler::ir::IR return_ir = ir_list.back();
+    const compiler::ir::Operand* const return_value = return_ir.get_dst();
+
+    // VOID != INT...
+    if (return_type == compiler::basic_type::VOID_TYPE &&
+        return_value != nullptr) {
+      throw compiler::unsupported_operation(
+          "Error: Return type does not match the definition!");
+    }
+    // INT != VOID
+    if (return_type != compiler::basic_type::VOID_TYPE &&
+        return_value == nullptr) {
+      throw compiler::unsupported_operation(
+          "Error: Return type does not match the definition!");
+    }
+  }
+}
+
 void compiler::Item_func_def::generate_ir_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   try {
-    ir_context->get_symbol_table()->add_symbol(
-        identifier->get_name(),
-        new compiler::Symbol(identifier->get_name(),
-                             compiler::symbol_type::FUNC_TYPE));
+    // Reset available id.
+    ir_context->get_symbol_table()->set_available_id(0ul);
+
+    // Set symbol
+    compiler::Symbol* const func_symbol = new compiler::Symbol(
+        identifier->get_name(), compiler::symbol_type::FUNC_TYPE);
+    // Set return type and parameter counts.
+    func_symbol->set_var_type(compiler::to_ir_type(return_type));
+    // Set argument number.
+    func_symbol->set_arg_count(parameter->get_arguments().size());
+
+    ir_context->get_symbol_table()->add_symbol(identifier->get_name(),
+                                               func_symbol);
     ir_context->enter_scope();
     const size_t argument_number = parameter->get_arg_number();
 
@@ -64,20 +108,9 @@ void compiler::Item_func_def::generate_ir_helper(
 
     // Generate the IR for the function body.
     func_body->generate_ir(ir_context, ir_list);
-    // No return type? Add it manually.
-    if (ir_list.back().get_op_type() != ir::op_type::RET) {
-      ir::Operand* return_value = nullptr;
 
-      if (return_type == compiler::basic_type::VOID_TYPE) {
-        return_value =
-            new ir::Operand(ir::var_type::NONE, "", "", false, false);
-      } else {
-        return_value = new ir::Operand(compiler::to_ir_type(return_type), "",
-                                       "0", false, false);
-      }
-
-      ir_list.emplace_back(ir::op_type::RET, return_value);
-    }
+    // Check return type.
+    check_return_type(ir_context, ir_list, return_type);
 
     ir_list.emplace_back(ir::op_type::END_FUNC);
     ir_context->leave_scope();
@@ -90,20 +123,33 @@ void compiler::Item_func_def::generate_ir_helper(
 
 compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   // Check if the function name is valid.
+  compiler::Symbol* func_symbol = nullptr;
   try {
-    ir_context->get_symbol_table()->find_symbol(identifier->get_name());
+    func_symbol =
+        ir_context->get_symbol_table()->find_symbol(identifier->get_name());
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
               << termcolor::reset << std::endl;
     exit(1);
   }
 
+  // Check argument count.
+  const size_t arg_count = arguments->get_arguments().size();
+  if (arg_count != func_symbol->get_arg_count()) {
+    throw compiler::unsupported_operation("Error: The argument number is not correct!");
+  }
+
   std::vector<ir::Operand*> operands;
+  // Set to void if the return type is a void.
+  const ir::var_type return_type = func_symbol->get_var_type();
+  
   ir::Operand* const dst = new ir::Operand(
+      return_type,
       ir::local_sign +
-      std::to_string(ir_context->get_symbol_table()->get_available_id()));
+          std::to_string(ir_context->get_symbol_table()->get_available_id()),
+      "", false, false);
 
   const std::vector<compiler::Item_expr*> args = arguments->get_arguments();
   for (uint32_t i = 0; i < args.size(); i++) {

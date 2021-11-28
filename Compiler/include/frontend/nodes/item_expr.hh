@@ -30,14 +30,14 @@ typedef class Item_expr : public Item {
  protected:
   virtual ir::BranchIR eval_cond_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const;
+      compiler::ir::ir_list& ir_list) const;
 
   virtual ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const;
 
   virtual ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const;
+      compiler::ir::ir_list& ir_list) const;
 
  public:
   typedef enum expr_type {
@@ -74,7 +74,7 @@ typedef class Item_expr : public Item {
    */
   virtual compiler::ir::BranchIR eval_cond(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const;
+      compiler::ir::ir_list& ir_list) const;
 
   /**
    * @brief This function is called when optimization level is set. We calculate
@@ -97,7 +97,7 @@ typedef class Item_expr : public Item {
    */
   virtual compiler::ir::Operand* eval_runtime(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const;
+      compiler::ir::ir_list& ir_list) const;
 
   virtual ~Item_expr() override = default;
 } Item_expr;
@@ -113,7 +113,7 @@ typedef class Item_expr_cond final : public Item_expr {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<ir::IR>& ir_list) const override;
+      ir::ir_list& ir_list) const override;
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
@@ -139,7 +139,7 @@ typedef class Item_expr_comma final : public Item_expr {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
@@ -182,11 +182,11 @@ typedef class Item_expr_binary final : public Item_expr {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
   virtual compiler::ir::BranchIR eval_cond_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   virtual Item_expr::expr_type get_expr_type(void) const override {
@@ -217,7 +217,7 @@ typedef class Item_expr_unary final : public Item_expr {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   virtual Item_expr::expr_type get_expr_type(void) const override {

@@ -18,18 +18,53 @@
 #include <common/termcolor.hh>
 #include <frontend/nodes/item_expr.hh>
 
-// TODO: Type check unary / binary expressions.
+static bool type_check(const compiler::ir::Operand* const operand) {
+  using namespace compiler;
+
+  // Get the variable type of the two operands.
+  const ir::var_type var_type = operand->get_type();
+
+  // Case 1: Function call returns void.
+  if (var_type == ir::var_type::NONE) {
+    return false;
+  }
+
+  return true;
+}
+
+// There could multiple situations:
+// 1. numeric + numeric;
+// 2. numeric + pointer;
+// 3. pointer + pointer;
+// 4. Array cannot be added to any other types, unless it is access through
+// indexing.
+// 5. void function!
+static bool type_check(const compiler::ir::Operand* const lhs,
+                       const compiler::ir::Operand* const rhs) {
+  using namespace compiler;
+
+  // Get the variable type of the two operands.
+  const ir::var_type left_type = lhs->get_type();
+  const ir::var_type right_type = rhs->get_type();
+
+  // Case 1: Function call returns void.
+  if ((left_type == ir::var_type::NONE && lhs->get_is_var() == false) ||
+      (right_type == ir::var_type::NONE && rhs->get_is_var() == false)) {
+    return false;
+  }
+
+  return true;
+}
 
 extern uint32_t opt_level;
 extern compiler::NodeStack stack;
 
 compiler::ir::BranchIR compiler::Item_expr::eval_cond_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   compiler::ir::BranchIR branch_ir;
-  ir_list.emplace_back(
-      compiler::ir::op_type::CMP, eval_runtime(ir_context, ir_list),
-      OPERAND_VALUE("0"));
+  ir_list.emplace_back(compiler::ir::op_type::CMP,
+                       eval_runtime(ir_context, ir_list), OPERAND_VALUE("0"));
 
   // Set jne and jeq.
   branch_ir.first = compiler::ir::op_type::JNE;
@@ -41,7 +76,7 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond_helper(
 // be thrown.
 compiler::ir::Operand* compiler::Item_expr::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   throw compiler::unsupported_operation(
       "Cannot evaluate this expression at runtime!");
 }
@@ -54,7 +89,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime_helper(
 
 compiler::ir::BranchIR compiler::Item_expr::eval_cond(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   stack.push_back(
       static_cast<compiler::Item*>(const_cast<compiler::Item_expr*>(this)));
   try {
@@ -71,8 +106,7 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond(
 }
 
 compiler::ir::Operand* compiler::Item_expr_cond::eval_runtime_helper(
-    compiler::ir::IRContext* const ir_context,
-    std::vector<ir::IR>& ir_list) const {
+    compiler::ir::IRContext* const ir_context, ir::ir_list& ir_list) const {
   return expr->eval_runtime(ir_context, ir_list);
 }
 
@@ -83,7 +117,7 @@ compiler::ir::Operand* compiler::Item_expr_cond::eval_runtime_helper(
 
 compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   stack.push_back(
       static_cast<compiler::Item*>(const_cast<compiler::Item_expr*>(this)));
   try {
@@ -117,7 +151,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
 
 compiler::ir::BranchIR compiler::Item_expr_binary::eval_cond_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   if (opt_level > 0) {
     ir::Operand* const result = eval_runtime(ir_context);
 
@@ -138,6 +172,12 @@ compiler::ir::BranchIR compiler::Item_expr_binary::eval_cond_helper(
       left = lhs->eval_runtime(ir_context, ir_list);
       right = rhs->eval_runtime(ir_context, ir_list);
     }
+  }
+
+  // Check if the operands are compatible.
+  if (type_check(left, right) == false) {
+    throw compiler::unsupported_operation(
+        "Error: Binary operands are incompatible!");
   }
 
   switch (type) {
@@ -176,20 +216,12 @@ compiler::ir::BranchIR compiler::Item_expr_binary::eval_cond_helper(
 
 compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
-  // TODO:: Type check + new node creation.
-  // There could multiple situations:
-  // 1. numeric + numeric;
-  // 2. numeric + pointer;
-  // 3. pointer + pointer;
-  // 4. Array cannot be added to any other types, unless it is access through
-  // indexing.
   compiler::ir::Operand* const expr_left = lhs->eval_runtime(ir_context);
   compiler::ir::Operand* const expr_right = rhs->eval_runtime(ir_context);
-  // Check type compatibility.
-
-  if (!compiler::ir::check_valid_binary(expr_left, expr_right)) {
+  // Check if the operands are compatible.
+  if (type_check(expr_left, expr_right) == false) {
     throw compiler::unsupported_operation(
-        "Error: Operand types are incompatible!");
+        "Error: Binary operands are incompatible!");
   }
 
   switch (type) {
@@ -216,7 +248,7 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
 
 compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   // First check the optimization level. If so, we calculate the expression at
   // runtime.
   if (opt_level > 0) {
@@ -243,6 +275,12 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
         left = lhs->eval_runtime(ir_context, ir_list);
         right = rhs->eval_runtime(ir_context, ir_list);
       }
+    }
+
+    // Do type check.
+    if (type_check(left, right) == false) {
+      throw compiler::unsupported_operation(
+          "Error: Binary operands are incompatible!");
     }
 
     switch (type) {
@@ -329,7 +367,7 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
 
 compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   if (opt_level > 0) {
     return eval_runtime_helper(ir_context);
   } else {
@@ -376,7 +414,7 @@ compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
 
 compiler::ir::Operand* compiler::Item_expr_comma::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   compiler::ir::Operand* ans = nullptr;
   for (compiler::Item_expr* const expr : expressions) {
     ans = expr->eval_runtime(ir_context, ir_list);

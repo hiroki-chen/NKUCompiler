@@ -36,7 +36,7 @@ typedef class Item {
   const uint32_t lineno;
 
   virtual void generate_ir_helper(ir::IRContext* const ir_context,
-                                  std::vector<ir::IR>& ir_list) const;
+                                  ir::ir_list& ir_list) const;
 
  public:
   /**
@@ -63,7 +63,7 @@ typedef class Item {
   virtual Item::type get_type(void) const = 0;
 
   virtual void generate_ir(ir::IRContext* const ir_context,
-                           std::vector<ir::IR>& ir_list) const;
+                           ir::ir_list& ir_list) const;
 
   virtual uint32_t get_lineno(void) const { return lineno; }
 
@@ -86,7 +86,7 @@ typedef class Item_root : public Item {
   std::vector<Item*> children;
 
   virtual void generate_ir_helper(ir::IRContext* const ir_context,
-                                  std::vector<ir::IR>& ir_list) const override;
+                                  ir::ir_list& ir_list) const override;
 
  public:
   virtual Item::type get_type(void) const override {

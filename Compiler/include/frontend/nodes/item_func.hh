@@ -42,7 +42,7 @@ typedef class Item_func_call_list final : public Item_expr {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -68,7 +68,7 @@ typedef class Item_func_call final : public Item_expr {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   virtual Item_expr::expr_type get_expr_type(void) const override {
@@ -105,7 +105,7 @@ typedef class Item_func_def_arg final : public Item_expr {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -161,7 +161,7 @@ typedef class Item_func_def final : public Item {
 
   virtual void generate_ir_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   virtual Item::type get_type(void) const override {
