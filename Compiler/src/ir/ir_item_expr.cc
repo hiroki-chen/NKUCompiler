@@ -276,12 +276,12 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
         left = lhs->eval_runtime(ir_context, ir_list);
         right = rhs->eval_runtime(ir_context, ir_list);
       }
-    }
 
-    // Do type check.
-    if (type_check(left, right) == false) {
-      throw compiler::unsupported_operation(
-          "Error: Binary operands are incompatible!");
+      // Do type check.
+      if (type_check(left, right) == false) {
+        throw compiler::unsupported_operation(
+            "Error: Binary operands are incompatible!");
+      }
     }
 
     switch (type) {
