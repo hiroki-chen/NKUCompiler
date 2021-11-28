@@ -31,7 +31,8 @@ compiler::ir::Operand::Operand()
       is_ptr(false) {}
 
 // Construct an operand type from name.
-compiler::ir::Operand::Operand(const std::string& identifier, const var_type& var_type)
+compiler::ir::Operand::Operand(const std::string& identifier,
+                               const var_type& var_type)
     : type(var_type),
       identifier(identifier),
       value(""),
@@ -137,7 +138,12 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   };
   walk_ir(lambda_walk_ir);
 
-  FORMAT(output, label + "\n", 0);
+  if (type == ir::op_type::LBL) {
+    FORMAT(output, label + ":\n", 0);
+  } else {
+    FORMAT(output, label + "\n", 0);
+  }
+
   if (type == ir::op_type::END_FUNC || type == ir::op_type::GLOBAL_END) {
     output << std::endl;
   }

@@ -74,6 +74,17 @@ static void analyze_control_flow(
     const compiler::ir::cfg& blocks,
     const std::map<std::string, uint32_t>& name_to_id,
     std::map<std::string, std::vector<compiler::ir::Edge>>& edges) {
+  // Since there are some implicit jump between blocks, we need analyze
+  // them as well.
+  // E.g.:
+  //      Foo:
+  //       ADD %t1, %t0, i32 1
+  //      Bar:
+  //       Sub %t1, %t2, i32 9
+  // To this end, * We need to look back and check whether there is an
+  // unconditional jump after the previous block.*
+  // I.e.:
+  //        Foo -> Bar  type: 1 (Unconditional)
   for (auto item : blocks) {
     const std::string name = item.first;
 
@@ -93,6 +104,14 @@ static void analyze_control_flow(
           // Add an edge to the edge map.
           edges[name].emplace_back(id, jump_dst_id, type);
         }
+      }
+
+      // Check if there is any JUMP instruction at the end of the basic block.
+      // If not, construct an explicit edge.
+      // HACK: Assume the next block's id is always cur_id + 1...
+      if (basic_block.second.back().get_op_type() !=
+          compiler::ir::op_type::JMP) {
+        edges[name].emplace_back(id, id + 1, true);
       }
     }
   }
@@ -115,7 +134,6 @@ static void prune_cfg(
 
   for (const auto item : edges) {
     for (const compiler::ir::Edge& edge : item.second) {
-
     }
   }
 }

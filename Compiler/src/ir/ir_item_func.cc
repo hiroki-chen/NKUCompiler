@@ -80,8 +80,11 @@ void compiler::Item_func_def::generate_ir_helper(
             ir::var_type_to_string(compiler::to_ir_type(return_type))),
         new ir::Operand(compiler::concatenate("argnum: ", argument_number)),
         ir::global_sign + identifier->get_name());
-    ir_list.emplace_back(ir::op_type::LBL,
-                         ".LB_" + identifier->get_name() + "_BEGIN");
+
+    // Generate an explicit label for CFG generation.
+    ir_list.emplace_back(
+        ir::op_type::LBL,
+        compiler::concatenate(".LB", ir::global_sign, identifier->get_name()));
 
     // Get all the arguments.
     const std::vector<Item_func_def_arg*> arguments =
@@ -105,11 +108,6 @@ void compiler::Item_func_def::generate_ir_helper(
             new compiler::Symbol(var, compiler::symbol_type::VAR_TYPE));
       }
     }
-
-    // Generate an explicit label for CFG generation.
-    ir_list.emplace_back(
-        ir::op_type::LBL,
-        compiler::concatenate(".LB", ir::global_sign, identifier->get_name()));
 
     // Generate the IR for the function body.
     func_body->generate_ir(ir_context, ir_list);
