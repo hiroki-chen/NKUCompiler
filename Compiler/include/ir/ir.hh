@@ -234,7 +234,7 @@ typedef class Operand {
 
   Operand(const Operand& operand);
 
-  Operand(const std::string& name);
+  Operand(const std::string& name, const var_type& var_type = NONE);
 
   Operand(const var_type& type, const std::string& identifier,
           const std::string& value, const bool& is_var = true,

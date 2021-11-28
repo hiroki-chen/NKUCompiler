@@ -31,8 +31,8 @@ compiler::ir::Operand::Operand()
       is_ptr(false) {}
 
 // Construct an operand type from name.
-compiler::ir::Operand::Operand(const std::string& identifier)
-    : type(compiler::ir::var_type::i32),
+compiler::ir::Operand::Operand(const std::string& identifier, const var_type& var_type)
+    : type(var_type),
       identifier(identifier),
       value(""),
       is_var(true),
