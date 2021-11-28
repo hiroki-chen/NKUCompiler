@@ -35,11 +35,16 @@
 #endif
 
 namespace compiler::ir {
+// Forward declaration.
+class IR;
+
 static const std::string global_sign = "@";
 
 static const std::string local_sign = "%t";
 
 static const std::string arg_sign = "$arg";
+
+using ir_list = std::vector<IR>;
 /**
  * @brief Look-up table for enum type compiler::ir::op_type.
  *
@@ -376,11 +381,11 @@ typedef class IR final {
    */
   void emit_ir(std::ostream& out = std::cout, const bool& verbose = false);
 
-  void set_phi_block(const std::vector<ir::IR>::iterator& phi_block) {
+  void set_phi_block(const ir::ir_list::iterator& phi_block) {
     phi = phi_block;
   }
 
-  std::vector<ir::IR>::iterator get_phi_block(void) const { return phi; }
+  ir::ir_list::iterator get_phi_block(void) const { return phi; }
 
   op_type get_op_type(void) const { return type; }
 
@@ -442,5 +447,14 @@ std::string var_type_to_string(const var_type& type);
  * @return uint32_t
  */
 uint32_t to_byte_length(const var_type& type);
+
+/**
+ * @brief Check if the operation type is jump-related.
+ *
+ * @param op_type
+ * @return true
+ * @return false
+ */
+bool is_jump(const op_type& op_type);
 }  // namespace compiler::ir
 #endif

@@ -281,3 +281,18 @@ compiler::ir::Operand::Operand(const compiler::ir::Operand& operand)
       is_ptr(operand.is_ptr),
       is_var(operand.is_var),
       value(operand.value) {}
+
+bool compiler::ir::is_jump(const op_type& op_type) {
+  switch (op_type) {
+    case op_type::JEQ:
+    case op_type::JL:
+    case op_type::JG:
+    case op_type::JGE:
+    case op_type::JLE:
+    case op_type::JNE:
+    case op_type::JMP:
+      return true;
+    default:
+      return false;
+  }
+}

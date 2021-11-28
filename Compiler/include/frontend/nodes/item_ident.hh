@@ -36,7 +36,7 @@ typedef class Item_ident : public Item_expr {
 
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override;
+      compiler::ir::ir_list& ir_list) const override;
 
  public:
   typedef enum ident_type { VARIABLE, POINTER, ARRAY, FUNCTION } ident_type;
@@ -69,13 +69,13 @@ typedef class Item_ident_array final : public Item_ident {
 
   virtual ir::Operand* eval_runtime_helper(
       ir::IRContext* const ir_context,
-      std::vector<ir::IR>& ir_list) const override;
+      ir::ir_list& ir_list) const override;
 
   virtual ir::Operand* eval_runtime_helper(
       ir::IRContext* ir_context) const override;
 
   virtual ir::Operand* array_access_helper(
-      compiler::ir::IRContext* const ir_context, std::vector<ir::IR>& ir_list,
+      compiler::ir::IRContext* const ir_context, ir::ir_list& ir_list,
       const ir::op_type& op_type,
       compiler::ir::Operand* expression = nullptr) const;
 
@@ -88,12 +88,12 @@ typedef class Item_ident_array final : public Item_ident {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
   virtual void assign_to_array(ir::IRContext* ir_context,
-                               std::vector<ir::IR>& ir_list,
+                               ir::ir_list& ir_list,
                                compiler::ir::Operand* const expression) const;
 
   Item_ident_array() = delete;
@@ -147,7 +147,7 @@ typedef class Item_ident_pointer final : public Item_ident {
 
   virtual void generate_ir(
       compiler::ir::IRContext* const ir_context,
-      std::vector<compiler::ir::IR>& ir_list) const override {
+      compiler::ir::ir_list& ir_list) const override {
     return;
   }
 

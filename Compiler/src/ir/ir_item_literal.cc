@@ -19,7 +19,7 @@
 
 void compiler::Item_literal::generate_ir(
     compiler::ir::IRContext* const ir_context,
-    std::vector<compiler::ir::IR>& ir_list) const {
+    compiler::ir::ir_list& ir_list) const {
   // Literal does not have IR.
   throw compiler::unsupported_operation("Cannot generate IR for literal type!");
 }

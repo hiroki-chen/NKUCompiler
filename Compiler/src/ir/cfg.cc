@@ -17,7 +17,7 @@
 #include <ir/cfg.hh>
 
 compiler::ir::CFG_builder::CFG_builder(
-    const std::vector<compiler::ir::IR>& ir_list) {
+    const compiler::ir::ir_list& ir_list) {
   uint32_t i = 0, id = 0;
   do {
     if (ir_list[i].get_op_type() == FUNC ||
