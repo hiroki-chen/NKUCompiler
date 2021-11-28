@@ -229,8 +229,8 @@ ConstDef: ConstDefNormal
         | ConstDefArray
         ;
 
-ConstDefNormal: Ident ASSIGN Exp           { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, true); }
-              | POINTER ASSIGN Exp         { $$ = new compiler::Item_decl_pointer_init(yyget_lineno(), $1, $3, true); }
+ConstDefNormal: Ident ASSIGN LOrExp           { $$ = new compiler::Item_decl_var_init(yyget_lineno(), $1, $3, true); }
+              | POINTER ASSIGN LOrExp         { $$ = new compiler::Item_decl_pointer_init(yyget_lineno(), $1, $3, true); }
               ;
 
 ConstDefArray: ArrayID ASSIGN ArrayInitVal      { $$ = new compiler::Item_decl_array_init(yyget_lineno(), $1, $3, true); }

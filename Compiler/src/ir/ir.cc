@@ -32,7 +32,7 @@ compiler::ir::Operand::Operand()
 
 // Construct an operand type from name.
 compiler::ir::Operand::Operand(const std::string& identifier)
-    : type(compiler::ir::var_type::NONE),
+    : type(compiler::ir::var_type::i32),
       identifier(identifier),
       value(""),
       is_var(true),
