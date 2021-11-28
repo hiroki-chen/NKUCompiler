@@ -81,7 +81,7 @@ void compiler::Item_func_def::generate_ir_helper(
         new ir::Operand(compiler::concatenate("argnum: ", argument_number)),
         ir::global_sign + identifier->get_name());
     ir_list.emplace_back(ir::op_type::LBL,
-                         ".LB_" + identifier->get_name() + "_BEGIN:");
+                         ".LB_" + identifier->get_name() + "_BEGIN");
 
     // Get all the arguments.
     const std::vector<Item_func_def_arg*> arguments =
@@ -105,6 +105,11 @@ void compiler::Item_func_def::generate_ir_helper(
             new compiler::Symbol(var, compiler::symbol_type::VAR_TYPE));
       }
     }
+
+    // Generate an explicit label for CFG generation.
+    ir_list.emplace_back(
+        ir::op_type::LBL,
+        compiler::concatenate(".LB", ir::global_sign, identifier->get_name()));
 
     // Generate the IR for the function body.
     func_body->generate_ir(ir_context, ir_list);
@@ -138,13 +143,14 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
   // Check argument count.
   const size_t arg_count = arguments->get_arguments().size();
   if (arg_count != func_symbol->get_arg_count()) {
-    throw compiler::unsupported_operation("Error: The argument number is not correct!");
+    throw compiler::unsupported_operation(
+        "Error: The argument number is not correct!");
   }
 
   std::vector<ir::Operand*> operands;
   // Set to void if the return type is a void.
   const ir::var_type return_type = func_symbol->get_var_type();
-  
+
   ir::Operand* const dst = new ir::Operand(
       return_type,
       ir::local_sign +

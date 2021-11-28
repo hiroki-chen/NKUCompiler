@@ -85,7 +85,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     // Generate a label for if branch.
     ir_list.emplace_back(ir::op_type::LBL,
-                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF:"));
+                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF"));
 
     compiler::ir::ir_list ir_if, ir_else;
     compiler::ir::IRContext ir_context_if(*ir_context);
@@ -107,7 +107,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     compiler::ir::ir_list ir_list_end;
     ir_list_end.emplace_back(
         compiler::ir::op_type::LBL,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF:"));
+        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
@@ -160,12 +160,12 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     }
     ir_list.emplace_back(
         ir::op_type::LBL,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE:"));
+        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE"));
 
     compiler::insert_with_move(ir_list, ir_else);
     ir_list.emplace_back(
         ir::op_type::JMP,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF:"));
+        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
     compiler::insert_with_move(ir_list, ir_list_end);
 
     ir_context->leave_scope();
@@ -314,7 +314,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     compiler::ir::ir_list ir_list_condition;
     ir_list_condition.emplace_back(
         compiler::ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
 
     compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context_condition, ir_list_condition);
@@ -350,7 +350,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Insert label.
     ir_list_do_real.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY");
     statement->generate_ir(ir_context_do_real, ir_list_do_real);
     // Insert phi blocks.
     for (auto& phi_block : ir_context_do_real->continue_phi_block.top()) {
@@ -383,7 +383,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_list_condition.clear();
     ir_list_condition.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
     // Handle phi move.
     auto symbol_table =
         ir_context_backup->get_symbol_table()->get_symbol_table();
@@ -426,7 +426,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
         ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
     ir_list_continue.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
 
     //============================= END PRE-PREPARATION
     //============================= BEGIN REAL WHILE STATEMENT
@@ -462,7 +462,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir::ir_list ir_list_end;
     ir_list_end.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
     ir_context_do_real->continue_symbol.push({});
     ir_context_do_real->break_symbol.push({});
     ir_context_do_real->continue_phi_block.push({});
@@ -473,7 +473,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
 
     ir_list_do_real.emplace_back(
         ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY:");
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY");
     statement->generate_ir(ir_context_do_real, ir_list_do_real);
     compiler::handle_phi_move(ir_context_do_real, true);
     compiler::handle_phi_move(ir_context_do_real, false);
@@ -489,7 +489,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_list_continue.emplace_back(
         ir::op_type::LBL,
         new ir::Operand(".LB" + ir_context->get_top_loop_label() +
-                        "_LOOP_CONTINUE:"));
+                        "_LOOP_CONTINUE"));
 
     for (uint32_t i = 0; i < symbol_table.size(); i++) {
       for (auto symbol_prev : *symbol_table[i]->get_block()) {
