@@ -14,7 +14,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <common/compile_excepts.hh>
 #include <ir/cfg.hh>
+
+extern uint32_t opt_level;
 
 static void construct_mapping(const compiler::ir::ir_list& ir_list,
                               std::map<std::string, uint32_t>& name_to_id,
@@ -95,6 +98,28 @@ static void analyze_control_flow(
   }
 }
 
+// Do pruning.
+static void prune_cfg(
+    const std::map<std::string, std::vector<compiler::ir::Edge>>& edges,
+    compiler::ir::cfg& blocks) {
+// Iterate over the block and remove dead basic blocks.
+// If any, merge continuos blocks.
+#ifdef COMPILER_DEBUG
+  std::cout << "Pruning and merging basic blocks!" << std::endl;
+#endif
+
+  // No optimization. We do nothing here.
+  if (opt_level == 0) {
+    return;
+  }
+
+  for (const auto item : edges) {
+    for (const compiler::ir::Edge& edge : item.second) {
+
+    }
+  }
+}
+
 compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
   // The CFG builder constructs the control flow graph as follows:
   // 1. It first scans the ir list and constructs a mapping from the label name
@@ -109,6 +134,7 @@ compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
   // Analyze the control flow.
   analyze_control_flow(blocks, name_to_id, edges);
   // Prune useless control flows or merge continuous basic blocks.
+  prune_cfg(edges, blocks);
 }
 
 #ifdef COMPILER_DEBUG
@@ -123,4 +149,6 @@ void compiler::ir::CFG_builder::print_cfg(void) const {
 }
 #endif
 
-void compiler::ir::CFG_builder::prettier_ir(std::ostream& out) { ; }
+void compiler::ir::CFG_builder::prettier_ir(std::ostream& out) {
+  throw compiler::unimplemented_error("Error: Not yet supported!");
+}
