@@ -154,9 +154,9 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     // Append to the ir_list.
     compiler::insert_with_move(ir_list, ir_if);
     if (ir_else.empty() == false) {
-      ir_list.emplace_back(ir::op_type::JMP,
-                           new ir::Operand(compiler::concatenate(
-                               ".LBB", scope_uuid_cur, "_END_IF")));
+      ir_list.emplace_back(
+          ir::op_type::JMP,
+          compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
     }
     ir_list.emplace_back(
         ir::op_type::LBL,
