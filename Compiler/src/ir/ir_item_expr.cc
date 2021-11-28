@@ -16,6 +16,7 @@
  */
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
+#include <common/utils.hh>
 #include <frontend/nodes/item_expr.hh>
 
 static bool type_check(const compiler::ir::Operand* const operand) {
@@ -284,7 +285,6 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     }
 
     switch (type) {
-      // TODO: Implement implicit type convertion.
       case ADD_TYPE: {
         ir_list.emplace_back(ir::op_type::IADD, dst, left, right);
         break;
@@ -354,6 +354,56 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
       }
       case BITXOR_TYPE: {
         ir_list.emplace_back(ir::op_type::BXOR, dst, left, right);
+        break;
+      }
+      case LAND_TYPE: {
+        // Generate a label.
+        const std::string label = compiler::concatenate(
+            ".LB", ir_context->get_symbol_table()->get_available_id(),
+            "_COND_END");
+        std::vector<ir::IR> ir_list_end;
+        ir_list_end.emplace_back(ir::op_type::LBL, label);
+
+        // Generate if-else block :)
+        const auto lhs_cond = lhs->eval_cond(ir_context, ir_list);
+        ir_list.emplace_back(ir::op_type::PHI, dst, OPERAND_VALUE("0"));
+        ir_list.back().set_phi_block(ir_list_end.begin());
+        // Short circuit
+        ir_list.emplace_back(lhs_cond.second, label);
+
+        // Handle right side.
+        ir::Operand* const rhs_expr = rhs->eval_runtime(ir_context, ir_list);
+        ir_list.emplace_back(ir::op_type::PHI, dst, rhs_expr);
+        ir_list.back().set_phi_block(ir_list_end.begin());
+
+        // Append to the ir_list.
+        compiler::insert_with_move(ir_list, ir_list_end);
+
+        break;
+      }
+      case LOR_TYPE: {
+        // Generate a label.
+        const std::string label = compiler::concatenate(
+            ".LB", ir_context->get_symbol_table()->get_available_id(),
+            "_COND_END");
+        std::vector<ir::IR> ir_list_end;
+        ir_list_end.emplace_back(ir::op_type::LBL, label);
+
+        // Generate if-else block :)
+        const auto lhs_cond = lhs->eval_cond(ir_context, ir_list);
+        ir_list.emplace_back(ir::op_type::PHI, dst, OPERAND_VALUE("1"));
+        ir_list.back().set_phi_block(ir_list_end.begin());
+        // Short circuit
+        ir_list.emplace_back(lhs_cond.first, label);
+
+        // Handle right side.
+        ir::Operand* const rhs_expr = rhs->eval_runtime(ir_context, ir_list);
+        ir_list.emplace_back(ir::op_type::PHI, dst, rhs_expr);
+        ir_list.back().set_phi_block(ir_list_end.begin());
+
+        // Append to the ir_list.
+        compiler::insert_with_move(ir_list, ir_list_end);
+
         break;
       }
 
