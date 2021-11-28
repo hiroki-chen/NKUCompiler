@@ -30,10 +30,10 @@ void compiler::Item_decl_var::generate_ir_helper(
 
   // Check current scope.
   if (ir_context->is_global_context() == true) {
-    const std::string name_symbol = ir::global_sign;
-    ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
+    const std::string name_symbol = ir::global_sign + name;
+    // ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL, default_value);
-    ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
+    // ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
 
     // Create a new symbol for the symbol table.
     compiler::Symbol* const symbol = new compiler::Symbol(

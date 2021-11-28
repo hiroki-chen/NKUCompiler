@@ -1125,8 +1125,13 @@ do								\
       YYERROR;							\
     }								\
 while (YYID (0))
+<<<<<<< Updated upstream
 
 
+=======
+
+
+>>>>>>> Stashed changes
 #define YYTERROR	1
 #define YYERRCODE	256
 
@@ -1277,10 +1282,17 @@ yy_symbol_print (yyoutput, yytype, yyvaluep, yylocationp)
 
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
+<<<<<<< Updated upstream
 static void
 yy_stack_print (yytype_int16 *bottom, yytype_int16 *top)
 #else
 static void
+=======
+static void
+yy_stack_print (yytype_int16 *bottom, yytype_int16 *top)
+#else
+static void
+>>>>>>> Stashed changes
 yy_stack_print (bottom, top)
     yytype_int16 *bottom;
     yytype_int16 *top;
@@ -1305,10 +1317,17 @@ do {								\
 
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
+<<<<<<< Updated upstream
 static void
 yy_reduce_print (YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule)
 #else
 static void
+=======
+static void
+yy_reduce_print (YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule)
+#else
+static void
+>>>>>>> Stashed changes
 yy_reduce_print (yyvsp, yylsp, yyrule)
     YYSTYPE *yyvsp;
     YYLTYPE *yylsp;
@@ -1612,6 +1631,23 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
 
 
 /* Prevent warnings from -Wmissing-prototypes.  */
+<<<<<<< Updated upstream
+=======
+
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int yyparse (void *YYPARSE_PARAM);
+#else
+int yyparse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
+int yyparse (void);
+#else
+int yyparse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
+>>>>>>> Stashed changes
 
 #ifdef YYPARSE_PARAM
 #if defined __STDC__ || defined __cplusplus
@@ -1628,7 +1664,10 @@ int yyparse ();
 #endif /* ! YYPARSE_PARAM */
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 /* The look-ahead symbol.  */
 int yychar;
 
@@ -2251,6 +2290,7 @@ yyreduce:
     break;
 
   case 72:
+<<<<<<< Updated upstream
 #line 292 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
     { 
                                                                  (yyval.item_literal_array_init) = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); 
@@ -2271,60 +2311,127 @@ yyreduce:
 
   case 74:
 #line 305 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 293 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    { 
+                    (yyval.item_literal_array_init) = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false);
+                    for (auto expr : (yyvsp[(1) - (1)].item_expr_comma)->get_expressions()) {
+                        (yyval.item_literal_array_init)->add_value(new compiler::Item_literal_array_init(yyget_lineno(), expr, true));
+                    }
+                    delete (yyvsp[(1) - (1)].item_expr_comma);                                                
+                  ;}
+    break;
+
+  case 73:
+#line 301 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    {
+                    (yyval.item_literal_array_init) = new compiler::Item_literal_array_init(yyget_lineno(), nullptr, false); 
+                    for (auto expr : (yyvsp[(1) - (3)].item_expr_comma)->get_expressions()) {
+                        (yyval.item_literal_array_init)->add_value(new compiler::Item_literal_array_init(yyget_lineno(), expr, true));
+                    }
+                    (yyval.item_literal_array_init)->add_value((yyvsp[(3) - (3)].item_literal_array_init));
+                    delete (yyvsp[(1) - (3)].item_expr_comma);
+                  ;}
+    break;
+
+  case 74:
+#line 311 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_block) = new compiler::Item_block(yyget_lineno()); ;}
     break;
 
   case 75:
+<<<<<<< Updated upstream
 #line 306 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 312 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_block) = (yyvsp[(2) - (3)].item_block); ;}
     break;
 
   case 76:
+<<<<<<< Updated upstream
 #line 309 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 315 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_block) = new compiler::Item_block(yyget_lineno()); (yyval.item_block)->add_item((yyvsp[(1) - (1)].item_stmt)); ;}
     break;
 
   case 77:
+<<<<<<< Updated upstream
 #line 310 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 316 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_block) = (yyvsp[(1) - (2)].item_block); (yyval.item_block)->add_item((yyvsp[(2) - (2)].item_stmt)); ;}
     break;
 
   case 78:
+<<<<<<< Updated upstream
 #line 313 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 319 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = (yyvsp[(1) - (1)].item_stmt); ;}
     break;
 
   case 79:
+<<<<<<< Updated upstream
 #line 314 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 320 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = (yyvsp[(1) - (1)].item_stmt); ;}
     break;
 
   case 80:
+<<<<<<< Updated upstream
 #line 317 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 323 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = (yyvsp[(1) - (1)].item_stmt); ;}
     break;
 
   case 89:
+<<<<<<< Updated upstream
 #line 328 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 334 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_break(yyget_lineno()); ;}
     break;
 
   case 90:
+<<<<<<< Updated upstream
 #line 331 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 337 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_continue(yyget_lineno()); ;}
     break;
 
   case 91:
+<<<<<<< Updated upstream
 #line 334 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 340 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_return(yyget_lineno(), nullptr); ;}
     break;
 
   case 92:
+<<<<<<< Updated upstream
 #line 335 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 341 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_return(yyget_lineno(), (yyvsp[(2) - (3)].item_expr)); ;}
     break;
 
   case 93:
+<<<<<<< Updated upstream
 #line 338 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_eif(yyget_lineno(), (yyvsp[(3) - (5)].item_expr), (yyvsp[(5) - (5)].item_stmt), new compiler::Item_stmt_void(yyget_lineno())); ;}
     break;
@@ -2336,15 +2443,38 @@ yyreduce:
 
   case 95:
 #line 342 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 345 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    {
+    compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), (yyvsp[(3) - (5)].item_expr));
+    (yyval.item_stmt) = new compiler::Item_stmt_eif(yyget_lineno(), condition, (yyvsp[(5) - (5)].item_stmt), new compiler::Item_stmt_void(yyget_lineno())); 
+;}
+    break;
+
+  case 94:
+#line 350 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    { compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), (yyvsp[(3) - (7)].item_expr));
+  (yyval.item_stmt) = new compiler::Item_stmt_eif(yyget_lineno(), condition, (yyvsp[(5) - (7)].item_stmt), (yyvsp[(7) - (7)].item_stmt)); 
+;}
+    break;
+
+  case 95:
+#line 355 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_eval(yyget_lineno(), (yyvsp[(1) - (2)].item_expr)); ;}
     break;
 
   case 96:
+<<<<<<< Updated upstream
 #line 343 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 356 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_void(yyget_lineno()); ;}
     break;
 
   case 97:
+<<<<<<< Updated upstream
 #line 346 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
     { (yyval.item_stmt) = new compiler::Item_stmt_while(yyget_lineno(), (yyvsp[(3) - (5)].item_expr), (yyvsp[(5) - (5)].item_stmt)); ;}
     break;
@@ -2360,58 +2490,120 @@ yyreduce:
              compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
              block->add_item((yyvsp[(3) - (6)].item_stmt));
              compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(), static_cast<compiler::Item_expr*>((yyvsp[(4) - (6)].item_stmt)), (yyvsp[(6) - (6)].item_block));
+=======
+#line 360 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    {
+    compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), (yyvsp[(3) - (5)].item_expr));
+    (yyval.item_stmt) = new compiler::Item_stmt_while(yyget_lineno(), condition, (yyvsp[(5) - (5)].item_stmt)); 
+;}
+    break;
+
+  case 98:
+#line 365 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    {   compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), (yyvsp[(5) - (7)].item_expr));
+    (yyval.item_stmt) = new compiler::Item_stmt_while(yyget_lineno(), condition, (yyvsp[(2) - (7)].item_block), true); 
+;}
+    break;
+
+  case 99:
+#line 371 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    {
+             compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
+             block->add_item((yyvsp[(3) - (6)].item_stmt));
+             compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>((yyvsp[(4) - (6)].item_stmt)));
+             compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(), condition, (yyvsp[(6) - (6)].item_block));
+>>>>>>> Stashed changes
              block->add_item(while_stmt);
              (yyval.item_stmt) = block;
          ;}
     break;
 
   case 100:
+<<<<<<< Updated upstream
 #line 359 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 380 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     {
            compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
            block->add_item((yyvsp[(3) - (7)].item_stmt));
            (yyvsp[(7) - (7)].item_block)->add_item(static_cast<compiler::Item_stmt*>((yyvsp[(5) - (7)].item_expr)));
+<<<<<<< Updated upstream
            compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>((yyvsp[(4) - (7)].item_stmt)), (yyvsp[(7) - (7)].item_block));
+=======
+           compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>((yyvsp[(4) - (7)].item_stmt)));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),condition, (yyvsp[(7) - (7)].item_block));
+>>>>>>> Stashed changes
            block->add_item(while_stmt);
            (yyval.item_stmt) = block;
        ;}
     break;
 
   case 101:
+<<<<<<< Updated upstream
 #line 368 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
     {
            compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
            block->add_item((yyvsp[(3) - (6)].item_stmt_decl));
            compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>((yyvsp[(4) - (6)].item_stmt)), (yyvsp[(6) - (6)].item_block));
+=======
+#line 390 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+    {
+           compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
+           block->add_item((yyvsp[(3) - (6)].item_stmt_decl));
+            compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>((yyvsp[(4) - (6)].item_stmt)));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(), condition, (yyvsp[(6) - (6)].item_block));
+>>>>>>> Stashed changes
            block->add_item(while_stmt);
            (yyval.item_stmt) = block;
        ;}
     break;
 
   case 102:
+<<<<<<< Updated upstream
 #line 376 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 399 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     {
            compiler::Item_block* const block = new compiler::Item_block(yyget_lineno());
            block->add_item((yyvsp[(3) - (7)].item_stmt_decl));
            (yyvsp[(7) - (7)].item_block)->add_item(static_cast<compiler::Item_stmt*>((yyvsp[(5) - (7)].item_expr)));
+<<<<<<< Updated upstream
            compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),static_cast<compiler::Item_expr*>((yyvsp[(4) - (7)].item_stmt)), (yyvsp[(7) - (7)].item_block));
+=======
+        compiler::Item_expr_cond* const condition = new compiler::Item_expr_cond(yyget_lineno(), static_cast<compiler::Item_expr*>((yyvsp[(4) - (7)].item_stmt)));
+           compiler::Item_stmt_while* const while_stmt = new compiler::Item_stmt_while(yyget_lineno(),condition, (yyvsp[(7) - (7)].item_block));
+>>>>>>> Stashed changes
            block->add_item(while_stmt);
            (yyval.item_stmt) = block;
        ;}
     break;
 
   case 103:
+<<<<<<< Updated upstream
 #line 386 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 410 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = (yyvsp[(1) - (2)].item_stmt); ;}
     break;
 
   case 104:
+<<<<<<< Updated upstream
 #line 389 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 413 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_assign(yyget_lineno(), (yyvsp[(1) - (3)].item_ident), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 105:
+<<<<<<< Updated upstream
 #line 390 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 414 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     {
                                             compiler::Item_expr_binary* const expr = 
                                                 new compiler::Item_expr_binary(
@@ -2424,7 +2616,11 @@ yyreduce:
     break;
 
   case 106:
+<<<<<<< Updated upstream
 #line 399 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 423 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     {
                                             compiler::Item_expr_binary* const expr = 
                                                 new compiler::Item_expr_binary(
@@ -2437,207 +2633,371 @@ yyreduce:
     break;
 
   case 107:
+<<<<<<< Updated upstream
 #line 408 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 432 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_postfix(yyget_lineno(), (yyvsp[(2) - (2)].item_ident), compiler::binary_type::ADD_TYPE); ;}
     break;
 
   case 108:
+<<<<<<< Updated upstream
 #line 409 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 433 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_stmt) = new compiler::Item_stmt_postfix(yyget_lineno(), (yyvsp[(2) - (2)].item_ident), compiler::binary_type::SUB_TYPE); ;}
     break;
 
   case 110:
+<<<<<<< Updated upstream
 #line 413 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 437 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_ident) = (yyvsp[(1) - (1)].item_ident); ;}
     break;
 
   case 111:
+<<<<<<< Updated upstream
 #line 416 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 440 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_ident_array) = new compiler::Item_ident_array(yyget_lineno(), (yyvsp[(1) - (4)].item_ident)->get_name()); (yyval.item_ident_array)->add_shape((yyvsp[(3) - (4)].item_expr));;}
     break;
 
   case 112:
+<<<<<<< Updated upstream
 #line 417 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 441 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_ident_array) = (yyvsp[(1) - (4)].item_ident_array); (yyval.item_ident_array)->add_shape((yyvsp[(3) - (4)].item_expr)); ;}
     break;
 
   case 114:
+<<<<<<< Updated upstream
 #line 421 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 445 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = (yyvsp[(1) - (1)].item_expr); ;}
     break;
 
   case 115:
+<<<<<<< Updated upstream
 #line 424 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 448 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr_comma) = new compiler::Item_expr_comma(yyget_lineno()); (yyval.item_expr_comma)->add_expression((yyvsp[(1) - (3)].item_expr)); (yyval.item_expr_comma)->add_expression((yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 116:
+<<<<<<< Updated upstream
 #line 425 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 449 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr_comma) = (yyvsp[(1) - (3)].item_expr_comma); (yyval.item_expr_comma)->add_expression((yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 117:
+<<<<<<< Updated upstream
 #line 428 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 452 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 118:
+<<<<<<< Updated upstream
 #line 429 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 453 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 120:
+<<<<<<< Updated upstream
 #line 433 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 457 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LAND_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 122:
+<<<<<<< Updated upstream
 #line 437 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 461 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::EQ_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 123:
+<<<<<<< Updated upstream
 #line 438 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 462 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::NEQ_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 125:
+<<<<<<< Updated upstream
 #line 442 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 466 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::GE_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 126:
+<<<<<<< Updated upstream
 #line 443 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 467 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::LE_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 127:
+<<<<<<< Updated upstream
 #line 444 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 468 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::G_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 128:
+<<<<<<< Updated upstream
 #line 445 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 469 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::L_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 131:
+<<<<<<< Updated upstream
 #line 453 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 477 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 132:
+<<<<<<< Updated upstream
 #line 454 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 478 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 134:
+<<<<<<< Updated upstream
 #line 458 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 482 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITXOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 135:
+<<<<<<< Updated upstream
 #line 459 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 483 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITXOR_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 137:
+<<<<<<< Updated upstream
 #line 463 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 487 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 138:
+<<<<<<< Updated upstream
 #line 464 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 488 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::BITAND_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 140:
+<<<<<<< Updated upstream
 #line 468 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 492 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::ADD_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 141:
+<<<<<<< Updated upstream
 #line 469 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 493 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::SUB_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 143:
+<<<<<<< Updated upstream
 #line 473 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 497 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::MUL_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 144:
+<<<<<<< Updated upstream
 #line 474 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 498 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::DIV_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 145:
+<<<<<<< Updated upstream
 #line 475 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 499 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_binary(yyget_lineno(), compiler::binary_type::MOD_TYPE, (yyvsp[(1) - (3)].item_expr), (yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 147:
+<<<<<<< Updated upstream
 #line 479 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 503 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UADD_TYPE, (yyvsp[(2) - (2)].item_expr)); ;}
     break;
 
   case 148:
+<<<<<<< Updated upstream
 #line 480 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 504 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UMINUS_TYPE, (yyvsp[(2) - (2)].item_expr)); ;}
     break;
 
   case 149:
+<<<<<<< Updated upstream
 #line 481 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 505 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::LNOT_TYPE, (yyvsp[(2) - (2)].item_expr)); ;}
     break;
 
   case 150:
+<<<<<<< Updated upstream
 #line 482 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 506 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::BITNEG_TYPE, (yyvsp[(2) - (2)].item_expr)); ;}
     break;
 
   case 151:
+<<<<<<< Updated upstream
 #line 483 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 507 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UREF_TYPE, (yyvsp[(2) - (2)].item_expr)); ;}
     break;
 
   case 152:
+<<<<<<< Updated upstream
 #line 484 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 508 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_expr_unary(yyget_lineno(), compiler::unary_type::UDEREFER_TYPE, (yyvsp[(2) - (2)].item_expr)); ;}
     break;
 
   case 155:
+<<<<<<< Updated upstream
 #line 489 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 513 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = (yyvsp[(2) - (3)].item_expr); ;}
     break;
 
   case 156:
+<<<<<<< Updated upstream
 #line 490 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 514 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = (yyvsp[(1) - (1)].item_expr); ;}
     break;
 
   case 157:
+<<<<<<< Updated upstream
 #line 491 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 515 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = (yyvsp[(1) - (1)].item_expr); ;}
     break;
 
   case 158:
+<<<<<<< Updated upstream
 #line 492 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 516 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = (yyvsp[(1) - (1)].item_expr); ;}
     break;
 
   case 159:
+<<<<<<< Updated upstream
 #line 495 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 519 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), (yyvsp[(1) - (1)].raw_number)); ;}
     break;
 
   case 160:
+<<<<<<< Updated upstream
 #line 496 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 520 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), (yyvsp[(1) - (1)].raw_number)); ;}
     break;
 
   case 161:
+<<<<<<< Updated upstream
 #line 498 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 522 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { 
           if (((yyvsp[(1) - (1)].raw_string))->find(".") != std::string::npos) {
             (yyval.item_literal) = new compiler::Item_literal_real(yyget_lineno(), std::stod(*(yyvsp[(1) - (1)].raw_string))); 
@@ -2649,48 +3009,84 @@ yyreduce:
     break;
 
   case 162:
+<<<<<<< Updated upstream
 #line 506 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 530 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_literal) = new compiler::Item_literal_char(yyget_lineno(), (yyvsp[(1) - (1)].raw_char)); ;}
     break;
 
   case 163:
+<<<<<<< Updated upstream
 #line 507 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 531 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_literal) = new compiler::Item_literal_string(yyget_lineno(), *(yyvsp[(1) - (1)].raw_string)); ;}
     break;
 
   case 164:
+<<<<<<< Updated upstream
 #line 508 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 532 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), 1); ;}
     break;
 
   case 165:
+<<<<<<< Updated upstream
 #line 509 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 533 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_literal) = new compiler::Item_literal_int(yyget_lineno(), 0); ;}
     break;
 
   case 166:
+<<<<<<< Updated upstream
 #line 512 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 536 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_func_call(yyget_lineno(), (yyvsp[(1) - (3)].item_ident), new compiler::Item_func_call_list(yyget_lineno())); ;}
     break;
 
   case 167:
+<<<<<<< Updated upstream
 #line 513 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 537 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_expr) = new compiler::Item_func_call(yyget_lineno(), (yyvsp[(1) - (4)].item_ident), (yyvsp[(3) - (4)].item_func_call_list)); ;}
     break;
 
   case 168:
+<<<<<<< Updated upstream
 #line 516 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 540 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_func_call_list) = (yyvsp[(1) - (3)].item_func_call_list); (yyvsp[(1) - (3)].item_func_call_list)->add_arg((yyvsp[(3) - (3)].item_expr)); ;}
     break;
 
   case 169:
+<<<<<<< Updated upstream
 #line 517 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 541 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
     { (yyval.item_func_call_list) = new compiler::Item_func_call_list(yyget_lineno()); (yyval.item_func_call_list)->add_arg((yyvsp[(1) - (1)].item_expr)); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
+<<<<<<< Updated upstream
 #line 2694 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.cc"
+=======
+#line 2712 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.cc"
+>>>>>>> Stashed changes
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2910,5 +3306,9 @@ yyreturn:
 }
 
 
+<<<<<<< Updated upstream
 #line 519 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+=======
+#line 543 "/Users/xujiawei/Program/编译原理/compiler/Compiler/src/frontend/parser/parser.ypp"
+>>>>>>> Stashed changes
 
