@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <sys/time.h>
+extern "C" {
 /* Input & output functions */
 int getint() {
   int t;
@@ -65,4 +66,5 @@ void _sysy_stoptime(int lineno) {
   _sysy_h[_sysy_idx] += _sysy_m[_sysy_idx] / 60;
   _sysy_m[_sysy_idx] %= 60;
   _sysy_idx++;
+}
 }

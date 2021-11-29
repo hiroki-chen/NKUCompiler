@@ -59,6 +59,10 @@ typedef class Symbol {
          const std::vector<ir::Operand*>& shape = {},
          const ir::var_type& var_type = ir::var_type::i32);
 
+  Symbol(const std::string& name, const symbol_type& type,
+         const uint32_t& arg_count,
+         const ir::var_type& var_type);  // For functions.
+
   Symbol(const Symbol& symbol);
 
   virtual void set_value(const std::string& value) { this->value = value; }

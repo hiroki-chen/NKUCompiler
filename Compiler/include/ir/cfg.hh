@@ -63,6 +63,11 @@ typedef struct Edge {
  */
 typedef class CFG_builder {
  private:
+  /**
+   * @brief The CFG should be a SPARSE graph where each node has at most two
+   *        successors and two predecessors.
+   *
+   */
   std::map<std::string, std::vector<Edge>> edges;
 
   std::map<uint32_t, cfg_block> look_up_table;

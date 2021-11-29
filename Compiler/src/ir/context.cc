@@ -20,18 +20,24 @@
 // Defines symbols for library functions.
 static const std::vector<std::pair<std::string, compiler::Symbol*>>
     sysy_functions = {
-        {"getint", new compiler::Symbol(
-                       "getint", compiler::symbol_type::FUNC_TYPE, false)},
-        {"getch", new compiler::Symbol(
-                      "getch", compiler::symbol_type::FUNC_TYPE, false)},
-        {"getarray", new compiler::Symbol(
-                         "getarray", compiler::symbol_type::FUNC_TYPE, false)},
-        {"putint", new compiler::Symbol(
-                       "putint", compiler::symbol_type::FUNC_TYPE, false)},
-        {"putch", new compiler::Symbol(
-                      "putch", compiler::symbol_type::FUNC_TYPE, false)},
-        {"putarray", new compiler::Symbol(
-                         "putarray", compiler::symbol_type::FUNC_TYPE, false)},
+        {"getint",
+         new compiler::Symbol("getint", compiler::symbol_type::FUNC_TYPE, 0,
+                              compiler::ir::var_type::i32)},
+        {"getch",
+         new compiler::Symbol("getch", compiler::symbol_type::FUNC_TYPE, 0,
+                              compiler::ir::var_type::i8)},
+        {"getarray",
+         new compiler::Symbol("getarray", compiler::symbol_type::FUNC_TYPE, 0,
+                              compiler::ir::var_type::i32)},
+        {"putint",
+         new compiler::Symbol("putint", compiler::symbol_type::FUNC_TYPE, 1,
+                              compiler::ir::var_type::NONE)},
+        {"putch",
+         new compiler::Symbol("putch", compiler::symbol_type::FUNC_TYPE, 1,
+                              compiler::ir::var_type::NONE)},
+        {"putarray",
+         new compiler::Symbol("putarray", compiler::symbol_type::FUNC_TYPE, 1,
+                              compiler::ir::var_type::NONE)},
 };
 
 compiler::ir::IRContext::IRContext() {
