@@ -108,7 +108,8 @@ static void analyze_control_flow(
 
       // Check if there is any JUMP instruction at the end of the basic block.
       // If not, construct an explicit edge.
-      // HACK: Assume the next block's id is always cur_id + 1...
+      // HACK: Assume the next block's id is always cur_id + 1... Is that really
+      // so?
       if (basic_block.second.back().get_op_type() !=
           compiler::ir::op_type::JMP) {
         edges[name].emplace_back(id, id + 1, true);
@@ -120,6 +121,7 @@ static void analyze_control_flow(
 // Do pruning.
 static void prune_cfg(
     const std::map<std::string, std::vector<compiler::ir::Edge>>& edges,
+    const std::map<std::string, uint32_t> name_to_id,
     compiler::ir::cfg& blocks) {
 // Iterate over the block and remove dead basic blocks.
 // If any, merge continuos blocks.
@@ -128,13 +130,16 @@ static void prune_cfg(
 #endif
 
   // No optimization. We do nothing here.
-  if (opt_level == 0) {
+  if (false /* Remember to delete me. */ && opt_level == 0) {
     return;
   }
 
-  for (const auto item : edges) {
-    for (const compiler::ir::Edge& edge : item.second) {
-    }
+  // Merge nodes that have only one entry and one exit.
+  for (auto item : name_to_id) {
+    const uint32_t id = item.second;
+    // Search all the blocks that come to this block.
+    // Search all the blocks that are connected to it as its successor.
+    
   }
 }
 
@@ -152,7 +157,7 @@ compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
   // Analyze the control flow.
   analyze_control_flow(blocks, name_to_id, edges);
   // Prune useless control flows or merge continuous basic blocks.
-  prune_cfg(edges, blocks);
+  prune_cfg(edges, name_to_id, blocks);
 }
 
 #ifdef COMPILER_DEBUG

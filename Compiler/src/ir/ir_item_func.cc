@@ -140,6 +140,7 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
 
   // Check argument count.
   const size_t arg_count = arguments->get_arguments().size();
+  std::cout << arg_count << ", " << func_symbol->get_arg_count();
   if (arg_count != func_symbol->get_arg_count()) {
     throw compiler::unsupported_operation(
         "Error: The argument number is not correct!");

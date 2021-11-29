@@ -446,7 +446,7 @@ compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
       }
       case UADD_TYPE: {
         // No need to generate any IR for it.
-        break;
+        return expr->eval_runtime(ir_context, ir_list);
       }
       default: {
         throw compiler::fatal_error("Error: Unknown Unary expression type!");
