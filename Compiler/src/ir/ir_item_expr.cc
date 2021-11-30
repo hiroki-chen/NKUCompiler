@@ -440,12 +440,14 @@ compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
         break;
       }
       case UMINUS_TYPE: {
-        ir_list.emplace_back(ir::op_type::ISUB, dst, OPERAND_VALUE("1"),
+        ir_list.emplace_back(ir::op_type::ISUB, dst, OPERAND_VALUE("0"),
                              expr->eval_runtime(ir_context, ir_list));
         break;
       }
       case UADD_TYPE: {
         // No need to generate any IR for it.
+        // But you still need to return a valid value!
+        // Simply break this switch will cause an error since dst is not defined.
         return expr->eval_runtime(ir_context, ir_list);
       }
       default: {

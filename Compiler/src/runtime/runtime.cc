@@ -70,7 +70,7 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
       cxxopts::value<bool>()->default_value("false"))(
       "o,output", "The output file name.",
       cxxopts::value<std::string>()->default_value("a.out"))(
-      "print-ir", "Print the intermediate representation of the source code",
+      "emit-llvm", "Print the intermediate representation of the source code",
       cxxopts::value<bool>()->default_value("false"))(
       "print-ast", "Print the abstract syntax tree",
       cxxopts::value<bool>()->default_value("false"))(
@@ -84,7 +84,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     : compile_on(result["compile"].as<bool>()),
       debug_on(result["debug"].as<bool>()),
       print_ast(result["print-ast"].as<bool>()),
-      print_ir(result["print-ir"].as<bool>()),
+      print_ir(result["emit-llvm"].as<bool>()),
       opt_level(result["opt-level"].as<int>()),
       generate_assembly(result["assembly"].as<bool>()) {
   ::opt_level = opt_level;
@@ -138,9 +138,6 @@ void compiler::Compiler_runtime::run(void) {
 
         for (auto item : ir_list) {
           item.emit_ir(oss, false);
-#ifdef COMPILER_DEBUG
-          item.emit_ir(std::cerr, false);
-#endif
         }
 
         res = oss.str();
@@ -149,7 +146,7 @@ void compiler::Compiler_runtime::run(void) {
       compiler::ir::CFG_builder* const cfg_builder =
           new compiler::ir::CFG_builder(ir_list);
 #ifdef COMPILER_DEBUG
-      cfg_builder->print_cfg();
+      // cfg_builder->print_cfg();
 #endif
 
       output_file << res;
