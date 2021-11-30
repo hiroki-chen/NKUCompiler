@@ -34,6 +34,11 @@ IFS=$'\n'
 files=($(find ${SOURCE_FILE_PATH} -regex ".*\.sy"))
 unset IFS
 
+# Sort files.
+IFS=$'\n'
+files=($(sort <<<"${files[*]}"))
+unset IFS
+
 # Set replace extension
 ext=".ir"
 find=".sy"
@@ -44,7 +49,7 @@ do
     echo "Reading file ${file}..."
     # Do a pattern substitution.
     output=${file//${find}/${ext}}
-    ./compiler ${file} --print-ir -o ${output}
+    ./compiler ${file} --emit-llvm -o ${output}
 done
 
 
