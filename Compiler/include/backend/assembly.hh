@@ -19,7 +19,7 @@
 
 #include <string>
 
-namespace compiler {
+namespace compiler::reg {
 /**
  * @brief This is a auto-generated ARM-v7 assebmly template for every output
  *        file.

@@ -32,9 +32,11 @@ void compiler::Item_decl_var::generate_ir_helper(
 
   // Check current scope.
   if (ir_context->is_global_context() == true) {
-    const std::string name_symbol = ir::global_sign;
+    const std::string name_symbol =
+        compiler::concatenate(ir::global_sign, name);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
-    ir_list.emplace_back(compiler::ir::op_type::GLOBAL, default_value);
+    ir_list.emplace_back(compiler::ir::op_type::GLOBAL,
+                         new ir::Operand(name_symbol), default_value);
     ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
 
     // Create a new symbol for the symbol table.
@@ -64,10 +66,11 @@ void compiler::Item_decl_var_init::generate_ir_helper(
     std::string name_symbol;
     // Check current scope.
     if (ir_context->is_global_context()) {
+      name_symbol = compiler::concatenate(ir::global_sign, name);
       ir::Operand* const result = expression->eval_runtime(ir_context, ir_list);
-      name_symbol = ir::global_sign;
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_BEGIN, name_symbol);
-      ir_list.emplace_back(compiler::ir::op_type::GLOBAL, result);
+      ir_list.emplace_back(compiler::ir::op_type::GLOBAL,
+                           new ir::Operand(name_symbol), result);
       ir_list.emplace_back(compiler::ir::op_type::GLOBAL_END, name_symbol);
 
       if (is_const) {

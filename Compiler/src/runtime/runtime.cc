@@ -146,7 +146,7 @@ void compiler::Compiler_runtime::run(void) {
       compiler::ir::CFG_builder* const cfg_builder =
           new compiler::ir::CFG_builder(ir_list);
 #ifdef COMPILER_DEBUG
-      // cfg_builder->print_cfg();
+       cfg_builder->print_cfg();
 #endif
 
       output_file << res;
