@@ -58,7 +58,7 @@ void compiler::Item_func_def::generate_ir_helper(
     compiler::ir::ir_list& ir_list) const {
   try {
     // Reset available id.
-    ir_context->get_symbol_table()->set_available_id(0ul);
+    ir_context->get_symbol_table()->set_available_id(1ul);
 
     // Set symbol
     compiler::Symbol* const func_symbol = new compiler::Symbol(

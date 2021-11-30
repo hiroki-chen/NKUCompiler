@@ -262,9 +262,6 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     }
     // Generate IR.
   } else {
-    ir::Operand* const dst = new ir::Operand(
-        ir::local_sign +
-        std::to_string(ir_context->get_symbol_table()->get_available_id()));
     ir::Operand* left = nullptr;
     ir::Operand* right = nullptr;
 
@@ -283,6 +280,11 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
             "Error: Binary operands are incompatible!");
       }
     }
+
+    // Dst should be generated after lhs and rhs are generated.
+    ir::Operand* const dst = new ir::Operand(
+        ir::local_sign +
+        std::to_string(ir_context->get_symbol_table()->get_available_id()));
 
     switch (type) {
       case ADD_TYPE: {
@@ -447,7 +449,8 @@ compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
       case UADD_TYPE: {
         // No need to generate any IR for it.
         // But you still need to return a valid value!
-        // Simply break this switch will cause an error since dst is not defined.
+        // Simply break this switch will cause an error since dst is not
+        // defined.
         return expr->eval_runtime(ir_context, ir_list);
       }
       default: {

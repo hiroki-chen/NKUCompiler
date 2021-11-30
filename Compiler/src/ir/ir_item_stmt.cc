@@ -132,10 +132,10 @@ void compiler::Item_stmt_eif::generate_ir_helper(
           }
 
           if (symbol->get_name()[0] == ir::local_sign[0]) {
-            symbol->set_name(
+            /*symbol->set_name(
                 ir::local_sign +
                 std::to_string(
-                    ir_context->get_symbol_table()->get_available_id()));
+                    ir_context->get_symbol_table()->get_available_id()));*/
           }
 
           // Set phi blocks.
@@ -201,7 +201,7 @@ compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
     const std::string symbol_name =
         ir::local_sign +
         std::to_string(ir_context->get_symbol_table()->get_available_id());
-    symbol->set_name(symbol_name);
+    // symbol->set_name(symbol_name);
     ir_context->get_symbol_table()->assign_const(symbol_name, symbol_const);
 
     return result;
@@ -255,24 +255,26 @@ void compiler::Item_stmt_assign::generate_ir_helper(
           symbol->get_name()[0] != ir::global_sign[0]) {
         if (ir_context->is_loop_context()) {
         } else {
-          symbol->set_name(name);
+          // Emulate LLVM type.
+          // We first move the rhs to a temporary variable and then move it to
+          // the variable. Two variables cannot assign with each other..
+          const std::string name_tmp = compiler::concatenate(
+              ir::local_sign,
+              ir_context->get_symbol_table()->get_available_id());
+          ir::Operand* const operand_tmp = new ir::Operand(name_tmp);
+          ir_list.emplace_back(ir::op_type::MOV, operand_tmp, rhs);
+          ir_list.emplace_back(ir::op_type::MOV,
+                               new ir::Operand(symbol->get_name()),
+                               operand_tmp);
         }
       }
     } else if (rhs->get_identifier().front() == '@') /* Global variable. */ {
-      symbol->set_name(rhs->get_identifier());
+      // symbol->set_name(rhs->get_identifier());
       ir_list.emplace_back(ir::op_type::MOV,
                            new ir::Operand(rhs->get_identifier()));
     } else /* Normal const expression. */ {
-      symbol->set_name(
-          ir::local_sign +
-          std::to_string(ir_context->get_symbol_table()->get_available_id()));
-      ir_list.emplace_back(
-          ir::op_type::MOV,
-          new ir::Operand(
-              ir::local_sign +
-              std::to_string(
-                  ir_context->get_symbol_table()->get_available_id())),
-          rhs);
+      ir_list.emplace_back(ir::op_type::MOV,
+                           new ir::Operand(symbol->get_name()), rhs);
 
       if (opt_level > 0) {
         compiler::Symbol_const* const assign = new compiler::Symbol_const(
