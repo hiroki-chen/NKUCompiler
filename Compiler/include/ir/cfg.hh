@@ -22,40 +22,52 @@
 
 namespace compiler::ir {
 /**
- * @brief Basic block in a control flow graph.
+ * @brief A basic block in the control flow graph.
  *
  */
-using cfg_block = std::vector<IR>;
+typedef class CFG_block {
+ private:
+  const uint32_t id;
 
-/**
- * @brief The CFG itself.
- *
- * A CFG is defined as:
- *    Function -> Blocks = [id, block_body].
- *
- */
-using cfg = std::map<std::string, std::vector<std::pair<uint32_t, cfg_block>>>;
+  // The name is extracted from the label.
+  const std::string name;
 
-/**
- * @brief An edge in the CFG.
- *
- */
-typedef struct Edge {
-  uint32_t from;
+  // Predecessors and successors.
+  std::vector<CFG_block*> preds;
+  std::vector<CFG_block*> succs;
 
-  uint32_t to;
+  ir::ir_list ir_list;
 
-  /**
-   * @brief type == 1 => Conditional jump; type == 0 => Uncondintional jump.
-   *
-   */
-  bool type;
+ public:
+  CFG_block() = delete;
 
-  Edge() = default;
+  CFG_block(const std::string& name, const uint32_t& id);
 
-  Edge(const uint32_t& from, const uint32_t& to, const bool& type)
-      : from(from), to(to), type(type) {}
-} Edge;
+  void add_pred(CFG_block* const block) { preds.emplace_back(block); }
+
+  void add_succ(CFG_block* const block) { succs.emplace_back(block); }
+
+  void add_ir(const ir::IR& ir) { ir_list.emplace_back(ir); }
+
+  void splice(const ir::ir_list& ir_list);
+
+  ir::ir_list* get_ir_list(void) { return &ir_list; }
+
+  uint32_t get_id(void) const { return id; }
+
+  std::string get_name(void) const { return name; }
+
+  std::vector<CFG_block*> get_preds(void) const { return preds; }
+
+  std::vector<CFG_block*> get_succs(void) const { return succs; }
+
+  void remove_pred(CFG_block* const pred);
+
+  void remove_succ(CFG_block* const succ);
+
+  void remove_jump(void);
+
+} CFG_block;
 
 /**
  * @brief A class for building the cfg from raw TAC (Three Address Code).
@@ -66,17 +78,29 @@ typedef class CFG_builder {
   /**
    * @brief The CFG should be a SPARSE graph where each node has at most two
    *        successors and two predecessors.
+   * @note  We maintain as a list since it is more efficient than the matrix.
    *
    */
-  std::map<std::string, std::vector<Edge>> edges;
 
-  std::map<uint32_t, cfg_block> look_up_table;
+  // Each function will contain several basic CFG blocks.
+  std::map<std::string, std::vector<CFG_block*>> functions;
 
-  std::map<std::string, uint32_t> name_to_id;
+  // This is used to construct preds and succs.
+  std::map<std::string, std::map<uint32_t, CFG_block*>> id_to_cfg;
 
-  std::map<uint32_t, std::string> id_to_name;
+  std::map<std::string, std::map<std::string, uint32_t>> name_to_id;
 
-  cfg blocks;
+  CFG_block* global_defs;
+
+  // Functions.
+  void construct_mapping(const std::vector<IR>& ir_list);
+
+  void analyze_control_flow(void);
+
+  void prune_cfg(void);
+
+  void block_epilogue(compiler::ir::CFG_block* const basic_block,
+                      const uint32_t& id, const std::string& name);
 
  public:
   CFG_builder() = delete;
@@ -85,12 +109,8 @@ typedef class CFG_builder {
 
   void prettier_ir(std::ostream& out = std::cerr);
 
-  std::map<std::string, std::vector<Edge>> get_edges(void) const {
-    return edges;
-  }
-
-  std::map<uint32_t, cfg_block> get_look_up_table(void) const {
-    return look_up_table;
+  std::map<std::string, std::vector<CFG_block*>> get_functions(void) const {
+    return functions;
   }
 
 #ifdef COMPILER_DEBUG

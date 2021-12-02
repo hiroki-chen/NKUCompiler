@@ -74,8 +74,8 @@ target_include_directories(utils PRIVATE include)
 file(GLOB_RECURSE COMPILER_SRC RELATIVE ${PROJECT_SOURCE_DIR} 
     "src/frontend/**/*.cc"
     "src/frontend/**/*.c"
-    "src/backend/**/*.cc"
-    "src/backend/**/*.c"
+    "src/backend/*.cc"
+    "src/backend/*.c"
     "src/runtime/*.cc"
     "src/runtime/*.c"
     "src/ir/*.c"

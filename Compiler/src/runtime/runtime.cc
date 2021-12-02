@@ -15,6 +15,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <algorithm>
+#include <backend/allocator.hh>
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
 #include <common/utils.hh>
@@ -117,6 +118,7 @@ void compiler::Compiler_runtime::run(void) {
       if (!output_file.is_open()) {
         const std::string file =
             input_file[i].substr(input_file[i].find_last_of("/"));
+        // Please do not enter --print-ast --emit-llvm -S simultaneously.
         if (print_ast) {
           oss << base_path << "/output/" << file << ".ast";
           output_file.open(oss.str(), std::ios::out);
@@ -125,29 +127,37 @@ void compiler::Compiler_runtime::run(void) {
           oss << base_path << "/output/" << file << ".ir";
           output_file.open(oss.str(), std::ios::out);
         }
+        if (generate_assembly) {
+          oss << base_path << "/output/" << file << ".S";
+          output_file.open(oss.str(), std::ios::out);
+        }
       }
 
+      // Generate the IR.
+      compiler::ir::IRContext* const ir_context = new compiler::ir::IRContext();
+
+      root->generate_ir(ir_context, ir_list);
+
+      // Check what should be printed.
       if (print_ast) {
         res = root->print_result(0, false);
-      }
-      if (print_ir) {
-        compiler::ir::IRContext* const ir_context =
-            new compiler::ir::IRContext();
-
-        root->generate_ir(ir_context, ir_list);
-
-        for (auto item : ir_list) {
-          item.emit_ir(oss, false);
+      } else if (print_ir) {
+        for (auto ir : ir_list) {
+          ir.emit_ir();
         }
-
+        compiler::ir::CFG_builder* const cfg_builder =
+            new compiler::ir::CFG_builder(ir_list);
+        cfg_builder->prettier_ir(oss);
         res = oss.str();
-      }
 
-      compiler::ir::CFG_builder* const cfg_builder =
-          new compiler::ir::CFG_builder(ir_list);
 #ifdef COMPILER_DEBUG
-       cfg_builder->print_cfg();
+        cfg_builder->print_cfg();
 #endif
+
+      } else if (generate_assembly) {
+        // compiler::reg::Allocator* allocator = new
+        // compiler::reg::Allocator(ir_list);
+      }
 
       output_file << res;
       output_file.flush();

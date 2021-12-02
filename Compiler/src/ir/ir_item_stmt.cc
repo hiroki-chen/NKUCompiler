@@ -325,6 +325,9 @@ void compiler::Item_stmt_while::generate_ir_helper(
     compiler::ir::ir_list ir_list_jump;
     ir_list_jump.emplace_back(
         branch_ir.second, compiler::concatenate(".LB", scope_id, ".LOOP_END"));
+    ir_list_jump.emplace_back(
+        ir::op_type::JMP,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY");
 
     // Step 4: Create the do body, and then generate ir from it.
     ir::IRContext* ir_context_do = new ir::IRContext(*ir_context_condition);
@@ -380,7 +383,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir::IRContext* ir_context_continue = new ir::IRContext(*ir_context_do_real);
     ir::ir_list ir_list_continue;
     ir_list_continue.emplace_back(
-        ir::op_type::JMP,
+        ir::op_type::LBL,
         ".LB" + ir_context->get_top_loop_label() + "_LOOP_CONTINUE");
     ir_list_condition.clear();
     ir_list_condition.emplace_back(
@@ -442,6 +445,9 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_list_jump.emplace_back(
         branch_ir.second,
         ".LB" + ir_context->get_top_loop_label() + "_LOOP_END");
+    ir_list_jump.emplace_back(
+        ir::op_type::JMP,
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY");
 
     // Step 3: DO BODY.
     delete ir_context_do;
@@ -490,8 +496,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_context_continue = new ir::IRContext(*ir_context_do_real);
     ir_list_continue.emplace_back(
         ir::op_type::LBL,
-        new ir::Operand(".LB" + ir_context->get_top_loop_label() +
-                        "_LOOP_CONTINUE"));
+        ".LB" + ir_context->get_top_loop_label() + "_LOOP_CONTINUE");
 
     for (uint32_t i = 0; i < symbol_table.size(); i++) {
       for (auto symbol_prev : *symbol_table[i]->get_block()) {

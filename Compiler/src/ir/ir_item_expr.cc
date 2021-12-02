@@ -363,7 +363,7 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
         const std::string label = compiler::concatenate(
             ".LB", ir_context->get_symbol_table()->get_available_id(),
             "_COND_END");
-        std::vector<ir::IR> ir_list_end;
+       ir::ir_list ir_list_end;
         ir_list_end.emplace_back(ir::op_type::LBL, label);
 
         // Generate if-else block :)
@@ -388,7 +388,7 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
         const std::string label = compiler::concatenate(
             ".LB", ir_context->get_symbol_table()->get_available_id(),
             "_COND_END");
-        std::vector<ir::IR> ir_list_end;
+       ir::ir_list ir_list_end;
         ir_list_end.emplace_back(ir::op_type::LBL, label);
 
         // Generate if-else block :)

@@ -14,44 +14,50 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <cassert>
 #include <common/compile_excepts.hh>
+#include <common/utils.hh>
 #include <ir/cfg.hh>
 
-extern uint32_t opt_level;
+static void prune_early_return(compiler::ir::CFG_block* const block) {
+  compiler::ir::ir_list* const ir_list = block->get_ir_list();
+  uint32_t end_pos = 0;
+  while (end_pos < ir_list->size() &&
+         (*ir_list)[end_pos].get_op_type() != compiler::ir::op_type::RET) {
+    end_pos++;
+  }
 
-static void construct_mapping(const compiler::ir::ir_list& ir_list,
-                              std::map<std::string, uint32_t>& name_to_id,
-                              std::map<uint32_t, std::string>& id_to_name,
-                              compiler::ir::cfg& blocks) {
-  // TODO: Need to save global definition.
-  // TODO: Need to stop analyzing the basic block if there is a RET statement.
+  // HACK: Just pop useless IRs out of the vector!
+  const size_t vec_size = ir_list->size();
+  for (size_t i = end_pos + 1; i < vec_size; i++) {
+    ir_list->pop_back();
+  }
+}
+
+void compiler::ir::CFG_builder::construct_mapping(
+    const compiler::ir::ir_list& ir_list) {
   // Create mapping while constructing basic blocks for the CFG.
   // Scan the whole ir_list to construct basic blocks and the id.
-  uint32_t id = 0;
+  uint32_t id = 1;
 
   size_t i = 0;
   while (i < ir_list.size()) {
     if (ir_list[i].get_op_type() == compiler::ir::op_type::GLOBAL_BEGIN) {
       // Handle global definitions.
       uint32_t j = i + 1;
-      compiler::ir::cfg_block global_block;
 
       while (j < ir_list.size() &&
              ir_list[j].get_op_type() != compiler::ir::op_type::GLOBAL_END) {
-        global_block.emplace_back(ir_list[j]);
+        global_defs->add_ir(ir_list[j]);
         j++;
       }
 
       i = j;
-      // Add to the whole blocks.
-      blocks["GLOBAL"].emplace_back(id++, global_block);
+
     } else if (ir_list[i].get_op_type() == compiler::ir::op_type::FUNC) {
       // Build a new CFG for a function.
-      id = 0;
+      id = 1;
       const std::string function_name = std::move(ir_list[i].get_label());
-
-      // Prepare block.
-      std::vector<std::pair<uint32_t, compiler::ir::cfg_block>> block_body;
 
       // Construct block body.
       size_t j = i + 1;
@@ -59,36 +65,37 @@ static void construct_mapping(const compiler::ir::ir_list& ir_list,
              ir_list[j].get_op_type() != compiler::ir::op_type::END_FUNC) {
         // Check if this is a label.
         if (ir_list[j].get_op_type() == compiler::ir::op_type::LBL) {
+          const std::string label = ir_list[j].get_label();
           // Prepare for the basic block.
-          name_to_id[ir_list[j].get_label()] = id;
-          id_to_name[id] = ir_list[j].get_label();
-          compiler::ir::cfg_block basic_block;
+          compiler::ir::CFG_block* const basic_block =
+              new compiler::ir::CFG_block(label, id);
+
+          // Insert into the name_to_cfg map.
+          id_to_cfg[function_name][id] = basic_block;
+          name_to_id[function_name][label] = id;
 
           // Construct basic block.
           size_t k = j + 1;
           while (k < ir_list.size() &&
                  ir_list[k].get_op_type() != compiler::ir::op_type::LBL &&
                  ir_list[k].get_op_type() != compiler::ir::op_type::END_FUNC) {
-            basic_block.emplace_back(ir_list[k]);
+            basic_block->add_ir(ir_list[k]);
             k++;
           }
           // Reset index.
           j = k;
-          block_body.emplace_back(id++, basic_block);
+          functions[function_name].emplace_back(basic_block);
+          id++;
         }
       }
       i = j;
-      blocks[function_name] = std::move(block_body);
     } else {
       i++;
     }
   }
 }
 
-static void analyze_control_flow(
-    const compiler::ir::cfg& blocks,
-    const std::map<std::string, uint32_t>& name_to_id,
-    std::map<std::string, std::vector<compiler::ir::Edge>>& edges) {
+void compiler::ir::CFG_builder::analyze_control_flow(void) {
   // Since there are some implicit jump between blocks, we need analyze
   // them as well.
   // E.g.:
@@ -100,78 +107,131 @@ static void analyze_control_flow(
   // unconditional jump after the previous block.*
   // I.e.:
   //        Foo -> Bar  type: 1 (Unconditional)
-  for (auto item : blocks) {
+  // First we prune the early return statements.
+  for (auto item : functions) {
     // Prune early return statements.
-    for (auto& block : item.second) {
-      uint32_t end_pos = 0;
-      while (end_pos < block.second.size() &&
-             block.second[end_pos].get_op_type() !=
-                 compiler::ir::op_type::RET) {
-        end_pos++;
-      }
-
-      // HACK: Just pop useless IRs out of the vector!
-      const size_t vec_size = block.second.size();
-      for (size_t i = end_pos + 1; i < vec_size; i++) {
-        block.second.pop_back();
-      }
+    for (auto block : item.second) {
+      prune_early_return(block);
     }
   }
 
-  for (auto item : blocks) {
+  for (auto& item : functions) {
     const std::string name = item.first;
     // Analyze the control flow by jump-related instructions.
     const auto blocks = item.second;
     for (auto basic_block : blocks) {
-      const uint32_t id = basic_block.first;
+      const uint32_t id = basic_block->get_id();
       // Iterate through the instruction lists.
-      for (auto ir : basic_block.second) {
+      for (auto ir : *(basic_block->get_ir_list())) {
         // Check if there is any jump-related instructions.
         if (compiler::ir::is_jump(ir.get_op_type())) {
           // Extract edge information for building the edge.
           const std::string jump_dst = std::move(ir.get_label());
-          const uint32_t jump_dst_id = name_to_id.at(jump_dst);
+          const uint32_t jump_dst_id = name_to_id.at(name).at(jump_dst);
+          compiler::ir::CFG_block* const dst_block =
+              id_to_cfg.at(name).at(jump_dst_id);
           const bool type = ir.get_op_type() == compiler::ir::JMP;
 
-          // Add an edge to the edge map.
-          edges[name].emplace_back(id, jump_dst_id, type);
+          // Add the successor to the vector.
+          basic_block->add_succ(dst_block);
+          dst_block->add_pred(basic_block);
         }
       }
 
-      // Check if there is any JUMP instruction at the end of the basic block.
-      // If not, construct an explicit edge.
-      // HACK: Assume the next block's id is always cur_id + 1... Is that really
-      // so?
-      if (basic_block.second.empty() ||
-          basic_block.second.back().get_op_type() !=
-              compiler::ir::op_type::JMP) {
-        edges[name].emplace_back(id, id + 1, true);
-      }
+      block_epilogue(basic_block, id, name);
     }
   }
 }
 
+void compiler::ir::CFG_builder::block_epilogue(
+    compiler::ir::CFG_block* const basic_block, const uint32_t& id,
+    const std::string& name) {
+  // Check if there is any JUMP instruction at the end of the basic block.
+  // If not, construct an explicit edge.
+
+  // HACK: Assume the next block's id is always cur_id + 1... Is that really
+  // so? NO.
+  compiler::ir::IR& last_ir = basic_block->get_ir_list()->back();
+
+  if (basic_block->get_ir_list()->empty() ||
+      last_ir.get_op_type() != compiler::ir::op_type::JMP &&
+          last_ir.get_op_type() != compiler::ir::op_type::RET) {
+    const uint32_t next_block_id = id + 1;
+    compiler::ir::CFG_block* const next_block = id_to_cfg[name][next_block_id];
+    basic_block->add_succ(next_block);
+    next_block->add_pred(basic_block);
+  }
+}
+
 // Do pruning.
-static void prune_cfg(
-    const std::map<std::string, std::vector<compiler::ir::Edge>>& edges,
-    const std::map<std::string, uint32_t> name_to_id,
-    compiler::ir::cfg& blocks) {
+void compiler::ir::CFG_builder::prune_cfg(void) {
 // Iterate over the block and remove dead basic blocks.
 // If any, merge continuos blocks.
 #ifdef COMPILER_DEBUG
   std::cout << "Pruning and merging basic blocks!" << std::endl;
 #endif
 
-  // No optimization. We do nothing here.
-  if (false /* Remember to delete me. */ && opt_level == 0) {
-    return;
-  }
+  for (auto& block : functions) {
+    auto& cfg_blocks = block.second;
+    // We handle blocks by function.
+    // 1. Merge nodes that have only one entry and one exit.
+    // 2. Remove all blocks that have no predecessors.
+    // Do this until the block does not change.
+    bool change = false;
+    do {
+      for (auto iter = cfg_blocks.begin(); iter != cfg_blocks.end();) {
+        change = false;
+        // Entry point should not be touched!
+        if ((*iter)->get_id() == 1) {
+          iter++;
+          continue;
+        }
 
-  // Merge nodes that have only one entry and one exit.
-  for (auto item : name_to_id) {
-    const uint32_t id = item.second;
-    // Search all the blocks that come to this block.
-    // Search all the blocks that are connected to it as its successor.
+        if ((*iter)->get_preds().empty()) {
+          // Recursively remove all the sucessors.
+          for (auto succ : (*iter)->get_succs()) {
+            succ->remove_pred(*iter);
+          }
+          cfg_blocks.erase(iter);
+          continue;
+        }
+        // A block that has exactly one predecessor may be merged to its
+        // predecessor if the predecessor has only one sucessor.
+        // NOTE:
+        //      DO NOT MERGE BLOCKS A and B.
+        //      A -> B
+        //        |
+        //        -> C
+        // FIXME: Have some bugs.
+        if ((*iter)->get_preds().size() == 1) {
+          compiler::ir::CFG_block* const pred = (*iter)->get_preds().front();
+          // Merging them is OK.
+          // The predecessor will inherit (?) its sucessor's sucessors.
+          if (pred->get_succs().size() == 1 &&
+              pred->get_succs().front()->get_id() == (*iter)->get_id()) {
+#ifdef COMPILER_DEBUG
+            std::cout << "Merging " << pred->get_name() << " and "
+                      << (*iter)->get_name() << std::endl;
+#endif      // Remove predecessor's JUMP instruction.
+            pred->remove_jump();
+            // Merge.
+            pred->splice(*(*iter)->get_ir_list());
+            // Remove it from the predecessor's successor list.
+            pred->remove_succ(*iter);
+            // Add successors.
+            for (auto succ : (*iter)->get_succs()) {
+              pred->add_succ(succ);
+            }
+            // Remove the current block.
+            cfg_blocks.erase(iter);
+            change = true;
+            continue;
+          }
+        }
+
+        iter++;
+      }
+    } while (change == true);
   }
 }
 
@@ -183,27 +243,83 @@ compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
   //    according to the jumo-related instructions.
   // 3. It analyzes the control flow and tries to prune needless / dead blocks;
   //    that is, blocks that have no entry point.
-
+  global_defs = new compiler::ir::CFG_block("GLOBAL", 0);
   // Construct blocks and their mappings.
-  construct_mapping(ir_list, name_to_id, id_to_name, blocks);
+  construct_mapping(ir_list);
   // Analyze the control flow.
-  analyze_control_flow(blocks, name_to_id, edges);
+  analyze_control_flow();
   // Prune useless control flows or merge continuous basic blocks.
-  prune_cfg(edges, name_to_id, blocks);
+  prune_cfg();
+}
+
+void compiler::ir::CFG_block::splice(const ir::ir_list& ir_list) {
+  compiler::insert_with_move(this->ir_list, ir_list);
 }
 
 #ifdef COMPILER_DEBUG
 void compiler::ir::CFG_builder::print_cfg(void) const {
-  for (auto item : edges) {
+  for (auto item : functions) {
     std::cout << item.first << ": " << std::endl;
-    for (auto edge : item.second) {
-      std::cout << edge.from << " -> " << edge.to << " type: " << edge.type
-                << std::endl;
+    for (auto block : item.second) {
+      std::cout << "------------" << std::endl;
+      std::cout << block->get_id() << "'s preds: ";
+      for (auto preds : block->get_preds()) {
+        std::cout << preds->get_id() << " ";
+      }
+      std::cout << std::endl;
+      std::cout << block->get_id() << "'s succs: ";
+      for (auto succs : block->get_succs()) {
+        std::cout << succs->get_id() << " ";
+      }
+      std::cout << std::endl;
     }
   }
 }
 #endif
 
 void compiler::ir::CFG_builder::prettier_ir(std::ostream& out) {
-  throw compiler::unimplemented_error("Error: Not yet supported!");
+  for (auto item : functions) {
+    out << item.first << ": " << std::endl;
+    for (auto block : item.second) {
+      out << block->get_name() << ": " << std::endl;
+      for (auto ir : *(block->get_ir_list())) {
+        ir.emit_ir(out);
+      }
+    }
+  }
+}
+
+compiler::ir::CFG_block::CFG_block(const std::string& name, const uint32_t& id)
+    : name(name), id(id) {}
+
+void compiler::ir::CFG_block::remove_pred(compiler::ir::CFG_block* const pred) {
+  // Find the element.
+  auto iter = std::find_if(preds.begin(), preds.end(),
+                           [=](compiler::ir::CFG_block* const block) -> bool {
+                             return block->get_id() == pred->get_id();
+                           });
+
+  assert(iter != preds.end() &&
+         "You are accessing a non-existing predecessor!");
+  // Remove it.
+  preds.erase(iter);
+}
+
+void compiler::ir::CFG_block::remove_succ(compiler::ir::CFG_block* const succ) {
+  // Find the element.
+  auto iter = std::find_if(succs.begin(), succs.end(),
+                           [=](compiler::ir::CFG_block* const block) -> bool {
+                             return block->get_id() == succ->get_id();
+                           });
+
+  assert(iter != succs.end() && "You are accessing a non-existing successor!");
+  // Remove it.
+  succs.erase(iter);
+}
+
+void compiler::ir::CFG_block::remove_jump(void) {
+  if (!ir_list.empty() &&
+      ir_list.back().get_op_type() == compiler::ir::op_type::JMP) {
+    ir_list.pop_back();
+  }
 }

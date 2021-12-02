@@ -18,6 +18,8 @@
 #define REGISTER_POOL_HH
 
 #include <backend/assembly.hh>
+#include <iostream>
+#include <ir/cfg.hh>
 #include <unordered_map>
 
 // For ARM-v7 32-bit backend.
@@ -31,6 +33,9 @@
  *
  */
 namespace compiler::reg {
+// TODO: Add a class for LiveRange or LiveInternal which defines the "DEF-USE"
+// CHAIN.
+// TODO: Perform analysis over the CFG for each function.
 /**
  * @brief This class defines pool for active registers.
  *
@@ -44,12 +49,29 @@ typedef class Allocator {
   std::unordered_map<std::string, bool> register_free_map;
 
   /**
-   * @brief Records the number of free registers.
+   * @brief A hash that stores the the mapping of virtual registers.
+   *
+   */
+  std::unordered_map<std::string, std::string> virtual_to_physical;
+
+  /**
+   * @brief Records the number of free registers. If there is no free registers
+   * anymore, we should spill virtual registers onto the stack.
    *
    */
   uint32_t free_registers;
 
+  const std::map<std::string, std::vector<compiler::ir::CFG_block*>> cfg_blocks;
+
  public:
+  Allocator() = delete;
+
+  Allocator(const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
+                cfg_blocks);
+
+  void generate_code(std::ostream& os = std::cerr);
+
+ protected:
   /**
    * @brief Get a free register from the register pool.
    *
