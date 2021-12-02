@@ -61,12 +61,13 @@ typedef class Allocator {
    */
   uint32_t free_registers;
 
-  const compiler::ir::cfg cfg_blocks;
+  const std::map<std::string, std::vector<compiler::ir::CFG_block*>> cfg_blocks;
 
  public:
   Allocator() = delete;
 
-  Allocator(const compiler::ir::cfg& cfg_blocks);
+  Allocator(const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
+                cfg_blocks);
 
   void generate_code(std::ostream& os = std::cerr);
 

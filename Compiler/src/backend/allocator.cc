@@ -14,8 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include <backend/analyzer.hh>
 #include <backend/allocator.hh>
+#include <backend/analyzer.hh>
 #include <backend/assembly.hh>
 #include <common/utils.hh>
 
@@ -24,7 +24,9 @@ void compiler::reg::Allocator::set_free_register(const std::string& reg_name) {
   free_registers++;
 }
 
-compiler::reg::Allocator::Allocator(const compiler::ir::cfg& cfg_blocks)
+compiler::reg::Allocator::Allocator(
+    const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
+        cfg_blocks)
     : cfg_blocks(cfg_blocks) {
   // Initialize all the registers to be free.
   for (auto reg : compiler::reg::general_registers) {
@@ -47,6 +49,6 @@ void compiler::reg::Allocator::generate_code(std::ostream& os) {
 #endif
     // First we will need to analyze the live variable, i.e., the so-called
     // "def-use" chain.
-    compiler::reg::compute_def_use(func.second);
+    // compiler::reg::compute_def_use(func.second);
   }
 }

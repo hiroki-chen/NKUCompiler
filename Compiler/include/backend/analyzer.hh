@@ -21,7 +21,6 @@
 #include <vector>
 
 namespace compiler::reg {
-void compute_def_use(
-    const std::vector<std::pair<uint32_t, compiler::ir::cfg_block>>& func_block);
+
 }  // namespace compiler::reg
 #endif

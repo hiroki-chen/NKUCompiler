@@ -15,12 +15,3 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <backend/analyzer.hh>
-
-// FIXME: Not sure what the return type is.
-void compiler::reg::compute_def_use(
-    const std::vector<std::pair<uint32_t, compiler::ir::cfg_block>>&
-        func_block) {
-  // Process each block in the function body.
-  for (auto basic_block : func_block) {
-  }
-}

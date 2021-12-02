@@ -142,20 +142,21 @@ void compiler::Compiler_runtime::run(void) {
       if (print_ast) {
         res = root->print_result(0, false);
       } else if (print_ir) {
-        // Print ir to the ostringostream.
-        for (auto item : ir_list) {
-          item.emit_ir(oss, false);
+        for (auto ir : ir_list) {
+          ir.emit_ir();
         }
-
-        res = oss.str();
         compiler::ir::CFG_builder* const cfg_builder =
             new compiler::ir::CFG_builder(ir_list);
+        cfg_builder->prettier_ir(oss);
+        res = oss.str();
+
 #ifdef COMPILER_DEBUG
         cfg_builder->print_cfg();
 #endif
 
       } else if (generate_assembly) {
-        compiler::reg::Allocator* allocator = new compiler::reg::Allocator(ir_list);
+        // compiler::reg::Allocator* allocator = new
+        // compiler::reg::Allocator(ir_list);
       }
 
       output_file << res;
