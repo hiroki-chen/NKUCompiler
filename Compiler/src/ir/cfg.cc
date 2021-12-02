@@ -19,12 +19,10 @@
 
 extern uint32_t opt_level;
 
-static void construct_mapping(const compiler::ir::ir_list& ir_list,
-                              std::map<std::string, uint32_t>& name_to_id,
-                              std::map<uint32_t, std::string>& id_to_name,
-                              compiler::ir::cfg& blocks) {
-  // TODO: Need to save global definition.
-  // TODO: Need to stop analyzing the basic block if there is a RET statement.
+static void construct_mapping(
+    const compiler::ir::ir_list& ir_list,
+    std::map<std::string, std::map<std::string, uint32_t>>& name_to_id,
+    compiler::ir::cfg& blocks) {
   // Create mapping while constructing basic blocks for the CFG.
   // Scan the whole ir_list to construct basic blocks and the id.
   uint32_t id = 0;
@@ -60,8 +58,7 @@ static void construct_mapping(const compiler::ir::ir_list& ir_list,
         // Check if this is a label.
         if (ir_list[j].get_op_type() == compiler::ir::op_type::LBL) {
           // Prepare for the basic block.
-          name_to_id[ir_list[j].get_label()] = id;
-          id_to_name[id] = ir_list[j].get_label();
+          name_to_id[function_name][ir_list[j].get_label()] = id;
           compiler::ir::cfg_block basic_block;
 
           // Construct basic block.
@@ -87,8 +84,8 @@ static void construct_mapping(const compiler::ir::ir_list& ir_list,
 
 static void analyze_control_flow(
     const compiler::ir::cfg& blocks,
-    const std::map<std::string, uint32_t>& name_to_id,
-    std::map<std::string, std::vector<compiler::ir::Edge>>& edges) {
+    const std::map<std::string, std::map<std::string, uint32_t>>& name_to_id,
+    compiler::ir::edge& edges) {
   // Since there are some implicit jump between blocks, we need analyze
   // them as well.
   // E.g.:
@@ -130,11 +127,11 @@ static void analyze_control_flow(
         if (compiler::ir::is_jump(ir.get_op_type())) {
           // Extract edge information for building the edge.
           const std::string jump_dst = std::move(ir.get_label());
-          const uint32_t jump_dst_id = name_to_id.at(jump_dst);
+          const uint32_t jump_dst_id = name_to_id.at(name).at(jump_dst);
           const bool type = ir.get_op_type() == compiler::ir::JMP;
 
           // Add an edge to the edge map.
-          edges[name].emplace_back(id, jump_dst_id, type);
+          edges[name][id].emplace_back(jump_dst_id, type);
         }
       }
 
@@ -144,18 +141,18 @@ static void analyze_control_flow(
       // so?
       if (basic_block.second.empty() ||
           basic_block.second.back().get_op_type() !=
-              compiler::ir::op_type::JMP) {
-        edges[name].emplace_back(id, id + 1, true);
+                  compiler::ir::op_type::JMP &&
+              basic_block.second.back().get_op_type() !=
+                  compiler::ir::op_type::RET) {
+        edges[name][id].emplace_back(id + 1, true);
       }
     }
   }
 }
 
 // Do pruning.
-static void prune_cfg(
-    const std::map<std::string, std::vector<compiler::ir::Edge>>& edges,
-    const std::map<std::string, uint32_t> name_to_id,
-    compiler::ir::cfg& blocks) {
+static void prune_cfg(const compiler::ir::edge& edges,
+                      compiler::ir::cfg& blocks) {
 // Iterate over the block and remove dead basic blocks.
 // If any, merge continuos blocks.
 #ifdef COMPILER_DEBUG
@@ -167,9 +164,10 @@ static void prune_cfg(
     return;
   }
 
-  // Merge nodes that have only one entry and one exit.
-  for (auto item : name_to_id) {
-    const uint32_t id = item.second;
+  for (auto block : blocks) {
+    // We handle blocks by function.
+    // Merge nodes that have only one entry and one exit.
+
     // Search all the blocks that come to this block.
     // Search all the blocks that are connected to it as its successor.
   }
@@ -185,20 +183,23 @@ compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
   //    that is, blocks that have no entry point.
 
   // Construct blocks and their mappings.
-  construct_mapping(ir_list, name_to_id, id_to_name, blocks);
+  construct_mapping(ir_list, name_to_id, blocks);
   // Analyze the control flow.
   analyze_control_flow(blocks, name_to_id, edges);
   // Prune useless control flows or merge continuous basic blocks.
-  prune_cfg(edges, name_to_id, blocks);
+  prune_cfg(edges, blocks);
 }
 
 #ifdef COMPILER_DEBUG
 void compiler::ir::CFG_builder::print_cfg(void) const {
-  for (auto item : edges) {
-    std::cout << item.first << ": " << std::endl;
-    for (auto edge : item.second) {
-      std::cout << edge.from << " -> " << edge.to << " type: " << edge.type
-                << std::endl;
+  for (auto edge : edges) {
+    std::cout << edge.first << ": " << std::endl;
+    for (auto item : edge.second) {
+      std::cout << item.first << ": ";
+      for (auto adj : item.second) {
+        std::cout << adj.first << " ";
+      }
+      std::cout << std::endl;
     }
   }
 }

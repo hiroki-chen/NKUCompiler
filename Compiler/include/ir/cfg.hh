@@ -36,6 +36,10 @@ using cfg_block = std::vector<IR>;
  */
 using cfg = std::map<std::string, std::vector<std::pair<uint32_t, cfg_block>>>;
 
+using edge =
+    std::map<std::string,
+             std::map<uint32_t, std::vector<std::pair<uint32_t, bool>>>>;
+
 /**
  * @brief An edge in the CFG.
  *
@@ -66,15 +70,14 @@ typedef class CFG_builder {
   /**
    * @brief The CFG should be a SPARSE graph where each node has at most two
    *        successors and two predecessors.
+   * @note  We maintain as a list since it is more efficient than the matrix.
    *
    */
-  std::map<std::string, std::vector<Edge>> edges;
+  edge edges;
 
   std::map<uint32_t, cfg_block> look_up_table;
 
-  std::map<std::string, uint32_t> name_to_id;
-
-  std::map<uint32_t, std::string> id_to_name;
+  std::map<std::string, std::map<std::string, uint32_t>> name_to_id;
 
   cfg blocks;
 
@@ -85,9 +88,7 @@ typedef class CFG_builder {
 
   void prettier_ir(std::ostream& out = std::cerr);
 
-  std::map<std::string, std::vector<Edge>> get_edges(void) const {
-    return edges;
-  }
+  edge get_edges(void) const { return edges; }
 
   std::map<uint32_t, cfg_block> get_look_up_table(void) const {
     return look_up_table;
