@@ -19,9 +19,21 @@
 #include <backend/assembly.hh>
 #include <common/utils.hh>
 
+void compiler::reg::Allocator::reserve_for_function_call(void) {
+  // ARM-v7 has enforced that these four registers cannot be used to store
+  // general variables.
+  virtual_to_physical["$arg0"] = "r0";
+  virtual_to_physical["$arg1"] = "r1";
+  virtual_to_physical["$arg2"] = "r2";
+  virtual_to_physical["$arg3"] = "r3";
+}
+
 void compiler::reg::Allocator::set_free_register(const std::string& reg_name) {
   virtual_to_physical[std::move(reg_name)] = true;
   free_registers++;
+
+  // Reserve registers for function call.
+  reserve_for_function_call();
 }
 
 compiler::reg::Allocator::Allocator(
@@ -39,8 +51,6 @@ compiler::reg::Allocator::Allocator(
 
 // This function will analyze the control flow graph of each function
 // and then allocate the physical registers to each virtual registers.
-// ! IMPORTANT: You should prune the cfg block before sending it to the
-// ! allocator.
 void compiler::reg::Allocator::generate_code(std::ostream& os) {
   for (auto func : cfg_blocks) {
 #ifdef COMPILER_DEBUG
