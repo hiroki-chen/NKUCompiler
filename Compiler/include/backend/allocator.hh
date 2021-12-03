@@ -55,6 +55,23 @@ typedef class Allocator {
   std::unordered_map<std::string, std::string> virtual_to_physical;
 
   /**
+   * @brief The inverse of compiler::reg::Allocator::virtual_to_physical.
+   *
+   */
+  std::unordered_map<std::string, std::string> physical_to_virtual;
+
+  /**
+   * @brief Due to insufficient number of registers or some other reasons, some
+   *        variables are stored on the stack. In order to retrieve them
+   *        correctly, we need to know the offset.
+   *
+   * @note  If a virtual register is not bound to any registers, please refer to
+   * this map.
+   *
+   */
+  std::unordered_map<std::string, uint32_t> stack_offset;
+
+  /**
    * @brief Records the number of free registers. If there is no free registers
    * anymore, we should spill virtual registers onto the stack.
    *
@@ -63,6 +80,10 @@ typedef class Allocator {
 
   const std::map<std::string, std::vector<compiler::ir::CFG_block*>> cfg_blocks;
 
+  void reserve_for_function_call(void);
+
+  void generate(const std::vector<compiler::ir::CFG_block*>& func);
+
  public:
   Allocator() = delete;
 
@@ -70,6 +91,11 @@ typedef class Allocator {
                 cfg_blocks);
 
   void generate_code(std::ostream& os = std::cerr);
+
+  bool is_on_stack(const std::string& name) {
+    return virtual_to_physical.count(name) == 0 &&
+           stack_offset.count(name) != 0;
+  }
 
  protected:
   /**
