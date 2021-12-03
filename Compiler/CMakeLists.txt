@@ -18,6 +18,7 @@ set(YACC_SRC "${PROJECT_SOURCE_DIR}/src/frontend/parser/parser.ypp")
 set(FLEX_SRC "${PROJECT_SOURCE_DIR}/src/frontend/parser/lexer.l")
 
 # Check the compiler
+set (SUPPRESS_WARN_FLAGS "${SUPPRESS_WARN_FLAGS} -Wno-return-type")
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(SUPPRESS_WARN_FLAGS "${SUPPRESS_WARN_FLAGS} -Wno-sign-compare \
                                                      -Wno-unused-parameter \
@@ -27,6 +28,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     set(SUPPRESS_WARN_FLAGS "${SUPPRESS_WARN_FLAGS} -Wno-sign-compare -Wno-unused-parameter")
 
 endif ()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} ${SUPPRESS_WARN_FLAGS}")
 
 IF(COMPILER_DEBUG)
     ADD_DEFINITIONS(-DCOMPILER_DEBUG)

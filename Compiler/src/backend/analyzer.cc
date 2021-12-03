@@ -17,6 +17,7 @@
 #include <backend/analyzer.hh>
 #include <backend/assembly.hh>
 #include <common/utils.hh>
+#include <map>
 
 void compiler::reg::Analyzer::reserve_for_function_call(void) {
   // ARM-v7 has enforced that these four registers cannot be used to store
@@ -57,15 +58,17 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   // Create an empty machine unit type.
   compiler::reg::Machine_unit* const machine_unit =
       new compiler::reg::Machine_unit();
+  asm_builder->set_unit(machine_unit);
 
   // Traverse each functions.
   for (auto func : cfg_blocks) {
     // First we will need to analyze the live variable, i.e., the so-called
     // "def-use" chain.
     // compiler::reg::compute_def_use(func.second);
-    compiler::reg::Machine_function* const machine_function =
-        generate(func.second, func.first, machine_unit);
+    generate(func.second, func.first);
     // Append to the function list of the machine unit.
+    compiler::reg::Machine_function* const machine_function =
+        asm_builder->get_function();
     machine_unit->add_function(machine_function);
   }
 
@@ -75,35 +78,50 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   machine_unit->emit_assembly(os);
 }
 
-compiler::reg::Machine_function* compiler::reg::Analyzer::generate(
+void compiler::reg::Analyzer::generate(
     const std::vector<compiler::ir::CFG_block*>& function,
-    const std::string& func_name, compiler::reg::Machine_unit* const parent) {
-  compiler::reg::Machine_function* const machine_function =
-      new compiler::reg::Machine_function(parent, func_name);
+    const std::string& func_name) {
+  compiler::reg::Machine_unit* const unit_cur = asm_builder->get_unit();
+  compiler::reg::Machine_function* const func_cur =
+      new compiler::reg::Machine_function(unit_cur, func_name);
+  asm_builder->set_function(func_cur);
+
+  std::map<compiler::ir::CFG_block*, compiler::reg::Machine_block*>
+      cfg_to_machine;
 
   for (compiler::ir::CFG_block* const block : function) {
     // Handle one block.
-    compiler::reg::Machine_block* const machine_block =
-        generate(block, machine_function);
-    machine_function->add_block(machine_block);
+    // The new block will be stored in asm_builder. :)
+    generate(block);
+    cfg_to_machine[block] = asm_builder->get_block();
   }
 
-  return machine_function;
+  // Add preds and succs.
+  for (compiler::ir::CFG_block* const block : function) {
+    // Handle one block.
+    compiler::reg::Machine_block* const machine_block = cfg_to_machine[block];
+    
+    const std::vector<compiler::ir::CFG_block*> preds = block->get_preds();
+    const std::vector<compiler::ir::CFG_block*> succs = block->get_succs();
+    for (auto pred = preds.begin(); pred != preds.end(); pred++) {
+      machine_block->add_pred(cfg_to_machine[*pred]);
+    }
+    for (auto succ = succs.begin(); succ != succs.end(); succ++) {
+      machine_block->add_succ(cfg_to_machine[*succ]);
+    }
+  }
+  unit_cur->add_function(func_cur);
 }
 
-compiler::reg::Machine_block* compiler::reg::Analyzer::generate(
-    compiler::ir::CFG_block* const block,
-    compiler::reg::Machine_function* const parent) {
-  compiler::reg::Machine_block* const machine_block =
-      new compiler::reg::Machine_block(parent, block->get_id());
+void compiler::reg::Analyzer::generate(compiler::ir::CFG_block* const block) {
+  compiler::reg::Machine_function* const cur_func = asm_builder->get_function();
+  compiler::reg::Machine_block* const cur_block =
+      new compiler::reg::Machine_block(cur_func, block->get_id());
+  asm_builder->set_block(cur_block);
 
-  compiler::ir::ir_list* const ir_list = block->get_ir_list();
-
-  // Do translation.
-  for (compiler::ir::IR ir : *ir_list) {
-    // TODO...
-    // ? HOW TO HANDLE JUMP -> Control flow is changed.
+  for (compiler::ir::IR ir : *block->get_ir_list()) {
+    ir.emit_machine_code(asm_builder);
   }
 
-  return machine_block;
+  cur_func->add_block(cur_block);
 }

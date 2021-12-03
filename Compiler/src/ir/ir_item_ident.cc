@@ -228,5 +228,6 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
     }
   } catch (const std::exception& e) {
     PANIC(lineno, e.what());
+    exit(1);
   }
 }
