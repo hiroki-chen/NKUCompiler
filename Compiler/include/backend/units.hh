@@ -58,7 +58,7 @@ typedef class Machine_block {
 
   Machine_block() = delete;
 
-  Machine_block(Machine_function* const parent, const int& no)
+  Machine_block(Machine_function* const parent, const uint32_t& no)
       : parent(parent), no(no) {}
 
   void add_instruction(Machine_instruction* const instruction) {
@@ -106,7 +106,7 @@ typedef class Machine_function {
 
   uint32_t allocate_stack(const uint32_t& size) { return (stack_size += size); }
 
-  void insert_block(Machine_block* const block) {
+  void add_block(Machine_block* const block) {
     block_list.emplace_back(block);
   }
   void add_saved_regs(const std::string& register_name) {

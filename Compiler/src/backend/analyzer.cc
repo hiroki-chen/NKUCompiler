@@ -39,6 +39,9 @@ compiler::reg::Analyzer::Analyzer(
     const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
         cfg_blocks)
     : cfg_blocks(cfg_blocks) {
+  // Create an empty Assembly_builder class for future usage :)
+  asm_builder = new Assembly_builder();
+
   // Initialize all the registers to be free.
   for (auto reg : compiler::reg::general_registers) {
     register_free_map[reg] = true;
@@ -77,4 +80,30 @@ compiler::reg::Machine_function* compiler::reg::Analyzer::generate(
     const std::string& func_name, compiler::reg::Machine_unit* const parent) {
   compiler::reg::Machine_function* const machine_function =
       new compiler::reg::Machine_function(parent, func_name);
+
+  for (compiler::ir::CFG_block* const block : function) {
+    // Handle one block.
+    compiler::reg::Machine_block* const machine_block =
+        generate(block, machine_function);
+    machine_function->add_block(machine_block);
+  }
+
+  return machine_function;
+}
+
+compiler::reg::Machine_block* compiler::reg::Analyzer::generate(
+    compiler::ir::CFG_block* const block,
+    compiler::reg::Machine_function* const parent) {
+  compiler::reg::Machine_block* const machine_block =
+      new compiler::reg::Machine_block(parent, block->get_id());
+
+  compiler::ir::ir_list* const ir_list = block->get_ir_list();
+
+  // Do translation.
+  for (compiler::ir::IR ir : *ir_list) {
+    // TODO...
+    // ? HOW TO HANDLE JUMP -> Control flow is changed.
+  }
+
+  return machine_block;
 }
