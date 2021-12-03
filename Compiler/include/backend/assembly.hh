@@ -24,7 +24,7 @@
 #include <vector>
 
 namespace compiler::reg {
-	// Forward declarations.
+// Forward declarations.
 class Machine_block;
 class Machine_operand;
 /**
@@ -234,6 +234,16 @@ typedef class Machine_instruction_mov final : public Machine_instruction {
 
   virtual void emit_assembly(std::ostream& os = std::cerr) const override;
 } Machine_instruction_mov;
+
+typedef class Machine_instruction_cmp final : public Machine_instruction {
+ public:
+  Machine_instruction_cmp(Machine_block* const parent,
+                          Machine_operand* const operand_a,
+                          Machine_operand* const operand_b,
+                          const cond_type& cond = cond_type::NONE);
+
+  virtual void emit_assembly(std::ostream& os = std::cerr) const override;
+} Machine_instruction_cmp;
 
 typedef class Machine_instruction_stack final : public Machine_instruction {
  protected:

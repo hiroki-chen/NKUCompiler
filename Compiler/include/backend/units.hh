@@ -129,7 +129,7 @@ typedef class Machine_unit {
 
   std::vector<Machine_function*>::iterator end() { return func_list.end(); }
 
-  void insert_function(Machine_function* const func) {
+  void add_function(Machine_function* const func) {
     func_list.emplace_back(func);
   }
 

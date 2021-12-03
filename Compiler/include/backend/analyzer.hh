@@ -17,10 +17,127 @@
 #ifndef ANALYZER_HH
 #define ANALYZER_HH
 
+#include <backend/assembly.hh>
+#include <backend/units.hh>
+#include <iostream>
 #include <ir/cfg.hh>
-#include <vector>
+#include <unordered_map>
 
+// For ARM-v7 32-bit backend.
+
+/**
+ * @brief This class implements register allocation algorithms (linear-scan
+ * alogrithm).
+ * @ref   Poletto, Massimiliano, and Vivek Sarkar. "Linear scan register
+ *        allocation." ACM Transactions on Programming Languages and Systems
+ *       (TOPLAS) 21.5 (1999): 895-913.
+ *
+ * @author chb
+ * So my thought is to generate machine code from cfg_blocks via the following
+ * steps:
+ * 1. Analyze each block and generate machine_instruction for each one.
+ * 2. Generate the class Machine_block for each CFG_block and append this list
+ * to the block.
+ * 3. Generate the class Machine_function for each function.
+ *
+ * So there must be multiple intermediate output.
+ *
+ */
 namespace compiler::reg {
+// TODO: Add a class for LiveRange or LiveInternal which defines the "DEF-USE"
+// CHAIN.
+// TODO: Perform analysis over the CFG for each function.
+/**
+ * @brief This class defines pool for active registers.
+ *
+ */
+typedef class Analyzer {
+ private:
+  /**
+   * @brief A hash map that stores the availability of each registers of ARM.
+   *
+   */
+  std::unordered_map<std::string, bool> register_free_map;
 
+  /**
+   * @brief A hash that stores the the mapping of virtual registers.
+   *
+   */
+  std::unordered_map<std::string, std::string> virtual_to_physical;
+
+  /**
+   * @brief The inverse of compiler::reg::Allocator::virtual_to_physical.
+   *
+   */
+  std::unordered_map<std::string, std::string> physical_to_virtual;
+
+  /**
+   * @brief Due to insufficient number of registers or some other reasons, some
+   *        variables are stored on the stack. In order to retrieve them
+   *        correctly, we need to know the offset.
+   *
+   * @note  If a virtual register is not bound to any registers, please refer to
+   * this map.
+   *
+   */
+  std::unordered_map<std::string, uint32_t> stack_offset;
+
+  /**
+   * @brief Records the number of free registers. If there is no free registers
+   * anymore, we should spill virtual registers onto the stack.
+   *
+   */
+  uint32_t free_registers;
+
+  const std::map<std::string, std::vector<compiler::ir::CFG_block*>> cfg_blocks;
+
+  //================= Functions====================
+  void reserve_for_function_call(void);
+
+  /**
+   * @brief This function will transform a function (which is a group of basic
+   *        blocks) into a machine function.
+   *
+   * @param func
+   * @param func_name
+   * @param parent
+   * @return Machine_function*
+   */
+  Machine_function* generate(
+      const std::vector<compiler::ir::CFG_block*>& function,
+      const std::string& func_name, Machine_unit* const parent);
+
+ public:
+  Analyzer() = delete;
+
+  Analyzer(const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
+               cfg_blocks);
+
+  void generate_code(std::ostream& os = std::cerr);
+
+  bool is_on_stack(const std::string& name) {
+    return virtual_to_physical.count(name) == 0 &&
+           stack_offset.count(name) != 0;
+  }
+
+ protected:
+  /**
+   * @brief Get a free register from the register pool.
+   *
+   * @return std::string
+   */
+  std::string get_free_register(void);
+
+  /**
+   * @brief Set an occupied register to be free.
+   *
+   * @param reg_name
+   */
+  void set_free_register(const std::string& reg_name);
+
+  uint32_t free_num(void) { return free_registers; }
+
+} Analyzer;
 }  // namespace compiler::reg
+
 #endif
