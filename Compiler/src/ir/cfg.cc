@@ -179,20 +179,24 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
     // Do this until the block does not change.
     bool change = false;
     do {
+      change = false;
+#ifdef COMPILER_DEBUG
+      this->prettier_ir(std::cout);
+#endif
       for (auto iter = cfg_blocks.begin(); iter != cfg_blocks.end();) {
-        change = false;
-        // Entry point should not be touched!
+                // Entry point should not be touched!
         if ((*iter)->get_id() == 1) {
           iter++;
           continue;
         }
 
         if ((*iter)->get_preds().empty()) {
+          change = true;
           // Recursively remove all the sucessors.
           for (auto succ : (*iter)->get_succs()) {
             succ->remove_pred(*iter);
           }
-          cfg_blocks.erase(iter);
+          iter = cfg_blocks.erase(iter);
           continue;
         }
         // A block that has exactly one predecessor may be merged to its
@@ -212,7 +216,7 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
 #ifdef COMPILER_DEBUG
             std::cout << "Merging " << pred->get_name() << " and "
                       << (*iter)->get_name() << std::endl;
-#endif      // Remove predecessor's JUMP instruction.
+#endif  // Remove predecessor's JUMP instruction.
             pred->remove_jump();
             // Merge.
             pred->splice(*(*iter)->get_ir_list());
@@ -221,9 +225,11 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
             // Add successors.
             for (auto succ : (*iter)->get_succs()) {
               pred->add_succ(succ);
+              succ->add_pred(pred);
+              succ->remove_pred(*iter);
             }
             // Remove the current block.
-            cfg_blocks.erase(iter);
+            iter = cfg_blocks.erase(iter);
             change = true;
             continue;
           }
@@ -253,7 +259,11 @@ compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
 }
 
 void compiler::ir::CFG_block::splice(const ir::ir_list& ir_list) {
-  compiler::insert_with_move(this->ir_list, ir_list);
+  for (compiler::ir::IR ir : ir_list) {
+    if (ir.get_op_type() != compiler::ir::op_type::LBL) {
+      this->ir_list.emplace_back(std::move(ir));
+    }
+  }
 }
 
 #ifdef COMPILER_DEBUG

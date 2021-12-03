@@ -103,6 +103,17 @@ compiler::ir::IR::IR(const op_type& operation, const std::string& label)
       operand_c(nullptr),
       label(label) {}
 
+compiler::ir::IR::IR(const IR& ir)
+    : type(ir.type),
+      dst(ir.dst == nullptr ? nullptr : new ir::Operand(*ir.dst)),
+      operand_a(ir.operand_a == nullptr ? nullptr
+                                        : new ir::Operand(*ir.operand_a)),
+      operand_b(ir.operand_b == nullptr ? nullptr
+                                        : new ir::Operand(*ir.operand_b)),
+      operand_c(ir.operand_c == nullptr ? nullptr
+                                        : new ir::Operand(*ir.operand_c)),
+      label(ir.label) {}
+
 void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   if (type == ir::op_type::NOP) {
     return;
