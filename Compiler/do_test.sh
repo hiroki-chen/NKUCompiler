@@ -1,3 +1,5 @@
+# !/bin/bash
+
 # Copyright (c) 2021 Haobin Chen & Jiawei Xu
 #
 # This program is free software: you can redistribute it and/or modify
@@ -12,8 +14,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-# !/bin/bash
 
 # This shell script will automatically scan all the files 
 # from a given path and then send them to the compiler.

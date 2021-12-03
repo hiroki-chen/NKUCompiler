@@ -176,6 +176,16 @@ compiler::reg::Machine_instruction_store::Machine_instruction_store(
   }
 }
 
+compiler::reg::Machine_instruction_cmp::Machine_instruction_cmp(
+    Machine_block* const parent, Machine_operand* const operand_a,
+    Machine_operand* const operand_b, const cond_type& cond) {
+  this->parent = parent;
+  use_list.emplace_back(operand_a);
+  use_list.emplace_back(operand_b);
+  operand_a->set_parent(this);
+  operand_b->set_parent(this);
+}
+
 void compiler::reg::Machine_instruction_load::emit_assembly(
     std::ostream& os) const {
   os << "\tldr ";
@@ -331,4 +341,10 @@ void compiler::reg::Machine_instruction_stack::emit_assembly(
   } else {
     os << "\tpop " << use_list[0]->print() << std::endl;
   }
+}
+
+void compiler::reg::Machine_instruction_cmp::emit_assembly(
+    std::ostream& os) const {
+  os << "\tcmp " << use_list[0]->print() << ", " << use_list[1]->print()
+     << std::endl;
 }
