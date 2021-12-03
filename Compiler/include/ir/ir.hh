@@ -364,6 +364,8 @@ typedef class IR final {
   // Default constructor is definitely not allowed.
   IR() = delete;
 
+  IR(const IR& ir);
+
   IR(const op_type& operation, Operand* const dst, Operand* const operand_a,
      Operand* const operand_b, Operand* const operand_c,
      const std::string& labal = "");
