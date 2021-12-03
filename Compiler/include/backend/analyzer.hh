@@ -21,7 +21,12 @@
 #include <backend/units.hh>
 #include <iostream>
 #include <ir/cfg.hh>
+#include <map>
 #include <unordered_map>
+
+namespace compiler::ir {
+class CFG_block;
+}  // namespace compiler::ir
 
 // For ARM-v7 32-bit backend.
 
@@ -48,11 +53,48 @@ namespace compiler::reg {
 // CHAIN.
 // TODO: Perform analysis over the CFG for each function.
 /**
+ * @brief A helper class that constructs the assemblt code for the CFG_block.
+ *
+ * @author YoungCoder et al.
+ * @ref
+ * https://github.com/Emanual20/2021NKUCS-Compilers-Lab/blob/lab7/include/AsmBuilder.h
+ *
+ */
+typedef class Assembly_builder {
+ private:
+  // Variables...
+  Machine_unit* machine_unit;          // Machine machine_unit
+  Machine_function* machine_function;  // current machine code function
+  Machine_block* machine_block;        // current machine code block
+  cond_type compare_code;  // CmpInstruction opcode, for CondInstruction
+
+ public:
+  Assembly_builder() = default;
+
+  void set_unit(Machine_unit* const unit) { machine_unit = unit; }
+
+  void set_function(Machine_function* const func) { machine_function = func; }
+
+  void set_block(Machine_block* const block) { machine_block = block; }
+
+  void set_compare_code(const cond_type& opcode) { compare_code = opcode; }
+
+  Machine_unit* get_unit() { return machine_unit; }
+
+  Machine_function* get_function() { return machine_function; }
+
+  Machine_block* get_block() { return machine_block; }
+
+  cond_type get_compare_code() { return compare_code; }
+} Assembly_builder;
+/**
  * @brief This class defines pool for active registers.
  *
  */
 typedef class Analyzer {
  private:
+  Assembly_builder* asm_builder;
+
   /**
    * @brief A hash map that stores the availability of each registers of ARM.
    *
@@ -101,11 +143,11 @@ typedef class Analyzer {
    * @param func
    * @param func_name
    * @param parent
-   * @return Machine_function*
    */
-  Machine_function* generate(
-      const std::vector<compiler::ir::CFG_block*>& function,
-      const std::string& func_name, Machine_unit* const parent);
+  void generate(const std::vector<compiler::ir::CFG_block*>& function,
+                const std::string& func_name);
+
+  void generate(compiler::ir::CFG_block* const block);
 
  public:
   Analyzer() = delete;

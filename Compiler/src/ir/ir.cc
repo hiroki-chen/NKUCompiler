@@ -14,6 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <backend/assembly_dispatcher.hh>
+#include <backend/units.hh>
 #include <common/compile_excepts.hh>
 #include <common/types.hh>
 #include <common/utils.hh>
@@ -50,6 +52,26 @@ compiler::ir::Operand::Operand(const var_type& type,
       value(value),
       is_var(is_var),
       is_ptr(is_ptr) {}
+
+compiler::reg::Machine_operand* compiler::ir::Operand::emit_machine_vode(
+    void) const {
+  // Temporary variables and local variables can be differentiated by their
+  // prefixes. TEMP: %t, VAR: %v.
+  if (is_var) {
+    if (identifier.substr(0, 2).compare(ir::local_sign) == 0) {
+      // Local.
+      return new reg::Machine_operand(reg::operand_type::VREG, identifier);
+    } else if (identifier.substr(0, 1).compare(ir::global_sign) == 0) {
+      // Global. => LBL.
+      return new reg::Machine_operand(identifier);
+    } else {
+      throw compiler::fatal_error(
+          "Error: Unknown error when generating machine operand!");
+    }
+  } else {
+    return new reg::Machine_operand(reg::operand_type::IMM, value);
+  }
+}
 
 compiler::ir::Operand_ptr::Operand_ptr(const var_type& type,
                                        const std::string& identifier,
@@ -113,6 +135,14 @@ compiler::ir::IR::IR(const IR& ir)
       operand_c(ir.operand_c == nullptr ? nullptr
                                         : new ir::Operand(*ir.operand_c)),
       label(ir.label) {}
+
+void compiler::ir::IR::emit_machine_code(
+    compiler::reg::Assembly_builder* const asm_builder) const {
+  // Let a dispatcher do the job.
+  compiler::Assembly_dispatcher* const dispatcher =
+      compiler::Assembly_dispatcher::dispatch(type);
+  dispatcher->emit_machine_code(asm_builder);
+}
 
 void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   if (type == ir::op_type::NOP) {

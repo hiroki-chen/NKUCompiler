@@ -34,7 +34,15 @@
   new ir::Operand(ir::var_type::i32, "", val, false, false)
 #endif
 
-namespace compiler::ir {
+namespace compiler {
+namespace reg {
+// Prevent circular includes.
+class Assembly_builder;
+class Machine_instruction;
+class Machine_operand;
+}  // namespace reg
+
+namespace ir {
 // Forward declaration.
 class IR;
 
@@ -258,6 +266,8 @@ typedef class Operand {
 
   virtual void set_var_type(const var_type& type) { this->type = type; }
 
+  virtual reg::Machine_operand* emit_machine_vode(void) const;
+
   virtual ~Operand() = default;
 } Operand;
 
@@ -389,6 +399,13 @@ typedef class IR final {
    */
   void emit_ir(std::ostream& out = std::cout, const bool& verbose = false);
 
+  /**
+   * @brief Emit the machine code. IR -> Machine code.
+   *
+   * @param asm_builder
+   */
+  void emit_machine_code(reg::Assembly_builder* const asm_builder) const;
+
   void set_phi_block(const ir::ir_list::iterator& phi_block) {
     phi = phi_block;
   }
@@ -464,5 +481,6 @@ uint32_t to_byte_length(const var_type& type);
  * @return false
  */
 bool is_jump(const op_type& op_type);
-}  // namespace compiler::ir
+}  // namespace ir
+}  // namespace compiler
 #endif
