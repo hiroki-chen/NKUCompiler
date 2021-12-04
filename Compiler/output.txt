@@ -1,0 +1,2 @@
+[Experiment setting] way: 3, number: 27, bucket_size: 6, level: 3
+Access finished, time elapsed: 0.12665 s

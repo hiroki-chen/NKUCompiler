@@ -15,21 +15,23 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <backend/units.hh>
+#include <common/utils.hh>
 
 void compiler::reg::Machine_block::emit_assembly(std::ostream& os) const {
   // Emit the label.
-  os << ".L" << no << ":" << std::endl;
+  os << ".L" << no << ":" << '\n';
   for (compiler::reg::Machine_instruction* const instruction : inst_list) {
     instruction->emit_assembly(os);
   }
 }
 
 void compiler::reg::Machine_function::emit_assembly(std::ostream& os) const {
-  os << ".globl " << function_name << std::endl;
-  os << ".type " << function_name << ", %%function" << std::endl;
-  os << function_name << ":" << std::endl;
+  os << ".globl " << function_name << '\n';
+  os << ".type " << function_name << ", %%function" << '\n';
+  os << function_name << ":" << '\n';
   // Allocate the stack and preserve the environment.
-  // TODO
+  compiler::generate_assembly("\tsub", reg::stack_pointer, reg::stack_pointer,
+                              this->stack_size);
 
   // Traverse all the block in block_list to print assembly code.
   for (compiler::reg::Machine_block* const block : block_list) {

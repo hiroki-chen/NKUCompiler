@@ -43,7 +43,7 @@ void compiler::Item_block::generate_ir_helper(
   } catch (const compiler::fatal_error& e) {
     // Scope is invalid.
     std::cerr << termcolor::red << termcolor::bold << lineno
-              << ": FATAL ERROR: " << e.what() << std::endl;
+              << ": FATAL ERROR: " << e.what() << '\n';
     exit(1);
   }
 }
@@ -171,7 +171,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     ir_context->leave_scope();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
   }
 }
 
@@ -207,7 +207,7 @@ compiler::ir::Operand* compiler::Item_stmt_assign::eval_runtime_helper(
     return result;
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     exit(1);
   }
 }
@@ -542,7 +542,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     ir_context->leave_scope();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
   }
 }
 

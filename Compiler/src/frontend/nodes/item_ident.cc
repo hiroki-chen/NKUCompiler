@@ -45,7 +45,7 @@ std::string compiler::Item_ident::print_result(const uint32_t& indent,
 
   print_indent(indent, leaf, oss);
   oss << " Identifier with name " << termcolor::red << name << termcolor::reset
-      << std::endl;
+      << '\n';
   return oss.str();
 }
 
@@ -56,7 +56,7 @@ std::string compiler::Item_ident_pointer::print_result(const uint32_t& indent,
   print_indent(indent, leaf, oss);
   oss << " Identifier with name " << termcolor::red << name << termcolor::reset
       << ", with shape " << termcolor::red << shape << termcolor::reset
-      << std::endl;
+      << '\n';
   return oss.str();
 }
 
@@ -66,7 +66,7 @@ std::string compiler::Item_ident_func::print_result(const uint32_t& indent,
 
   print_indent(indent, leaf, oss);
   oss << " Identifier Function with name " << termcolor::red << name
-      << termcolor::reset << std::endl;
+      << termcolor::reset << '\n';
   return oss.str();
 }
 
@@ -76,7 +76,7 @@ std::string compiler::Item_ident_array::print_result(const uint32_t& indent,
 
   print_indent(indent, leaf, oss);
   oss << " Array Identifier with name " << termcolor::red << name
-      << termcolor::reset << ", and the shape is " << std::endl;
+      << termcolor::reset << ", and the shape is " << '\n';
   for (uint32_t i = 0; i < array_shape.size(); i++) {
     oss << array_shape[i]->print_result(
         indent + 2,

@@ -68,8 +68,15 @@ typedef class Assembly_builder {
   Machine_block* machine_block;        // current machine code block
   cond_type compare_code;  // CmpInstruction opcode, for CondInstruction
 
+  // Available id for virtual registers.
+  // Note that this variable is used ONLY when we need temporary registers.
+  // E.g.: ADD %t0, #1, #2 => MOV v0, #1     ADD %t0, v0, #2.
+  // For our convenience, this variable keeps to grow until the compilation
+  // ends.
+  uint32_t id;
+
  public:
-  Assembly_builder() = default;
+  Assembly_builder() : id(0) {}
 
   void set_unit(Machine_unit* const unit) { machine_unit = unit; }
 
@@ -86,6 +93,8 @@ typedef class Assembly_builder {
   Machine_block* get_block() { return machine_block; }
 
   cond_type get_compare_code() { return compare_code; }
+
+  uint32_t get_available_id(void) { return id++; }
 } Assembly_builder;
 /**
  * @brief This class defines pool for active registers.

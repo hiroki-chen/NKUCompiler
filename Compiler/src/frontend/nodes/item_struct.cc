@@ -25,7 +25,7 @@ std::string compiler::Item_struct_body::print_result(const uint32_t& indent,
                                                      const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Struct Body" << std::endl;
+  oss << " Struct Body" << '\n';
   for (uint32_t i = 0; i < struct_body.size(); i++) {
     oss << struct_body[i]->print_result(
         indent + 2, i == struct_body.size() - 1 ? true : false);

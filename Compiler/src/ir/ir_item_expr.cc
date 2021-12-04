@@ -64,7 +64,7 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond_helper(
     compiler::ir::IRContext* const ir_context,
     compiler::ir::ir_list& ir_list) const {
   compiler::ir::BranchIR branch_ir;
-  ir_list.emplace_back(compiler::ir::op_type::CMP,
+  ir_list.emplace_back(compiler::ir::op_type::CMP, nullptr,
                        eval_runtime(ir_context, ir_list), OPERAND_VALUE("0"));
 
   // Set jne and jeq.
@@ -100,7 +100,7 @@ compiler::ir::BranchIR compiler::Item_expr::eval_cond(
     return branch_ir;
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     stack.pop_back();
     exit(1);
   }
@@ -128,7 +128,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     return operand;
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     stack.pop_back();
     exit(1);
   }
@@ -144,7 +144,7 @@ compiler::ir::Operand* compiler::Item_expr::eval_runtime(
     return operand;
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     stack.pop_back();
     exit(1);
   }
@@ -257,7 +257,7 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
       return eval_runtime_helper(ir_context);
     } catch (const std::exception& e) {
       std::cerr << termcolor::red << termcolor::bold << e.what()
-                << termcolor::reset << std::endl;
+                << termcolor::reset << '\n';
       exit(1);
     }
     // Generate IR.
@@ -363,7 +363,7 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
         const std::string label = compiler::concatenate(
             ".LB", ir_context->get_symbol_table()->get_available_id(),
             "_COND_END");
-       ir::ir_list ir_list_end;
+        ir::ir_list ir_list_end;
         ir_list_end.emplace_back(ir::op_type::LBL, label);
 
         // Generate if-else block :)
@@ -388,7 +388,7 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
         const std::string label = compiler::concatenate(
             ".LB", ir_context->get_symbol_table()->get_available_id(),
             "_COND_END");
-       ir::ir_list ir_list_end;
+        ir::ir_list ir_list_end;
         ir_list_end.emplace_back(ir::op_type::LBL, label);
 
         // Generate if-else block :)

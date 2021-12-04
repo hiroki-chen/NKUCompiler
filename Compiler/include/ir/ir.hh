@@ -266,7 +266,7 @@ typedef class Operand {
 
   virtual void set_var_type(const var_type& type) { this->type = type; }
 
-  virtual reg::Machine_operand* emit_machine_vode(void) const;
+  virtual reg::Machine_operand* emit_machine_operand(void) const;
 
   virtual ~Operand() = default;
 } Operand;
@@ -370,6 +370,8 @@ typedef class IR final {
   void walk_ir(std::function<void(Operand* const)>&& callback,
                const bool& chained = true);
 
+  std::vector<IR*> func_call_list;
+
  public:
   // Default constructor is definitely not allowed.
   IR() = delete;
@@ -410,6 +412,8 @@ typedef class IR final {
     phi = phi_block;
   }
 
+  void add_func_call(IR* const ir) { func_call_list.emplace_back(ir); }
+
   ir::ir_list::iterator get_phi_block(void) const { return phi; }
 
   op_type get_op_type(void) const { return type; }
@@ -421,6 +425,8 @@ typedef class IR final {
   Operand* get_op2(void) const { return operand_b; }
 
   Operand* get_op3(void) const { return operand_c; }
+
+  std::vector<IR*> get_func_call_list(void) const { return func_call_list; }
 
   std::string get_label(void) const { return label; }
 } IR;

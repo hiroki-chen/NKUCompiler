@@ -101,7 +101,7 @@ void compiler::Item_decl_var_init::generate_ir_helper(
 
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     exit(1);
   }
 }
@@ -115,7 +115,7 @@ void compiler::Item_decl::generate_ir(compiler::ir::IRContext* const ir_context,
     stack.pop_back();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     stack.pop_back();
     exit(1);
   }
@@ -196,7 +196,7 @@ void compiler::Item_decl_array::generate_ir_helper(
     }
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     exit(1);
   }
 }
@@ -243,7 +243,7 @@ void compiler::Item_decl_array_init::generate_ir_helper(
     }
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     exit(1);
   }
 }
@@ -261,7 +261,7 @@ void compiler::Item_decl_array_init::init_helper(
       if (ir_context->is_global_context()) {
         // Iterate through the size of the array.
         const uint32_t size = std::stoul(value->get_value());
-        std::cout << "size: " << size << std::endl;
+        std::cout << "size: " << size << '\n';
         for (uint32_t i = 0; i < size; i++) {
           init_value.emplace_back(
               new ir::Operand(var_type, "", "0", false, false));
@@ -306,7 +306,7 @@ void compiler::Item_decl_array_init::init_helper(
     const uint32_t res =
         std::stoul(shape[index]->eval_runtime(ir_context)->get_value());
     const uint32_t cur = size / res;
-    // std::cout << "Size for this shape: " << size << std::endl;
+    // std::cout << "Size for this shape: " << size << '\n';
 
     for (compiler::Item_literal_array_init* const value : value_list) {
       if (value->get_is_numeric()) {

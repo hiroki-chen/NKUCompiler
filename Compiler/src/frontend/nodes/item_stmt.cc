@@ -76,7 +76,7 @@ std::string compiler::Item_stmt_assign::print_result(const uint32_t& indent,
                                                      const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Assignment Statement" << std::endl;
+  oss << " Assignment Statement" << '\n';
   oss << identifier->print_result(indent + 2, true);
   oss << expression->print_result(indent + 2, false);
   return oss.str();
@@ -86,7 +86,7 @@ std::string compiler::Item_stmt_break::print_result(const uint32_t& indent,
                                                     const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Break Statement" << std::endl;
+  oss << " Break Statement" << '\n';
   return oss.str();
 }
 
@@ -94,7 +94,7 @@ std::string compiler::Item_stmt_continue::print_result(const uint32_t& indent,
                                                        const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Continue Statement" << std::endl;
+  oss << " Continue Statement" << '\n';
   return oss.str();
 }
 
@@ -102,7 +102,7 @@ std::string compiler::Item_stmt_eif::print_result(const uint32_t& indent,
                                                   const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " If-else Statement" << std::endl;
+  oss << " If-else Statement" << '\n';
   oss << condition->print_result(indent + 2, false);
 
   // There could be no else statement at all.
@@ -119,7 +119,7 @@ std::string compiler::Item_stmt_while::print_result(const uint32_t& indent,
                                                     const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << (is_do_while ? "Do While Statement" : " While Statement") << std::endl;
+  oss << (is_do_while ? "Do While Statement" : " While Statement") << '\n';
   oss << condition->print_result(indent + 2, false);
   oss << statement->print_result(indent + 2, true);
   return oss.str();
@@ -130,7 +130,7 @@ std::string compiler::Item_stmt_postfix::print_result(const uint32_t& indent,
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
   oss << " Postfix Statement with identifier"
-      << identifier->print_result(indent + 2, true) << std::endl;
+      << identifier->print_result(indent + 2, true) << '\n';
   return oss.str();
 }
 
@@ -138,7 +138,7 @@ std::string compiler::Item_stmt_void::print_result(const uint32_t& indent,
                                                    const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Empty Statement" << std::endl;
+  oss << " Empty Statement" << '\n';
   return oss.str();
 }
 
@@ -146,7 +146,7 @@ std::string compiler::Item_stmt_eval::print_result(const uint32_t& indent,
                                                    const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Eval Statement" << std::endl;
+  oss << " Eval Statement" << '\n';
   oss << expression->print_result(indent + 2, true);
   return oss.str();
 }
@@ -155,7 +155,7 @@ std::string compiler::Item_stmt_return::print_result(const uint32_t& indent,
                                                      const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Return statement" << std::endl;
+  oss << " Return statement" << '\n';
   if (expr != nullptr) {
     oss << expr->print_result(indent + 2, true);
   }
@@ -167,7 +167,7 @@ std::string compiler::Item_block::print_result(const uint32_t& indent,
                                                const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Block" << std::endl;
+  oss << " Block" << '\n';
   for (uint32_t i = 0; i < statements.size(); i++) {
     oss << statements[i]->print_result(indent + 2, i == statements.size() - 1);
   }

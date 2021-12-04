@@ -52,7 +52,11 @@ typedef enum inst_type {
   MOV,
   BRANCH,
   CMP,
-  STACK
+  STACK,
+  UNARY,
+  ALLOCA,
+  RET,
+  CALL,
 } inst_type;
 
 typedef enum branch_type {
@@ -109,8 +113,6 @@ static const std::string program_counter = "pc";
 
 static const std::string stack_pointer = "sp";
 
-static const std::string link_register = "lr";
-
 /**
  * @brief ARM-v7 Registers that are NOT callee-saved. I.e., they are used when a
  *        procedure is called.
@@ -118,8 +120,12 @@ static const std::string link_register = "lr";
  */
 static const std::string argument_registers[4] = {"r0", "r1", "r2", "r3"};
 
+static const std::string virtual_sign = "%v";
+
 /**
  * @brief Basic class for machine instructions.
+ *
+ * @note  THIS IS AN ABSTRACT CLASS. NEVER CREATE AN INSTANCE FROM IT.
  *
  */
 typedef class Machine_instruction {

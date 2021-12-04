@@ -195,3 +195,52 @@ compiler::basic_type compiler::to_basic_type(
           "Cannot convert this type to basic type!");
   }
 }
+
+compiler::reg::inst_type compiler::to_machine_type(
+    const compiler::ir::op_type& type) {
+  switch (type) {
+    case compiler::ir::op_type::JEQ:
+    case compiler::ir::op_type::JNE:
+    case compiler::ir::op_type::JG:
+    case compiler::ir::op_type::JGE:
+    case compiler::ir::op_type::JL:
+    case compiler::ir::op_type::JLE:
+    case compiler::ir::op_type::JMP:
+      return compiler::reg::inst_type::BRANCH;
+    case compiler::ir::op_type::PHI:
+    case compiler::ir::op_type::MOV:
+    case compiler::ir::op_type::MOVNE:
+    case compiler::ir::op_type::MOVEQ:
+    case compiler::ir::op_type::MOVGT:
+    case compiler::ir::op_type::MOVGE:
+    case compiler::ir::op_type::MOVLT:
+    case compiler::ir::op_type::MOVLE:
+      return compiler::reg::inst_type::MOV;
+    case compiler::ir::op_type::LDR:
+    case compiler::ir::op_type::STR:
+    case compiler::ir::op_type::PUSH:
+      return compiler::reg::inst_type::STACK;
+    case compiler::ir::op_type::CMP:
+      return compiler::reg::inst_type::CMP;
+    case compiler::ir::op_type::ALLOCA:
+      return compiler::reg::inst_type::ALLOCA;
+    case compiler::ir::op_type::IADD:
+    case compiler::ir::op_type::ISUB:
+    case compiler::ir::op_type::IMUL:
+    case compiler::ir::op_type::IDIV:
+    case compiler::ir::op_type::IMOD:
+    case compiler::ir::op_type::BOR:
+    case compiler::ir::op_type::BXOR:
+    case compiler::ir::op_type::BAND:
+      return compiler::reg::inst_type::BINARY;
+    case compiler::ir::op_type::BNEG:
+      return compiler::reg::inst_type::UNARY;
+    case compiler::ir::op_type::RET:
+      return compiler::reg::inst_type::RET;
+    case compiler::ir::op_type::CALL:
+      return compiler::reg::inst_type::CALL;
+    default:
+      std::cout << type << '\n';
+      throw compiler::unsupported_operation("TODO: Support this.");
+  }
+}

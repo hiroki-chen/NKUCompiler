@@ -58,7 +58,7 @@ std::string compiler::Item_func_call_list::print_result(
     const uint32_t& indent, const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Function Call List" << std::endl;
+  oss << " Function Call List" << '\n';
   for (uint32_t i = 0; i < arguments.size(); i++) {
     oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1);
   }
@@ -69,7 +69,7 @@ std::string compiler::Item_func_call::print_result(const uint32_t& indent,
                                                    const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Function Call" << std::endl;
+  oss << " Function Call" << '\n';
   oss << identifier->print_result(indent + 2, false);
   oss << arguments->print_result(indent + 2, true);
   return oss.str();
@@ -81,7 +81,7 @@ std::string compiler::Item_func_def_arg::print_result(const uint32_t& indent,
 
   print_indent(indent, leaf, oss);
   oss << " Function Definition Argument with type " << termcolor::bright_blue
-      << compiler::to_string(type) << termcolor::reset << std::endl;
+      << compiler::to_string(type) << termcolor::reset << '\n';
   oss << identifier->print_result(indent + 2, true);
   return oss.str();
 }
@@ -90,7 +90,7 @@ std::string compiler::Item_func_def_list::print_result(const uint32_t& indent,
                                                        const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Function Definition Argument List" << std::endl;
+  oss << " Function Definition Argument List" << '\n';
   for (uint32_t i = 0; i < arguments.size(); i++) {
     oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1);
   }
@@ -102,7 +102,7 @@ std::string compiler::Item_func_def::print_result(const uint32_t& indent,
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
   oss << " Function Definition with return type " << termcolor::bright_blue
-      << compiler::to_string(return_type) << termcolor::reset << std::endl;
+      << compiler::to_string(return_type) << termcolor::reset << '\n';
   oss << identifier->print_result(indent + 2, false);
   oss << parameter->print_result(indent + 2, false);
   oss << func_body->print_result(indent + 2, false);
