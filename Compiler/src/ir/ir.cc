@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <backend/analyzer.hh>
 #include <backend/assembly_dispatcher.hh>
 #include <backend/units.hh>
 #include <common/compile_excepts.hh>

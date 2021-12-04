@@ -153,7 +153,7 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
       return_type,
       ir::local_sign +
           std::to_string(ir_context->get_symbol_table()->get_available_id()),
-      "", false, false);
+      "", true, false);
 
   const std::vector<compiler::Item_expr*> args = arguments->get_arguments();
   for (uint32_t i = 0; i < args.size(); i++) {

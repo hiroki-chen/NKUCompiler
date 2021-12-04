@@ -20,6 +20,7 @@
 #include <backend/assembly.hh>
 #include <iostream>
 #include <set>
+#include <string>
 #include <vector>
 
 namespace compiler::reg {
@@ -35,7 +36,7 @@ typedef class Machine_block {
  private:
   Machine_function* parent;
 
-  uint32_t no;
+  std::string label;
 
   std::vector<Machine_block*> pred, succ;
 
@@ -58,8 +59,8 @@ typedef class Machine_block {
 
   Machine_block() = delete;
 
-  Machine_block(Machine_function* const parent, const uint32_t& no)
-      : parent(parent), no(no) {}
+  Machine_block(Machine_function* const parent, const std::string& label)
+      : parent(parent), label(label) {}
 
   void add_instruction(Machine_instruction* const instruction) {
     inst_list.emplace_back(instruction);
@@ -106,9 +107,7 @@ typedef class Machine_function {
 
   uint32_t allocate_stack(const uint32_t& size) { return (stack_size += size); }
 
-  void add_block(Machine_block* const block) {
-    block_list.emplace_back(block);
-  }
+  void add_block(Machine_block* const block) { block_list.emplace_back(block); }
   void add_saved_regs(const std::string& register_name) {
     saved_regs.insert(register_name);
   }

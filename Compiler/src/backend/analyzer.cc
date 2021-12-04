@@ -93,7 +93,8 @@ void compiler::reg::Analyzer::generate(
   // 1. Save fp
   // 2. fp = sp
   // 3. Save callee saved register
-  // 4. Allocate stack space for local variable. [We use explicit mov $arg... to handle this.]
+  // 4. Allocate stack space for local variable. [We use explicit mov $arg... to
+  // handle this.]
 
   asm_builder->set_function(func_cur);
 
@@ -137,13 +138,12 @@ void compiler::reg::Analyzer::generate(
       allocate = false;
     }
   }
-  unit_cur->add_function(func_cur);
 }
 
 void compiler::reg::Analyzer::generate(compiler::ir::CFG_block* const block) {
   compiler::reg::Machine_function* const cur_func = asm_builder->get_function();
   compiler::reg::Machine_block* const cur_block =
-      new compiler::reg::Machine_block(cur_func, block->get_id());
+      new compiler::reg::Machine_block(cur_func, block->get_name());
   asm_builder->set_block(cur_block);
 
   for (compiler::ir::IR ir : *block->get_ir_list()) {

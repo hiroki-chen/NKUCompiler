@@ -127,11 +127,10 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
   reg::Machine_operand* const operand_b = ir->get_op2()->emit_machine_operand();
 
   // Before simply generating machine instructions, we shall first check whether
-  // the operands are BOTH IMMEDIATES:
-  // ADD r0, #1, #2 => This is forbidden in ARM assembly.
+  // the first operand is BOTH IMMEDIATE:
+  // ADD r0, #1,  => This is forbidden in ARM assembly.
   reg::Machine_operand* operand_a = nullptr;
-  if (false == ir->get_op1()->get_is_var() &&
-      false == ir->get_op2()->get_is_var()) {
+  if (false == ir->get_op1()->get_is_var()) {
     const std::string id = compiler::concatenate(
         reg::virtual_sign, asm_builder->get_available_id());
     // Insert an explicit MOV!
@@ -202,20 +201,34 @@ void compiler::Assembly_dispatcher_mov::emit_machine_code(
 }
 
 void compiler::Assembly_dispatcher_stack::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {}
+    compiler::reg::Assembly_builder* const asm_builder) const {
+  // This should be the "push argument" statements.
+}
 
 void compiler::Assembly_dispatcher_alloca::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {}
+    compiler::reg::Assembly_builder* const asm_builder) const {
+  return;
+  // No need to emit anything.
+}
 
 void compiler::Assembly_dispatcher_call::emit_machine_code(
     compiler::reg::Assembly_builder* const asm_builder) const {
-    // TODO: MOV arguments.
+  // TODO: MOV arguments.
 }
 
 void compiler::Assembly_dispatcher_return::emit_machine_code(
     compiler::reg::Assembly_builder* const asm_builder) const {
   reg::Machine_block* const cur_block = asm_builder->get_block();
   // Handle return value. This should always be stored in r0.
+  if (ir->get_dst() != nullptr) {
+    reg::Machine_operand* const r0 =
+        new reg::Machine_operand(reg::operand_type::REG, "r0");
+    reg::Machine_operand* const return_value =
+        ir->get_dst()->emit_machine_operand();
+    reg::Machine_instruction_mov* const ret = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r0, return_value);
+    cur_block->add_instruction(ret);
+  }
 
   // The callee should restore the envionment.
   // ldr r14, [sp,#0]

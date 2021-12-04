@@ -215,32 +215,56 @@ void compiler::reg::Machine_instruction_binary::emit_assembly(
     std::ostream& os) const {
   switch (op) {
     case ADD:
-      os << compiler::generate_assembly("\tadd ", def_list[0]->print(),
+      os << compiler::generate_assembly("\tadd", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
          << '\n';
       break;
     case SUB:
-      os << compiler::generate_assembly("\tsub ", def_list[0]->print(),
+      os << compiler::generate_assembly("\tsub", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
          << '\n';
       break;
     case MUL:
-      os << compiler::generate_assembly("\tmul ", def_list[0]->print(),
+      os << compiler::generate_assembly("\tmul", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
          << '\n';
       break;
     case DIV:
-      os << compiler::generate_assembly("\tsdiv ", def_list[0]->print(),
+      os << compiler::generate_assembly("\tsdiv", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
          << '\n';
       break;
-    default: {
-      // TODO: Implement me.
-    }
+    case BAND:
+      os << compiler::generate_assembly("\tand", def_list[0]->print(),
+                                        use_list[0]->print(),
+                                        use_list[1]->print())
+         << '\n';
+      break;
+    case BOR:
+      os << compiler::generate_assembly("\tor", def_list[0]->print(),
+                                        use_list[0]->print(),
+                                        use_list[1]->print())
+         << '\n';
+      break;
+    case BXOR:
+      os << compiler::generate_assembly("\txor", def_list[0]->print(),
+                                        use_list[0]->print(),
+                                        use_list[1]->print())
+         << '\n';
+      break;
+
+    case MOD:
+      os << compiler::generate_assembly("\tand", def_list[0]->print(),
+                                        use_list[0]->print(),
+                                        use_list[1]->print())
+         << '\n';
+      break;
+    default:
+      throw compiler::unsupported_operation("Error: This binary operation is not supported!");
   }
 }
 
