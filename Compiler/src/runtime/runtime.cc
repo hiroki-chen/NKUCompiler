@@ -152,6 +152,7 @@ void compiler::Compiler_runtime::run(void) {
         compiler::reg::Analyzer* const analyzer =
             new compiler::reg::Analyzer(cfg_builder->get_functions());
         analyzer->generate_code(oss);
+        res = oss.str();
       }
 
       output_file << res;

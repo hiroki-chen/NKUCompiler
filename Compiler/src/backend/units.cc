@@ -17,18 +17,31 @@
 #include <backend/units.hh>
 #include <common/utils.hh>
 
+static std::string escape_string(const std::string& in) {
+  std::string ret = std::move(in);
+
+  if (ret.find("@") != std::string::npos) {
+    ret.replace(ret.find("@"), 1, "");
+  }
+  return ret;
+}
+
 void compiler::reg::Machine_block::emit_assembly(std::ostream& os) const {
   // Emit the label.
-  os << ".L" << no << ":" << '\n';
-  for (compiler::reg::Machine_instruction* const instruction : inst_list) {
-    instruction->emit_assembly(os);
+  if (false == inst_list.empty()) {
+    os << escape_string(label) << ":\n";
+    for (compiler::reg::Machine_instruction* const instruction : inst_list) {
+      instruction->emit_assembly(os);
+    }
   }
 }
 
 void compiler::reg::Machine_function::emit_assembly(std::ostream& os) const {
-  os << ".globl " << function_name << '\n';
-  os << ".type " << function_name << ", %%function" << '\n';
-  os << function_name << ":" << '\n';
+  const std::string demangled_func =
+      function_name.substr(1, function_name.find_last_of("_") - 1);
+  os << ".globl " << demangled_func << '\n';
+  os << ".type " << demangled_func << ", %function" << '\n';
+  os << demangled_func << ":" << '\n';
   // Allocate the stack and preserve the environment.
   compiler::generate_assembly("\tsub", reg::stack_pointer, reg::stack_pointer,
                               this->stack_size);
@@ -48,7 +61,6 @@ void compiler::reg::Machine_unit::emit_assembly(std::ostream& os) const {
   os << compiler::reg::assembly_template;
   emit_global(os);
 
-  // Generate each function.
   for (compiler::reg::Machine_function* const func : func_list) {
     func->emit_assembly(os);
   }
