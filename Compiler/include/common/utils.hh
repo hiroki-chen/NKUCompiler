@@ -17,6 +17,7 @@
 #ifndef UTILS_HH
 #define UTILS_HH
 
+#include <backend/assembly.hh>
 #include <common/compile_excepts.hh>
 #include <common/types.hh>
 #include <regex>
@@ -46,12 +47,13 @@ std::string concatenate(Args&&... args) {
 
 /**
  * @brief Generate an instruction for the ARM assembly.
- * 
- * Example: const std::string instruction = compiler::generate_assembly("MOV", "r0", "[sp, #16]");
+ *
+ * Example: const std::string instruction = compiler::generate_assembly("MOV",
+ * "r0", "[sp, #16]");
  *
  * @tparam Operator
  * @tparam Args
- * @param op      The type of the operator.    
+ * @param op      The type of the operator.
  * @param args    The argument of the instruction.
  * @return std::string
  */
@@ -64,7 +66,7 @@ std::string generate_assembly(Operator&& op, Args&&... args) {
     throw compiler::fatal_error("The first argument must be a string!");
   }
   std::ostringstream oss;
-  oss << op << std::string(6, ' ');
+  oss << op << ' ';
   ((oss << std::forward<Args>(args) << ", "), ...);
 
   // Trim the last comma.
@@ -123,6 +125,9 @@ void insert_with_move(std::vector<ItemType>& dst,
     dst.emplace_back(std::move(item));
   }
 }
+
+reg::inst_type to_machine_type(const ir::op_type& type);
+
 }  // namespace compiler
 
 #endif

@@ -25,15 +25,25 @@ namespace compiler {
  *
  */
 typedef class Assembly_dispatcher {
+ protected:
+  const ir::op_type type;
+
+  const ir::IR* const ir;
+
  public:
-  Assembly_dispatcher() = default;
+  Assembly_dispatcher() = delete;
+
+  Assembly_dispatcher(const ir::op_type& type, const ir::IR* const ir)
+      : type(type), ir(ir) {}
   /**
    * @brief Get a dispatcher based on the operation type.
    *
    * @param type
+	 * @param ir
    * @return Assembly_dispatcher*
    */
-  static Assembly_dispatcher* dispatch(const ir::op_type& type);
+  static Assembly_dispatcher* dispatch(const ir::op_type& type,
+                                       const ir::IR* const ir);
 
   /**
    * @brief Generate the corresponding machine code for each instructions.
@@ -46,15 +56,33 @@ typedef class Assembly_dispatcher {
 
 typedef class Assembly_dispatcher_binary final : public Assembly_dispatcher {
  public:
-  Assembly_dispatcher_binary() = default;
+  Assembly_dispatcher_binary() = delete;
+
+  Assembly_dispatcher_binary(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
 } Assembly_dispatcher_binary;
 
+
+typedef class Assembly_dispatcher_call final : public Assembly_dispatcher {
+ public:
+  Assembly_dispatcher_call() = delete;
+
+  Assembly_dispatcher_call(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
+
+  virtual void emit_machine_code(
+      reg::Assembly_builder* const asm_builder) const override;
+} Assembly_dispatcher_call;
+
 typedef class Assembly_dispatcher_stack final : public Assembly_dispatcher {
  public:
-  Assembly_dispatcher_stack() = default;
+  Assembly_dispatcher_stack() = delete;
+
+  Assembly_dispatcher_stack(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
@@ -62,7 +90,10 @@ typedef class Assembly_dispatcher_stack final : public Assembly_dispatcher {
 
 typedef class Assembly_dispatcher_cmp final : public Assembly_dispatcher {
  public:
-  Assembly_dispatcher_cmp() = default;
+  Assembly_dispatcher_cmp() = delete;
+
+  Assembly_dispatcher_cmp(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
@@ -70,7 +101,10 @@ typedef class Assembly_dispatcher_cmp final : public Assembly_dispatcher {
 
 typedef class Assembly_dispatcher_mov final : public Assembly_dispatcher {
  public:
-  Assembly_dispatcher_mov() = default;
+  Assembly_dispatcher_mov() = delete;
+
+  Assembly_dispatcher_mov(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
@@ -78,15 +112,32 @@ typedef class Assembly_dispatcher_mov final : public Assembly_dispatcher {
 
 typedef class Assembly_dispatcher_unary final : public Assembly_dispatcher {
  public:
-  Assembly_dispatcher_unary() = default;
+  Assembly_dispatcher_unary() = delete;
+
+  Assembly_dispatcher_unary(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
 } Assembly_dispatcher_unary;
 
+typedef class Assembly_dispatcher_return final : public Assembly_dispatcher {
+ public:
+  Assembly_dispatcher_return() = delete;
+
+  Assembly_dispatcher_return(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
+
+  virtual void emit_machine_code(
+      reg::Assembly_builder* const asm_builder) const override;
+} Assembly_dispatcher_return;
+
 typedef class Assembly_dispatcher_branch final : public Assembly_dispatcher {
  public:
-  Assembly_dispatcher_branch() = default;
+  Assembly_dispatcher_branch() = delete;
+
+  Assembly_dispatcher_branch(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
@@ -94,7 +145,10 @@ typedef class Assembly_dispatcher_branch final : public Assembly_dispatcher {
 
 typedef class Assembly_dispatcher_alloca final : public Assembly_dispatcher {
  public:
-  Assembly_dispatcher_alloca() = default;
+  Assembly_dispatcher_alloca() = delete;
+
+  Assembly_dispatcher_alloca(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;

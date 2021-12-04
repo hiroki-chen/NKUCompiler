@@ -53,7 +53,7 @@ compiler::ir::Operand::Operand(const var_type& type,
       is_var(is_var),
       is_ptr(is_ptr) {}
 
-compiler::reg::Machine_operand* compiler::ir::Operand::emit_machine_vode(
+compiler::reg::Machine_operand* compiler::ir::Operand::emit_machine_operand(
     void) const {
   // Temporary variables and local variables can be differentiated by their
   // prefixes. TEMP: %t, VAR: %v.
@@ -138,9 +138,14 @@ compiler::ir::IR::IR(const IR& ir)
 
 void compiler::ir::IR::emit_machine_code(
     compiler::reg::Assembly_builder* const asm_builder) const {
+  // We do not handle NOP.
+  if (type == compiler::ir::op_type::NOP) {
+    return;
+  }
   // Let a dispatcher do the job.
+  // const_cast<compiler::ir::IR*>(this)->emit_ir();
   compiler::Assembly_dispatcher* const dispatcher =
-      compiler::Assembly_dispatcher::dispatch(type);
+      compiler::Assembly_dispatcher::dispatch(type, this);
   dispatcher->emit_machine_code(asm_builder);
 }
 
@@ -152,7 +157,7 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   if (type == ir::op_type::FUNC || type == ir::op_type::GLOBAL_BEGIN) {
     FORMAT(output, op_name[type], 0x10);
   } else if (type == ir::op_type::LBL) {
-    output << std::endl;
+    output << '\n';
   } else if (type == ir::op_type::END_FUNC || type == ir::op_type::GLOBAL_END) {
     FORMAT(output, op_name[type], 0x10);
   } else {
@@ -186,7 +191,7 @@ void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
   }
 
   if (type == ir::op_type::END_FUNC || type == ir::op_type::GLOBAL_END) {
-    output << std::endl;
+    output << '\n';
   }
 }
 

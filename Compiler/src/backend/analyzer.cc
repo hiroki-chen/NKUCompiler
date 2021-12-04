@@ -84,6 +84,17 @@ void compiler::reg::Analyzer::generate(
   compiler::reg::Machine_unit* const unit_cur = asm_builder->get_unit();
   compiler::reg::Machine_function* const func_cur =
       new compiler::reg::Machine_function(unit_cur, func_name);
+
+  const uint32_t stack_size =
+      4 * (1 + std::stoul(func_name.substr(1 + func_name.find_last_of("_"))));
+  func_cur->allocate_stack(stack_size);  // May be used later?
+
+  // Hint:
+  // 1. Save fp
+  // 2. fp = sp
+  // 3. Save callee saved register
+  // 4. Allocate stack space for local variable. [We use explicit mov $arg... to handle this.]
+
   asm_builder->set_function(func_cur);
 
   std::map<compiler::ir::CFG_block*, compiler::reg::Machine_block*>
@@ -97,10 +108,11 @@ void compiler::reg::Analyzer::generate(
   }
 
   // Add preds and succs.
+  bool allocate = true;
   for (compiler::ir::CFG_block* const block : function) {
     // Handle one block.
     compiler::reg::Machine_block* const machine_block = cfg_to_machine[block];
-    
+
     const std::vector<compiler::ir::CFG_block*> preds = block->get_preds();
     const std::vector<compiler::ir::CFG_block*> succs = block->get_succs();
     for (auto pred = preds.begin(); pred != preds.end(); pred++) {
@@ -108,6 +120,21 @@ void compiler::reg::Analyzer::generate(
     }
     for (auto succ = succs.begin(); succ != succs.end(); succ++) {
       machine_block->add_succ(cfg_to_machine[*succ]);
+    }
+
+    // SUB sp, sp, #4
+    // STR r14, [sp,#0]
+    if (allocate == true) {
+      reg::Machine_operand* const size = new reg::Machine_operand(
+          reg::operand_type::IMM, std::to_string(stack_size));
+      reg::Machine_operand* const sp =
+          new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
+      reg::Machine_instruction_binary* const sub =
+          new reg::Machine_instruction_binary(
+              machine_block, reg::binary_type::SUB, sp, sp, size);
+      machine_block->add_instruction(sub);
+
+      allocate = false;
     }
   }
   unit_cur->add_function(func_cur);

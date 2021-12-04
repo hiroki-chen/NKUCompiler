@@ -77,7 +77,7 @@ std::string compiler::reg::Machine_operand::print(void) const {
       break;
     }
     case LABEL: {
-      if (label.substr(0, 2).compare(".L") == 0) {
+      if (label.substr(0, 3).compare(".LB") == 0) {
         oss << label;
       } else {
         oss << "addr_" << label;
@@ -194,7 +194,7 @@ void compiler::reg::Machine_instruction_load::emit_assembly(
   // Load from immediate value.
   // E.g.: ldr r8, =8
   if (use_list[0]->is_imm()) {
-    os << "=" << use_list[0]->get_value() << std::endl;
+    os << "=" << use_list[0]->get_value() << '\n';
     return;
   }
 
@@ -207,7 +207,7 @@ void compiler::reg::Machine_instruction_load::emit_assembly(
       os << ", " << use_list[1]->print();
     }
 
-    os << "]" << std::endl;
+    os << "]" << '\n';
   }
 }
 
@@ -218,23 +218,26 @@ void compiler::reg::Machine_instruction_binary::emit_assembly(
       os << compiler::generate_assembly("\tadd ", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
-         << std::endl;
-
+         << '\n';
+      break;
     case SUB:
       os << compiler::generate_assembly("\tsub ", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
-         << std::endl;
+         << '\n';
+      break;
     case MUL:
       os << compiler::generate_assembly("\tmul ", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
-         << std::endl;
+         << '\n';
+      break;
     case DIV:
       os << compiler::generate_assembly("\tsdiv ", def_list[0]->print(),
                                         use_list[0]->print(),
                                         use_list[1]->print())
-         << std::endl;
+         << '\n';
+      break;
     default: {
       // TODO: Implement me.
     }
@@ -251,7 +254,7 @@ void compiler::reg::Machine_instruction_store::emit_assembly(
   if (use_list.size() > 2) {
     os << ", " << use_list[2]->print();
   }
-  os << "]" << std::endl;
+  os << "]" << '\n';
 }
 
 void compiler::reg::Machine_instruction_mov::emit_assembly(
@@ -286,7 +289,7 @@ void compiler::reg::Machine_instruction_mov::emit_assembly(
       break;
     }
   }
-  os << def_list[0]->print() << ", " << use_list[0]->print() << std::endl;
+  os << def_list[0]->print() << ", " << use_list[0]->print() << '\n';
 }
 
 void compiler::reg::Machine_instruction_branch::emit_assembly(
@@ -329,7 +332,7 @@ void compiler::reg::Machine_instruction_branch::emit_assembly(
       break;
     }
   }
-  os << use_list.front()->print() << std::endl;
+  os << use_list.front()->print() << '\n';
 }
 
 void compiler::reg::Machine_instruction_stack::emit_assembly(
@@ -337,14 +340,14 @@ void compiler::reg::Machine_instruction_stack::emit_assembly(
   // Caveat: We do not support scalar push / pop operations.
   // E.g.: push {r0, r1} is not supported.
   if (op == PUSH) {
-    os << "\tpush " << use_list[0]->print() << std::endl;
+    os << "\tpush " << use_list[0]->print() << '\n';
   } else {
-    os << "\tpop " << use_list[0]->print() << std::endl;
+    os << "\tpop " << use_list[0]->print() << '\n';
   }
 }
 
 void compiler::reg::Machine_instruction_cmp::emit_assembly(
     std::ostream& os) const {
   os << "\tcmp " << use_list[0]->print() << ", " << use_list[1]->print()
-     << std::endl;
+     << '\n';
 }

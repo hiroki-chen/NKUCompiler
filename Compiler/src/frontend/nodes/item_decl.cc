@@ -80,7 +80,7 @@ std::string compiler::Item_stmt_decl::print_result(const uint32_t& indent,
                                                    const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Declaration" << std::endl;
+  oss << " Declaration" << '\n';
 
   for (uint32_t i = 0; i < declarations.size(); i++) {
     oss << declarations[i]->print_result(indent + 2,
@@ -93,7 +93,7 @@ std::string compiler::Item_decl_var::print_result(const uint32_t& indent,
                                                   const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Variable Declaration" << std::endl;
+  oss << " Variable Declaration" << '\n';
   oss << identifier->print_result(indent + 2, true);
   return oss.str();
 }
@@ -107,7 +107,7 @@ std::string compiler::Item_decl_var_init::print_result(const uint32_t& indent,
   if (is_const == true) {
     oss << " and is CONST" << termcolor::reset;
   }
-  oss << std::endl;
+  oss << '\n';
   oss << identifier->print_result(indent + 2, false);
   oss << expression->print_result(indent + 2, true);
 
@@ -118,7 +118,7 @@ std::string compiler::Item_decl_array::print_result(const uint32_t& indent,
                                                     const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Array Declaration" << std::endl;
+  oss << " Array Declaration" << '\n';
   oss << identifier->print_result(indent + 2, true);
   return oss.str();
 }
@@ -127,7 +127,7 @@ std::string compiler::Item_decl_array_init::print_result(
     const uint32_t& indent, const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Array Declaration with initial value" << std::endl;
+  oss << " Array Declaration with initial value" << '\n';
   oss << identifier->print_result(indent + 2, false);
   oss << init_value->print_result(indent + 2, true);
   return oss.str();
@@ -137,7 +137,7 @@ std::string compiler::Item_decl_pointer::print_result(const uint32_t& indent,
                                                       const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Pointer Declaration" << std::endl;
+  oss << " Pointer Declaration" << '\n';
   oss << identifier->print_result(indent + 2, true);
   return oss.str();
 }
@@ -150,7 +150,7 @@ std::string compiler::Item_decl_pointer_init::print_result(
   if (is_const == true) {
     oss << " and is CONST" << termcolor::reset;
   }
-  oss << std::endl;
+  oss << '\n';
   oss << identifier->print_result(indent + 2, false);
   oss << expression->print_result(indent + 2, true);
   return oss.str();
@@ -160,7 +160,7 @@ std::string compiler::Item_decl_struct::print_result(const uint32_t& indent,
                                                      const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Struct Declaration" << std::endl;
+  oss << " Struct Declaration" << '\n';
   oss << identifier->print_result(indent + 2, false);
 
   if (struct_body != nullptr) {

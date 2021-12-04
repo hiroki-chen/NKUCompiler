@@ -17,6 +17,14 @@
 #include <common/termcolor.hh>
 #include <runtime/runtime.hh>
 
+static const auto __ = []() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    std::setvbuf(stdout, nullptr, _IOFBF, BUFSIZ);
+    return nullptr;
+}();
+
 using compiler::Command_parser;
 using compiler::Compiler_runtime;
 

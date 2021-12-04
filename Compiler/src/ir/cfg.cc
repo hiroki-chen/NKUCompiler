@@ -57,7 +57,8 @@ void compiler::ir::CFG_builder::construct_mapping(
     } else if (ir_list[i].get_op_type() == compiler::ir::op_type::FUNC) {
       // Build a new CFG for a function.
       id = 1;
-      const std::string function_name = std::move(ir_list[i].get_label());
+      const std::string function_name = compiler::concatenate(
+          ir_list[i].get_label(), "_", ir_list[i].get_op2()->get_identifier());
 
       // Construct block body.
       size_t j = i + 1;
@@ -168,7 +169,7 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
 // Iterate over the block and remove dead basic blocks.
 // If any, merge continuos blocks.
 #ifdef COMPILER_DEBUG
-  std::cout << "Pruning and merging basic blocks!" << std::endl;
+  std::cout << "Pruning and merging basic blocks!" << '\n';
 #endif
 
   for (auto& block : functions) {
@@ -184,7 +185,7 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
       this->prettier_ir(std::cout);
 #endif
       for (auto iter = cfg_blocks.begin(); iter != cfg_blocks.end();) {
-                // Entry point should not be touched!
+        // Entry point should not be touched!
         if ((*iter)->get_id() == 1) {
           iter++;
           continue;
@@ -215,7 +216,7 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
               pred->get_succs().front()->get_id() == (*iter)->get_id()) {
 #ifdef COMPILER_DEBUG
             std::cout << "Merging " << pred->get_name() << " and "
-                      << (*iter)->get_name() << std::endl;
+                      << (*iter)->get_name() << '\n';
 #endif  // Remove predecessor's JUMP instruction.
             pred->remove_jump();
             // Merge.
@@ -269,19 +270,19 @@ void compiler::ir::CFG_block::splice(const ir::ir_list& ir_list) {
 #ifdef COMPILER_DEBUG
 void compiler::ir::CFG_builder::print_cfg(void) const {
   for (auto item : functions) {
-    std::cout << item.first << ": " << std::endl;
+    std::cout << item.first << ": " << '\n';
     for (auto block : item.second) {
-      std::cout << "------------" << std::endl;
+      std::cout << "------------" << '\n';
       std::cout << block->get_id() << "'s preds: ";
       for (auto preds : block->get_preds()) {
         std::cout << preds->get_id() << " ";
       }
-      std::cout << std::endl;
+      std::cout << '\n';
       std::cout << block->get_id() << "'s succs: ";
       for (auto succs : block->get_succs()) {
         std::cout << succs->get_id() << " ";
       }
-      std::cout << std::endl;
+      std::cout << '\n';
     }
   }
 }
@@ -289,9 +290,9 @@ void compiler::ir::CFG_builder::print_cfg(void) const {
 
 void compiler::ir::CFG_builder::prettier_ir(std::ostream& out) {
   for (auto item : functions) {
-    out << item.first << ": " << std::endl;
+    out << item.first << ": " << '\n';
     for (auto block : item.second) {
-      out << block->get_name() << ": " << std::endl;
+      out << block->get_name() << ": " << '\n';
       for (auto ir : *(block->get_ir_list())) {
         ir.emit_ir(out);
       }

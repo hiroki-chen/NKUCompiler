@@ -74,12 +74,11 @@ void compiler::Item_func_def::generate_ir_helper(
     const size_t argument_number = parameter->get_arg_number();
 
     // BEGIN_FUNCTION.
-    ir_list.emplace_back(
-        ir::op_type::FUNC,
-        new ir::Operand(
-            ir::var_type_to_string(compiler::to_ir_type(return_type))),
-        new ir::Operand(compiler::concatenate("argnum: ", argument_number)),
-        ir::global_sign + identifier->get_name());
+    ir_list.emplace_back(ir::op_type::FUNC, nullptr,
+                         new ir::Operand(ir::var_type_to_string(
+                             compiler::to_ir_type(return_type))),
+                         new ir::Operand(std::to_string(argument_number)),
+                         ir::global_sign + identifier->get_name());
 
     // Generate an explicit label for CFG generation.
     ir_list.emplace_back(
@@ -119,7 +118,7 @@ void compiler::Item_func_def::generate_ir_helper(
     ir_context->leave_scope();
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     exit(1);
   }
 }
@@ -134,7 +133,7 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
         ir_context->get_symbol_table()->find_symbol(identifier->get_name());
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
     exit(1);
   }
 
@@ -161,12 +160,16 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
     operands.emplace_back(args[i]->eval_runtime(ir_context, ir_list));
   }
 
+  ir::IR func_call(ir::op_type::CALL, dst, identifier->get_name());
+
   // Set arguments.
   for (uint32_t i = 0; i < args.size(); i++) {
     ir::Operand* arg = args[i]->eval_runtime(ir_context, ir_list);
-    ir_list.emplace_back(ir::op_type::PUSH, arg);
+    ir::IR ir_arg(ir::op_type::PUSH, arg);
+    ir_list.emplace_back(ir_arg);
+    func_call.add_func_call(&ir_arg);
   }
 
-  ir_list.emplace_back(ir::op_type::CALL, dst, identifier->get_name());
+  ir_list.emplace_back(func_call);
   return dst;
 }

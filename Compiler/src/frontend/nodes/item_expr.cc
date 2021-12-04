@@ -43,7 +43,7 @@ std::string compiler::Item_expr_cond::print_result(const uint32_t& indent,
                                                    const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Conditional Expression" << std::endl;
+  oss << " Conditional Expression" << '\n';
   oss << expr->print_result(indent + 2, true);
   return oss.str();
 }
@@ -52,7 +52,7 @@ std::string compiler::Item_expr_comma::print_result(const uint32_t& indent,
                                                     const bool& leaf) const {
   std::ostringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Comma Expression" << std::endl;
+  oss << " Comma Expression" << '\n';
   for (uint32_t i = 0; i < expressions.size(); i++) {
     oss << expressions[i]->print_result(
         indent + 2, i == expressions.size() - 1 ? true : false);
@@ -67,7 +67,7 @@ std::string compiler::Item_expr_binary::print_result(const uint32_t& indent,
   print_indent(indent, leaf, oss);
   oss << " Binary Expression with type " << termcolor::bright_blue
       << compiler::to_string(get_binary_type()) << termcolor::reset
-      << std::endl;
+      << '\n';
   oss << lhs->print_result(indent + 2, false);
   oss << rhs->print_result(indent + 2, true);
   return oss.str();
@@ -79,7 +79,7 @@ std::string compiler::Item_expr_unary::print_result(const uint32_t& indent,
 
   print_indent(indent, leaf, oss);
   oss << " Unary Expression with type " << termcolor::bright_blue
-      << compiler::to_string(get_unary_type()) << termcolor::reset << std::endl;
+      << compiler::to_string(get_unary_type()) << termcolor::reset << '\n';
   oss << expr->print_result(indent + 2, false);
   return oss.str();
 }

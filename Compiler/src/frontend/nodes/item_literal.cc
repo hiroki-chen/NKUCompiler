@@ -62,15 +62,15 @@ std::string compiler::Item_literal_numeric::print_result(
 
   switch (get_literal_type()) {
     case Item_literal::literal_type::INT_TYPE: {
-      oss << int(value) << termcolor::reset << std::endl;
+      oss << int(value) << termcolor::reset << '\n';
       break;
     }
     case Item_literal::literal_type::CHAR_TYPE: {
-      oss << char(value) << termcolor::reset << std::endl;
+      oss << char(value) << termcolor::reset << '\n';
       break;
     }
     case Item_literal::literal_type::REAL_TYPE: {
-      oss << double(value) << termcolor::reset << std::endl;
+      oss << double(value) << termcolor::reset << '\n';
       break;
     }
     default: {
@@ -86,7 +86,7 @@ std::string compiler::Item_literal_string::print_result(
   std::ostringstream oss;
 
   oss << " Literal String with value " << termcolor::red << str
-      << termcolor::reset << std::endl;
+      << termcolor::reset << '\n';
   return oss.str();
 }
 
@@ -94,7 +94,7 @@ std::string compiler::Item_literal_array_init::print_result(
     const uint32_t& indent, const bool& leaf) const {
   std::stringstream oss;
   print_indent(indent, leaf, oss);
-  oss << " Literal Array Init" << std::endl;
+  oss << " Literal Array Init" << '\n';
 
   if (expression != nullptr) {
     oss << expression->print_result(indent + 2, false);

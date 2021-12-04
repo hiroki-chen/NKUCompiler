@@ -100,13 +100,13 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
   }
 
   std::cout << "\033[4;90;107mTakanashi Compiler is running!!\033[0m"
-            << std::endl;
+            << '\n';
 }
 
 void compiler::Compiler_runtime::run(void) {
   try {
     for (uint32_t i = 0; i < input_file.size(); i++) {
-      std::cout << "Reading " << input_file[i] << std::endl;
+      std::cout << "Reading " << input_file[i] << '\n';
       yyset_in(fopen(input_file[i].data(), "r"));
       yyset_lineno(1);
       yyparse();
@@ -135,8 +135,9 @@ void compiler::Compiler_runtime::run(void) {
 
       // Generate the IR.
       compiler::ir::IRContext* const ir_context = new compiler::ir::IRContext();
-
       root->generate_ir(ir_context, ir_list);
+      compiler::ir::CFG_builder* const cfg_builder =
+          new compiler::ir::CFG_builder(ir_list);
 
       // Check what should be printed.
       if (print_ast) {
@@ -145,18 +146,12 @@ void compiler::Compiler_runtime::run(void) {
         for (auto ir : ir_list) {
           ir.emit_ir();
         }
-        compiler::ir::CFG_builder* const cfg_builder =
-            new compiler::ir::CFG_builder(ir_list);
-        cfg_builder->prettier_ir(oss);
+        // cfg_builder->prettier_ir(oss);
         res = oss.str();
-
-#ifdef COMPILER_DEBUG
-        cfg_builder->print_cfg();
-#endif
-
       } else if (generate_assembly) {
-        // compiler::reg::Allocator* allocator = new
-        // compiler::reg::Allocator(ir_list);
+        compiler::reg::Analyzer* const analyzer =
+            new compiler::reg::Analyzer(cfg_builder->get_functions());
+        analyzer->generate_code(oss);
       }
 
       output_file << res;
@@ -167,7 +162,7 @@ void compiler::Compiler_runtime::run(void) {
   } catch (const std::exception& e) {
     // Error handler.
     std::cerr << termcolor::red << termcolor::bold << e.what()
-              << termcolor::reset << std::endl;
+              << termcolor::reset << '\n';
   }
 }
 
@@ -177,11 +172,11 @@ void compiler::Command_parser::parse(void) {
 
     // We store configuration in a global accessable field.
     if (result.count("help")) {
-      std::cout << options->help() << std::endl;
+      std::cout << options->help() << '\n';
       exit(0);
     }
   } catch (const cxxopts::OptionException& e) {
-    std::cout << "Error: " << e.what() << std::endl;
+    std::cout << "Error: " << e.what() << '\n';
     exit(1);
   }
 }
