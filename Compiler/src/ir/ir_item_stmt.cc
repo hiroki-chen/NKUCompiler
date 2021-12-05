@@ -271,7 +271,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
     } else if (rhs->get_identifier().front() == '@') /* Global variable. */ {
       // symbol->set_name(rhs->get_identifier());
       ir_list.emplace_back(ir::op_type::MOV,
-                           new ir::Operand(rhs->get_identifier()));
+                           new ir::Operand(rhs->get_identifier()), rhs);
     } else /* Normal const expression. */ {
       ir_list.emplace_back(ir::op_type::MOV,
                            new ir::Operand(symbol->get_name()), rhs);

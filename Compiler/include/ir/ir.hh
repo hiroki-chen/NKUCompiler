@@ -50,7 +50,7 @@ static const std::string global_sign = "@";
 
 static const std::string local_sign = "%t";
 
-static const std::string arg_sign = "$arg";
+static const std::string arg_sign = "$";
 
 using ir_list = std::vector<IR>;
 /**

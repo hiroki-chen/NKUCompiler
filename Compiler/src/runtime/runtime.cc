@@ -99,8 +99,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
     input_file.emplace_back(input);
   }
 
-  std::cout << "\033[4;90;107mTakanashi Compiler is running!!\033[0m"
-            << '\n';
+  std::cout << "\033[4;90;107mTakanashi Compiler is running!!\033[0m" << '\n';
 }
 
 void compiler::Compiler_runtime::run(void) {
@@ -149,8 +148,8 @@ void compiler::Compiler_runtime::run(void) {
         // cfg_builder->prettier_ir(oss);
         res = oss.str();
       } else if (generate_assembly) {
-        compiler::reg::Analyzer* const analyzer =
-            new compiler::reg::Analyzer(cfg_builder->get_functions());
+        compiler::reg::Analyzer* const analyzer = new compiler::reg::Analyzer(
+            cfg_builder->get_functions(), cfg_builder->get_global_defs());
         analyzer->generate_code(oss);
         res = oss.str();
       }

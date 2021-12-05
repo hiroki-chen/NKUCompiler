@@ -113,6 +113,8 @@ typedef class CFG_builder {
     return functions;
   }
 
+  CFG_block* get_global_defs(void) const { return global_defs; }
+
 #ifdef COMPILER_DEBUG
   void print_cfg(void) const;
 #endif

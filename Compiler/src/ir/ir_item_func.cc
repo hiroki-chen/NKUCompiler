@@ -100,8 +100,9 @@ void compiler::Item_func_def::generate_ir_helper(
         const std::string var =
             ir::local_sign +
             std::to_string(ir_context->get_symbol_table()->get_available_id());
-        ir_list.emplace_back(ir::op_type::MOV, new ir::Operand(var),
-                             compiler::concatenate(ir::arg_sign, i));
+        ir_list.emplace_back(
+            ir::op_type::MOV, new ir::Operand(var),
+            new ir::Operand(compiler::concatenate(ir::arg_sign, i)));
         ir_context->get_symbol_table()->add_symbol(
             identifier->get_name(),
             new compiler::Symbol(var, compiler::symbol_type::VAR_TYPE));
@@ -160,16 +161,19 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
     operands.emplace_back(args[i]->eval_runtime(ir_context, ir_list));
   }
 
-  ir::IR func_call(ir::op_type::CALL, dst, identifier->get_name());
+  ir::IR* const func_call =
+      new ir::IR(ir::op_type::CALL, dst, identifier->get_name());
 
   // Set arguments.
   for (uint32_t i = 0; i < args.size(); i++) {
     ir::Operand* arg = args[i]->eval_runtime(ir_context, ir_list);
-    ir::IR ir_arg(ir::op_type::PUSH, arg);
-    ir_list.emplace_back(ir_arg);
-    func_call.add_func_call(&ir_arg);
+    ir::IR* const ir_arg =
+        new ir::IR(ir::op_type::PUSH, nullptr,
+                   OPERAND_VALUE(std::to_string(args.size() - 1 - i)), arg);
+    ir_list.emplace_back(*ir_arg);
+    func_call->add_func_call(ir_arg);
   }
 
-  ir_list.emplace_back(func_call);
+  ir_list.emplace_back(*func_call);
   return dst;
 }

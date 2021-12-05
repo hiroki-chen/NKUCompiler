@@ -77,11 +77,12 @@ std::string compiler::reg::Machine_operand::print(void) const {
       break;
     }
     case LABEL: {
-      if (label.substr(0, 3).compare(".LB") == 0) {
-        oss << label;
-      } else {
-        oss << "addr_" << label;
-      }
+      oss << label;
+      // if (label.substr(0, 3).compare(".LB") == 0) {
+      //   oss << label;
+      // } else {
+      //   oss << "addr_" << label;
+      // }
       break;
     }
   }
@@ -258,14 +259,17 @@ void compiler::reg::Machine_instruction_binary::emit_assembly(
       break;
 
     case MOD:
-      os << compiler::generate_assembly("\tand", def_list[0]->print(),
-                                        use_list[0]->print(),
-                                        use_list[1]->print())
-         << '\n';
+      handle_modulus(os);
       break;
     default:
-      throw compiler::unsupported_operation("Error: This binary operation is not supported!");
+      throw compiler::unsupported_operation(
+          "Error: This binary operation is not supported!");
   }
+}
+
+void compiler::reg::Machine_instruction_binary::handle_modulus(
+    std::ostream& os) const {
+  ;
 }
 
 void compiler::reg::Machine_instruction_store::emit_assembly(
@@ -310,6 +314,10 @@ void compiler::reg::Machine_instruction_mov::emit_assembly(
     }
     case MOVLE: {
       os << "\tmovle ";
+      break;
+    }
+    case MOV32: {
+      os << "\tmov32 ";
       break;
     }
   }

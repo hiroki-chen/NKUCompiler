@@ -17,6 +17,7 @@
 #ifndef UNITS_HH
 #define UNITS_HH
 
+#include <ir/cfg.hh>
 #include <backend/assembly.hh>
 #include <iostream>
 #include <set>
@@ -119,9 +120,15 @@ typedef class Machine_unit {
  private:
   std::vector<Machine_function*> func_list;
 
+  compiler::ir::CFG_block* const global_defs;
+
   void emit_global(std::ostream& os = std::cerr) const;
 
  public:
+  Machine_unit() = delete;
+
+  Machine_unit(compiler::ir::CFG_block* const global_defs) : global_defs(global_defs) {}
+
   std::vector<Machine_function*>* get_function_list() { return &func_list; }
 
   std::vector<Machine_function*>::iterator begin() { return func_list.begin(); }

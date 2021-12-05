@@ -85,6 +85,12 @@ static compiler::reg::binary_type to_binary_type(
     case compiler::ir::op_type::BAND: {
       return compiler::reg::binary_type::BAND;
     }
+    case compiler::ir::op_type::BOR: {
+      return compiler::reg::binary_type::BOR;
+    }
+    case compiler::ir::op_type::BXOR: {
+      return compiler::reg::binary_type::BXOR;
+    }
     default:
       throw compiler::fatal_error("Error: Internal logic error.");
   }
@@ -124,13 +130,52 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
   // Construct basic information.
   reg::Machine_block* const block = asm_builder->get_block();
   reg::Machine_operand* const dst = ir->get_dst()->emit_machine_operand();
-  reg::Machine_operand* const operand_b = ir->get_op2()->emit_machine_operand();
+  reg::Machine_operand* operand_a = nullptr;
+  reg::Machine_operand* operand_b = nullptr;
+
+  // Check if there is a movement from global variable to the register.
+  if (ir->get_op1()->get_identifier().substr(0, 1) == ir::global_sign) {
+    // CALL MOV32 + ldr.
+    // mov32 r0, symbol
+    // ldr r0, [r0]
+    reg::Machine_operand* const tmp = new reg::Machine_operand(
+        reg::operand_type::VREG,
+        compiler::concatenate(reg::virtual_sign,
+                              asm_builder->get_available_id()));
+    reg::Machine_instruction_mov* const mov32 =
+        new reg::Machine_instruction_mov(block, reg::mov_type::MOV32, tmp,
+                                         ir->get_op1()->emit_machine_operand());
+    reg::Machine_instruction_load* const ldr =
+        new reg::Machine_instruction_load(block, tmp, tmp);
+    block->add_instruction(mov32);
+    block->add_instruction(ldr);
+    operand_a = tmp;
+  } else {
+    operand_a = ir->get_op1()->emit_machine_operand();
+  }
+
+  if (ir->get_op2()->get_identifier().substr(0, 1) == ir::global_sign) {
+    reg::Machine_operand* const tmp = new reg::Machine_operand(
+        reg::operand_type::VREG,
+        compiler::concatenate(reg::virtual_sign,
+                              asm_builder->get_available_id()));
+    reg::Machine_instruction_mov* const mov32 =
+        new reg::Machine_instruction_mov(block, reg::mov_type::MOV32, tmp,
+                                         ir->get_op2()->emit_machine_operand());
+    reg::Machine_instruction_load* const ldr =
+        new reg::Machine_instruction_load(block, tmp, tmp);
+    block->add_instruction(mov32);
+    block->add_instruction(ldr);
+    operand_b = tmp;
+  } else {
+    operand_b = ir->get_op2()->emit_machine_operand();
+  }
 
   // Before simply generating machine instructions, we shall first check whether
   // the first operand is BOTH IMMEDIATE:
   // ADD r0, #1,  => This is forbidden in ARM assembly.
-  reg::Machine_operand* operand_a = nullptr;
-  if (false == ir->get_op1()->get_is_var()) {
+  if (false == ir->get_op1()->get_is_var() &&
+      ir->get_op1()->get_identifier().substr(0, 1) != ir::global_sign) {
     const std::string id = compiler::concatenate(
         reg::virtual_sign, asm_builder->get_available_id());
     // Insert an explicit MOV!
@@ -142,8 +187,6 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
                                          ir->get_op1()->emit_machine_operand());
     block->add_instruction(m_inst_mov);
     operand_a = new reg::Machine_operand(reg::operand_type::VREG, id);
-  } else {
-    operand_a = ir->get_op1()->emit_machine_operand();
   }
 
   compiler::reg::binary_type type_bin = to_binary_type(type);
@@ -171,7 +214,6 @@ void compiler::Assembly_dispatcher_cmp::emit_machine_code(
   reg::Machine_instruction_cmp* const m_inst =
       new reg::Machine_instruction_cmp(block, lhs, rhs);
   block->add_instruction(m_inst);
-  m_inst->emit_assembly(std::cout);
 }
 
 void compiler::Assembly_dispatcher_branch::emit_machine_code(
@@ -182,7 +224,6 @@ void compiler::Assembly_dispatcher_branch::emit_machine_code(
 
   reg::Machine_instruction_branch* const m_inst =
       new reg::Machine_instruction_branch(block, to_branch_type(type), label);
-  m_inst->emit_assembly(std::cout);
   block->add_instruction(m_inst);
 }
 
@@ -202,7 +243,23 @@ void compiler::Assembly_dispatcher_mov::emit_machine_code(
 
 void compiler::Assembly_dispatcher_stack::emit_machine_code(
     compiler::reg::Assembly_builder* const asm_builder) const {
+  reg::Machine_block* const cur_block = asm_builder->get_block();
   // This should be the "push argument" statements.
+  // PUSH 0, %t1    =>    mov r0, %1
+  // Note that r0 should be protected, if r0 currently contains different data.
+  // This can be done when you allocate the registers.
+  if (type == ir::op_type::PUSH) {
+    reg::Machine_operand* const reg = new reg::Machine_operand(
+        reg::operand_type::REG,
+        compiler::concatenate("r", ir->get_op1()->get_value()));
+    reg::Machine_operand* const src = ir->get_op2()->emit_machine_operand();
+    reg::Machine_instruction_mov* const m_inst =
+        new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, reg,
+                                         src);
+    cur_block->add_instruction(m_inst);
+  } else {
+    throw compiler::unimplemented_error("Error: Not yet implemented :(");
+  }
 }
 
 void compiler::Assembly_dispatcher_alloca::emit_machine_code(
@@ -213,7 +270,15 @@ void compiler::Assembly_dispatcher_alloca::emit_machine_code(
 
 void compiler::Assembly_dispatcher_call::emit_machine_code(
     compiler::reg::Assembly_builder* const asm_builder) const {
-  // TODO: MOV arguments.
+  // The arguments are already pushed onto the stack by the stack dispatcher.
+  // We only need to generate a single BL instruction.
+  reg::Machine_block* const cur_block = asm_builder->get_block();
+  reg::Machine_operand* const func_name =
+      new reg::Machine_operand(ir->get_label());
+  reg::Machine_instruction_branch* const func_call =
+      new reg::Machine_instruction_branch(cur_block, reg::branch_type::BL,
+                                          func_name);
+  cur_block->add_instruction(func_call);
 }
 
 void compiler::Assembly_dispatcher_return::emit_machine_code(

@@ -42,8 +42,7 @@ static const std::string assembly_template =
     " \tand	\\rd, \\rd, #0xF\n"
     ".endm\n"
     ".text\n"
-    ".syntax unified\n"
-    ".cpu    arm7tdmi\n";
+    ".syntax unified\n";
 
 typedef enum inst_type {
   BINARY,
@@ -99,6 +98,7 @@ typedef enum mov_type {  // MOV CONDITIONAL.
   MOVGE,
   MOVLE,
   MOV_N,  // normal
+  MOV32,  // mov global.
 } mov_type;
 
 /**
@@ -181,6 +181,15 @@ typedef class Machine_instruction {
  *
  */
 typedef class Machine_instruction_binary final : public Machine_instruction {
+ private:
+  /**
+   * @brief This function will call GCC''s __aeabi_idivmod EABI function to
+   * perform modulus.
+   *
+   * @param os
+   */
+  void handle_modulus(std::ostream& os) const;
+
  protected:
   binary_type op;
 
