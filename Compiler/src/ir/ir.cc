@@ -64,7 +64,12 @@ compiler::reg::Machine_operand* compiler::ir::Operand::emit_machine_operand(
       return new reg::Machine_operand(reg::operand_type::VREG, identifier);
     } else if (identifier.substr(0, 1).compare(ir::global_sign) == 0) {
       // Global. => LBL.
-      return new reg::Machine_operand(identifier);
+      return new reg::Machine_operand(identifier.substr(1));
+    } else if (identifier.substr(0, 1).compare(ir::arg_sign) == 0) {
+      // Args
+      return new reg::Machine_operand(
+          reg::operand_type::REG,
+          compiler::concatenate("r", identifier.back()));
     } else {
       throw compiler::fatal_error(
           "Error: Unknown error when generating machine operand!");

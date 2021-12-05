@@ -142,8 +142,12 @@ typedef class Analyzer {
 
   const std::map<std::string, std::vector<compiler::ir::CFG_block*>> cfg_blocks;
 
+  compiler::ir::CFG_block* const global_defs;
+
   //================= Functions====================
   void reserve_for_function_call(void);
+
+  void allocate_registers(Machine_unit* const machine_unit);
 
   /**
    * @brief This function will transform a function (which is a group of basic
@@ -162,7 +166,8 @@ typedef class Analyzer {
   Analyzer() = delete;
 
   Analyzer(const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
-               cfg_blocks);
+               cfg_blocks,
+           compiler::ir::CFG_block* const global_defs);
 
   void generate_code(std::ostream& os = std::cerr);
 
