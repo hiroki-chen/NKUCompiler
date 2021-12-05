@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 
 # Copyright (c) 2021 Haobin Chen & Jiawei Xu
 #

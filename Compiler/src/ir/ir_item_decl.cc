@@ -80,6 +80,11 @@ void compiler::Item_decl_var_init::generate_ir_helper(
         ir_context->get_symbol_table()->add_const(
             identifier->get_name(),
             dynamic_cast<compiler::Symbol_const*>(symbol));
+      } else {
+        compiler::Symbol* const symbol =
+            new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE);
+        ir_context->get_symbol_table()->add_symbol(identifier->get_name(),
+                                                   symbol);
       }
     } else {
       const uint32_t id = ir_context->get_symbol_table()->get_available_id();
