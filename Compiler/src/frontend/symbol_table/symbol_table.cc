@@ -34,11 +34,16 @@ compiler::Symbol* compiler::Symbol_table::find_symbol(const std::string& name) {
     return result;
   }
 
-  // Not found. Raise an error.
-  std::ostringstream oss;
-  oss << "Error: Symbol \"" << name << "\" is not declared.";
-  throw compiler::undeclared_symbol(oss.str());
-  return nullptr;
+  // Try to find in the const table.
+  try {
+    auto result = find_const(name);
+    return result;
+  } catch (...) {
+    // Not found. Raise an error.
+    std::ostringstream oss;
+    oss << "Error: Symbol \"" << name << "\" is not declared.";
+    throw compiler::undeclared_symbol(oss.str());
+  }
 }
 
 compiler::Symbol_const* compiler::Symbol_table::find_const(
