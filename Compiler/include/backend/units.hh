@@ -17,9 +17,9 @@
 #ifndef UNITS_HH
 #define UNITS_HH
 
-#include <ir/cfg.hh>
 #include <backend/assembly.hh>
 #include <iostream>
+#include <ir/cfg.hh>
 #include <set>
 #include <string>
 #include <vector>
@@ -90,9 +90,19 @@ typedef class Machine_function {
 
   uint32_t stack_size;
 
+  /**
+   * @brief This vector saves the registers of the previous function.
+   * 
+   */
   std::set<std::string> saved_regs;
 
   std::string function_name;
+
+  /**
+   * @brief This stores the instructions for preparation of a function frame.
+   *
+   */
+  std::vector<Machine_instruction*> func_prologue;
 
  public:
   Machine_function() = delete;
@@ -109,7 +119,12 @@ typedef class Machine_function {
   uint32_t allocate_stack(const uint32_t& size) { return (stack_size += size); }
 
   void add_block(Machine_block* const block) { block_list.emplace_back(block); }
-  
+
+  void add_func_prologue_instruction(Machine_instruction* const instruction) {
+    func_prologue.emplace_back(instruction);
+  }
+
+  // What is this used for?
   void add_saved_regs(const std::string& register_name) {
     saved_regs.insert(register_name);
   }
@@ -128,7 +143,8 @@ typedef class Machine_unit {
  public:
   Machine_unit() = delete;
 
-  Machine_unit(compiler::ir::CFG_block* const global_defs) : global_defs(global_defs) {}
+  Machine_unit(compiler::ir::CFG_block* const global_defs)
+      : global_defs(global_defs) {}
 
   std::vector<Machine_function*>* get_function_list() { return &func_list; }
 

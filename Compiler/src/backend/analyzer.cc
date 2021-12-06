@@ -14,27 +14,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <backend/allocator.hh>
 #include <backend/analyzer.hh>
 #include <backend/assembly.hh>
 #include <common/utils.hh>
 #include <map>
-
-void compiler::reg::Analyzer::reserve_for_function_call(void) {
-  // ARM-v7 has enforced that these four registers cannot be used to store
-  // general variables.
-  virtual_to_physical["$arg0"] = "r0";
-  virtual_to_physical["$arg1"] = "r1";
-  virtual_to_physical["$arg2"] = "r2";
-  virtual_to_physical["$arg3"] = "r3";
-}
-
-void compiler::reg::Analyzer::set_free_register(const std::string& reg_name) {
-  virtual_to_physical[std::move(reg_name)] = true;
-  free_registers++;
-
-  // Reserve registers for function call.
-  reserve_for_function_call();
-}
 
 compiler::reg::Analyzer::Analyzer(
     const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
@@ -43,14 +27,6 @@ compiler::reg::Analyzer::Analyzer(
     : cfg_blocks(cfg_blocks), global_defs(global_defs) {
   // Create an empty Assembly_builder class for future usage :)
   asm_builder = new Assembly_builder();
-
-  // Initialize all the registers to be free.
-  for (auto reg : compiler::reg::general_registers) {
-    register_free_map[reg] = true;
-  }
-  for (auto reg : compiler::reg::argument_registers) {
-    register_free_map[reg] = true;
-  }
 }
 
 void compiler::reg::Analyzer::generate_code(std::ostream& os) {
@@ -61,7 +37,7 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
       new compiler::reg::Machine_unit(global_defs);
   asm_builder->set_unit(machine_unit);
 
-  // Traverse each functions.
+  // Traverse each function.
   for (auto func : cfg_blocks) {
     // First we will need to analyze the live variable, i.e., the so-called
     // "def-use" chain.
@@ -74,23 +50,15 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   }
 
   // TODO: Allocate registers. XJW.
-  // You need to either implement the graph-coloring algorithm or the
-  // linear-scan algorithm. Use the class "Analyzer" to do this job. If you
-  // need to add / modify / delete some data structures, feel free to do it.
-  allocate_registers(machine_unit);
-
-  // TODO: The size of the function frame can be determined after all the
-  // instructions are set?
-  // func_cur->allocate_stack(asm_builder->get_stack_size());
+  // You need to either implement the graph-colorin / linear-scan algorithm.
+  // Use the class "Allocator" to do this job. If you need to add / modify /
+  // delete some data structures, feel free to do it.
+  compiler::reg::Allocator* const allocator =
+      new compiler::reg::Allocator(machine_unit);
+  allocator->do_linear_scan();
 
   // Finally, we emit the assembly from machine unit.
   machine_unit->emit_assembly(os);
-}
-
-void compiler::reg::Analyzer::allocate_registers(
-    reg::Machine_unit* const machine_unit) {
-  // TODO.
-  // ! Add your implementations here.
 }
 
 void compiler::reg::Analyzer::generate(
@@ -99,12 +67,6 @@ void compiler::reg::Analyzer::generate(
   compiler::reg::Machine_unit* const unit_cur = asm_builder->get_unit();
   compiler::reg::Machine_function* const func_cur =
       new compiler::reg::Machine_function(unit_cur, func_name);
-
-  // Hint:
-  // 1. Save fp
-  // 2. fp = sp
-  // 3. Save callee saved register
-  // 4. Allocate stack space for local variable.
 
   asm_builder->set_function(func_cur);
 

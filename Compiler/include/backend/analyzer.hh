@@ -113,50 +113,9 @@ typedef class Analyzer {
  private:
   Assembly_builder* asm_builder;
 
-  /**
-   * @brief A hash map that stores the availability of each registers of ARM.
-   *
-   */
-  std::unordered_map<std::string, bool> register_free_map;
-
-  /**
-   * @brief A hash that stores the the mapping of virtual registers.
-   *
-   */
-  std::unordered_map<std::string, std::string> virtual_to_physical;
-
-  /**
-   * @brief The inverse of compiler::reg::Allocator::virtual_to_physical.
-   *
-   */
-  std::unordered_map<std::string, std::string> physical_to_virtual;
-
-  /**
-   * @brief Due to insufficient number of registers or some other reasons, some
-   *        variables are stored on the stack. In order to retrieve them
-   *        correctly, we need to know the offset.
-   *
-   * @note  If a virtual register is not bound to any registers, please refer to
-   * this map.
-   *
-   */
-  std::unordered_map<std::string, uint32_t> stack_offset;
-
-  /**
-   * @brief Records the number of free registers. If there is no free registers
-   * anymore, we should spill virtual registers onto the stack.
-   *
-   */
-  uint32_t free_registers;
-
   const std::map<std::string, std::vector<compiler::ir::CFG_block*>> cfg_blocks;
 
   compiler::ir::CFG_block* const global_defs;
-
-  //================= Functions====================
-  void reserve_for_function_call(void);
-
-  void allocate_registers(Machine_unit* const machine_unit);
 
   /**
    * @brief This function will transform a function (which is a group of basic

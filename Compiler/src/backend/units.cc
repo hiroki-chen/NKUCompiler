@@ -43,15 +43,20 @@ void compiler::reg::Machine_function::emit_assembly(std::ostream& os) const {
   os << ".type " << demangled_func << ", %function" << '\n';
   os << demangled_func << ":\n";
   // Allocate the stack and preserve the environment.
-  
+
   // FIXME: There is one question left: whether we should allocate the stack
-  //        size in advance or after every instruction within the function body is
-  //        generated, since we may have to spill some data on the stack.
-  os << compiler::generate_assembly("\tsub", reg::stack_pointer,
-                                    reg::stack_pointer, this->stack_size)
-     << '\n';
-  // Store the return addres on the stack.
-  os << compiler::generate_assembly("\tstr", "r14", "[sp, #0]") << '\n';
+  //        size in advance or after every instruction within the function body
+  //        is generated, since we may have to spill some data on the stack.
+  // Hint:
+  // 1. Save fp
+  // 2. fp = sp
+  // 3. Save callee saved register
+  // 4. Allocate stack space for local variable.
+
+  // Emit the preparation instructions.
+  for (compiler::reg::Machine_instruction* const prologue : func_prologue) {
+    prologue->emit_assembly(os);
+  }
 
   // Traverse all the block in block_list to print assembly code.
   for (compiler::reg::Machine_block* const block : block_list) {
@@ -80,4 +85,6 @@ void compiler::reg::Machine_unit::emit_assembly(std::ostream& os) const {
   for (compiler::reg::Machine_function* const func : func_list) {
     func->emit_assembly(os);
   }
+
+  os << copyright;
 }

@@ -40,7 +40,7 @@ files=($(sort <<<"${files[*]}"))
 unset IFS
 
 # Set replace extension
-ext=".ir"
+ext=".S"
 find=".sy"
 
 # Iterate through the current folder.
@@ -49,7 +49,6 @@ do
     echo "Reading file ${file}..."
     # Do a pattern substitution.
     output=${file//${find}/${ext}}
-    ./compiler ${file} --emit-llvm -o ${output}
+    ./compiler ${file} -S -o ${output}
+    echo "File generated in ${output}."
 done
-
-
