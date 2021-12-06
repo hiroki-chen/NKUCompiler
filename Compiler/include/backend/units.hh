@@ -109,6 +109,7 @@ typedef class Machine_function {
   uint32_t allocate_stack(const uint32_t& size) { return (stack_size += size); }
 
   void add_block(Machine_block* const block) { block_list.emplace_back(block); }
+  
   void add_saved_regs(const std::string& register_name) {
     saved_regs.insert(register_name);
   }

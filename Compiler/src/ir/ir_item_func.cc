@@ -175,5 +175,6 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
   }
 
   ir_list.emplace_back(*func_call);
+
   return dst;
 }

@@ -105,7 +105,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 66 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.ypp" /* yacc.c:1909  */
+#line 65 "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.ypp" /* yacc.c:1909  */
 
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
