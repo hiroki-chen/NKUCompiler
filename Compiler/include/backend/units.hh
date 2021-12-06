@@ -33,6 +33,10 @@ class Machine_function;
 class Machine_block;
 class Machine_instruction;
 
+struct Comparator {
+  bool operator()(const Machine_operand* lhs, const Machine_operand* rhs) const;
+};
+
 typedef class Machine_block {
  private:
   Machine_function* parent;
@@ -43,9 +47,9 @@ typedef class Machine_block {
 
   std::vector<Machine_instruction*> inst_list;
 
-  std::set<Machine_operand*> live_in;
+  std::set<Machine_operand*, Comparator> live_in;
 
-  std::set<Machine_operand*> live_out;
+  std::set<Machine_operand*, Comparator> live_out;
 
  public:
   std::vector<Machine_instruction*>* get_instruction_list() {
@@ -71,9 +75,9 @@ typedef class Machine_block {
 
   void add_succ(Machine_block* const s) { succ.emplace_back(s); }
 
-  std::set<Machine_operand*>* get_live_in() { return &live_in; }
+  std::set<Machine_operand*, Comparator>* get_live_in() { return &live_in; }
 
-  std::set<Machine_operand*>* get_live_out() { return &live_out; }
+  std::set<Machine_operand*, Comparator>* get_live_out() { return &live_out; }
 
   std::vector<Machine_block*>* get_preds() { return &pred; }
 
@@ -92,7 +96,7 @@ typedef class Machine_function {
 
   /**
    * @brief This vector saves the registers of the previous function.
-   * 
+   *
    */
   std::set<std::string> saved_regs;
 

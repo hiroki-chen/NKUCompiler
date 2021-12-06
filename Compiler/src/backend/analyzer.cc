@@ -14,6 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <algorithm>
 #include <backend/allocator.hh>
 #include <backend/analyzer.hh>
 #include <backend/assembly.hh>
@@ -110,16 +111,92 @@ void compiler::reg::Analyzer::generate(compiler::ir::CFG_block* const block) {
 }
 
 void compiler::reg::Live_variable_analyzer::compute_def_use(
-    compiler::reg::Machine_function* const func) {}
+    compiler::reg::Machine_function* const func) {
+  for (compiler::reg::Machine_block* const block : *func->get_blocks()) {
+    for (auto inst = (*block->get_instruction_list()).begin();
+         inst != (*block->get_instruction_list()).end(); inst++) {
+      auto user = *(*inst)->get_use();
+
+      std::set<compiler::reg::Machine_operand*, Comparator> cur_set_user(
+          user.begin(), user.end());
+      // Compute the set differentce between use / def list.
+      std::set_difference(cur_set_user.begin(), cur_set_user.end(),
+                          def[block].begin(), def[block].end(),
+                          std::inserter(use[block], use[block].end()));
+
+      auto defs = *(*inst)->get_def();
+      for (compiler::reg::Machine_operand* const item : defs) {
+        def[block].insert(all_uses[item].begin(), all_uses[item].end());
+      }
+    }
+  }
+}
 
 void compiler::reg::Live_variable_analyzer::iterate(
-    compiler::reg::Machine_function* const func) {}
+    compiler::reg::Machine_function* const func) {
+  for (compiler::reg::Machine_block* const block : *func->get_blocks()) {
+    block->get_live_in()->clear();
+  }
+
+  // This variable marks if the current state is changing.
+  // We need to iterate the interval until there is no change.
+  bool change = true;
+  while (change) {
+    // Reset the variable.
+    change = false;
+    for (compiler::reg::Machine_block* const block : *func->get_blocks()) {
+      block->get_live_out()->clear();
+
+      // Fetch the old list in order to perform set difference for live variable
+      // analysis.
+      std::set<compiler::reg::Machine_operand*, Comparator>* const old =
+          block->get_live_in();
+      for (compiler::reg::Machine_block* const succ : *block->get_succs()) {
+        block->get_live_out()->insert(succ->get_live_in()->begin(),
+                                      succ->get_live_in()->end());
+        *block->get_live_in() = std::set<compiler::reg::Machine_operand*, Comparator>(
+            use[block].begin(), use[block].end());
+        std::vector<compiler::reg::Machine_operand*> temp;
+
+        std::set_difference(
+            block->get_live_out()->begin(), block->get_live_out()->end(),
+            def[block].begin(), def[block].end(),
+            std::inserter(*block->get_live_in(), block->get_live_in()->end()));
+
+        if (*old != *block->get_live_in()) {
+          change = true;
+        }
+      }
+    }
+  }
+}
 
 void compiler::reg::Live_variable_analyzer::compute_use_pos(
-    compiler::reg::Machine_function* const func) {}
+    compiler::reg::Machine_function* const func) {
+  for (compiler::reg::Machine_block* const block : *func->get_blocks()) {
+    for (compiler::reg::Machine_instruction* const inst :
+         *block->get_instruction_list()) {
+      for (compiler::reg::Machine_operand* const use : *inst->get_use()) {
+        all_uses[use].insert(use);
+      }
+    }
+  }
+}
 
 void compiler::reg::Live_variable_analyzer::pass(
-    compiler::reg::Machine_unit* const unit) {}
+    compiler::reg::Machine_unit* const unit) {
+  for (compiler::reg::Machine_function* const func :
+       *unit->get_function_list()) {
+    // Construct the def-use chain.
+    compute_use_pos(func);
+    compute_def_use(func);
+    iterate(func);
+  }
+}
 
 void compiler::reg::Live_variable_analyzer::pass(
-    compiler::reg::Machine_block* const func) {}
+    compiler::reg::Machine_function* const func) {
+  compute_use_pos(func);
+  compute_def_use(func);
+  iterate(func);
+}

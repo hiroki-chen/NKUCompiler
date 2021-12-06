@@ -165,8 +165,8 @@ typedef class Analyzer {
 typedef class Live_variable_analyzer final {
  private:
   // For def-use chain.
-  std::map<Machine_operand*, std::set<Machine_operand*>> all_uses;
-  std::map<Machine_block*, std::set<Machine_operand*>> def, use;
+  std::map<Machine_operand*, std::set<Machine_operand*, Comparator>> all_uses;
+  std::map<Machine_block*, std::set<Machine_operand*, Comparator>> def, use;
 
   // ================ Functions ================//
   void compute_def_use(Machine_function* const func);
@@ -178,9 +178,10 @@ typedef class Live_variable_analyzer final {
  public:
   void pass(Machine_unit* const unit);
 
-  void pass(Machine_block* const func);
+  void pass(Machine_function* const func);
 
-  std::map<Machine_operand*, std::set<Machine_operand*>>* get_all_uses(void) {
+  std::map<Machine_operand*, std::set<Machine_operand*, Comparator>>*
+  get_all_uses(void) {
     return &all_uses;
   }
   // Add your definitions and implementations here.

@@ -17,6 +17,12 @@
 #include <backend/units.hh>
 #include <common/utils.hh>
 
+bool compiler::reg::Comparator::operator()(
+    const compiler::reg::Machine_operand* lhs,
+    const compiler::reg::Machine_operand* rhs) const {
+  return *lhs < *rhs;
+}
+
 static std::string escape_string(const std::string& in) {
   std::string ret = std::move(in);
 
