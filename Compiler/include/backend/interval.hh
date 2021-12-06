@@ -27,8 +27,8 @@ typedef struct Interval final {
   uint32_t disp;     // Displacement in stack
   uint32_t phy_reg;  // The physical register mapped from virtual register if
                      // the vreg is not spilled to memory
-  std::set<Machine_operand *> defs;
-  std::set<Machine_operand *> uses;
+  std::set<Machine_operand *, Comparator> defs;
+  std::set<Machine_operand *, Comparator> uses;
 } Interval;
 }  // namespace compiler::reg
 
