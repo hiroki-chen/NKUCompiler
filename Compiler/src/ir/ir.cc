@@ -152,6 +152,14 @@ void compiler::ir::IR::emit_machine_code(
   // const_cast<compiler::ir::IR*>(this)->emit_ir();
   compiler::Assembly_dispatcher* const dispatcher =
       compiler::Assembly_dispatcher::dispatch(type, this);
+
+  // Handle function call.
+  // Set where the return value is stored.
+  if (type == compiler::ir::op_type::CALL) {
+    static_cast<compiler::Assembly_dispatcher_call*>(dispatcher)
+        ->set_return_virtual_reg(dst);
+  }
+
   dispatcher->emit_machine_code(asm_builder);
 }
 

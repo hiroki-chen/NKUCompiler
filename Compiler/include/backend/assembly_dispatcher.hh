@@ -39,7 +39,7 @@ typedef class Assembly_dispatcher {
    * @brief Get a dispatcher based on the operation type.
    *
    * @param type
-	 * @param ir
+   * @param ir
    * @return Assembly_dispatcher*
    */
   static Assembly_dispatcher* dispatch(const ir::op_type& type,
@@ -65,8 +65,10 @@ typedef class Assembly_dispatcher_binary final : public Assembly_dispatcher {
       reg::Assembly_builder* const asm_builder) const override;
 } Assembly_dispatcher_binary;
 
-
 typedef class Assembly_dispatcher_call final : public Assembly_dispatcher {
+ protected:
+  ir::Operand* reg;
+
  public:
   Assembly_dispatcher_call() = delete;
 
@@ -75,6 +77,10 @@ typedef class Assembly_dispatcher_call final : public Assembly_dispatcher {
 
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
+
+  virtual void set_return_virtual_reg(ir::Operand* const reg) {
+    this->reg = reg;
+  };
 } Assembly_dispatcher_call;
 
 typedef class Assembly_dispatcher_stack final : public Assembly_dispatcher {

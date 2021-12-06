@@ -79,6 +79,10 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   // need to add / modify / delete some data structures, feel free to do it.
   allocate_registers(machine_unit);
 
+  // TODO: The size of the function frame can be determined after all the
+  // instructions are set?
+  // func_cur->allocate_stack(asm_builder->get_stack_size());
+
   // Finally, we emit the assembly from machine unit.
   machine_unit->emit_assembly(os);
 }
@@ -86,7 +90,7 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
 void compiler::reg::Analyzer::allocate_registers(
     reg::Machine_unit* const machine_unit) {
   // TODO.
-  // ! Add your implementations here
+  // ! Add your implementations here.
 }
 
 void compiler::reg::Analyzer::generate(
@@ -96,18 +100,11 @@ void compiler::reg::Analyzer::generate(
   compiler::reg::Machine_function* const func_cur =
       new compiler::reg::Machine_function(unit_cur, func_name);
 
-  // Here, the stack_size cannot be directly set.
-  // Maybe passed by the asm_builder.
-  const uint32_t stack_size =
-      4 * (1 + std::stoul(func_name.substr(1 + func_name.find_last_of("_"))));
-  func_cur->allocate_stack(stack_size);  // May be used later?
-
   // Hint:
   // 1. Save fp
   // 2. fp = sp
   // 3. Save callee saved register
-  // 4. Allocate stack space for local variable. [We use explicit mov $arg... to
-  // handle this.]
+  // 4. Allocate stack space for local variable.
 
   asm_builder->set_function(func_cur);
 

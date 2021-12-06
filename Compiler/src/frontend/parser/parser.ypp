@@ -15,7 +15,6 @@
     #include <runtime/runtime.hh>
     #include <frontend/nodes/item_all.hh>
     #include <frontend/parser/parser.hh>
-    #include <sylib.hh>
 
     #include <iostream>
     #include <fstream>

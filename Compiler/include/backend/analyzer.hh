@@ -75,8 +75,11 @@ typedef class Assembly_builder {
   // ends.
   uint32_t id;
 
+  // For the stack frame analysis.
+  uint32_t stack_size;
+
  public:
-  Assembly_builder() : id(0) {}
+  Assembly_builder() : id(0ul), stack_size(0ul) {}
 
   void set_unit(Machine_unit* const unit) { machine_unit = unit; }
 
@@ -85,6 +88,10 @@ typedef class Assembly_builder {
   void set_block(Machine_block* const block) { machine_block = block; }
 
   void set_compare_code(const cond_type& opcode) { compare_code = opcode; }
+
+  void set_stack_size_cur(const uint32_t& stack_size) {
+    this->stack_size = stack_size;
+  }
 
   Machine_unit* get_unit() { return machine_unit; }
 
@@ -95,6 +102,8 @@ typedef class Assembly_builder {
   cond_type get_compare_code() { return compare_code; }
 
   uint32_t get_available_id(void) { return id++; }
+
+  uint32_t get_stack_size(void) { return stack_size; }
 } Assembly_builder;
 /**
  * @brief This class defines pool for active registers.
