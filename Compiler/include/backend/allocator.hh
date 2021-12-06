@@ -27,7 +27,7 @@ namespace compiler::reg {
  * @brief A class that analyzes the def-use chain and then perform register
  *        allocations for each machine instruction where each register is
  *        virtual.
- * 
+ *
  * @author xjw
  *
  */
@@ -84,6 +84,12 @@ typedef class Allocator final {
   void do_linear_scan(void);
 
   void do_color_graphing(void);
+
+  bool is_on_stack(const std::string& name) {
+    return virtual_to_physical.count(name) == 0 &&
+           stack_offset.count(name) != 0;
+  }
+
 } Allocator;
 }  // namespace compiler::reg
 

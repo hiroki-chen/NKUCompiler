@@ -49,9 +49,6 @@ class CFG_block;
  *
  */
 namespace compiler::reg {
-// TODO: Add a class for LiveRange or LiveInternal which defines the "DEF-USE"
-// CHAIN.
-// TODO: Perform analysis over the CFG for each function.
 /**
  * @brief A helper class that constructs the assemblt code for the CFG_block.
  *
@@ -105,6 +102,7 @@ typedef class Assembly_builder {
 
   uint32_t get_stack_size(void) { return stack_size; }
 } Assembly_builder;
+
 /**
  * @brief This class defines pool for active registers.
  *
@@ -139,11 +137,6 @@ typedef class Analyzer {
 
   void generate_code(std::ostream& os = std::cerr);
 
-  bool is_on_stack(const std::string& name) {
-    return virtual_to_physical.count(name) == 0 &&
-           stack_offset.count(name) != 0;
-  }
-
  protected:
   /**
    * @brief Get a free register from the register pool.
@@ -158,10 +151,40 @@ typedef class Analyzer {
    * @param reg_name
    */
   void set_free_register(const std::string& reg_name);
-
-  uint32_t free_num(void) { return free_registers; }
-
 } Analyzer;
+
+/**
+ * @brief A class that analyzes the live variable, which is used to analyze
+ * the live interval so that we can alloacte registers to virtual ones.
+ *
+ * @author xjw
+ *
+ * TODO: This is for xjw.
+ *
+ */
+typedef class Live_variable_analyzer final {
+ private:
+  // For def-use chain.
+  std::map<Machine_operand*, std::set<Machine_operand*>> all_uses;
+  std::map<Machine_block*, std::set<Machine_operand*>> def, use;
+
+  // ================ Functions ================//
+  void compute_def_use(Machine_function* const func);
+
+  void iterate(Machine_function* const func);
+
+  void compute_use_pos(Machine_function* const func);
+
+ public:
+  void pass(Machine_unit* const unit);
+
+  void pass(Machine_block* const func);
+
+  std::map<Machine_operand*, std::set<Machine_operand*>>* get_all_uses(void) {
+    return &all_uses;
+  }
+  // Add your definitions and implementations here.
+} Live_variable_analyzer;
 }  // namespace compiler::reg
 
 #endif

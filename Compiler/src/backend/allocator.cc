@@ -34,7 +34,8 @@ void compiler::reg::Allocator::set_free_register(const std::string& reg_name) {
 // Your jobs may include:
 // 1. Allocate registers;
 // 2. Spill overflown registers onto the stack.
-// 3. Determine the stack frame of the function and set the stack size / saved registers.
+// 3. Determine the stack frame of the function and set the stack size / saved
+// registers.
 // 4. (Optional) Do some optimizations.
 void compiler::reg::Allocator::do_color_graphing(void) {
   // TODO: Implement me. Choose whatever you want.

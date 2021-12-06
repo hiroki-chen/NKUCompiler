@@ -108,3 +108,18 @@ void compiler::reg::Analyzer::generate(compiler::ir::CFG_block* const block) {
 
   cur_func->add_block(cur_block);
 }
+
+void compiler::reg::Live_variable_analyzer::compute_def_use(
+    compiler::reg::Machine_function* const func) {}
+
+void compiler::reg::Live_variable_analyzer::iterate(
+    compiler::reg::Machine_function* const func) {}
+
+void compiler::reg::Live_variable_analyzer::compute_use_pos(
+    compiler::reg::Machine_function* const func) {}
+
+void compiler::reg::Live_variable_analyzer::pass(
+    compiler::reg::Machine_unit* const unit) {}
+
+void compiler::reg::Live_variable_analyzer::pass(
+    compiler::reg::Machine_block* const func) {}
