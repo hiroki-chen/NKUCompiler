@@ -174,9 +174,9 @@ typedef class Machine_instruction {
 
   virtual uint32_t get_no(void) const { return no; }
 
-  std::vector<Machine_operand*> get_use(void) const { return use_list; }
+  std::vector<Machine_operand*>* get_use(void) { return &use_list; }
 
-  std::vector<Machine_operand*> get_def(void) const { return def_list; }
+  std::vector<Machine_operand*>* get_def(void) { return &def_list; }
 } Machine_instruction;
 
 /**

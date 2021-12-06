@@ -17,6 +17,7 @@
 #ifndef ALLOCATOR_HH
 #define ALLOCATOR_HH
 
+#include <backend/interval.hh>
 #include <backend/units.hh>
 #include <string>
 #include <unordered_map>
@@ -33,6 +34,18 @@ namespace compiler::reg {
  */
 typedef class Allocator final {
  private:
+  /**
+   * @brief The define-use chain data structure.
+   *
+   */
+  std::map<Machine_operand*, std::set<Machine_operand*, Comparator>> du_chains;
+
+  std::vector<Interval*> intervals;
+
+  Machine_unit* unit;
+
+  Machine_function* func;
+
   /**
    * @brief A hash map that stores the availability of each registers of ARM.
    *
@@ -69,12 +82,26 @@ typedef class Allocator final {
    */
   uint32_t free_registers;
 
-  Machine_unit* const unit;
-
-  // =================== Functions===================== //
+  // =================== Functions ===================== //
   void reserve_for_function_call(void);
 
   void set_free_register(const std::string& name);
+
+  static bool compare_start(Interval* const lhs, Interval* const rhs);
+
+  void expre_old_intervals(Interval* const interval);
+
+  void spill_at_interval(Interval* const interval);
+
+  void make_du_chains(void);
+
+  void compute_live_intervals(void);
+
+  bool linear_scan_register_allicate(void);
+
+  void modify_code(void);
+
+  void genenrate_spilled_code(void);
 
  public:
   Allocator() = delete;
