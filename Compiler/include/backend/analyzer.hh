@@ -22,6 +22,7 @@
 #include <iostream>
 #include <ir/cfg.hh>
 #include <map>
+#include <memory>
 #include <unordered_map>
 
 namespace compiler::ir {
@@ -109,7 +110,7 @@ typedef class Assembly_builder {
  */
 typedef class Analyzer {
  private:
-  Assembly_builder* asm_builder;
+  std::unique_ptr<Assembly_builder> asm_builder;
 
   const std::map<std::string, std::vector<compiler::ir::CFG_block*>> cfg_blocks;
 
@@ -165,7 +166,7 @@ typedef class Analyzer {
 typedef class Live_variable_analyzer final {
  private:
   // For def-use chain.
-  std::map<Machine_operand*, std::set<Machine_operand*, Comparator>> all_uses;
+  std::map<Machine_operand, std::set<Machine_operand*, Comparator>> all_uses;
   std::map<Machine_block*, std::set<Machine_operand*, Comparator>> def, use;
 
   // ================ Functions ================//
@@ -180,7 +181,7 @@ typedef class Live_variable_analyzer final {
 
   void pass(Machine_function* const func);
 
-  std::map<Machine_operand*, std::set<Machine_operand*, Comparator>>*
+  std::map<Machine_operand, std::set<Machine_operand*, Comparator>>*
   get_all_uses(void) {
     return &all_uses;
   }

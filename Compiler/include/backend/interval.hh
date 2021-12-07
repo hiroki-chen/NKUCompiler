@@ -18,17 +18,33 @@
 #define INTERVAL_HH
 #include <backend/assembly.hh>
 #include <set>
+#include <string>
 
 namespace compiler::reg {
 typedef struct Interval final {
   uint32_t start;
   uint32_t end;
-  bool spill;        // Whether this vreg should be spilled to memory
-  uint32_t disp;     // Displacement in stack
-  uint32_t phy_reg;  // The physical register mapped from virtual register if
-                     // the vreg is not spilled to memory
-  std::set<Machine_operand *, Comparator> defs;
-  std::set<Machine_operand *, Comparator> uses;
+  bool spill;           // Whether this vreg should be spilled to memory
+  uint32_t disp;        // Displacement in stack
+  std::string phy_reg;  // The physical register mapped from virtual register if
+                        // the vreg is not spilled to memory
+  std::set<Machine_operand*, Comparator> defs;
+  std::set<Machine_operand*, Comparator> uses;
+
+  // ================= Functions =================== //
+  Interval() = delete;
+
+  Interval(const uint32_t& start, const uint32_t& end, const bool& spill,
+           const uint32_t& disp, const std::string& phy_reg)
+      : start(start), end(end), spill(spill), disp(disp), phy_reg(phy_reg) {}
+
+  void set_def(const std::set<Machine_operand*, Comparator>& defs) {
+    this->defs = defs;
+  }
+
+  void set_use(const std::set<Machine_operand*, Comparator>& uses) {
+    this->uses = uses;
+  }
 } Interval;
 }  // namespace compiler::reg
 
