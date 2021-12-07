@@ -25,6 +25,34 @@ static const auto interval_compare =
   return lhs->start < rhs->start;
 };
 
+static void analyze_interval(compiler::reg::Interval* const w1,
+                             compiler::reg::Interval* const w2,
+                             std::vector<compiler::reg::Interval*>& intervals,
+                             bool& change) {
+  // Do a set difference to compute the overlap of each interval and we
+  // can actually merge some intervals with overlaps.
+  if (**w1->defs.begin() == **w2->defs.begin()) {
+    std::set<compiler::reg::Machine_operand*, compiler::reg::Comparator> set;
+    std::set_intersection(w1->uses.begin(), w1->uses.end(), w2->uses.begin(),
+                          w2->uses.end(), std::inserter(set, set.end()));
+
+    if (!set.empty()) {
+      // Merge overlapping intervals.
+      change = true;
+      w1->defs.insert(w2->defs.begin(), w2->defs.end());
+      w1->uses.insert(w2->uses.begin(), w2->uses.end());
+
+      // Determine the start and end point.
+      w1->start = std::min(w1->start, w2->start);
+      w1->end = std::max(w1->end, w2->end);
+      auto iter = std::find(intervals.begin(), intervals.end(), w2);
+      if (iter != intervals.end()) {
+        intervals.erase(iter);
+      }
+    }
+  }
+}
+
 void compiler::reg::Allocator::reserve_for_function_call(void) {
   // ARM-v7 has enforced that these four registers cannot be used to store
   // general variables.
@@ -162,29 +190,7 @@ void compiler::reg::Allocator::do_compute_live_intervals(void) {
     for (size_t i = 0; i < t.size(); i++) {
       for (size_t j = i + 1; j < t.size(); j++) {
         compiler::reg::Interval *const w1 = t[i], *const w2 = t[j];
-        // Do a set difference to compute the overlap of each interval and we
-        // can actually merge some intervals with overlaps.
-        if (**w1->defs.begin() == **w2->defs.begin()) {
-          std::set<compiler::reg::Machine_operand*, Comparator> set;
-          std::set_intersection(w1->uses.begin(), w1->uses.end(),
-                                w2->uses.begin(), w2->uses.end(),
-                                std::inserter(set, set.end()));
-
-          if (!set.empty()) {
-            // Merge overlapping intervals.
-            change = true;
-            w1->defs.insert(w2->defs.begin(), w2->defs.end());
-            w1->uses.insert(w2->uses.begin(), w2->uses.end());
-            
-            // Determine the start and end point.
-            w1->start = std::min(w1->start, w2->start);
-            w1->end = std::max(w1->end, w2->end);
-            auto iter = std::find(intervals.begin(), intervals.end(), w2);
-            if (iter != intervals.end()) {
-              intervals.erase(iter);
-            }
-          }
-        }
+        analyze_interval(w1, w2, intervals, change);
       }
     }
   }
