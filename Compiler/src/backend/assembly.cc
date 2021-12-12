@@ -31,6 +31,15 @@ compiler::reg::Machine_operand::Machine_operand(const operand_type& type,
 compiler::reg::Machine_operand::Machine_operand(const std::string& label)
     : type(LABEL), val(""), label(label) {}
 
+void compiler::reg::Machine_operand::set_register_name(
+    const std::string& name) {
+  // Note that this function can be called only after a physical register is
+  // available for this operand! Otherwise do not invoke this function to set
+  // the register name because this may alter the property of the operand.
+  register_name = name;
+  type = compiler::reg::operand_type::REG;
+}
+
 bool compiler::reg::Machine_operand::operator==(
     const Machine_operand& rhs) const {
   // Different types cannot be compared!

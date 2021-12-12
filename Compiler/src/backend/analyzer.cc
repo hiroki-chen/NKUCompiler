@@ -27,7 +27,7 @@ compiler::reg::Analyzer::Analyzer(
     compiler::ir::CFG_block* const global_defs)
     : cfg_blocks(cfg_blocks), global_defs(global_defs) {
   // Create an empty Assembly_builder class for future usage :)
-  asm_builder = new Assembly_builder();
+  asm_builder = std::make_unique<Assembly_builder>();
 }
 
 void compiler::reg::Analyzer::generate_code(std::ostream& os) {
@@ -54,8 +54,8 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   // You need to either implement the graph-colorin / linear-scan algorithm.
   // Use the class "Allocator" to do this job. If you need to add / modify /
   // delete some data structures, feel free to do it.
-  compiler::reg::Allocator* const allocator =
-      new compiler::reg::Allocator(machine_unit);
+  const std::unique_ptr<compiler::reg::Allocator> allocator =
+      std::make_unique<compiler::reg::Allocator>(machine_unit);
   allocator->do_linear_scan();
 
   // Finally, we emit the assembly from machine unit.
@@ -104,7 +104,7 @@ void compiler::reg::Analyzer::generate(compiler::ir::CFG_block* const block) {
   asm_builder->set_block(cur_block);
 
   for (compiler::ir::IR ir : *block->get_ir_list()) {
-    ir.emit_machine_code(asm_builder);
+    ir.emit_machine_code(asm_builder.get());
   }
 
   cur_func->add_block(cur_block);
@@ -126,7 +126,7 @@ void compiler::reg::Live_variable_analyzer::compute_def_use(
 
       auto defs = *(*inst)->get_def();
       for (compiler::reg::Machine_operand* const item : defs) {
-        def[block].insert(all_uses[item].begin(), all_uses[item].end());
+        def[block].insert(all_uses[*item].begin(), all_uses[*item].end());
       }
     }
   }
@@ -154,8 +154,9 @@ void compiler::reg::Live_variable_analyzer::iterate(
       for (compiler::reg::Machine_block* const succ : *block->get_succs()) {
         block->get_live_out()->insert(succ->get_live_in()->begin(),
                                       succ->get_live_in()->end());
-        *block->get_live_in() = std::set<compiler::reg::Machine_operand*, Comparator>(
-            use[block].begin(), use[block].end());
+        *block->get_live_in() =
+            std::set<compiler::reg::Machine_operand*, Comparator>(
+                use[block].begin(), use[block].end());
         std::vector<compiler::reg::Machine_operand*> temp;
 
         std::set_difference(
@@ -177,7 +178,7 @@ void compiler::reg::Live_variable_analyzer::compute_use_pos(
     for (compiler::reg::Machine_instruction* const inst :
          *block->get_instruction_list()) {
       for (compiler::reg::Machine_operand* const use : *inst->get_use()) {
-        all_uses[use].insert(use);
+        all_uses[*use].insert(use);
       }
     }
   }

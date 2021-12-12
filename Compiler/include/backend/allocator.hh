@@ -94,10 +94,12 @@ typedef class Allocator final {
   void spill_at_interval(Interval* const interval);
 
   void make_du_chains(void);
+  
+  void do_compute_live_intervals(void);
 
   void compute_live_intervals(void);
 
-  bool linear_scan_register_allicate(void);
+  bool linear_scan_register_allocate(void);
 
   void modify_code(void);
 
