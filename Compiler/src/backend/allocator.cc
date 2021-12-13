@@ -186,8 +186,8 @@ void compiler::reg::Allocator::do_linear_scan(void) {
         // spill vregs that can't be mapped to real regs
         // break;
         genenrate_spilled_code();
-        func->emit_assembly(std::cout << "funchhh==========\n");
-        if (count == 2) break;
+        // func->emit_assembly(std::cout << "funchhh==========\n");
+        // if (count == 2) break;
         // break;
       }
     }
