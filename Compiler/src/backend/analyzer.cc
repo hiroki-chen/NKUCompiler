@@ -54,6 +54,7 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   // You need to either implement the graph-colorin / linear-scan algorithm.
   // Use the class "Allocator" to do this job. If you need to add / modify /
   // delete some data structures, feel free to do it.
+  // machine_unit->emit_assembly(std::cout);
   const std::unique_ptr<compiler::reg::Allocator> allocator =
       std::make_unique<compiler::reg::Allocator>(machine_unit);
   allocator->do_linear_scan();
@@ -126,7 +127,9 @@ void compiler::reg::Live_variable_analyzer::compute_def_use(
 
       auto defs = *(*inst)->get_def();
       for (compiler::reg::Machine_operand* const item : defs) {
-        def[block].insert(all_uses[*item].begin(), all_uses[*item].end());
+        // def[block].insert(all_uses[*item].begin(), all_uses[*item].end());
+        def[block].insert(all_uses[item->get_register_name()].begin(),
+                          all_uses[item->get_register_name()].end());
       }
     }
   }
@@ -178,7 +181,8 @@ void compiler::reg::Live_variable_analyzer::compute_use_pos(
     for (compiler::reg::Machine_instruction* const inst :
          *block->get_instruction_list()) {
       for (compiler::reg::Machine_operand* const use : *inst->get_use()) {
-        all_uses[*use].insert(use);
+        // all_uses[*use].insert(use);
+        all_uses[use->get_register_name()].insert(use);
       }
     }
   }

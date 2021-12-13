@@ -131,6 +131,7 @@ void compiler::Compiler_runtime::run(void) {
           output_file.open(oss.str(), std::ios::out);
         }
       }
+      
 
       // Generate the IR.
       compiler::ir::IRContext* const ir_context = new compiler::ir::IRContext();

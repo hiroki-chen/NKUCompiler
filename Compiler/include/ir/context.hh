@@ -185,6 +185,15 @@ typedef class IRContext {
    * @return Symbol_table*
    */
   Symbol_table* get_symbol_table(void) { return &symbol_table; }
+
+  /**
+   * @brief Get the top variable loop vector.
+   *
+   * @return  std::vector<std::string>
+   */
+  virtual std::vector<std::string> get_top_loop_vector(void) const {
+    return loop_variable.top();
+  }
 } IRContext;
 }  // namespace compiler::ir.
 

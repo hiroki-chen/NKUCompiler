@@ -31,6 +31,9 @@ compiler::reg::Machine_operand::Machine_operand(const operand_type& type,
 compiler::reg::Machine_operand::Machine_operand(const std::string& label)
     : type(LABEL), val(""), label(label) {}
 
+compiler::reg::Machine_operand::Machine_operand(const Machine_operand& operand) 
+    : type(operand.type), val(operand.val), label(operand.label), register_name(operand.register_name), parent(operand.parent) {}
+
 void compiler::reg::Machine_operand::set_register_name(
     const std::string& name) {
   // Note that this function can be called only after a physical register is
@@ -54,6 +57,7 @@ bool compiler::reg::Machine_operand::operator==(
 
 bool compiler::reg::Machine_operand::operator<(
     const Machine_operand& rhs) const {
+      return true;
   // Note that std::string has already overridden comparison operators.
   if (type == rhs.type) {
     if (type == IMM) {
@@ -278,7 +282,10 @@ void compiler::reg::Machine_instruction_binary::emit_assembly(
 
 void compiler::reg::Machine_instruction_binary::handle_modulus(
     std::ostream& os) const {
-  ;
+  // mov r0, op1
+  // mov r1, op2
+  // bl __aeabi_idivmod
+  
 }
 
 void compiler::reg::Machine_instruction_store::emit_assembly(
@@ -296,32 +303,39 @@ void compiler::reg::Machine_instruction_store::emit_assembly(
 
 void compiler::reg::Machine_instruction_mov::emit_assembly(
     std::ostream& os) const {
+      
   switch (op) {
     case MOV_N: {
       os << "\tmov ";
       break;
     }
     case MOVEQ: {
+      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmoveq ";
       break;
     }
     case MOVNE: {
+      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovne ";
       break;
     }
     case MOVGT: {
+      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovgt ";
       break;
     }
     case MOVGE: {
+      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovge ";
       break;
     }
     case MOVLT: {
+      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovlt ";
       break;
     }
     case MOVLE: {
+      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovle ";
       break;
     }
@@ -381,9 +395,9 @@ void compiler::reg::Machine_instruction_stack::emit_assembly(
   // Caveat: We do not support scalar push / pop operations.
   // E.g.: push {r0, r1} is not supported.
   if (op == PUSH) {
-    os << "\tpush " << use_list[0]->print() << '\n';
+    os << "\tpush {" << use_list[0]->print() << "}\n";
   } else {
-    os << "\tpop " << use_list[0]->print() << '\n';
+    os << "\tpop {" << use_list[0]->print() << "}\n";
   }
 }
 

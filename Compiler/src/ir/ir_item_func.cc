@@ -157,9 +157,6 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
       "", true, false);
 
   const std::vector<compiler::Item_expr*> args = arguments->get_arguments();
-  for (uint32_t i = 0; i < args.size(); i++) {
-    operands.emplace_back(args[i]->eval_runtime(ir_context, ir_list));
-  }
 
   ir::IR* const func_call =
       new ir::IR(ir::op_type::CALL, dst, identifier->get_name());
@@ -169,7 +166,7 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
     ir::Operand* arg = args[i]->eval_runtime(ir_context, ir_list);
     ir::IR* const ir_arg =
         new ir::IR(ir::op_type::PUSH, nullptr,
-                   OPERAND_VALUE(std::to_string(args.size() - 1 - i)), arg);
+                   OPERAND_VALUE(std::to_string(i)), arg);
     ir_list.emplace_back(*ir_arg);
     func_call->add_func_call(ir_arg);
   }

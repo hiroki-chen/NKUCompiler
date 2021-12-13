@@ -34,8 +34,8 @@ static std::string escape_string(const std::string& in) {
 
 void compiler::reg::Machine_block::emit_assembly(std::ostream& os) const {
   // Emit the label.
+  os << escape_string(label) << ":\n";
   if (false == inst_list.empty()) {
-    os << escape_string(label) << ":\n";
     for (compiler::reg::Machine_instruction* const instruction : inst_list) {
       instruction->emit_assembly(os);
     }

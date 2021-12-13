@@ -522,7 +522,7 @@ LITERAL: HEX                                        { $$ = new compiler::Item_li
           if (($1)->find(".") != std::string::npos) {
             $$ = new compiler::Item_literal_real(yyget_lineno(), std::stod(*$1)); 
           } else {
-            $$ = new compiler::Item_literal_int(yyget_lineno(), std::stoi(*$1)); 
+            $$ = new compiler::Item_literal_int(yyget_lineno(), std::stol(*$1)); 
           }
           
         }

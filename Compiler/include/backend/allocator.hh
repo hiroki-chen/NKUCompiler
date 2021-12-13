@@ -22,6 +22,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <utility>
 
 namespace compiler::reg {
 /**
@@ -38,19 +39,24 @@ typedef class Allocator final {
    * @brief The define-use chain data structure.
    *
    */
-  std::map<Machine_operand*, std::set<Machine_operand*, Comparator>> du_chains;
-
+  // std::map<Machine_operand*, std::set<Machine_operand*, Comparator>> du_chains;
+  std::vector<std::pair<std::set<Machine_operand*, Comparator>, std::set<Machine_operand*, Comparator>>> du_chains;
+  std::vector<std::pair<uint32_t, uint32_t>> loop_label_stack;
   std::vector<Interval*> intervals;
 
   Machine_unit* unit;
 
   Machine_function* func;
 
+  uint32_t spill_id;
+
+  const std::string spill_label = "%";
+
   /**
    * @brief A hash map that stores the availability of each registers of ARM.
    *
    */
-  std::unordered_map<std::string, bool> register_free_map;
+  std::unordered_map<std::string, Interval*> register_free_map;
 
   /**
    * @brief A hash that stores the the mapping of virtual registers.
@@ -73,7 +79,8 @@ typedef class Allocator final {
    * this map.
    *
    */
-  std::unordered_map<std::string, uint32_t> stack_offset;
+  // std::unordered_map<std::string, uint32_t> stack_offset;
+  int stack_top_offset;
 
   /**
    * @brief Records the number of free registers. If there is no free registers
@@ -83,6 +90,7 @@ typedef class Allocator final {
   uint32_t free_registers;
 
   // =================== Functions ===================== //
+  uint32_t get_spil_available_id() { return spill_id++; }
   void reserve_for_function_call(void);
 
   void set_free_register(const std::string& name);
@@ -114,10 +122,10 @@ typedef class Allocator final {
 
   void do_color_graphing(void);
 
-  bool is_on_stack(const std::string& name) {
-    return virtual_to_physical.count(name) == 0 &&
-           stack_offset.count(name) != 0;
-  }
+  // bool is_on_stack(const std::string& name) {
+  //   return virtual_to_physical.count(name) == 0 &&
+  //          stack_offset.count(name) != 0;
+  // }
 
 } Allocator;
 }  // namespace compiler::reg

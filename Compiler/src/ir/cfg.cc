@@ -257,6 +257,7 @@ compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
   analyze_control_flow();
   // Prune useless control flows or merge continuous basic blocks.
   prune_cfg();
+  // print_cfg();
 }
 
 void compiler::ir::CFG_block::splice(const ir::ir_list& ir_list) {

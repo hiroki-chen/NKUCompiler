@@ -150,7 +150,7 @@ uint32_t compiler::Item_decl_array::calculate_array_size(
   uint32_t array_size = 1;
   for (ir::Operand* const shape : array_shape) {
     int size = 0;
-    if ((size = std::stoi(shape->get_value())) < 0) {
+    if ((size = std::stol(shape->get_value())) < 0) {
       throw compiler::fatal_error("The array has negative shape!");
     }
     array_size *= (uint32_t)size;
