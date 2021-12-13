@@ -112,9 +112,9 @@ void compiler::reg::Allocator::do_linear_scan(void) {
     func = f;
     bool success = false;
     // repeat until all vregs can be mapped
-    // int count = 0;
+    int count = 0;
     while (!success) {
-      // count++;
+      count++;
       compute_live_intervals();
 
       // for(auto & interval : intervals) {
@@ -186,8 +186,8 @@ void compiler::reg::Allocator::do_linear_scan(void) {
         // spill vregs that can't be mapped to real regs
         // break;
         genenrate_spilled_code();
-        // func->emit_assembly(std::cout << "funchhh==========\n");
-        // if (count == 2) break;
+        func->emit_assembly(std::cout << "funchhh==========\n");
+        if (count == 2) break;
         // break;
       }
     }
@@ -302,7 +302,6 @@ void compiler::reg::Allocator::compute_live_intervals(void) {
     interval->set_use(du_chain.second);
     intervals.emplace_back(interval);
   }
-
   for (auto& interval : intervals) {
     for (auto loop_iter = loop_label_stack.rbegin();
          loop_iter != loop_label_stack.rend(); loop_iter++) {

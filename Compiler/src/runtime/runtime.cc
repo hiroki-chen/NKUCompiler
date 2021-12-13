@@ -86,7 +86,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
       debug_on(result["debug"].as<bool>()),
       print_ast(result["print-ast"].as<bool>()),
       print_ir(result["emit-llvm"].as<bool>()),
-      opt_level(result["opt-level"].as<int>()),
+      opt_level(/*result["opt-level"].as<int>()*/ 0ul),
       generate_assembly(result["assembly"].as<bool>()) {
   ::opt_level = opt_level;
   const std::string input = result["source"].as<std::string>();

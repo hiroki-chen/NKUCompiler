@@ -40,9 +40,9 @@ static void handle_mod_div(compiler::reg::Machine_block *const cur_block,
   // mov %v, r0
   // mov %v, r1
   reg::Machine_operand *const v0 = new reg::Machine_operand(
-      reg::operand_type::VREG, std::to_string(asm_builder->get_available_id()));
+      reg::operand_type::VREG, reg::virtual_sign + std::to_string(asm_builder->get_available_id()));
   reg::Machine_operand *const v1 = new reg::Machine_operand(
-      reg::operand_type::VREG, std::to_string(asm_builder->get_available_id()));
+      reg::operand_type::VREG, reg::virtual_sign + std::to_string(asm_builder->get_available_id()));
 
   {
     reg::Machine_instruction_mov *const mov1 = new reg::Machine_instruction_mov(
@@ -76,10 +76,10 @@ static void handle_mod_div(compiler::reg::Machine_block *const cur_block,
   // Restore the operands.
   {
     reg::Machine_instruction_mov *const mov1 = new reg::Machine_instruction_mov(
-        cur_block, reg::mov_type::MOV_N, new reg::Machine_operand(*r0),
+        cur_block, reg::mov_type::MOV_N, r0,
         new reg::Machine_operand(*v0));
     reg::Machine_instruction_mov *const mov2 = new reg::Machine_instruction_mov(
-        cur_block, reg::mov_type::MOV_N, new reg::Machine_operand(*r1),
+        cur_block, reg::mov_type::MOV_N, r1,
         new reg::Machine_operand(*v1));
     cur_block->add_instruction(mov1);
     cur_block->add_instruction(mov2);
