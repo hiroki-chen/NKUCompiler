@@ -131,11 +131,10 @@ union YYSTYPE
     compiler::Item_func_call_list*      item_func_call_list;
     compiler::Item_block*               item_block;
     compiler::Item_struct_body*         item_struct_body;
-    double                              raw_number;
     std::string*                        raw_string;
     char                                raw_char;
 
-#line 139 "/home/darren/compiler/Compiler/src/frontend/parser/parser.hh"
+#line 138 "/home/darren/compiler/Compiler/src/frontend/parser/parser.hh"
 
 };
 typedef union YYSTYPE YYSTYPE;

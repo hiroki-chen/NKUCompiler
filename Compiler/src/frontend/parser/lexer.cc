@@ -1011,7 +1011,7 @@ YY_RULE_SETUP
 case 21:
 YY_RULE_SETUP
 #line 89 "/home/darren/compiler/Compiler/src/frontend/parser/lexer.l"
-{ yylval.raw_string = new std::string(std::to_string(std::stol(std::string(yytext, yyleng), nullptr, 16)));  return HEX; }
+{ yylval.raw_string = new std::string(std::to_string(std::stol(std::string(yytext, yyleng), nullptr, 16))); return HEX; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP

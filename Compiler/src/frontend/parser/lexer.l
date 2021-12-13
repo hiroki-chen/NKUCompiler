@@ -86,7 +86,7 @@ CHAR        '\\?.'
 "const"      { return CONST; }
 "struct"     { return STRUCT_TOKEN; }
 
-{HEX}        { yylval.raw_string = new std::string(std::to_string(std::stol(std::string(yytext, yyleng), nullptr, 16)));  return HEX; }
+{HEX}        { yylval.raw_string = new std::string(std::to_string(std::stol(std::string(yytext, yyleng), nullptr, 16))); return HEX; }
 {OCTAL}      { yylval.raw_string = new std::string(std::to_string(std::stol(std::string(yytext, yyleng), nullptr, 8))); return OCTAL; }
 {DECIMAL}    { yylval.raw_string = new std::string(yytext, yyleng); return DECIMAL; }
 

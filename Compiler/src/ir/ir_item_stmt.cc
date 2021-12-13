@@ -256,7 +256,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
           //      symbol->get_name().substr(0, 4) == ir::arg_sign) &&
           //     symbol->get_name()[0] != ir::global_sign[0]
       ) {
-        if (false && ir_context->is_loop_context()) {
+        if (ir_context->is_loop_context()) {
           bool is_lhs_loop = false;
           bool is_rhs_loop = false;
 
@@ -273,6 +273,7 @@ void compiler::Item_stmt_assign::generate_ir_helper(
             const std::string new_name = compiler::concatenate(
                 ir::local_sign,
                 ir_context->get_symbol_table()->get_available_id());
+                std::cout << "Hello\n";
             ir::Operand* const tmp =
                 new ir::Operand(ir::var_type::i32, new_name, "");
             ir_list.emplace_back(ir::op_type::MOV, tmp, rhs);
