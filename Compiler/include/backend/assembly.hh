@@ -228,6 +228,17 @@ typedef class Machine_instruction_branch final : public Machine_instruction {
   virtual void emit_assembly(std::ostream& os = std::cerr) const override;
 } Machine_instruction_branch;
 
+typedef class Machine_instruction_alloca final : public Machine_instruction {
+ public:
+  Machine_instruction_alloca(Machine_block* const parent,
+                             Machine_operand* const var,
+                             const cond_type& cond = cond_type::NONE);
+
+  virtual void emit_assembly(std::ostream& os = std::cerr) const override {
+    return;
+  }
+} Machine_instruction_alloca;
+
 typedef class Machine_instruction_load final : public Machine_instruction {
  public:
   Machine_instruction_load(Machine_block* const parent,
