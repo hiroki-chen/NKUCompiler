@@ -134,6 +134,8 @@ void compiler::reg::Allocator::do_linear_scan(void) {
             reg::operand_type::REG, reg::frame_pointer);
         reg::Machine_operand* const r14 =
             new reg::Machine_operand(reg::operand_type::REG, "r14");
+        reg::Machine_operand* const r8 =
+            new reg::Machine_operand(reg::operand_type::REG, "r8");
         reg::Machine_operand* const offset = new reg::Machine_operand(
             reg::operand_type::IMM, std::to_string(stack_top_offset));
         reg::Machine_instruction_stack* const stack_fp =
@@ -145,12 +147,18 @@ void compiler::reg::Allocator::do_linear_scan(void) {
         reg::Machine_instruction_mov* const mov_sp =
             new reg::Machine_instruction_mov((*func->begin()),
                                              reg::mov_type::MOV_N, fp, sp);
+        reg::Machine_instruction_mov* const sub_sp_imm =
+            new reg::Machine_instruction_mov(
+                (*func->begin()), reg::mov_type::MOV_N, r8, offset);
         reg::Machine_instruction_binary* const sub_sp =
             new reg::Machine_instruction_binary(
-                (*func->begin()), reg::binary_type::SUB, sp, sp, offset);
+                (*func->begin()), reg::binary_type::SUB, sp, sp, r8);
         (*func->begin())
             ->get_instruction_list()
             ->insert((*func->begin())->begin(), sub_sp);
+        (*func->begin())
+            ->get_instruction_list()
+            ->insert((*func->begin())->begin(), sub_sp_imm);
         (*func->begin())
             ->get_instruction_list()
             ->insert((*func->begin())->begin(), mov_sp);
