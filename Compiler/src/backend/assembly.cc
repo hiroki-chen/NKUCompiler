@@ -314,8 +314,10 @@ void compiler::reg::Machine_instruction_store::emit_assembly(
 
 void compiler::reg::Machine_instruction_mov::emit_assembly(
     std::ostream& os) const {
-  os << "\tmov " << def_list[0]->print() << ", #0\n";
-  
+  if (op != MOV_N) {
+    os << "\tmov " << def_list[0]->print() << ", #0\n";
+  }
+
   switch (op) {
     case MOV_N: {
       os << "\tmov ";
