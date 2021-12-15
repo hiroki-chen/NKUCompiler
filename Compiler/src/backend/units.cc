@@ -103,5 +103,6 @@ void compiler::reg::Machine_unit::emit_assembly(std::ostream& os) const {
     func->emit_assembly(os);
   }
 
-  os << copyright;
+  os << ".ident \"" << copyright << " "
+     << std::chrono::seconds(std::time(NULL)).count() << "\"";
 }

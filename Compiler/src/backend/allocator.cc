@@ -27,6 +27,33 @@ static const auto interval_compare =
   return lhs->start < rhs->start;
 };
 
+static const auto interval_compare_stack =
+    [](compiler::reg::Interval* const lhs,
+       compiler::reg::Interval* const rhs) -> bool {
+  return lhs->end < rhs->end;
+};
+
+static void optimize_stack(
+    int& stack_top_offset,
+    const std::vector<compiler::reg::Interval*>& intervals,
+    compiler::reg::Interval* const interval,
+    std::vector<compiler::reg::Interval*>::iterator first_end) {
+  std::string stack_offset = "-";
+  if (first_end != intervals.end() && (*first_end)->end <= interval->start &&
+      (*first_end)->phy_reg.length()) {
+    stack_offset += (*first_end)->phy_reg;
+    first_end++;
+
+    while (first_end != intervals.end() && !(*first_end)->spill) {
+      first_end++;
+    }
+  } else {
+    stack_top_offset += 4;
+    stack_offset += std::to_string(stack_top_offset);
+    interval->phy_reg = std::to_string(stack_top_offset);
+  }
+}
+
 static void prepare_function_stack(compiler::reg::Machine_function* const func,
                                    const uint32_t& stack_top_offset) {
   using namespace compiler;
@@ -163,7 +190,6 @@ void compiler::reg::Allocator::make_du_chains(void) {
 
   uint32_t num = 0;
   for (auto& block : *(func->get_blocks())) {
-    
     // Elongate the live interval for loop variables.
     if (block->get_label().find("LOOP_BEGIN") != std::string::npos ||
         block->get_label().find("IF") + 2 == block->get_label().length()) {
@@ -278,11 +304,19 @@ void compiler::reg::Allocator::spill_at_interval(Interval* const interval) {
 }
 
 void compiler::reg::Allocator::genenrate_spilled_code(void) {
+  // Collect some information for register optimization.
+  std::sort(intervals.begin(), intervals.end(), interval_compare_stack);
+  auto first_end = intervals.begin();
+  while (first_end != intervals.end() && !(*first_end)->spill) {
+    first_end++;
+  }
+
   for (compiler::reg::Interval* const interval : intervals) {
     if (!interval->spill) {
       continue;
     } else {
-      stack_top_offset += 4;  // alloc
+      optimize_stack(stack_top_offset, intervals, interval, first_end);
+
       for (auto& use : interval->uses) {
         use->reset_register_name(spill_label +
                                  std::to_string(get_spil_available_id()));
