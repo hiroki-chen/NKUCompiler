@@ -54,6 +54,43 @@ static void optimize_stack(
   }
 }
 
+static void do_generate_spill_code(
+    compiler::reg::Machine_operand* const operand,
+    const std::string& spill_offset, const uint32_t& stack_top_offset,
+    bool type = false) {
+  operand->reset_register_name(compiler::reg::spill_label + spill_offset);
+  compiler::reg::Machine_block* block = operand->get_parent()->get_parent();
+
+  // Find the position in which we should insert the spilled code.
+  auto pos =
+      std::find(block->get_instruction_list()->begin(),
+                block->get_instruction_list()->end(), operand->get_parent());
+
+  if (type) {
+    pos++;
+  }
+
+  // Generate spill-related instructions.
+  compiler::reg::Machine_operand* const fp = new compiler::reg::Machine_operand(
+      compiler::reg::operand_type::REG, compiler::reg::frame_pointer);
+  compiler::reg::Machine_operand* const offset =
+      new compiler::reg::Machine_operand(compiler::reg::operand_type::IMM,
+                                         std::to_string(-stack_top_offset));
+
+  // Load variable from the stack.
+  if (!type) {
+    compiler::reg::Machine_instruction_load* const ldr =
+        new compiler::reg::Machine_instruction_load(
+            block, new compiler::reg::Machine_operand(*operand), fp, offset);
+    block->get_instruction_list()->insert(pos, ldr);
+  } else {
+    compiler::reg::Machine_instruction_store* const str =
+        new compiler::reg::Machine_instruction_store(
+            block, new compiler::reg::Machine_operand(*operand), fp, offset);
+    block->get_instruction_list()->insert(pos, str);
+  }
+}
+
 static void prepare_function_stack(compiler::reg::Machine_function* const func,
                                    const uint32_t& stack_top_offset) {
   using namespace compiler;
@@ -318,37 +355,12 @@ void compiler::reg::Allocator::genenrate_spilled_code(void) {
       optimize_stack(stack_top_offset, intervals, interval, first_end);
 
       for (auto& use : interval->uses) {
-        use->reset_register_name(spill_label +
-                                 std::to_string(get_spil_available_id()));
-        compiler::reg::Machine_block* block = use->get_parent()->get_parent();
-        auto pos =
-            std::find(block->get_instruction_list()->begin(),
-                      block->get_instruction_list()->end(), use->get_parent());
-        reg::Machine_operand* const fp = new reg::Machine_operand(
-            reg::operand_type::REG, reg::frame_pointer);
-        reg::Machine_operand* const offset = new reg::Machine_operand(
-            reg::operand_type::IMM, std::to_string(-stack_top_offset));
-        reg::Machine_instruction_load* const ldr =
-            new reg::Machine_instruction_load(
-                block, new reg::Machine_operand(*use), fp, offset);
-        block->get_instruction_list()->insert(pos, ldr);
+        do_generate_spill_code(use, std::to_string(get_spill_available_id()),
+                               stack_top_offset);
       }
       for (auto& def : interval->defs) {
-        def->reset_register_name(spill_label +
-                                 std::to_string(get_spil_available_id()));
-        compiler::reg::Machine_block* block = def->get_parent()->get_parent();
-        auto pos =
-            std::find(block->get_instruction_list()->begin(),
-                      block->get_instruction_list()->end(), def->get_parent());
-        pos++;
-        reg::Machine_operand* const fp = new reg::Machine_operand(
-            reg::operand_type::REG, reg::frame_pointer);
-        reg::Machine_operand* const offset = new reg::Machine_operand(
-            reg::operand_type::IMM, std::to_string(-stack_top_offset));
-        reg::Machine_instruction_store* const ldr =
-            new reg::Machine_instruction_store(block, new Machine_operand(*def),
-                                               fp, offset);
-        block->get_instruction_list()->insert(pos, ldr);
+        do_generate_spill_code(def, std::to_string(get_spill_available_id()),
+                               stack_top_offset, true);
       }
     }
   }

@@ -26,6 +26,8 @@
 
 namespace compiler::reg {
 
+static const std::string spill_label = "%";
+
 using live_var_type =
     std::map<std::string, std::pair<std::set<Machine_operand*, Comparator>,
                                     std::set<Machine_operand*, Comparator>>>;
@@ -56,8 +58,6 @@ typedef class Allocator final {
   Machine_function* func;
 
   uint32_t spill_id;
-
-  const std::string spill_label = "%";
 
   /**
    * @brief A hash map that stores the availability of each registers of ARM.
@@ -97,7 +97,7 @@ typedef class Allocator final {
   uint32_t free_registers;
 
   // =================== Functions ===================== //
-  uint32_t get_spil_available_id() { return spill_id++; }
+  uint32_t get_spill_available_id() { return spill_id++; }
   void reserve_for_function_call(void);
 
   void set_free_register(const std::string& name);
