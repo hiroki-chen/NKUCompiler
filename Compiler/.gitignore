@@ -2,7 +2,6 @@ backup
 build
 bin
 doc
-test
 .vscode
 .DS_Store
 *.log
