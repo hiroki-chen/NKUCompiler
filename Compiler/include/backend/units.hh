@@ -137,6 +137,8 @@ typedef class Machine_function {
     saved_regs.insert(register_name);
   }
 
+  void backup_registers(void);
+
   void emit_assembly(std::ostream& os = std::cerr) const;
 } Machine_function;
 

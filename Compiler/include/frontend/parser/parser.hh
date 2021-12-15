@@ -1,14 +1,14 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 2.3.  */
 
-/* Bison interface for Yacc-like parsers in C
+/* Skeleton interface for Bison's Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
-   Inc.
+   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+   Free Software Foundation, Inc.
 
-   This program is free software: you can redistribute it and/or modify
+   This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,7 +16,9 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA 02110-1301, USA.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,85 +33,127 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
-
-#ifndef YY_YY_HOME_DARREN_COMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
-# define YY_YY_HOME_DARREN_COMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
-/* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
-#endif
-#if YYDEBUG
-extern int yydebug;
-#endif
-
-/* Token type.  */
+/* Tokens.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-  enum yytokentype
-  {
-    ID = 258,
-    ADD = 259,
-    MINUS = 260,
-    MUL = 261,
-    DIV = 262,
-    MOD = 263,
-    INC = 264,
-    DEC = 265,
-    EQ = 266,
-    NEQ = 267,
-    GEQ = 268,
-    LEQ = 269,
-    G = 270,
-    L = 271,
-    BIT_AND = 272,
-    BIT_OR = 273,
-    BIT_XOR = 274,
-    BIT_NEG = 275,
-    LOGIC_AND = 276,
-    LOGIC_OR = 277,
-    LOGIC_NOT = 278,
-    DECIMAL = 279,
-    OCTAL = 280,
-    HEX = 281,
-    STRING = 282,
-    INT = 283,
-    DOUBLE = 284,
-    FLOAT = 285,
-    CHAR = 286,
-    VOID = 287,
-    STRUCT_TOKEN = 288,
-    IF = 289,
-    ELSE = 290,
-    DO = 291,
-    WHILE = 292,
-    FOR = 293,
-    RETURN = 294,
-    BREAK = 295,
-    CONTINUE = 296,
-    CONST = 297,
-    ASSIGN = 298,
-    TRUE = 299,
-    FALSE = 300,
-    LBRACE = 301,
-    RBRACE = 302,
-    LPARENTHESIS = 303,
-    RPARENTHESIS = 304,
-    LSQUARE = 305,
-    RSQUARE = 306,
-    SEMICOLON = 307,
-    DOT = 308,
-    COMMA = 309
-  };
+   /* Put the tokens into the symbol table, so that GDB and other debuggers
+      know about them.  */
+   enum yytokentype {
+     ID = 258,
+     ADD = 259,
+     MINUS = 260,
+     MUL = 261,
+     DIV = 262,
+     MOD = 263,
+     INC = 264,
+     DEC = 265,
+     EQ = 266,
+     NEQ = 267,
+     GEQ = 268,
+     LEQ = 269,
+     G = 270,
+     L = 271,
+     BIT_AND = 272,
+     BIT_OR = 273,
+     BIT_XOR = 274,
+     BIT_NEG = 275,
+     LOGIC_AND = 276,
+     LOGIC_OR = 277,
+     LOGIC_NOT = 278,
+     DECIMAL = 279,
+     OCTAL = 280,
+     HEX = 281,
+     STRING = 282,
+     INT = 283,
+     DOUBLE = 284,
+     FLOAT = 285,
+     CHAR = 286,
+     VOID = 287,
+     STRUCT_TOKEN = 288,
+     IF = 289,
+     ELSE = 290,
+     DO = 291,
+     WHILE = 292,
+     FOR = 293,
+     RETURN = 294,
+     BREAK = 295,
+     CONTINUE = 296,
+     CONST = 297,
+     ASSIGN = 298,
+     TRUE = 299,
+     FALSE = 300,
+     LBRACE = 301,
+     RBRACE = 302,
+     LPARENTHESIS = 303,
+     RPARENTHESIS = 304,
+     LSQUARE = 305,
+     RSQUARE = 306,
+     SEMICOLON = 307,
+     DOT = 308,
+     COMMA = 309
+   };
 #endif
+/* Tokens.  */
+#define ID 258
+#define ADD 259
+#define MINUS 260
+#define MUL 261
+#define DIV 262
+#define MOD 263
+#define INC 264
+#define DEC 265
+#define EQ 266
+#define NEQ 267
+#define GEQ 268
+#define LEQ 269
+#define G 270
+#define L 271
+#define BIT_AND 272
+#define BIT_OR 273
+#define BIT_XOR 274
+#define BIT_NEG 275
+#define LOGIC_AND 276
+#define LOGIC_OR 277
+#define LOGIC_NOT 278
+#define DECIMAL 279
+#define OCTAL 280
+#define HEX 281
+#define STRING 282
+#define INT 283
+#define DOUBLE 284
+#define FLOAT 285
+#define CHAR 286
+#define VOID 287
+#define STRUCT_TOKEN 288
+#define IF 289
+#define ELSE 290
+#define DO 291
+#define WHILE 292
+#define FOR 293
+#define RETURN 294
+#define BREAK 295
+#define CONTINUE 296
+#define CONST 297
+#define ASSIGN 298
+#define TRUE 299
+#define FALSE 300
+#define LBRACE 301
+#define RBRACE 302
+#define LPARENTHESIS 303
+#define RPARENTHESIS 304
+#define LSQUARE 305
+#define RSQUARE 306
+#define SEMICOLON 307
+#define DOT 308
+#define COMMA 309
 
-/* Value type.  */
+
+
+
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
+typedef union YYSTYPE
+#line 65 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.ypp"
 {
-#line 65 "/home/darren/compiler/Compiler/src/frontend/parser/parser.ypp"
-
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
     compiler::Item_decl*                item_decl;
@@ -133,32 +177,28 @@ union YYSTYPE
     compiler::Item_struct_body*         item_struct_body;
     std::string*                        raw_string;
     char                                raw_char;
-
-#line 138 "/home/darren/compiler/Compiler/src/frontend/parser/parser.hh"
-
-};
-typedef union YYSTYPE YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
+}
+/* Line 1529 of yacc.c.  */
+#line 183 "/Users/chenhaobin/Documents/NKU/Computer/Compilation/compiler/Compiler/src/frontend/parser/parser.hh"
+	YYSTYPE;
+# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
 #endif
 
-/* Location type.  */
+extern YYSTYPE yylval;
+
 #if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
+typedef struct YYLTYPE
 {
   int first_line;
   int first_column;
   int last_line;
   int last_column;
-};
+} YYLTYPE;
+# define yyltype YYLTYPE /* obsolescent; will be withdrawn */
 # define YYLTYPE_IS_DECLARED 1
 # define YYLTYPE_IS_TRIVIAL 1
 #endif
 
-
-extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
-int yyparse (void);
-
-#endif /* !YY_YY_HOME_DARREN_COMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED  */

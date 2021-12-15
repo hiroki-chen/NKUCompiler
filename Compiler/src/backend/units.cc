@@ -42,6 +42,17 @@ void compiler::reg::Machine_block::emit_assembly(std::ostream& os) const {
   }
 }
 
+void compiler::reg::Machine_function::backup_registers(void) {
+  // Push all the needed registers.
+  for (auto reg : compiler::reg::general_registers) {
+    reg::Machine_instruction_stack* const stack_r =
+        new reg::Machine_instruction_stack(
+            *get_blocks()->begin(), reg::stack_type::PUSH,
+            new reg::Machine_operand(reg::operand_type::REG, reg));
+    add_func_prologue_instruction(stack_r);
+  }
+}
+
 void compiler::reg::Machine_function::emit_assembly(std::ostream& os) const {
   const std::string demangled_func =
       function_name.substr(1, function_name.find_last_of("_") - 1);

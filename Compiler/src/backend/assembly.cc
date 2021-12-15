@@ -95,11 +95,6 @@ std::string compiler::reg::Machine_operand::print(void) const {
     }
     case LABEL: {
       oss << label;
-      // if (label.substr(0, 3).compare(".LB") == 0) {
-      //   oss << label;
-      // } else {
-      //   oss << "addr_" << label;
-      // }
       break;
     }
   }

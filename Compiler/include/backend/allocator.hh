@@ -25,6 +25,10 @@
 #include <utility>
 
 namespace compiler::reg {
+
+using live_var_type =
+    std::map<std::string, std::pair<std::set<Machine_operand*, Comparator>,
+                                    std::set<Machine_operand*, Comparator>>>;
 /**
  * @brief A class that analyzes the def-use chain and then perform register
  *        allocations for each machine instruction where each register is
@@ -39,8 +43,11 @@ typedef class Allocator final {
    * @brief The define-use chain data structure.
    *
    */
-  // std::map<Machine_operand*, std::set<Machine_operand*, Comparator>> du_chains;
-  std::vector<std::pair<std::set<Machine_operand*, Comparator>, std::set<Machine_operand*, Comparator>>> du_chains;
+  // std::map<Machine_operand*, std::set<Machine_operand*, Comparator>>
+  // du_chains;
+  std::vector<std::pair<std::set<Machine_operand*, Comparator>,
+                        std::set<Machine_operand*, Comparator>>>
+      du_chains;
   std::vector<std::pair<uint32_t, uint32_t>> loop_label_stack;
   std::vector<Interval*> intervals;
 
@@ -102,7 +109,7 @@ typedef class Allocator final {
   void spill_at_interval(Interval* const interval);
 
   void make_du_chains(void);
-  
+
   void do_compute_live_intervals(void);
 
   void compute_live_intervals(void);
