@@ -50,6 +50,8 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
     machine_unit->add_function(machine_function);
   }
 
+  machine_unit->emit_assembly(std::cout);
+
   // TODO: Allocate registers. XJW.
   // You need to either implement the graph-colorin / linear-scan algorithm.
   // Use the class "Allocator" to do this job. If you need to add / modify /
