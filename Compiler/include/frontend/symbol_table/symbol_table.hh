@@ -85,6 +85,8 @@ typedef class Symbol_table {
    */
   uint32_t available_id;
 
+  uint32_t label_id;
+
   // Tables are pushed onto the front of the stack (here it is a list)
   std::deque<Symbol_block*> symbol_table;
 
@@ -93,11 +95,13 @@ typedef class Symbol_table {
   std::deque<Const_block*> const_assign_table;
 
  public:
-  Symbol_table() = default;
+  Symbol_table() : available_id(0ul), label_id(0ul) {}
 
   Symbol_table(const Symbol_table& symbol_table);
 
   virtual ~Symbol_table();
+
+  virtual uint32_t get_label_id(void) { return label_id++; }
 
   virtual int get_top_scope_uuid() const {
     return (int)symbol_table.size() - 1;
@@ -129,6 +133,8 @@ typedef class Symbol_table {
   virtual void leave_scope();
 
   virtual uint32_t get_available_id(void) { return available_id++; }
+
+  virtual void set_label_id(const uint32_t& id) { label_id = id; }
 
   virtual void set_available_id(const uint32_t& id) { available_id = id; }
 } Symbol_table;

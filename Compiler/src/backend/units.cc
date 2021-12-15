@@ -34,11 +34,22 @@ static std::string escape_string(const std::string& in) {
 
 void compiler::reg::Machine_block::emit_assembly(std::ostream& os) const {
   // Emit the label.
+  os << escape_string(label) << ":\n";
   if (false == inst_list.empty()) {
-    os << escape_string(label) << ":\n";
     for (compiler::reg::Machine_instruction* const instruction : inst_list) {
       instruction->emit_assembly(os);
     }
+  }
+}
+
+void compiler::reg::Machine_function::backup_registers(void) {
+  // Push all the needed registers.
+  for (auto reg : compiler::reg::general_registers) {
+    reg::Machine_instruction_stack* const stack_r =
+        new reg::Machine_instruction_stack(
+            *get_blocks()->begin(), reg::stack_type::PUSH,
+            new reg::Machine_operand(reg::operand_type::REG, reg));
+    add_func_prologue_instruction(stack_r);
   }
 }
 

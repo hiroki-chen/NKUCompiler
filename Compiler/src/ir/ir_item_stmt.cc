@@ -36,6 +36,7 @@ void compiler::Item_block::generate_ir_helper(
     compiler::ir::ir_list& ir_list) const {
   try {
     ir_context->enter_scope();
+    // ir_context->get_symbol_table()->set_available_id();
     for (Item_stmt* const statement : statements) {
       statement->generate_ir(ir_context, ir_list);
     }
@@ -61,7 +62,7 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     ir_context->enter_scope();
     // Get the id of current scope.
     const uint32_t scope_uuid_cur =
-        (uint32_t)(ir_context->get_symbol_table()->get_top_scope_uuid());
+        (uint32_t)(ir_context->get_symbol_table()->get_label_id());
     const compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context, ir_list);
 
@@ -97,12 +98,17 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     ir_context_else.get_symbol_table()->set_available_id(
         ir_context_if.get_symbol_table()->get_available_id());
+    ir_context_else.get_symbol_table()->set_label_id(
+        ir_context_if.get_symbol_table()->get_label_id());
+
     ir_context_else.enter_scope();
     else_branch->generate_ir(&ir_context_else, ir_else);
     ir_context_else.leave_scope();
 
     ir_context->get_symbol_table()->set_available_id(
         ir_context_else.get_symbol_table()->get_available_id());
+    ir_context->get_symbol_table()->set_label_id(
+        ir_context_else.get_symbol_table()->get_label_id());
 
     compiler::ir::ir_list ir_list_end;
     ir_list_end.emplace_back(
@@ -249,11 +255,44 @@ void compiler::Item_stmt_assign::generate_ir_helper(
     const std::string name = rhs->get_identifier();
     if (rhs->get_is_var() == true) {
       // Local <= Variable. ok. SSA update symbol name.
-      if (name[0] == '%' &&
-          (symbol->get_name()[0] == ir::local_sign[0] ||
-           symbol->get_name().substr(0, 4) == ir::arg_sign) &&
-          symbol->get_name()[0] != ir::global_sign[0]) {
+      if (name.substr(0, 2).compare(ir::local_sign) == 0 ||
+          name.substr(0, 1).compare(ir::global_sign) == 0
+          // &&
+          //     (symbol->get_name()[0] == ir::local_sign[0] ||
+          //      symbol->get_name().substr(0, 4) == ir::arg_sign) &&
+          //     symbol->get_name()[0] != ir::global_sign[0]
+      ) {
         if (ir_context->is_loop_context()) {
+          bool is_lhs_loop = false;
+          bool is_rhs_loop = false;
+
+          // If the variable is in a loop, we should take care of it.
+          for (const std::string& var : ir_context->get_top_loop_vector()) {
+            if (symbol->get_name() == var) {
+              is_lhs_loop = true;
+            } else if (rhs->get_identifier() == var) {
+              is_rhs_loop = true;
+            }
+          }
+
+          if (is_lhs_loop || is_rhs_loop) {
+            const std::string new_name = compiler::concatenate(
+                ir::local_sign,
+                ir_context->get_symbol_table()->get_available_id());
+            std::cout << "Hello\n";
+            ir::Operand* const tmp =
+                new ir::Operand(ir::var_type::i32, new_name, "");
+            ir_list.emplace_back(ir::op_type::MOV, tmp, rhs);
+            ir_list.emplace_back(
+                ir::op_type::MOV,
+                new ir::Operand(ir::var_type::i32, symbol->get_name(), ""),
+                tmp);
+          } else {
+            ir_list.emplace_back(
+                ir::op_type::MOV,
+                new ir::Operand(ir::var_type::i32, symbol->get_name(), ""),
+                rhs);
+          }
         } else {
           // Emulate LLVM type.
           // We first move the rhs to a temporary variable and then move it to
@@ -261,21 +300,25 @@ void compiler::Item_stmt_assign::generate_ir_helper(
           const std::string name_tmp = compiler::concatenate(
               ir::local_sign,
               ir_context->get_symbol_table()->get_available_id());
-          ir::Operand* const operand_tmp = new ir::Operand(name_tmp);
-          ir_list.emplace_back(ir::op_type::MOV, operand_tmp, rhs);
-          ir_list.emplace_back(ir::op_type::MOV,
-                               new ir::Operand(symbol->get_name()),
-                               operand_tmp);
+          ir_list.emplace_back(
+              ir::op_type::MOV,
+              new ir::Operand(ir::var_type::i32, symbol->get_name(), "", true,
+                              false),
+              rhs);
         }
       }
     } else if (rhs->get_identifier().front() == '@') /* Global variable. */ {
       // symbol->set_name(rhs->get_identifier());
-      ir_list.emplace_back(ir::op_type::MOV,
-                           new ir::Operand(rhs->get_identifier()), rhs);
+      ir_list.emplace_back(
+          ir::op_type::MOV,
+          new ir::Operand(ir::var_type::i32, rhs->get_identifier(), "", true,
+                          false),
+          rhs);
     } else /* Normal const expression. */ {
       ir_list.emplace_back(ir::op_type::MOV,
-                           new ir::Operand(symbol->get_name()), rhs);
-
+                           new ir::Operand(ir::var_type::i32,
+                                           symbol->get_name(), "", true, false),
+                           rhs);
       if (opt_level > 0) {
         compiler::Symbol_const* const assign = new compiler::Symbol_const(
             symbol->get_name(), compiler::symbol_type::VAR_TYPE, "");
@@ -301,8 +344,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Enter a scope.
     ir_context->enter_scope();
     // Create a loop label.
-    const uint32_t scope_id =
-        ir_context->get_symbol_table()->get_top_scope_uuid();
+    const uint32_t scope_id = ir_context->get_symbol_table()->get_label_id();
     ir_context->add_loop_label(std::to_string(scope_id));
 
     // Step 1: Copy the previous context.
@@ -536,6 +578,8 @@ void compiler::Item_stmt_while::generate_ir_helper(
     *ir_context = *ir_context_condition;
     ir_context->get_symbol_table()->set_available_id(
         ir_context_continue->get_symbol_table()->get_available_id());
+    ir_context->get_symbol_table()->set_label_id(
+        ir_context_continue->get_symbol_table()->get_label_id());
 
     // Leave the scope.
     ir_context->pop_loop_var();
@@ -696,7 +740,7 @@ void compiler::handle_phi_move(ir::IRContext* const ir_context_a,
               tag_pair,
               compiler::concatenate(
                   ir::local_sign,
-                  ir_context_dst->get_symbol_table()->get_top_scope_uuid()));
+                  ir_context_dst->get_symbol_table()->get_label_id()));
           ir_context_dst->continue_phi_block.top().insert(phi_pair);
           break;
         }

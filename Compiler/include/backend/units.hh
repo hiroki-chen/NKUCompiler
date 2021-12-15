@@ -31,7 +31,7 @@ class Machine_instruction;
 class Machine_unit;
 class Machine_function;
 class Machine_block;
-class Machine_instruction;
+// class Machine_instruction;
 
 struct Comparator {
   bool operator()(const Machine_operand* lhs, const Machine_operand* rhs) const;
@@ -84,6 +84,10 @@ typedef class Machine_block {
   std::vector<Machine_block*>* get_succs() { return &succ; }
 
   void emit_assembly(std::ostream& os = std::cerr) const;
+
+  std::string get_label() const { return label; }
+
+  Machine_function* get_parent() { return parent; }
 } Machine_block;
 
 typedef class Machine_function {
@@ -132,6 +136,8 @@ typedef class Machine_function {
   void add_saved_regs(const std::string& register_name) {
     saved_regs.insert(register_name);
   }
+
+  void backup_registers(void);
 
   void emit_assembly(std::ostream& os = std::cerr) const;
 } Machine_function;

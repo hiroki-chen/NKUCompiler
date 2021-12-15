@@ -53,7 +53,7 @@ void compiler::Item_decl_var::generate_ir_helper(
     ir_context->get_symbol_table()->add_symbol(name, symbol);
     // Generate an explicit declare IR.
     ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
-                         new ir::Operand(name_symbol));
+                         new ir::Operand(ir::var_type::i32, name_symbol, ""));
   }
 }
 
@@ -91,7 +91,7 @@ void compiler::Item_decl_var_init::generate_ir_helper(
       name_symbol = compiler::concatenate(ir::local_sign, id);
       // Generate an explicit declare IR.
       ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
-                           new ir::Operand(name_symbol));
+                           new ir::Operand(ir::var_type::i32, name_symbol, ""));
 
       compiler::Symbol* const symbol =
           new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
@@ -150,7 +150,7 @@ uint32_t compiler::Item_decl_array::calculate_array_size(
   uint32_t array_size = 1;
   for (ir::Operand* const shape : array_shape) {
     int size = 0;
-    if ((size = std::stoi(shape->get_value())) < 0) {
+    if ((size = std::stol(shape->get_value())) < 0) {
       throw compiler::fatal_error("The array has negative shape!");
     }
     array_size *= (uint32_t)size;

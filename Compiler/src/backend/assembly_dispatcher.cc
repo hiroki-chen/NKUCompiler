@@ -20,46 +20,135 @@
 #include <cassert>
 #include <common/utils.hh>
 
+static void handle_mod_div(compiler::reg::Machine_block *const cur_block,
+                           compiler::reg::Assembly_builder *const asm_builder,
+                           compiler::ir::Operand *const dst,
+                           compiler::reg::Machine_operand *const operand_a,
+                           compiler::reg::Machine_operand *const operand_b,
+                           const std::string &func_name) {
+  using namespace compiler;
+  // This will generate a function call.
+  // mov r0, opa
+  // mov r1, opb
+  // bl __aeabi_idivxxx
+  reg::Machine_operand *const r0 =
+      new reg::Machine_operand(reg::operand_type::REG, "r0");
+  reg::Machine_operand *const r1 =
+      new reg::Machine_operand(reg::operand_type::REG, "r1");
+
+  // Backup the arguments.
+  // mov %v, r0
+  // mov %v, r1
+  reg::Machine_operand *const v0 = new reg::Machine_operand(
+      reg::operand_type::VREG,
+      reg::virtual_sign + std::to_string(asm_builder->get_available_id()));
+  reg::Machine_operand *const v1 = new reg::Machine_operand(
+      reg::operand_type::VREG,
+      reg::virtual_sign + std::to_string(asm_builder->get_available_id()));
+
+  {
+    reg::Machine_instruction_mov *const mov1 = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, new reg::Machine_operand(*v0), r0);
+    reg::Machine_instruction_mov *const mov2 = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, new reg::Machine_operand(*v1), r1);
+    cur_block->add_instruction(mov1);
+    cur_block->add_instruction(mov2);
+  }
+
+  {
+    reg::Machine_instruction_mov *const mov1 = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r0, operand_a);
+    reg::Machine_instruction_mov *const mov2 = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r1, operand_b);
+    reg::Machine_operand *const func = new reg::Machine_operand(func_name);
+    reg::Machine_instruction_branch *const call =
+        new reg::Machine_instruction_branch(cur_block, reg::branch_type::BL,
+                                            func);
+    reg::Machine_instruction_mov *const ret = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, dst->emit_machine_operand(),
+        func_name.compare(reg::mod_func) == 0 ? r1 : r0);
+    cur_block->add_instruction(mov1);
+    cur_block->add_instruction(mov2);
+    cur_block->add_instruction(call);
+    cur_block->add_instruction(ret);
+  }
+
+  // Restore the operands.
+  {
+    reg::Machine_instruction_mov *const mov1 = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r0, new reg::Machine_operand(*v0));
+    reg::Machine_instruction_mov *const mov2 = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r1, new reg::Machine_operand(*v1));
+    cur_block->add_instruction(mov1);
+    cur_block->add_instruction(mov2);
+  }
+}
+
 // Global variables are like pointers in C language, they are represented by
 // their unique addresses in the memory. Thus, to load global variables into
 // their register, we should use ldr instruction. This can be done via macro
 // definition: mov32: mov \reg16...
-static compiler::reg::Machine_operand* handle_global(
-    compiler::reg::Machine_block* const cur_block,
-    compiler::reg::Assembly_builder* const asm_builder,
-    compiler::ir::Operand* const raw_operand) {
+static compiler::reg::Machine_operand *handle_global(
+    compiler::reg::Machine_block *const cur_block,
+    compiler::reg::Assembly_builder *const asm_builder,
+    compiler::ir::Operand *const raw_operand) {
   using namespace compiler;
   // CALL MOV32 + ldr.
   // mov32 r0, symbol
   // ldr r0, [r0]
-  reg::Machine_operand* const tmp = new reg::Machine_operand(
+  reg::Machine_operand *const tmp = new reg::Machine_operand(
       reg::operand_type::VREG,
       compiler::concatenate(reg::virtual_sign,
                             asm_builder->get_available_id()));
-  reg::Machine_operand* const zero =
+  reg::Machine_operand *const zero =
       new reg::Machine_operand(reg::operand_type::IMM, "0");
-  reg::Machine_instruction_mov* const mov32 =
+  reg::Machine_instruction_mov *const mov32 =
       new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV32, tmp,
                                        raw_operand->emit_machine_operand());
-  reg::Machine_instruction_load* const ldr =
-      new reg::Machine_instruction_load(cur_block, tmp, tmp, zero);
+  reg::Machine_instruction_load *const ldr = new reg::Machine_instruction_load(
+      cur_block, new reg::Machine_operand(*tmp), new reg::Machine_operand(*tmp),
+      zero);
   cur_block->add_instruction(mov32);
   cur_block->add_instruction(ldr);
 
-  return tmp;
+  return new reg::Machine_operand(*tmp);
 }
 
-static compiler::reg::Machine_operand* handle_immediate(
-    compiler::reg::Machine_block* const cur_block,
-    compiler::reg::Assembly_builder* const asm_builder,
-    compiler::ir::Operand* const raw_operand) {
+static void handle_global_str(
+    compiler::reg::Machine_block *const cur_block,
+    compiler::reg::Assembly_builder *const asm_builder,
+    compiler::reg::Machine_operand *const raw_operand,
+    compiler::ir::Operand *const global_name) {
+  using namespace compiler;
+  // mov32 r0, symbol
+  // str r1, [r0, #0]
+  reg::Machine_operand *const tmp = new reg::Machine_operand(
+      reg::operand_type::VREG,
+      compiler::concatenate(reg::virtual_sign,
+                            asm_builder->get_available_id()));
+  reg::Machine_operand *const zero =
+      new reg::Machine_operand(reg::operand_type::IMM, "0");
+  reg::Machine_instruction_mov *const mov32 =
+      new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV32, tmp,
+                                       global_name->emit_machine_operand());
+  reg::Machine_instruction_store *const str =
+      new reg::Machine_instruction_store(cur_block, raw_operand,
+                                         new reg::Machine_operand(*tmp), zero);
+  cur_block->add_instruction(mov32);
+  cur_block->add_instruction(str);
+}
+
+static compiler::reg::Machine_operand *handle_immediate(
+    compiler::reg::Machine_block *const cur_block,
+    compiler::reg::Assembly_builder *const asm_builder,
+    compiler::ir::Operand *const raw_operand) {
   using namespace compiler;
   const std::string id =
       compiler::concatenate(reg::virtual_sign, asm_builder->get_available_id());
   // Insert an explicit MOV!
-  reg::Machine_operand* const temp_virtual_reg =
+  reg::Machine_operand *const temp_virtual_reg =
       new reg::Machine_operand(reg::operand_type::VREG, id);
-  reg::Machine_instruction* const m_inst_mov = new reg::Machine_instruction_mov(
+  reg::Machine_instruction *const m_inst_mov = new reg::Machine_instruction_mov(
       cur_block, reg::mov_type::MOV_N, temp_virtual_reg,
       raw_operand->emit_machine_operand());
   cur_block->add_instruction(m_inst_mov);
@@ -69,39 +158,60 @@ static compiler::reg::Machine_operand* handle_immediate(
 }
 
 // FIXME: Determine the size of the stack allocated by the function!
-static void return_epilogue(compiler::reg::Machine_block* const cur_block,
-                            const compiler::ir::IR* const ir) {
+static void return_epilogue(compiler::reg::Machine_block *const cur_block,
+                            const compiler::ir::IR *const ir) {
   using namespace compiler;
-  reg::Machine_operand* const r14 =
+  reg::Machine_operand *const r14 =
       new reg::Machine_operand(reg::operand_type::REG, "r14");
-  reg::Machine_operand* const sp =
-      new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
-  reg::Machine_operand* const offset =
-      new reg::Machine_operand(reg::operand_type::IMM, "0");
-  reg::Machine_instruction_load* const ldr =
-      new reg::Machine_instruction_load(cur_block, r14, sp, offset);
-  cur_block->add_instruction(ldr);
+  // reg::Machine_operand* const sp =
+  //     new reg::Machine_operand(reg::operand_type::REG, reg::frame_pointer);
+  // reg::Machine_operand* const offset =
+  //     new reg::Machine_operand(reg::operand_type::IMM, "0");
+  // reg::Machine_instruction_load* const ldr =
+  //     new reg::Machine_instruction_load(cur_block, r14, sp, offset);
+  // cur_block->add_instruction(ldr);
 
   // add sp, sp, #4
-  const std::string size =
-      std::to_string(ir->get_func_call_list().size() * 4 + 4);
-  reg::Machine_operand* const stack_size =
-      new reg::Machine_operand(reg::operand_type::IMM, size);
-  reg::Machine_instruction_binary* const add =
-      new reg::Machine_instruction_binary(cur_block, reg::binary_type::ADD, sp,
-                                          sp, stack_size);
-  cur_block->add_instruction(add);
+  // const std::string size =
+  //     std::to_string(ir->get_func_call_list().size() * 4 + 4);
+  // reg::Machine_operand* const stack_size =
+  //     new reg::Machine_operand(reg::operand_type::IMM, size);
+  // reg::Machine_instruction_binary* const add =
+  //     new reg::Machine_instruction_binary(cur_block, reg::binary_type::ADD,
+  //     sp,
+  //                                         sp, stack_size);
+  // cur_block->add_instruction(add);
 
+  reg::Machine_operand *const sp =
+      new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
+  reg::Machine_operand *const fp =
+      new reg::Machine_operand(reg::operand_type::REG, reg::frame_pointer);
+  reg::Machine_instruction_stack *const stack_fp =
+      new reg::Machine_instruction_stack(cur_block, reg::stack_type::POP, fp);
+  reg::Machine_instruction_stack *const stack_r14 =
+      new reg::Machine_instruction_stack(cur_block, reg::stack_type::POP, r14);
+  reg::Machine_instruction_mov *const mov_fp =
+      new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, sp, fp);
+  cur_block->add_instruction(mov_fp);
+  cur_block->add_instruction(stack_fp);
+  for (auto reg : compiler::reg::general_registers) {
+    reg::Machine_instruction_stack *const stack_r =
+        new reg::Machine_instruction_stack(
+            cur_block, reg::stack_type::POP,
+            new reg::Machine_operand(reg::operand_type::REG, reg));
+    cur_block->add_instruction(stack_r);
+  }
+  cur_block->add_instruction(stack_r14);
   // mov pc, r14
-  reg::Machine_operand* const pc =
+  reg::Machine_operand *const pc =
       new reg::Machine_operand(reg::operand_type::REG, reg::program_counter);
-  reg::Machine_instruction_mov* const mov = new reg::Machine_instruction_mov(
+  reg::Machine_instruction_mov *const mov = new reg::Machine_instruction_mov(
       cur_block, reg::mov_type::MOV_N, pc, r14);
   cur_block->add_instruction(mov);
 }
 
 static compiler::reg::branch_type to_branch_type(
-    const compiler::ir::op_type& type) {
+    const compiler::ir::op_type &type) {
   switch (type) {
     case compiler::ir::op_type::JMP:
       return compiler::reg::branch_type::B;
@@ -122,7 +232,7 @@ static compiler::reg::branch_type to_branch_type(
   }
 }
 
-static compiler::reg::mov_type to_move_type(const compiler::ir::op_type& type) {
+static compiler::reg::mov_type to_move_type(const compiler::ir::op_type &type) {
   switch (type) {
     case compiler::ir::op_type::MOV:
     case compiler::ir::op_type::PHI:
@@ -145,7 +255,7 @@ static compiler::reg::mov_type to_move_type(const compiler::ir::op_type& type) {
 }
 
 static compiler::reg::binary_type to_binary_type(
-    const compiler::ir::op_type& type) {
+    const compiler::ir::op_type &type) {
   switch (type) {
     case compiler::ir::op_type::IADD: {
       return compiler::reg::binary_type::ADD;
@@ -176,8 +286,8 @@ static compiler::reg::binary_type to_binary_type(
   }
 }
 
-compiler::Assembly_dispatcher* compiler::Assembly_dispatcher::dispatch(
-    const compiler::ir::op_type& type, const ir::IR* const ir) {
+compiler::Assembly_dispatcher *compiler::Assembly_dispatcher::dispatch(
+    const compiler::ir::op_type &type, const ir::IR *const ir) {
   auto op_type = compiler::to_machine_type(type);
 
   switch (op_type) {
@@ -206,44 +316,58 @@ compiler::Assembly_dispatcher* compiler::Assembly_dispatcher::dispatch(
 }
 
 void compiler::Assembly_dispatcher_binary::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
+    compiler::reg::Assembly_builder *const asm_builder) const {
   // Construct basic information.
-  reg::Machine_block* const block = asm_builder->get_block();
-  reg::Machine_operand* const dst = ir->get_dst()->emit_machine_operand();
-  reg::Machine_operand* operand_a = nullptr;
-  reg::Machine_operand* operand_b = nullptr;
+  reg::Machine_block *const block = asm_builder->get_block();
 
+  reg::Machine_operand *const dst = ir->get_dst()->emit_machine_operand();
+  reg::Machine_operand *operand_a = nullptr;
+  reg::Machine_operand *operand_b = nullptr;
+
+  bool global_a = false;
+  bool global_b = false;
   // Check if there is a movement from global variable to the register.
   if (ir->get_op1()->get_identifier().substr(0, 1) == ir::global_sign) {
     operand_a = handle_global(block, asm_builder, ir->get_op1());
-  } else {
-    operand_a = ir->get_op1()->emit_machine_operand();
+    global_a = true;
   }
 
   if (ir->get_op2()->get_identifier().substr(0, 1) == ir::global_sign) {
     operand_b = handle_global(block, asm_builder, ir->get_op2());
-  } else {
-    operand_b = ir->get_op2()->emit_machine_operand();
+    global_b = true;
   }
 
   // Before simply generating machine instructions, we shall first check whether
   // the first operand is IMMEDIATE:
   // ADD r0, #1,  => This is forbidden in ARM assembly.
-  if (false == ir->get_op1()->get_is_var() &&
-      ir->get_op1()->get_identifier().substr(0, 1) != ir::global_sign) {
+  if (false == ir->get_op1()->get_is_var() && !global_a) {
     operand_a = handle_immediate(block, asm_builder, ir->get_op1());
-  } else if (false == ir->get_op2()->get_is_var() &&
-                 ir->get_op2()->get_identifier().substr(0, 1) !=
-                     ir::global_sign &&
-                 ir->get_op_type() == ir::op_type::IMUL ||
-             ir->get_op_type() == ir::op_type::IDIV) {
+  } else if (!global_a) {
+    operand_a = ir->get_op1()->emit_machine_operand();
+  }
+
+  if (false == ir->get_op2()->get_is_var() && !global_b &&
+      ir->get_op_type() == ir::op_type::IMUL) {
     // For multiplcation and division, the second operand cannot be immediate
     // either. So we need to transform it too.
     operand_b = handle_immediate(block, asm_builder, ir->get_op2());
+  } else if (!global_b) {
+    operand_b = ir->get_op2()->emit_machine_operand();
+  }
+
+  // If this is a division.
+  if (type == ir::op_type::IDIV) {
+    handle_mod_div(block, asm_builder, ir->get_dst(), operand_a, operand_b,
+                   reg::div_func);
+    return;
+  } else if (type == ir::op_type::IMOD) {
+    handle_mod_div(block, asm_builder, ir->get_dst(), operand_a, operand_b,
+                   reg::mod_func);
+    return;
   }
 
   compiler::reg::binary_type type_bin = to_binary_type(type);
-  reg::Machine_instruction_binary* const m_inst =
+  reg::Machine_instruction_binary *const m_inst =
       new reg::Machine_instruction_binary(block, type_bin, dst, operand_a,
                                           operand_b);
 
@@ -252,41 +376,69 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
 
 // FIXME: Maybe this is not needed?...
 void compiler::Assembly_dispatcher_unary::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
+    compiler::reg::Assembly_builder *const asm_builder) const {
   // This is not needed, but I keep it there.
   return;
 }
 
 void compiler::Assembly_dispatcher_cmp::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
+    compiler::reg::Assembly_builder *const asm_builder) const {
   // Construct basic information.
-  reg::Machine_block* const block = asm_builder->get_block();
-  reg::Machine_operand* const lhs = ir->get_op1()->emit_machine_operand();
-  reg::Machine_operand* const rhs = ir->get_op2()->emit_machine_operand();
+  reg::Machine_block *const block = asm_builder->get_block();
+  reg::Machine_operand *lhs = nullptr;
+  reg::Machine_operand *rhs = nullptr;
 
-  reg::Machine_instruction_cmp* const m_inst =
+  // Global type.
+  if (ir->get_op1()->get_identifier().substr(0, 1).compare(ir::global_sign) ==
+      0) {
+    lhs = handle_global(block, asm_builder, ir->get_op1());
+  } else {
+    lhs = ir->get_op1()->emit_machine_operand();
+  }
+
+  if (ir->get_op2()->get_identifier().substr(0, 1).compare(ir::global_sign) ==
+      0) {
+    rhs = handle_global(block, asm_builder, ir->get_op2());
+  } else {
+    rhs = ir->get_op2()->emit_machine_operand();
+  }
+
+  // Before simply generating machine instructions, we shall first check whether
+  // the first operand is IMMEDIATE:
+  // ADD r0, #1,  => This is forbidden in ARM assembly.
+  if (false == ir->get_op1()->get_is_var() &&
+      ir->get_op1()->get_identifier().substr(0, 1) != ir::global_sign) {
+    lhs = handle_immediate(block, asm_builder, ir->get_op1());
+  } else if (false == ir->get_op2()->get_is_var() &&
+             ir->get_op2()->get_identifier().substr(0, 1) != ir::global_sign) {
+    // For multiplcation and division, the second operand cannot be immediate
+    // either. So we need to transform it too.
+    rhs = handle_immediate(block, asm_builder, ir->get_op2());
+  }
+
+  reg::Machine_instruction_cmp *const m_inst =
       new reg::Machine_instruction_cmp(block, lhs, rhs);
   block->add_instruction(m_inst);
 }
 
 void compiler::Assembly_dispatcher_branch::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
+    compiler::reg::Assembly_builder *const asm_builder) const {
   // Construct basic information.
-  reg::Machine_block* const block = asm_builder->get_block();
-  reg::Machine_operand* const label = new reg::Machine_operand(ir->get_label());
+  reg::Machine_block *const block = asm_builder->get_block();
+  reg::Machine_operand *const label = new reg::Machine_operand(ir->get_label());
 
-  reg::Machine_instruction_branch* const m_inst =
+  reg::Machine_instruction_branch *const m_inst =
       new reg::Machine_instruction_branch(block, to_branch_type(type), label);
   block->add_instruction(m_inst);
 }
 
 void compiler::Assembly_dispatcher_mov::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
+    compiler::reg::Assembly_builder *const asm_builder) const {
   // Construct basic information.
-  reg::Machine_block* const block = asm_builder->get_block();
-  reg::Machine_operand* const dst = ir->get_dst()->emit_machine_operand();
+  reg::Machine_block *const block = asm_builder->get_block();
+  reg::Machine_operand *dst = nullptr;
   // Need further process.
-  reg::Machine_operand* src = nullptr;
+  reg::Machine_operand *src = nullptr;
 
   // We cannot move an address to the register. We need the value.
   if (ir->get_op1()->get_identifier().substr(0, 1) == ir::global_sign) {
@@ -295,16 +447,31 @@ void compiler::Assembly_dispatcher_mov::emit_machine_code(
     src = ir->get_op1()->emit_machine_operand();
   }
 
+  // If the destination is a global variable.
+  bool dst_global =
+      ir->get_dst()->get_identifier().substr(0, 1) == ir::global_sign;
+  if (dst_global) {
+    dst = handle_global(block, asm_builder, ir->get_dst());
+  } else {
+    dst = ir->get_dst()->emit_machine_operand();
+  }
+
   assert(dst->is_reg() || dst->is_vreg() && "Cannot move to non-register!");
 
-  reg::Machine_instruction_mov* const m_inst =
+  reg::Machine_instruction_mov *const m_inst =
       new reg::Machine_instruction_mov(block, to_move_type(type), dst, src);
   block->add_instruction(m_inst);
+
+  // Store the global variable.
+  if (dst_global) {
+    handle_global_str(block, asm_builder,
+                      new compiler::reg::Machine_operand(*dst), ir->get_dst());
+  }
 }
 
 void compiler::Assembly_dispatcher_stack::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
-  reg::Machine_block* const cur_block = asm_builder->get_block();
+    compiler::reg::Assembly_builder *const asm_builder) const {
+  reg::Machine_block *const cur_block = asm_builder->get_block();
   // This should be the "push argument" statements.
   // PUSH 0, %t1    =>    mov r0, %1
   // Note that r0 should be protected, if r0 currently contains different data.
@@ -314,11 +481,21 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
   if (type == ir::op_type::PUSH) {
     const uint32_t arg_no = std::stoul(ir->get_op1()->get_value());
     if (arg_no <= 3ul) {
-      reg::Machine_operand* const reg = new reg::Machine_operand(
+      reg::Machine_operand *const reg = new reg::Machine_operand(
           reg::operand_type::REG,
           compiler::concatenate("r", ir->get_op1()->get_value()));
-      reg::Machine_operand* const src = ir->get_op2()->emit_machine_operand();
-      reg::Machine_instruction_mov* const m_inst =
+
+      // Handle global type.
+      reg::Machine_operand *src = nullptr;
+      if (ir->get_op2()->get_is_var() &&
+          ir->get_op2()->get_identifier().substr(0, 1).compare(
+              ir::global_sign) == 0) {
+        src = handle_global(cur_block, asm_builder, ir->get_op2());
+      } else {
+        src = ir->get_op2()->emit_machine_operand();
+      }
+
+      reg::Machine_instruction_mov *const m_inst =
           new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, reg,
                                            src);
       cur_block->add_instruction(m_inst);
@@ -328,11 +505,11 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
       // If the argument number is too large, then we have to store the
       // overflown arguments on the stack. To this end, we calculate the offset
       // and then push them onto the stack.
-      reg::Machine_operand* const sp =
+      reg::Machine_operand *const sp =
           new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
-      reg::Machine_operand* const offset =
+      reg::Machine_operand *const offset =
           new reg::Machine_operand(reg::operand_type::IMM, overflow);
-      reg::Machine_instruction_store* const store =
+      reg::Machine_instruction_store *const store =
           new reg::Machine_instruction_store(
               cur_block, ir->get_op2()->emit_machine_operand(), sp, offset);
       cur_block->add_instruction(store);
@@ -344,19 +521,23 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
 }
 
 void compiler::Assembly_dispatcher_alloca::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
-  return;
-  // No need to emit anything.
+    compiler::reg::Assembly_builder *const asm_builder) const {
+  // Generate an empty statement.
+  reg::Machine_block *const block = asm_builder->get_block();
+  reg::Machine_operand *const var = ir->get_op1()->emit_machine_operand();
+  reg::Machine_instruction_alloca *const alloca =
+      new reg::Machine_instruction_alloca(block, var);
+  block->add_instruction(alloca);
 }
 
 void compiler::Assembly_dispatcher_call::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
+    compiler::reg::Assembly_builder *const asm_builder) const {
   // The arguments are already pushed onto the stack by the stack dispatcher.
   // We only need to generate a single BL instruction.
-  reg::Machine_block* const cur_block = asm_builder->get_block();
-  reg::Machine_operand* const func_name =
+  reg::Machine_block *const cur_block = asm_builder->get_block();
+  reg::Machine_operand *const func_name =
       new reg::Machine_operand(ir->get_label());
-  reg::Machine_instruction_branch* const func_call =
+  reg::Machine_instruction_branch *const func_call =
       new reg::Machine_instruction_branch(cur_block, reg::branch_type::BL,
                                           func_name);
 
@@ -364,22 +545,22 @@ void compiler::Assembly_dispatcher_call::emit_machine_code(
 
   // Then we should add the return value...
   if (reg != nullptr) {
-    reg::Machine_operand* const r0 =
+    reg::Machine_operand *const r0 =
         new reg::Machine_operand(reg::operand_type::REG, "r0");
-    reg::Machine_operand* const dst = reg->emit_machine_operand();
-    reg::Machine_instruction_mov* const mov = new reg::Machine_instruction_mov(
+    reg::Machine_operand *const dst = reg->emit_machine_operand();
+    reg::Machine_instruction_mov *const mov = new reg::Machine_instruction_mov(
         cur_block, reg::mov_type::MOV_N, dst, r0);
     cur_block->add_instruction(mov);
   }
 }
 
 void compiler::Assembly_dispatcher_return::emit_machine_code(
-    compiler::reg::Assembly_builder* const asm_builder) const {
-  reg::Machine_block* const cur_block = asm_builder->get_block();
+    compiler::reg::Assembly_builder *const asm_builder) const {
+  reg::Machine_block *const cur_block = asm_builder->get_block();
   // Handle return value. This should always be stored in r0.
-  reg::Machine_operand* return_value = nullptr;
+  reg::Machine_operand *return_value = nullptr;
   if (ir->get_dst() != nullptr) {
-    reg::Machine_operand* const r0 =
+    reg::Machine_operand *const r0 =
         new reg::Machine_operand(reg::operand_type::REG, "r0");
 
     if (ir->get_dst()->get_identifier().substr(0, 1) == ir::global_sign) {
@@ -387,8 +568,8 @@ void compiler::Assembly_dispatcher_return::emit_machine_code(
     } else {
       return_value = ir->get_dst()->emit_machine_operand();
     }
-
-    reg::Machine_instruction_mov* const ret = new reg::Machine_instruction_mov(
+    // std::cout << return_value->print() << std::endl;
+    reg::Machine_instruction_mov *const ret = new reg::Machine_instruction_mov(
         cur_block, reg::mov_type::MOV_N, r0, return_value);
     cur_block->add_instruction(ret);
   }

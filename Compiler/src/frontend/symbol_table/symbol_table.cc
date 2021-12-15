@@ -213,7 +213,7 @@ compiler::Const_block::Const_block(const compiler::Const_block& const_block) {
 }
 
 compiler::Symbol_table::Symbol_table(const compiler::Symbol_table& symbol_table)
-    : available_id(symbol_table.available_id) {
+    : available_id(symbol_table.available_id), label_id(symbol_table.label_id) {
   for (auto item : symbol_table.symbol_table) {
     this->symbol_table.emplace_back(new compiler::Symbol_block(*item));
   }

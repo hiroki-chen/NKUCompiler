@@ -59,7 +59,7 @@ compiler::reg::Machine_operand* compiler::ir::Operand::emit_machine_operand(
   // Temporary variables and local variables can be differentiated by their
   // prefixes. TEMP: %t, VAR: %v.
   if (is_var) {
-    if (identifier.substr(0, 2).compare(ir::local_sign) == 0) {
+    if (identifier.find(ir::local_sign) != -1) {
       // Local.
       return new reg::Machine_operand(reg::operand_type::VREG, identifier);
     } else if (identifier.substr(0, 1).compare(ir::global_sign) == 0) {
@@ -318,7 +318,7 @@ compiler::Item_literal* compiler::ir::wrap_value(
     compiler::ir::Operand* const operand) {
   switch (operand->get_type()) {
     case ir::var_type::i32:
-      return new compiler::Item_literal_int(0, std::stoi(operand->get_value()));
+      return new compiler::Item_literal_int(0, std::stol(operand->get_value()));
     case ir::var_type::i8:
       return new compiler::Item_literal_char(0, operand->get_value()[0]);
     case ir::var_type::DB:
