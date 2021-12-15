@@ -17,6 +17,7 @@
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
 #include <common/utils.hh>
+#include <frontend/nodes/item_literal.hh>
 #include <frontend/nodes/item_expr.hh>
 
 static bool type_check(const compiler::ir::Operand* const operand) {
@@ -463,8 +464,20 @@ compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
 
 compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
-  // TODO: implement this. The same as the type "ADD".
-  return nullptr;
+  // For global intializations.
+  if (expr->get_expr_type() != compiler::Item_expr::LITERAL_TYPE) {
+    throw compiler::unsupported_operation(
+        "Error: Cannot evaluate this expression at runtime!");
+  }
+
+  compiler::Item_literal_int* const value =
+      static_cast<compiler::Item_literal_int* const>(expr);
+
+  if (type == UMINUS_TYPE) {
+    return OPERAND_VALUE(std::to_string(-value->get_int()));
+  } else if (type == LNOT_TYPE) {
+    return value->get_int() == 0 ? OPERAND_VALUE("1") : OPERAND_VALUE("0");
+  }
 }
 
 compiler::ir::Operand* compiler::Item_expr_comma::eval_runtime_helper(
