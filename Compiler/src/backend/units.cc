@@ -14,6 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <chrono>
+
 #include <backend/units.hh>
 #include <common/utils.hh>
 
@@ -92,5 +94,6 @@ void compiler::reg::Machine_unit::emit_assembly(std::ostream& os) const {
     func->emit_assembly(os);
   }
 
-  os << copyright;
+  os << ".ident \"" << copyright << " "
+     << std::chrono::seconds(std::time(NULL)).count() << "\"";
 }
