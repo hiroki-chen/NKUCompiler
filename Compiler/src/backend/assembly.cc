@@ -95,6 +95,11 @@ std::string compiler::reg::Machine_operand::print(void) const {
     }
     case LABEL: {
       oss << label;
+      // if (label.substr(0, 3).compare(".LB") == 0) {
+      //   oss << label;
+      // } else {
+      //   oss << "addr_" << label;
+      // }
       break;
     }
   }
@@ -309,38 +314,34 @@ void compiler::reg::Machine_instruction_store::emit_assembly(
 
 void compiler::reg::Machine_instruction_mov::emit_assembly(
     std::ostream& os) const {
+  os << "\tmov " << def_list[0]->print() << ", #0\n";
+  
   switch (op) {
     case MOV_N: {
       os << "\tmov ";
       break;
     }
     case MOVEQ: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmoveq ";
       break;
     }
     case MOVNE: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovne ";
       break;
     }
     case MOVGT: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovgt ";
       break;
     }
     case MOVGE: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovge ";
       break;
     }
     case MOVLT: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovlt ";
       break;
     }
     case MOVLE: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovle ";
       break;
     }
@@ -350,6 +351,12 @@ void compiler::reg::Machine_instruction_mov::emit_assembly(
     }
   }
   os << def_list[0]->print() << ", " << use_list[0]->print() << '\n';
+
+  // Handle extra mov
+  if (op == MOVEQ) {
+    os << "\tmovne " << def_list[0]->print() << ", " << use_list[1]->print()
+       << '\n';
+  }
 }
 
 void compiler::reg::Machine_instruction_branch::emit_assembly(
