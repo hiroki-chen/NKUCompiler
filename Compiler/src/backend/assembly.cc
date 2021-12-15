@@ -314,38 +314,36 @@ void compiler::reg::Machine_instruction_store::emit_assembly(
 
 void compiler::reg::Machine_instruction_mov::emit_assembly(
     std::ostream& os) const {
+  if (op != MOV_N) {
+    os << "\tmov " << def_list[0]->print() << ", #0\n";
+  }
+
   switch (op) {
     case MOV_N: {
       os << "\tmov ";
       break;
     }
     case MOVEQ: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmoveq ";
       break;
     }
     case MOVNE: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovne ";
       break;
     }
     case MOVGT: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovgt ";
       break;
     }
     case MOVGE: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovge ";
       break;
     }
     case MOVLT: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovlt ";
       break;
     }
     case MOVLE: {
-      os << "\tmov " << def_list[0]->print() << ", #0\n";
       os << "\tmovle ";
       break;
     }

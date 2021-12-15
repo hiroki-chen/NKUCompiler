@@ -27,6 +27,12 @@ static const auto interval_compare =
   return lhs->start < rhs->start;
 };
 
+static const auto interval_compare_stack =
+    [](compiler::reg::Interval* const lhs,
+       compiler::reg::Interval* const rhs) -> bool {
+  return lhs->end < rhs->end;
+};
+
 void compiler::reg::Allocator::reserve_for_function_call(void) {
   // ARM-v7 has enforced that these four registers cannot be used to store
   // general variables.
@@ -108,6 +114,7 @@ void compiler::reg::Allocator::do_color_graphing(void) {
 
 void compiler::reg::Allocator::do_linear_scan(void) {
   for (compiler::reg::Machine_function* const f : *unit->get_function_list()) {
+    stack_top_offset = 0;
     func = f;
     bool success = false;
     // repeat until all vregs can be mapped
@@ -267,6 +274,7 @@ void compiler::reg::Allocator::compute_live_intervals(void) {
       else
         t_d = std::min(t_d, no);
     }
+    if(t == -1) t = t_d;
 
     compiler::reg::Interval* const interval =
         new compiler::reg::Interval(t_d, t, false, 0, "");
@@ -309,6 +317,10 @@ void compiler::reg::Allocator::spill_at_interval(Interval* const interval) {
 }
 
 void compiler::reg::Allocator::genenrate_spilled_code(void) {
+  std::sort(intervals.begin(), intervals.end(), interval_compare_stack);
+  auto first_end = intervals.begin();
+  while (first_end != intervals.end() && !(*first_end)->spill) first_end++;
+
   for (compiler::reg::Interval* const interval : intervals) {
     if (!interval->spill) {
       continue;
@@ -321,8 +333,20 @@ void compiler::reg::Allocator::genenrate_spilled_code(void) {
        */
       // throw compiler::unimplemented_error("Error: Linear scan is not
       // implemented.");
+      std::string stack_offset = "-";
+      if (first_end != intervals.end() &&
+          (*first_end)->end <= interval->start &&
+          (*first_end)->phy_reg.length()) {
+        stack_offset += (*first_end)->phy_reg;
+        first_end++;
+        while (first_end != intervals.end() && !(*first_end)->spill)
+          first_end++;
+      } else {
+        stack_top_offset += 4;
+        stack_offset += std::to_string(stack_top_offset);
+        interval->phy_reg = std::to_string(stack_top_offset);
+      }
 
-      stack_top_offset += 4;  // alloc
       for (auto& use : interval->uses) {
         use->reset_register_name(spill_label +
                                  std::to_string(get_spil_available_id()));
@@ -332,8 +356,8 @@ void compiler::reg::Allocator::genenrate_spilled_code(void) {
                       block->get_instruction_list()->end(), use->get_parent());
         reg::Machine_operand* const fp = new reg::Machine_operand(
             reg::operand_type::REG, reg::frame_pointer);
-        reg::Machine_operand* const offset = new reg::Machine_operand(
-            reg::operand_type::IMM, std::to_string(-stack_top_offset));
+        reg::Machine_operand* const offset =
+            new reg::Machine_operand(reg::operand_type::IMM, stack_offset);
         reg::Machine_instruction_load* const ldr =
             new reg::Machine_instruction_load(
                 block, new reg::Machine_operand(*use), fp, offset);
@@ -352,8 +376,8 @@ void compiler::reg::Allocator::genenrate_spilled_code(void) {
         pos++;
         reg::Machine_operand* const fp = new reg::Machine_operand(
             reg::operand_type::REG, reg::frame_pointer);
-        reg::Machine_operand* const offset = new reg::Machine_operand(
-            reg::operand_type::IMM, std::to_string(-stack_top_offset));
+        reg::Machine_operand* const offset =
+            new reg::Machine_operand(reg::operand_type::IMM, stack_offset);
         reg::Machine_instruction_store* const ldr =
             new reg::Machine_instruction_store(block, new Machine_operand(*def),
                                                fp, offset);
