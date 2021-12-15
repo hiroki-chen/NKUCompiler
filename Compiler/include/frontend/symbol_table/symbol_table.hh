@@ -134,6 +134,8 @@ typedef class Symbol_table {
 
   virtual uint32_t get_available_id(void) { return available_id++; }
 
+  virtual void set_label_id(const uint32_t& id) { label_id = id; }
+
   virtual void set_available_id(const uint32_t& id) { available_id = id; }
 } Symbol_table;
 }  // namespace compiler

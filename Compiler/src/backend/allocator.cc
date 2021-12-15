@@ -184,10 +184,18 @@ void compiler::reg::Allocator::make_du_chains(void) {
         block->get_label().find("IF") + 2 == block->get_label().length()) {
       loop_label_stack.emplace_back(num++, -1);
     } else if (block->get_label().find("LOOP_END") != -1 ||
-               block->get_label().find("END_IF") != -1) {
+               block->get_label().find("ELSE") != -1) {
       for (auto i = loop_label_stack.rbegin(); i != loop_label_stack.rend();
            i++) {
         if (i->second == -1) {
+          i->second = num++;
+          break;
+        }
+      }
+    } else if (block->get_label().find("END_IF") != -1) {
+      for (auto i = loop_label_stack.rbegin(); i + 1 != loop_label_stack.rend();
+           i++) {
+        if ((i + 1)->second == -1) {
           i->second = num++;
           break;
         }

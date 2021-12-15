@@ -36,6 +36,7 @@ void compiler::Item_block::generate_ir_helper(
     compiler::ir::ir_list& ir_list) const {
   try {
     ir_context->enter_scope();
+    // ir_context->get_symbol_table()->set_available_id();
     for (Item_stmt* const statement : statements) {
       statement->generate_ir(ir_context, ir_list);
     }
@@ -97,12 +98,17 @@ void compiler::Item_stmt_eif::generate_ir_helper(
 
     ir_context_else.get_symbol_table()->set_available_id(
         ir_context_if.get_symbol_table()->get_available_id());
+    ir_context_else.get_symbol_table()->set_label_id(
+        ir_context_if.get_symbol_table()->get_label_id());
+
     ir_context_else.enter_scope();
     else_branch->generate_ir(&ir_context_else, ir_else);
     ir_context_else.leave_scope();
 
     ir_context->get_symbol_table()->set_available_id(
         ir_context_else.get_symbol_table()->get_available_id());
+    ir_context->get_symbol_table()->set_label_id(
+        ir_context_else.get_symbol_table()->get_label_id());
 
     compiler::ir::ir_list ir_list_end;
     ir_list_end.emplace_back(
@@ -273,13 +279,14 @@ void compiler::Item_stmt_assign::generate_ir_helper(
             const std::string new_name = compiler::concatenate(
                 ir::local_sign,
                 ir_context->get_symbol_table()->get_available_id());
-                std::cout << "Hello\n";
+            std::cout << "Hello\n";
             ir::Operand* const tmp =
                 new ir::Operand(ir::var_type::i32, new_name, "");
             ir_list.emplace_back(ir::op_type::MOV, tmp, rhs);
             ir_list.emplace_back(
                 ir::op_type::MOV,
-                new ir::Operand(ir::var_type::i32, symbol->get_name(), ""), tmp);
+                new ir::Operand(ir::var_type::i32, symbol->get_name(), ""),
+                tmp);
           } else {
             ir_list.emplace_back(
                 ir::op_type::MOV,
@@ -337,8 +344,7 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Enter a scope.
     ir_context->enter_scope();
     // Create a loop label.
-    const uint32_t scope_id =
-        ir_context->get_symbol_table()->get_label_id();
+    const uint32_t scope_id = ir_context->get_symbol_table()->get_label_id();
     ir_context->add_loop_label(std::to_string(scope_id));
 
     // Step 1: Copy the previous context.
@@ -572,6 +578,8 @@ void compiler::Item_stmt_while::generate_ir_helper(
     *ir_context = *ir_context_condition;
     ir_context->get_symbol_table()->set_available_id(
         ir_context_continue->get_symbol_table()->get_available_id());
+    ir_context->get_symbol_table()->set_label_id(
+        ir_context_continue->get_symbol_table()->get_label_id());
 
     // Leave the scope.
     ir_context->pop_loop_var();
