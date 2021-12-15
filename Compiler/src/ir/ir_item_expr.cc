@@ -432,9 +432,8 @@ compiler::ir::Operand* compiler::Item_expr_unary::eval_runtime_helper(
       case LNOT_TYPE: {
         ir_list.emplace_back(ir::op_type::CMP, nullptr, OPERAND_VALUE("0"),
                              expr->eval_runtime(ir_context, ir_list));
-        ir_list.emplace_back(ir::op_type::MOVEQ, dst, OPERAND_VALUE("0"),
-                             OPERAND_VALUE("1"));
-
+        ir_list.emplace_back(ir::op_type::MOVEQ, dst, OPERAND_VALUE("1"),
+                             OPERAND_VALUE("0"));
         break;
       }
       case BITNEG_TYPE: {

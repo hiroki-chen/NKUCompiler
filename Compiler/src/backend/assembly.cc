@@ -314,8 +314,10 @@ void compiler::reg::Machine_instruction_store::emit_assembly(
 
 void compiler::reg::Machine_instruction_mov::emit_assembly(
     std::ostream& os) const {
-  os << "\tmov " << def_list[0]->print() << ", #0\n";
-  
+  if (op != MOV_N) {
+    os << "\tmov " << def_list[0]->print() << ", #0\n";
+  }
+
   switch (op) {
     case MOV_N: {
       os << "\tmov ";
@@ -351,12 +353,6 @@ void compiler::reg::Machine_instruction_mov::emit_assembly(
     }
   }
   os << def_list[0]->print() << ", " << use_list[0]->print() << '\n';
-
-  // Handle extra mov
-  if (op == MOVEQ) {
-    os << "\tmovne " << def_list[0]->print() << ", " << use_list[1]->print()
-       << '\n';
-  }
 }
 
 void compiler::reg::Machine_instruction_branch::emit_assembly(
