@@ -33,102 +33,6 @@ static const auto interval_compare_stack =
   return lhs->end < rhs->end;
 };
 
-static void optimize_stack(
-    int& stack_top_offset,
-    const std::vector<compiler::reg::Interval*>& intervals,
-    compiler::reg::Interval* const interval,
-    std::vector<compiler::reg::Interval*>::iterator first_end) {
-  std::string stack_offset = "-";
-  if (first_end != intervals.end() && (*first_end)->end <= interval->start &&
-      (*first_end)->phy_reg.length()) {
-    stack_offset += (*first_end)->phy_reg;
-    first_end++;
-
-    while (first_end != intervals.end() && !(*first_end)->spill) {
-      first_end++;
-    }
-  } else {
-    stack_top_offset += 4;
-    stack_offset += std::to_string(stack_top_offset);
-    interval->phy_reg = std::to_string(stack_top_offset);
-  }
-}
-
-static void do_generate_spill_code(
-    compiler::reg::Machine_operand* const operand,
-    const std::string& spill_offset, const uint32_t& stack_top_offset,
-    bool type = false) {
-  operand->reset_register_name(compiler::reg::spill_label + spill_offset);
-  compiler::reg::Machine_block* block = operand->get_parent()->get_parent();
-
-  // Find the position in which we should insert the spilled code.
-  auto pos =
-      std::find(block->get_instruction_list()->begin(),
-                block->get_instruction_list()->end(), operand->get_parent());
-
-  if (type) {
-    pos++;
-  }
-
-  // Generate spill-related instructions.
-  compiler::reg::Machine_operand* const fp = new compiler::reg::Machine_operand(
-      compiler::reg::operand_type::REG, compiler::reg::frame_pointer);
-  compiler::reg::Machine_operand* const offset =
-      new compiler::reg::Machine_operand(compiler::reg::operand_type::IMM,
-                                         std::to_string(-stack_top_offset));
-
-  // Load variable from the stack.
-  if (!type) {
-    compiler::reg::Machine_instruction_load* const ldr =
-        new compiler::reg::Machine_instruction_load(
-            block, new compiler::reg::Machine_operand(*operand), fp, offset);
-    block->get_instruction_list()->insert(pos, ldr);
-  } else {
-    compiler::reg::Machine_instruction_store* const str =
-        new compiler::reg::Machine_instruction_store(
-            block, new compiler::reg::Machine_operand(*operand), fp, offset);
-    block->get_instruction_list()->insert(pos, str);
-  }
-}
-
-static void prepare_function_stack(compiler::reg::Machine_function* const func,
-                                   const uint32_t& stack_top_offset) {
-  using namespace compiler;
-
-  reg::Machine_block* const cur_block = *func->begin();
-  reg::Machine_operand* const sp =
-      new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
-  reg::Machine_operand* const fp =
-      new reg::Machine_operand(reg::operand_type::REG, reg::frame_pointer);
-  reg::Machine_operand* const r8 =
-      new reg::Machine_operand(reg::operand_type::REG, "r8");
-  reg::Machine_operand* const r14 =
-      new reg::Machine_operand(reg::operand_type::REG, "r14");
-  reg::Machine_operand* const offset = new reg::Machine_operand(
-      reg::operand_type::IMM, std::to_string(stack_top_offset));
-  reg::Machine_instruction_stack* const stack_fp =
-      new reg::Machine_instruction_stack(cur_block, reg::stack_type::PUSH, fp);
-  reg::Machine_instruction_stack* const stack_r14 =
-      new reg::Machine_instruction_stack(cur_block, reg::stack_type::PUSH, r14);
-  reg::Machine_instruction_mov* const mov_sp =
-      new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, fp, sp);
-  reg::Machine_instruction_mov* const sub_sp_imm =
-      new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, r8,
-                                       offset);
-  reg::Machine_instruction_binary* const sub_sp =
-      new reg::Machine_instruction_binary(cur_block, reg::binary_type::SUB, sp,
-                                          sp, r8);
-
-  // These instructions are used to allocate the needed spaces for function
-  // stack frame. Dynamically calculated at compile time.
-  func->add_func_prologue_instruction(stack_r14);
-  func->backup_registers();
-  func->add_func_prologue_instruction(stack_fp);
-  func->add_func_prologue_instruction(mov_sp);
-  func->add_func_prologue_instruction(sub_sp_imm);
-  func->add_func_prologue_instruction(sub_sp);
-}
-
 void compiler::reg::Allocator::reserve_for_function_call(void) {
   // ARM-v7 has enforced that these four registers cannot be used to store
   // general variables.
@@ -164,10 +68,14 @@ void compiler::reg::Allocator::modify_code(void) {
 // registers.
 // 4. (Optional) Do some optimizations.
 bool compiler::reg::Allocator::linear_scan_register_allocate(void) {
+  // TODO:
+  // throw compiler::unimplemented_error("Error: Linear scan is not
+  // implemented.");
   for (auto reg : compiler::reg::general_registers) {
     register_free_map[reg] = nullptr;
   }
 
+  // std::cout << "hhh" << std::endl;
   bool res = true;
   compiler::reg::Interval* conflict = nullptr;
   for (auto& reg_usage : intervals) {
@@ -181,20 +89,22 @@ bool compiler::reg::Allocator::linear_scan_register_allocate(void) {
         break;
       } else {
         reg_usage->spill = true;
-        if (!conflict) {
+        if (!conflict)
           conflict = active_reg.second;
-        } else if (conflict->end - conflict->start <
-                   active_reg.second->end - active_reg.second->start) {
+        else if (conflict->end - conflict->start <
+                 active_reg.second->end - active_reg.second->start)
           conflict = active_reg.second;
-        }
       }
     }
     if (conflict) {
       conflict->spill = true;
       res = false;
     }
+    // if (res && conflict) res = false;
   }
-
+  // if (!res) {
+  //   conflict->spill = true;
+  // }
   return res;
 }
 
@@ -204,6 +114,7 @@ void compiler::reg::Allocator::do_color_graphing(void) {
 
 void compiler::reg::Allocator::do_linear_scan(void) {
   for (compiler::reg::Machine_function* const f : *unit->get_function_list()) {
+    stack_top_offset = 0;
     func = f;
     bool success = false;
     // repeat until all vregs can be mapped
@@ -216,7 +127,56 @@ void compiler::reg::Allocator::do_linear_scan(void) {
       if (success) {
         // all vregs can be mapped to real regs
         modify_code();
-        prepare_function_stack(func, stack_top_offset);
+
+        reg::Machine_operand* const sp = new reg::Machine_operand(
+            reg::operand_type::REG, reg::stack_pointer);
+        reg::Machine_operand* const fp = new reg::Machine_operand(
+            reg::operand_type::REG, reg::frame_pointer);
+        reg::Machine_operand* const r14 =
+            new reg::Machine_operand(reg::operand_type::REG, "r14");
+        reg::Machine_operand* const r8 =
+            new reg::Machine_operand(reg::operand_type::REG, "r8");
+        reg::Machine_operand* const offset = new reg::Machine_operand(
+            reg::operand_type::IMM, std::to_string(stack_top_offset));
+        reg::Machine_instruction_stack* const stack_fp =
+            new reg::Machine_instruction_stack((*func->begin()),
+                                               reg::stack_type::PUSH, fp);
+        reg::Machine_instruction_stack* const stack_r14 =
+            new reg::Machine_instruction_stack((*func->begin()),
+                                               reg::stack_type::PUSH, r14);
+        reg::Machine_instruction_mov* const mov_sp =
+            new reg::Machine_instruction_mov((*func->begin()),
+                                             reg::mov_type::MOV_N, fp, sp);
+        reg::Machine_instruction_mov* const sub_sp_imm =
+            new reg::Machine_instruction_mov((*func->begin()),
+                                             reg::mov_type::MOV_N, r8, offset);
+        reg::Machine_instruction_binary* const sub_sp =
+            new reg::Machine_instruction_binary(
+                (*func->begin()), reg::binary_type::SUB, sp, sp, r8);
+        (*func->begin())
+            ->get_instruction_list()
+            ->insert((*func->begin())->begin(), sub_sp);
+        (*func->begin())
+            ->get_instruction_list()
+            ->insert((*func->begin())->begin(), sub_sp_imm);
+        (*func->begin())
+            ->get_instruction_list()
+            ->insert((*func->begin())->begin(), mov_sp);
+        (*func->begin())
+            ->get_instruction_list()
+            ->insert((*func->begin())->begin(), stack_fp);
+        for (auto reg : compiler::reg::general_registers) {
+          reg::Machine_instruction_stack* const stack_r =
+              new reg::Machine_instruction_stack(
+                  (*func->begin()), reg::stack_type::PUSH,
+                  new reg::Machine_operand(reg::operand_type::REG, reg));
+          (*func->begin())
+              ->get_instruction_list()
+              ->insert((*func->begin())->begin(), stack_r);
+        }
+        (*func->begin())
+            ->get_instruction_list()
+            ->insert((*func->begin())->begin(), stack_r14);
       } else {
         // spill vregs that can't be mapped to real regs
         genenrate_spilled_code();
@@ -228,16 +188,16 @@ void compiler::reg::Allocator::do_linear_scan(void) {
 void compiler::reg::Allocator::make_du_chains(void) {
   du_chains.clear();
   loop_label_stack.clear();
-  live_var_type live_var;
-
+  std::map<std::string, std::pair<std::set<Machine_operand*, Comparator>,
+                                  std::set<Machine_operand*, Comparator>>>
+      live_var;
   uint32_t num = 0;
   for (auto& block : *(func->get_blocks())) {
-    // Elongate the live interval for loop variables.
-    if (block->get_label().find("LOOP_BEGIN") != std::string::npos ||
+    if (block->get_label().find("LOOP_BEGIN") != -1 ||
         block->get_label().find("IF") + 2 == block->get_label().length()) {
       loop_label_stack.emplace_back(num++, -1);
-    } else if (block->get_label().find("LOOP_END") != std::string::npos ||
-               block->get_label().find("ELSE") != std::string::npos) {
+    } else if (block->get_label().find("LOOP_END") != -1 ||
+               block->get_label().find("ELSE") != -1) {
       for (auto i = loop_label_stack.rbegin(); i != loop_label_stack.rend();
            i++) {
         if (i->second == -1) {
@@ -245,7 +205,7 @@ void compiler::reg::Allocator::make_du_chains(void) {
           break;
         }
       }
-    } else if (block->get_label().find("END_IF") != std::string::npos) {
+    } else if (block->get_label().find("END_IF") != -1) {
       for (auto i = loop_label_stack.rbegin(); i + 1 != loop_label_stack.rend();
            i++) {
         if ((i + 1)->second == -1) {
@@ -284,11 +244,7 @@ void compiler::reg::Allocator::make_du_chains(void) {
         }
       for (auto& use : *(inst->get_use()))
         if (use->is_vreg()) {
-          if (live_var[use->get_register_name()].first.size() == 0) {
-            std::cout << use->get_register_name() << std::endl;
-            throw compiler::fatal_error("Error: Unknown internal error.");
-          }
-
+          if (live_var[use->get_register_name()].first.size() == 0) throw;
           live_var[use->get_register_name()].second.insert(use);
         }
     }
@@ -300,6 +256,7 @@ void compiler::reg::Allocator::make_du_chains(void) {
 
 void compiler::reg::Allocator::compute_live_intervals(void) {
   make_du_chains();
+
   intervals.clear();
 
   for (auto& du_chain : du_chains) {
@@ -317,6 +274,7 @@ void compiler::reg::Allocator::compute_live_intervals(void) {
       else
         t_d = std::min(t_d, no);
     }
+    if (t == -1) t = t_d;
 
     compiler::reg::Interval* const interval =
         new compiler::reg::Interval(t_d, t, false, 0, "");
@@ -347,26 +305,60 @@ void compiler::reg::Allocator::spill_at_interval(Interval* const interval) {
 }
 
 void compiler::reg::Allocator::genenrate_spilled_code(void) {
-  // Collect some information for register optimization.
   std::sort(intervals.begin(), intervals.end(), interval_compare_stack);
   auto first_end = intervals.begin();
-  while (first_end != intervals.end() && !(*first_end)->spill) {
-    first_end++;
-  }
+  while (first_end != intervals.end() && !(*first_end)->spill) first_end++;
 
   for (compiler::reg::Interval* const interval : intervals) {
     if (!interval->spill) {
       continue;
     } else {
-      optimize_stack(stack_top_offset, intervals, interval, first_end);
+      std::string stack_offset = "-";
+      if (first_end != intervals.end() &&
+          (*first_end)->end <= interval->start &&
+          (*first_end)->phy_reg.length()) {
+        stack_offset += (*first_end)->phy_reg;
+        first_end++;
+        while (first_end != intervals.end() && !(*first_end)->spill)
+          first_end++;
+      } else {
+        stack_top_offset += 4;
+        stack_offset += std::to_string(stack_top_offset);
+        interval->phy_reg = std::to_string(stack_top_offset);
+      }
 
       for (auto& use : interval->uses) {
-        do_generate_spill_code(use, std::to_string(get_spill_available_id()),
-                               stack_top_offset);
+        use->reset_register_name(spill_label +
+                                 std::to_string(get_spill_available_id()));
+        compiler::reg::Machine_block* block = use->get_parent()->get_parent();
+        auto pos =
+            std::find(block->get_instruction_list()->begin(),
+                      block->get_instruction_list()->end(), use->get_parent());
+        reg::Machine_operand* const fp = new reg::Machine_operand(
+            reg::operand_type::REG, reg::frame_pointer);
+        reg::Machine_operand* const offset =
+            new reg::Machine_operand(reg::operand_type::IMM, stack_offset);
+        reg::Machine_instruction_load* const ldr =
+            new reg::Machine_instruction_load(
+                block, new reg::Machine_operand(*use), fp, offset);
+        block->get_instruction_list()->insert(pos, ldr);
       }
       for (auto& def : interval->defs) {
-        do_generate_spill_code(def, std::to_string(get_spill_available_id()),
-                               stack_top_offset, true);
+        def->reset_register_name(spill_label +
+                                 std::to_string(get_spill_available_id()));
+        compiler::reg::Machine_block* block = def->get_parent()->get_parent();
+        auto pos =
+            std::find(block->get_instruction_list()->begin(),
+                      block->get_instruction_list()->end(), def->get_parent());
+        pos++;
+        reg::Machine_operand* const fp = new reg::Machine_operand(
+            reg::operand_type::REG, reg::frame_pointer);
+        reg::Machine_operand* const offset =
+            new reg::Machine_operand(reg::operand_type::IMM, stack_offset);
+        reg::Machine_instruction_store* const ldr =
+            new reg::Machine_instruction_store(block, new Machine_operand(*def),
+                                               fp, offset);
+        block->get_instruction_list()->insert(pos, ldr);
       }
     }
   }
