@@ -51,6 +51,8 @@ static const std::string mod_func = "__aeabi_idivmod";
 
 static const std::string div_func = "__aeabi_idiv";
 
+static const uint32_t maximum_immediate = 0xffful;
+
 typedef enum inst_type {
   BINARY,
   LOAD,

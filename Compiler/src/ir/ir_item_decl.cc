@@ -52,7 +52,7 @@ void compiler::Item_decl_var::generate_ir_helper(
     ir_context->get_symbol_table()->add_symbol(name, symbol);
     // Generate an explicit declare IR.
     ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
-                         new ir::Operand(ir::var_type::i32, name_symbol, ""));
+                         new ir::Operand(name_symbol));
   }
 }
 
@@ -89,7 +89,7 @@ void compiler::Item_decl_var_init::generate_ir_helper(
       name_symbol = compiler::concatenate(ir::local_sign, id);
       // Generate an explicit declare IR.
       ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
-                           new ir::Operand(ir::var_type::i32, name_symbol, ""));
+                           new ir::Operand(name_symbol));
 
       compiler::Symbol* const symbol =
           new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE,
@@ -183,13 +183,19 @@ void compiler::Item_decl_array::generate_ir_helper(
       ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
       // Handle local array type.
     } else {
+      // We need to emit the instruction for allocation. Although this is not
+      // needed in the final assembly, but we will need it for live interval
+      // analysis.
       const std::string name_symbol = compiler::concatenate(
-          ir::arr_sign, ir_context->get_symbol_table()->get_available_id(),
-          name);
+          ir::local_sign, ir::arr_sign,
+          ir_context->get_symbol_table()->get_available_id());
       ir_context->get_symbol_table()->add_symbol(
           name, new compiler::Symbol(
                     name_symbol, compiler::symbol_type::ARRAY_TYPE, true,
                     array_shape, compiler::to_ir_type(b_type)));
+      ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
+                           new ir::Operand(name_symbol),
+                           operand_alloc_notation);
     }
   } catch (const std::exception& e) {
     std::cerr << termcolor::red << termcolor::bold << lineno << ": " << e.what()
@@ -227,13 +233,17 @@ void compiler::Item_decl_array_init::generate_ir_helper(
       ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
     } else {
       // We call a memset to handle local initilization.
-      const std::string name_symbol =
-          ir::arr_sign +
-          std::to_string(ir_context->get_symbol_table()->get_available_id());
+      const std::string name_symbol = compiler::concatenate(
+          ir::local_sign, ir::arr_sign,
+          ir_context->get_symbol_table()->get_available_id());
+
       ir_context->get_symbol_table()->add_symbol(
           name, new compiler::Symbol(
                     name_symbol, compiler::symbol_type::ARRAY_TYPE, true,
                     array_shape, compiler::to_ir_type(b_type)));
+      ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
+                           new ir::Operand(name_symbol),
+                           operand_alloc_notation);
       ir_list.emplace_back(ir::op_type::MALLOC, nullptr,
                            new ir::Operand(name_symbol),
                            operand_alloc_notation);
@@ -262,17 +272,15 @@ void compiler::Item_decl_array_init::init_helper(
         const uint32_t size = std::stoul(value->get_value());
         std::cout << "size: " << size << '\n';
         for (uint32_t i = 0; i < size; i++) {
-          init_value.emplace_back(
-              new ir::Operand(var_type, "", "0", false, false));
+          init_value.emplace_back(OPERAND_VALUE("0"));
         }
-        ir_list.emplace_back(
-            ir::op_type::SPACE,
-            new ir::Operand(std::to_string(byte_length * size)));
+        ir_list.emplace_back(ir::op_type::SPACE,
+                             OPERAND_VALUE(std::to_string(byte_length * size)));
       }
     } else {
       init_value.emplace_back(OPERAND_VALUE("0"));
       if (ir_context->is_global_context()) {
-        ir_list.emplace_back(ir::op_type::SPACE, value);
+        ir_list.emplace_back(ir::op_type::WORD, value);
       } else {
         const std::string array_name_local =
             ir_context->get_symbol_table()

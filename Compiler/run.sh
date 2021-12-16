@@ -20,7 +20,6 @@
 # Execute the script after your environment variable is set.
 # E.g.:
 #           $ export SOURCE_FILE_PATH=./some/path
-
 # Check if the environment variable is already set.
 if [[ -z "${SOURCE_FILE_PATH}" ]]; then
 	echo "The environment is not set. Abort."
@@ -64,9 +63,11 @@ for dir in ${dirs[@]}; do
 		# Do a pattern substitution.
 		output=${file/${find}/${ext}}
 		qemu=${file/${find}/${binary}}
-		./compiler ${file} -S -o ${output}
+		./compiler ${file} -S -o ${output} &> /dev/null
 
-		$(which arm-linux-gnueabihf-gcc) -o ${qemu} ${output} ${LIB_PATH}/libsysy.a -static -march=armv7-a
-		$(which qemu-arm) ${qemu}
+		arm-linux-gnueabihf-gcc -o ${qemu} ${output} ${LIB_PATH}/libsysy.a -static -march=armv7-a
+		qemu-arm ${qemu}
+		echo $?
+		echo '\n'
 	done
 done

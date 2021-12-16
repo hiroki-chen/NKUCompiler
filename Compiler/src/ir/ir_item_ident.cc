@@ -112,9 +112,6 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
     // Note that we do not check if the index is out of range.
     // Checking is done by the programmer.
 
-    // SSA: Give the array a new name.
-    const std::string array_name = array_symbol->get_name();
-    ir::Operand* const dst = new ir::Operand(array_name);
     // Fetch basic information.
     const ir::var_type var_type = array_symbol->get_var_type();
     const uint32_t byte_length =
@@ -122,6 +119,8 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
 
     // Optimization can be done.
     if (opt_level > 0) {
+      ir::Operand* const dst = new ir::Operand(compiler::concatenate(
+          ir::local_sign, ir_context->get_symbol_table()->get_available_id()));
       // Determine the alignment of the array.
       uint32_t length = byte_length;
       // A pointer recording the current position.
@@ -209,7 +208,8 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
               ir::local_sign,
               ir_context->get_symbol_table()->get_available_id());
           // Determine the offset. We use an iterator to calculate the distance.
-          const uint32_t distance = std::distance(iter, array_shape.crend()) - 1;
+          const uint32_t distance =
+              std::distance(iter, array_shape.crend()) - 1;
           ir::Operand* const operand_tmp = new ir::Operand(tmp);
           // Do the multiplication.
           ir_list.emplace_back(ir::op_type::IMUL, operand_tmp, operand_size,
@@ -218,15 +218,20 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
         }
       }
       if (op_type == ir::op_type::STR) {
-        ir_list.emplace_back(op_type, new ir::Operand(array_symbol->get_name()),
-                             operand_index, expression);
+        ir::Operand* const dst = new ir::Operand(array_symbol->get_name());
+        ir_list.emplace_back(op_type, dst, operand_index, expression);
+
+        return dst;
       } else {
+        // Prepare for the destination variable.
+        const std::string dst_name = compiler::concatenate(
+            ir::local_sign, ir_context->get_symbol_table()->get_available_id());
+        ir::Operand* const dst = new ir::Operand(dst_name);
         ir_list.emplace_back(op_type, dst,
                              new ir::Operand(array_symbol->get_name()),
                              operand_index);
+        return dst;
       }
-
-      return dst;
     }
   } catch (const std::exception& e) {
     PANIC(lineno, e.what());
