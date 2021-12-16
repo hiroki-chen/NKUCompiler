@@ -16,6 +16,7 @@
  */
 #include <backend/units.hh>
 #include <common/utils.hh>
+#include <chrono>
 
 bool compiler::reg::Comparator::operator()(
     const compiler::reg::Machine_operand* lhs,

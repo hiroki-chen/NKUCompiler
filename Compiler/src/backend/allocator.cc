@@ -285,7 +285,8 @@ void compiler::reg::Allocator::make_du_chains(void) {
       for (auto& use : *(inst->get_use()))
         if (use->is_vreg()) {
           if (live_var[use->get_register_name()].first.size() == 0) {
-            throw compiler::fatal_error("Error: Unkown internal error.");
+            std::cout << use->get_register_name() << std::endl;
+            throw compiler::fatal_error("Error: Unknown internal error.");
           }
 
           live_var[use->get_register_name()].second.insert(use);

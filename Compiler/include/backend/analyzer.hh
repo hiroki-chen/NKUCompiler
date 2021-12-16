@@ -76,8 +76,14 @@ typedef class Assembly_builder {
   // For the stack frame analysis.
   uint32_t stack_size;
 
+  // The current stack pointer.
+  uint32_t cur_sp;
+
+  // A map that stores the base offset of each array.
+  std::map<Machine_function*, std::map<std::string, uint32_t>> array_base;
+
  public:
-  Assembly_builder() : id(0ul), stack_size(0ul) {}
+  Assembly_builder() : id(0ul), stack_size(0ul), cur_sp(0ul) {}
 
   void set_unit(Machine_unit* const unit) { machine_unit = unit; }
 
@@ -86,6 +92,12 @@ typedef class Assembly_builder {
   void set_block(Machine_block* const block) { machine_block = block; }
 
   void set_compare_code(const cond_type& opcode) { compare_code = opcode; }
+
+  void set_array_base(const std::string& array_name,
+                      const uint32_t& array_size) {
+    array_base[machine_function][array_name] = cur_sp;
+    cur_sp += array_size;
+  }
 
   void set_stack_size_cur(const uint32_t& stack_size) {
     this->stack_size = stack_size;
@@ -102,6 +114,12 @@ typedef class Assembly_builder {
   uint32_t get_available_id(void) { return id++; }
 
   uint32_t get_stack_size(void) { return stack_size; }
+
+  uint32_t get_array_base(void) { return cur_sp; }
+
+  uint32_t get_array_base(const std::string& name) {
+    return array_base[machine_function][name];
+  }
 } Assembly_builder;
 
 /**
@@ -186,8 +204,8 @@ typedef class Live_variable_analyzer final {
   // get_all_uses(void) {
   //   return &all_uses;
   // }
-  std::map<std::string, std::set<Machine_operand*, Comparator>>*
-  get_all_uses(void) {
+  std::map<std::string, std::set<Machine_operand*, Comparator>>* get_all_uses(
+      void) {
     return &all_uses;
   }
   // Add your definitions and implementations here.
