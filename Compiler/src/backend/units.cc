@@ -29,6 +29,10 @@ static std::string escape_string(const std::string& in) {
   if (ret.find("@") != std::string::npos) {
     ret.replace(ret.find("@"), 1, "");
   }
+
+  if (ret.find("&") != std::string::npos) {
+    ret.replace(ret.find("&"), 1, "");
+  }
   return ret;
 }
 
@@ -84,14 +88,24 @@ void compiler::reg::Machine_function::emit_assembly(std::ostream& os) const {
 
 void compiler::reg::Machine_unit::emit_global(std::ostream& os) const {
   // Set global definitions.
-  os << ".data\n";
+  os << "\n.data";
 
   for (auto def : *global_defs->get_ir_list()) {
-    const std::string name = escape_string(def.get_dst()->get_identifier());
-    os << ".globl " << name << '\n';
-    os << name << ":\n";
-    os << ".word " << def.get_op1()->get_value() << "\n\n";
+    if (def.get_op_type() == compiler::ir::GLOBAL_BEGIN) {
+      os << '\n';
+      const std::string name = escape_string(def.get_label());
+      os << ".globl " << name << '\n';
+      os << name << ":\n";
+    }
+
+    if (def.get_op_type() == compiler::ir::WORD) {
+      os << ".word " << def.get_dst()->get_value() << "\n";
+    } else if (def.get_op_type() == compiler::ir::SPACE &&
+               def.get_dst()->get_value() != "0") {
+      os << ".space " << def.get_dst()->get_value() << "\n";
+    }
   }
+  os << '\n';
 }
 
 void compiler::reg::Machine_unit::emit_assembly(std::ostream& os) const {

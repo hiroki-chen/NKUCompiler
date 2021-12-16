@@ -52,6 +52,8 @@ static const std::string local_sign = "%t";
 
 static const std::string arg_sign = "$";
 
+static const std::string arr_sign = "&";
+
 using ir_list = std::vector<IR>;
 /**
  * @brief Look-up table for enum type compiler::ir::op_type.
@@ -136,6 +138,7 @@ static const char* op_name[]{
 
     // Alloca.
     "ALLOCA",
+    "WORD",
 };
 /**
  * @brief Defines different operations.
@@ -220,6 +223,7 @@ typedef enum op_type {
 
   // Declare,
   ALLOCA,
+  WORD,
 } op_type;
 
 /**

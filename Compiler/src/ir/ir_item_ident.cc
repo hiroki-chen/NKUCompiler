@@ -74,8 +74,7 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
 
 // For generting the IR for array identifiers. E.g.: arr[4][4].
 compiler::ir::Operand* compiler::Item_ident_array::eval_runtime_helper(
-    compiler::ir::IRContext* const ir_context,
-    ir::ir_list& ir_list) const {
+    compiler::ir::IRContext* const ir_context, ir::ir_list& ir_list) const {
   return array_access_helper(ir_context, ir_list, ir::op_type::LDR);
 }
 
@@ -114,9 +113,8 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
     // Checking is done by the programmer.
 
     // SSA: Give the array a new name.
-    const std::string array_name_new = compiler::concatenate(
-        ir::local_sign, ir_context->get_symbol_table()->get_available_id());
-    ir::Operand* const dst = new ir::Operand(array_name_new);
+    const std::string array_name = array_symbol->get_name();
+    ir::Operand* const dst = new ir::Operand(array_name);
     // Fetch basic information.
     const ir::var_type var_type = array_symbol->get_var_type();
     const uint32_t byte_length =
@@ -160,6 +158,12 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       ir::Operand* operand_size = new ir::Operand(size_name);
       ir::Operand* operand_index = new ir::Operand(index_name);
 
+      // Multiply the operand index by byte_length.
+      ir_list.emplace_back(
+          ir::op_type::IMUL, operand_index,
+          array_shape.back()->eval_runtime(ir_context, ir_list),
+          OPERAND_VALUE(std::to_string(byte_length)));
+
       // How to get the correct index from shape and the byte_length:
       // E.g.: arr[4][4] (where arr is int type):
       // 1. Determine the alignment in the memory: 4 bytes.
@@ -176,7 +180,7 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
         ir::Operand* const operand_tmp = new ir::Operand(tmp);
         ir_list.emplace_back(
             ir::op_type::MOV, operand_size,
-            OPERAND_VALUE(std::to_string(byte_length * size_uni)));
+            OPERAND_VALUE(std::to_string(size_uni * byte_length)));
       }
 
       const uint32_t byte_length = compiler::to_byte_length(
@@ -185,8 +189,7 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       for (auto iter = array_shape.crbegin() + 1; iter != array_shape.crend();
            iter++) {
         // Get the subscript.
-        ir::Operand* const subscript =
-            (*iter)->eval_runtime(ir_context, ir_list);
+        ir::Operand* const subscript = (*iter)->eval_runtime(ir_context);
         // Intermediate variable for calculating the offset.
         const std::string size_str = compiler::concatenate(
             ir::local_sign, ir_context->get_symbol_table()->get_available_id());
@@ -206,12 +209,11 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
               ir::local_sign,
               ir_context->get_symbol_table()->get_available_id());
           // Determine the offset. We use an iterator to calculate the distance.
-          const uint32_t distance = std::distance(iter, array_shape.crend());
+          const uint32_t distance = std::distance(iter, array_shape.crend()) - 1;
           ir::Operand* const operand_tmp = new ir::Operand(tmp);
           // Do the multiplication.
           ir_list.emplace_back(ir::op_type::IMUL, operand_tmp, operand_size,
                                array_symbol->get_shape()[distance]);
-          delete operand_size;
           operand_size = new ir::Operand(*operand_tmp);
         }
       }

@@ -63,6 +63,7 @@ typedef enum inst_type {
   ALLOCA,
   RET,
   CALL,
+  GLOBAL,
 } inst_type;
 
 typedef enum branch_type {

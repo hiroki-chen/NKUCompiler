@@ -100,6 +100,8 @@ static void prepare_function_stack(compiler::reg::Machine_function* const func,
       new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
   reg::Machine_operand* const fp =
       new reg::Machine_operand(reg::operand_type::REG, reg::frame_pointer);
+  reg::Machine_operand* const r8 =
+      new reg::Machine_operand(reg::operand_type::REG, "r8");
   reg::Machine_operand* const r14 =
       new reg::Machine_operand(reg::operand_type::REG, "r14");
   reg::Machine_operand* const offset = new reg::Machine_operand(
@@ -110,18 +112,21 @@ static void prepare_function_stack(compiler::reg::Machine_function* const func,
       new reg::Machine_instruction_stack(cur_block, reg::stack_type::PUSH, r14);
   reg::Machine_instruction_mov* const mov_sp =
       new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, fp, sp);
+  reg::Machine_instruction_mov* const sub_sp_imm =
+      new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, r8,
+                                       offset);
   reg::Machine_instruction_binary* const sub_sp =
       new reg::Machine_instruction_binary(cur_block, reg::binary_type::SUB, sp,
-                                          sp, offset);
+                                          sp, r8);
 
   // These instructions are used to allocate the needed spaces for function
   // stack frame. Dynamically calculated at compile time.
-  func->add_func_prologue_instruction(sub_sp);
-  func->add_func_prologue_instruction(mov_sp);
-  func->add_func_prologue_instruction(stack_fp);
-
-  func->backup_registers();
   func->add_func_prologue_instruction(stack_r14);
+  func->backup_registers();
+  func->add_func_prologue_instruction(stack_fp);
+  func->add_func_prologue_instruction(mov_sp);
+  func->add_func_prologue_instruction(sub_sp_imm);
+  func->add_func_prologue_instruction(sub_sp);
 }
 
 void compiler::reg::Allocator::reserve_for_function_call(void) {

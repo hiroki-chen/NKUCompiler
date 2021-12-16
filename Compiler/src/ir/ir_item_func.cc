@@ -16,6 +16,7 @@
  */
 #include <common/termcolor.hh>
 #include <common/utils.hh>
+#include <frontend/nodes/item_ident.hh>
 #include <frontend/nodes/item_func.hh>
 
 static void check_return_type(compiler::ir::IRContext* const ir_context,
@@ -96,6 +97,30 @@ void compiler::Item_func_def::generate_ir_helper(
       // Handle array type.
       // Currently we do not support non-array and non-variable type.
       if (identifier->get_ident_type() == Item_ident::ARRAY) {
+        const compiler::Item_ident_array* const arr =
+            static_cast<const compiler::Item_ident_array* const>(identifier);
+        // This vector will store the shape information about the array.
+        std::vector<compiler::ir::Operand*> shape;
+
+        for (compiler::Item_expr* const shape_expr : arr->get_array_shape()) {
+          // FIXME: Implement integer runtime evaluation.
+          compiler::ir::Operand* const res =
+              shape_expr->eval_runtime(ir_context);
+          shape.emplace_back(res);
+        }
+
+        const std::string tmp = compiler::concatenate(
+            compiler::ir::local_sign,
+            ir_context->get_symbol_table()->get_available_id());
+        ir_list.emplace_back(compiler::ir::op_type::MOV,
+                             new compiler::ir::Operand(tmp),
+                             new compiler::ir::Operand(compiler::concatenate(
+                                 compiler::ir::arg_sign, i)));
+
+        ir_context->get_symbol_table()->add_symbol(
+            identifier->get_name(),
+            new compiler::Symbol(tmp, compiler::symbol_type::ARRAY_TYPE, false,
+                                 shape));
       } else {
         const std::string var =
             ir::local_sign +
@@ -164,9 +189,8 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
   // Set arguments.
   for (uint32_t i = 0; i < args.size(); i++) {
     ir::Operand* arg = args[i]->eval_runtime(ir_context, ir_list);
-    ir::IR* const ir_arg =
-        new ir::IR(ir::op_type::PUSH, nullptr,
-                   OPERAND_VALUE(std::to_string(i)), arg);
+    ir::IR* const ir_arg = new ir::IR(ir::op_type::PUSH, nullptr,
+                                      OPERAND_VALUE(std::to_string(i)), arg);
     ir_list.emplace_back(*ir_arg);
     func_call->add_func_call(ir_arg);
   }

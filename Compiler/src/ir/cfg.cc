@@ -44,6 +44,7 @@ void compiler::ir::CFG_builder::construct_mapping(
   while (i < ir_list.size()) {
     if (ir_list[i].get_op_type() == compiler::ir::op_type::GLOBAL_BEGIN) {
       // Handle global definitions.
+      global_defs->add_ir(ir_list[i]);
       uint32_t j = i + 1;
 
       while (j < ir_list.size() &&
