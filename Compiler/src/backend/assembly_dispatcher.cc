@@ -20,6 +20,41 @@
 #include <cassert>
 #include <common/utils.hh>
 
+static void check_immediate(
+    compiler::reg::Machine_block *const cur_block,
+    const compiler::reg::binary_type &type_bin,
+    compiler::reg::Machine_operand *const dst,
+    compiler::reg::Machine_operand *const operand_a,
+    compiler::reg::Machine_operand *const operand_b,
+    compiler::reg::Assembly_builder *const asm_builder) {
+  if (!operand_b->get_value().empty() &&
+      std::stoul(operand_b->get_value()) <= compiler::reg::maximum_immediate) {
+    compiler::reg::Machine_instruction_binary *const m_inst =
+        new compiler::reg::Machine_instruction_binary(cur_block, type_bin, dst,
+                                                      operand_a, operand_b);
+
+    cur_block->add_instruction(m_inst);
+  } else {
+    // Do an explicit move.
+    compiler::reg::Machine_operand *const vreg =
+        new compiler::reg::Machine_operand(
+            compiler::reg::operand_type::VREG,
+            compiler::concatenate(compiler::reg::virtual_sign,
+                                  asm_builder->get_available_id()));
+    compiler::reg::Machine_instruction_mov *const mov =
+        new compiler::reg::Machine_instruction_mov(
+            cur_block, compiler::reg::mov_type::MOV_N, vreg, operand_b);
+    cur_block->add_instruction(mov);
+
+    // Then emit the binary instruction.
+    compiler::reg::Machine_instruction_binary *const m_inst =
+        new compiler::reg::Machine_instruction_binary(
+            cur_block, type_bin, dst, operand_a,
+            new compiler::reg::Machine_operand(*vreg));
+    cur_block->add_instruction(m_inst);
+  }
+}
+
 static void handle_mod_div(compiler::reg::Machine_block *const cur_block,
                            compiler::reg::Assembly_builder *const asm_builder,
                            compiler::ir::Operand *const dst,
@@ -366,12 +401,9 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
     return;
   }
 
+  // Check if the immediate exceeds 2^12 = 4096.
   compiler::reg::binary_type type_bin = to_binary_type(type);
-  reg::Machine_instruction_binary *const m_inst =
-      new reg::Machine_instruction_binary(block, type_bin, dst, operand_a,
-                                          operand_b);
-
-  block->add_instruction(m_inst);
+  check_immediate(block, type_bin, dst, operand_a, operand_b, asm_builder);
 }
 
 // FIXME: Maybe this is not needed?...
@@ -559,12 +591,8 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
               cur_block, reg::mov_type::MOV_N,
               new reg::Machine_operand(*array_address_reg), sp);
       cur_block->add_instruction(mov);
-      reg::Machine_instruction_binary *const add =
-          new reg::Machine_instruction_binary(
-              cur_block, reg::binary_type::ADD,
-              new reg::Machine_operand(*array_address_reg),
-              new reg::Machine_operand(*array_address_reg), base);
-      cur_block->add_instruction(add);
+      check_immediate(cur_block, reg::binary_type::ADD, array_address_reg,
+                      array_address_reg, base, asm_builder);
     }
 
     // Generate the store instruction.
@@ -632,12 +660,8 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
               cur_block, reg::mov_type::MOV_N,
               new reg::Machine_operand(*array_address_reg), sp);
       cur_block->add_instruction(mov);
-      reg::Machine_instruction_binary *const add =
-          new reg::Machine_instruction_binary(
-              cur_block, reg::binary_type::ADD,
-              new reg::Machine_operand(*array_address_reg),
-              new reg::Machine_operand(*array_address_reg), base);
-      cur_block->add_instruction(add);
+      check_immediate(cur_block, reg::binary_type::ADD, array_address_reg,
+                      array_address_reg, base, asm_builder);
     }
 
     // Generate the load instruction.
@@ -666,11 +690,10 @@ void compiler::Assembly_dispatcher_alloca::emit_machine_code(
     // Subtract the stack pointer.
     reg::Machine_operand *const sp =
         new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
-    reg::Machine_instruction_binary *const sub =
-        new reg::Machine_instruction_binary(
-            block, reg::binary_type::SUB, sp, sp,
-            ir->get_op2()->emit_machine_operand());
-    block->add_instruction(sub);
+    // Sometime the immediate will be larger than 4095. In this case we should
+    // move it to a register first.
+    check_immediate(block, reg::binary_type::SUB, sp, sp,
+                    ir->get_op2()->emit_machine_operand(), asm_builder);
   }
   block->add_instruction(alloca);
 }
