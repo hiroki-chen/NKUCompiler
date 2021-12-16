@@ -82,6 +82,11 @@ typedef class Assembly_builder {
   // A map that stores the base offset of each array.
   std::map<Machine_function*, std::map<std::string, uint32_t>> array_base;
 
+  // A map that stores the base offset of each array in the parameters of a
+  // function. Usage: [func] -> [array_name] -> [name of the vreg].
+  std::map<Machine_function*, std::map<std::string, std::string>>
+      array_base_param;
+
  public:
   Assembly_builder() : id(0ul), stack_size(0ul), cur_sp(0ul) {}
 

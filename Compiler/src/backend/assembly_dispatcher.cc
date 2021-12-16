@@ -28,7 +28,8 @@ static void check_immediate(
     compiler::reg::Machine_operand *const operand_b,
     compiler::reg::Assembly_builder *const asm_builder) {
   if (!operand_b->get_value().empty() &&
-      std::abs(std::stoi(operand_b->get_value())) <= compiler::reg::maximum_immediate) {
+      std::abs(std::stoi(operand_b->get_value())) <=
+          compiler::reg::maximum_immediate) {
     compiler::reg::Machine_instruction_binary *const m_inst =
         new compiler::reg::Machine_instruction_binary(cur_block, type_bin, dst,
                                                       operand_a, operand_b);
@@ -523,6 +524,23 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
           ir->get_op2()->get_identifier().substr(0, 1).compare(
               ir::global_sign) == 0) {
         src = handle_global(cur_block, asm_builder, ir->get_op2());
+      } else if (ir->get_op2()->get_identifier().find(ir::arr_sign) !=
+                 std::string::npos) {
+        // Handle array arguments.
+        reg::Machine_operand *const sp = new reg::Machine_operand(
+            reg::operand_type::REG, reg::stack_pointer);
+        const uint32_t array_base =
+            asm_builder->get_array_base(ir->get_op2()->get_identifier());
+
+        reg::Machine_operand *const vreg = new reg::Machine_operand(
+            reg::operand_type::VREG,
+            compiler::concatenate(reg::virtual_sign,
+                                  asm_builder->get_available_id()));
+        reg::Machine_operand *const base = new reg::Machine_operand(
+            reg::operand_type::IMM, std::to_string(array_base));
+        check_immediate(cur_block, reg::binary_type::ADD, vreg, sp, base,
+                        asm_builder);
+        src = new reg::Machine_operand(*vreg);
       } else {
         src = ir->get_op2()->emit_machine_operand();
       }
