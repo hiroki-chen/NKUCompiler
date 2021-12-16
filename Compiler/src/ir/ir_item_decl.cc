@@ -184,8 +184,8 @@ void compiler::Item_decl_array::generate_ir_helper(
       // Handle local array type.
     } else {
       const std::string name_symbol = compiler::concatenate(
-          ir::arr_sign, ir_context->get_symbol_table()->get_available_id(),
-          name);
+          ir::local_sign, ir::arr_sign,
+          ir_context->get_symbol_table()->get_available_id());
       ir_context->get_symbol_table()->add_symbol(
           name, new compiler::Symbol(
                     name_symbol, compiler::symbol_type::ARRAY_TYPE, true,
@@ -227,9 +227,10 @@ void compiler::Item_decl_array_init::generate_ir_helper(
       ir_list.emplace_back(ir::op_type::GLOBAL_END, name_symbol);
     } else {
       // We call a memset to handle local initilization.
-      const std::string name_symbol =
-          ir::arr_sign +
-          std::to_string(ir_context->get_symbol_table()->get_available_id());
+      const std::string name_symbol = compiler::concatenate(
+          ir::local_sign, ir::arr_sign,
+          ir_context->get_symbol_table()->get_available_id());
+
       ir_context->get_symbol_table()->add_symbol(
           name, new compiler::Symbol(
                     name_symbol, compiler::symbol_type::ARRAY_TYPE, true,
