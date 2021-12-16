@@ -66,7 +66,7 @@ for dir in ${dirs[@]}; do
 		qemu=${file/${find}/${binary}}
 		./compiler ${file} -S -o ${output}
 
-		$(which arm-none-eabi-gcc) -o ${qemu} ${output} ${LIB_PATH}/libsysy.a -static -march=armv7-a  -specs=nosys.specs
+		$(which arm-linux-gnueabihf-gcc) -o ${qemu} ${output} ${LIB_PATH}/libsysy.a -static -march=armv7-a
 		$(which qemu-arm) ${qemu}
 	done
 done

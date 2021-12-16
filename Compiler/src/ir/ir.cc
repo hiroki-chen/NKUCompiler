@@ -26,6 +26,14 @@
 #include <ir/ir.hh>
 #include <sstream>
 
+static std::string escape_array(const std::string& str) {
+  if (str.substr(0, 1) == compiler::ir::arr_sign) {
+    return str.substr(1);
+  } else {
+    return str;
+  }
+}
+
 compiler::ir::Operand::Operand()
     : type(compiler::ir::var_type::NONE),
       identifier(""),
@@ -61,10 +69,13 @@ compiler::reg::Machine_operand* compiler::ir::Operand::emit_machine_operand(
   if (is_var) {
     if (identifier.find(ir::local_sign) != -1) {
       // Local.
-      return new reg::Machine_operand(reg::operand_type::VREG, identifier);
+      // Escape array identifier.
+      return new reg::Machine_operand(reg::operand_type::VREG,
+                                      std::move(escape_array(identifier)));
     } else if (identifier.substr(0, 1).compare(ir::global_sign) == 0) {
       // Global. => LBL.
-      return new reg::Machine_operand(identifier.substr(1));
+      return new reg::Machine_operand(
+          std::move(escape_array(identifier.substr(1))));
     } else if (identifier.substr(0, 1).compare(ir::arg_sign) == 0) {
       // Args
       return new reg::Machine_operand(
@@ -145,7 +156,9 @@ compiler::ir::IR::IR(const IR& ir)
 void compiler::ir::IR::emit_machine_code(
     compiler::reg::Assembly_builder* const asm_builder) const {
   // We do not handle NOP.
-  if (type == compiler::ir::op_type::NOP) {
+  if (type == compiler::ir::op_type::NOP ||
+      type == compiler::ir::op_type::WORD ||
+      type == compiler::ir::op_type::SPACE) {
     return;
   }
   // Let a dispatcher do the job.
