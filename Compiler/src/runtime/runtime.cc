@@ -131,7 +131,9 @@ void compiler::Compiler_runtime::run(void) {
           output_file.open(oss.str(), std::ios::out);
         }
       }
-      
+      if (print_ast) {
+        res = root->print_result(0, false);
+      }
 
       // Generate the IR.
       compiler::ir::IRContext* const ir_context = new compiler::ir::IRContext();
@@ -140,9 +142,7 @@ void compiler::Compiler_runtime::run(void) {
           new compiler::ir::CFG_builder(ir_list);
 
       // Check what should be printed.
-      if (print_ast) {
-        res = root->print_result(0, false);
-      } else if (print_ir) {
+      if (print_ir) {
         for (auto ir : ir_list) {
           ir.emit_ir();
         }

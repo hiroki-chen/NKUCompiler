@@ -216,33 +216,28 @@ compiler::ir::BranchIR compiler::Item_expr_binary::eval_cond_helper(
   }
 }
 
+// Currently we only evaluate integers.
 compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
   compiler::ir::Operand* const expr_left = lhs->eval_runtime(ir_context);
   compiler::ir::Operand* const expr_right = rhs->eval_runtime(ir_context);
-  // Check if the operands are compatible.
-  if (type_check(expr_left, expr_right) == false) {
-    throw compiler::unsupported_operation(
-        "Error: Binary operands are incompatible!");
-  }
+  const int lval = std::stoi(expr_left->get_value());
+  const int rval = std::stoi(expr_right->get_value());
 
   switch (type) {
     case compiler::binary_type::ADD_TYPE: {
-      const double lhs =
-          compiler::ir::convert_from_string(expr_left->get_value());
-      const double rhs =
-          compiler::ir::convert_from_string(expr_right->get_value());
-      const double res = lhs + rhs;
-      const compiler::ir::var_type type =
-          compiler::ir::get_type_priority(expr_left->get_type(),
-                                          expr_right->get_type())
-              ? expr_left->get_type()
-              : expr_right->get_type();
-      return new compiler::ir::Operand(
-          type, "", compiler::ir::convert_from_double(res), false, false);
+      return OPERAND_VALUE(std::to_string(lval + rval));
+    }
+    case compiler::binary_type::SUB_TYPE: {
+      return OPERAND_VALUE(std::to_string(lval - rval));
+    }
+    case compiler::binary_type::MUL_TYPE: {
+      return OPERAND_VALUE(std::to_string(lval * rval));
+    }
+    case compiler::binary_type::DIV_TYPE: {
+      return OPERAND_VALUE(std::to_string(lval / rval));
     }
 
-    // TODO: Implement other types. Maybe we can add a utility function?
     default:
       throw compiler::unsupported_operation("Unknown binary type!");
   }

@@ -637,6 +637,10 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
               ir->get_op2()->emit_machine_operand());
       cur_block->add_instruction(mov);
       value = vreg;
+    } else if (ir->get_op2()->get_identifier().find(ir::global_sign) !=
+               std::string::npos) {
+      // Handle global variable type.
+      value = handle_global(cur_block, asm_builder, ir->get_op2());
     } else {
       value = ir->get_op2()->emit_machine_operand();
     }
