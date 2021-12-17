@@ -78,6 +78,7 @@ void compiler::Item_decl_var_init::generate_ir_helper(
         ir_context->get_symbol_table()->add_const(
             identifier->get_name(),
             dynamic_cast<compiler::Symbol_const*>(symbol));
+
       } else {
         compiler::Symbol* const symbol =
             new compiler::Symbol(name_symbol, compiler::symbol_type::VAR_TYPE);
@@ -138,7 +139,7 @@ uint32_t compiler::Item_decl_array::calculate_array_size(
     std::vector<ir::Operand*>& array_shape) const {
   // Determine the shape of the array.
   for (compiler::Item_expr* const shape : identifier->get_array_shape()) {
-    ir::Operand* const value = shape->eval_runtime(ir_context, ir_list);
+    ir::Operand* const value = shape->eval_runtime(ir_context);
     if (value->get_type() == ir::var_type::DB) {
       throw compiler::fatal_error("Array shape cannot be a double type!");
     }

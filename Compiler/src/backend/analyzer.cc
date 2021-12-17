@@ -50,8 +50,8 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
     machine_unit->add_function(machine_function);
   }
 
-  machine_unit->emit_assembly(std::cerr);
-  
+  // machine_unit->emit_assembly(std::cerr);
+
   // You need to either implement the graph-colorin / linear-scan algorithm.
   // Use the class "Allocator" to do this job. If you need to add / modify /
   // delete some data structures, feel free to do it.
@@ -204,4 +204,17 @@ void compiler::reg::Live_variable_analyzer::pass(
   compute_use_pos(func);
   compute_def_use(func);
   iterate(func);
+}
+
+void compiler::reg::Assembly_builder::set_array_base(
+    const std::string& array_name, const uint32_t& array_size) {
+  array_base[machine_function][array_name] = 0;
+  cur_sp += array_size;
+
+  // Recalculate the offset for each array.
+  for (auto& item : array_base[machine_function]) {
+    if (item.first != array_name) {
+      item.second += array_size;
+    }
+  }
 }

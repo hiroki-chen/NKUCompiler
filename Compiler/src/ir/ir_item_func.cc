@@ -110,7 +110,7 @@ void compiler::Item_func_def::generate_ir_helper(
         }
 
         const std::string tmp = compiler::concatenate(
-            compiler::ir::local_sign,
+            compiler::ir::local_sign, compiler::ir::arr_param_sign,
             ir_context->get_symbol_table()->get_available_id());
         ir_list.emplace_back(compiler::ir::op_type::MOV,
                              new compiler::ir::Operand(tmp),

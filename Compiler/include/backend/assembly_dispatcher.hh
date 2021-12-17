@@ -159,6 +159,18 @@ typedef class Assembly_dispatcher_alloca final : public Assembly_dispatcher {
   virtual void emit_machine_code(
       reg::Assembly_builder* const asm_builder) const override;
 } Assembly_dispatcher_alloca;
+
+
+typedef class Assembly_dispatcher_malloc final : public Assembly_dispatcher {
+ public:
+  Assembly_dispatcher_malloc() = delete;
+
+  Assembly_dispatcher_malloc(const ir::op_type& type, const ir::IR* const ir)
+      : Assembly_dispatcher(type, ir) {}
+
+  virtual void emit_machine_code(
+      reg::Assembly_builder* const asm_builder) const override;
+} Assembly_dispatcher_malloc;
 }  // namespace compiler
 
 #endif

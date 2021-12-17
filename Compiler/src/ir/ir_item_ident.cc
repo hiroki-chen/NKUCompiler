@@ -31,12 +31,12 @@ compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
       throw compiler::fatal_error(
           "Cannot evaluate pointer / array type. What: " + name);
     } else {
-      return new ir::Operand(symbol->get_var_type(), "", symbol->get_value(),
-                             false, false);
+      return OPERAND_VALUE(symbol->get_value());
     }
   } catch (const std::exception& e) {
     compiler::Symbol* const symbol_cur = symbol_table->find_symbol(name);
-    if (opt_level > 0) {
+    if (opt_level > 0 ||
+        symbol_cur->get_name().find(ir::global_sign) != std::string::npos) {
       compiler::Symbol_const* symbol_assign =
           symbol_table->find_assign_const(symbol_cur->get_name());
       return new ir::Operand(symbol_assign->get_var_type(), "",
@@ -105,10 +105,6 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
     }
     // Check if the shape can match the symbol.
     const size_t shape_cur = array_symbol->get_shape().size();
-    if (array_shape.size() != shape_cur) {
-      throw compiler::unsupported_operation(
-          "Error: Array shape is of wrong size!");
-    }
     // Note that we do not check if the index is out of range.
     // Checking is done by the programmer.
 
@@ -133,7 +129,7 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       for (auto iter = array_shape.crend(); iter != array_shape.crbegin();
            iter++) {
         // Get the result of the shape.
-        ir::Operand* res = (*iter)->eval_runtime(ir_context);
+        ir::Operand* res = (*iter)->eval_runtime(ir_context, ir_list);
         const uint32_t res_num = std::stoul(res->get_value());
         // Add to the index.
         index += res_num * length;
@@ -158,10 +154,9 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       ir::Operand* operand_index = new ir::Operand(index_name);
 
       // Multiply the operand index by byte_length.
-      ir_list.emplace_back(
-          ir::op_type::IMUL, operand_index,
-          array_shape.back()->eval_runtime(ir_context, ir_list),
-          OPERAND_VALUE(std::to_string(byte_length)));
+      ir_list.emplace_back(ir::op_type::IMUL, operand_index,
+                           array_shape.back()->eval_runtime(ir_context, ir_list),
+                           OPERAND_VALUE(std::to_string(byte_length)));
 
       // How to get the correct index from shape and the byte_length:
       // E.g.: arr[4][4] (where arr is int type):
@@ -188,7 +183,7 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       for (auto iter = array_shape.crbegin() + 1; iter != array_shape.crend();
            iter++) {
         // Get the subscript.
-        ir::Operand* const subscript = (*iter)->eval_runtime(ir_context);
+        ir::Operand* const subscript = (*iter)->eval_runtime(ir_context, ir_list);
         // Intermediate variable for calculating the offset.
         const std::string size_str = compiler::concatenate(
             ir::local_sign, ir_context->get_symbol_table()->get_available_id());
