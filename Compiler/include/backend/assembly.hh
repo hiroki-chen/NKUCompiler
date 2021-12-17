@@ -51,6 +51,8 @@ static const std::string mod_func = "__aeabi_idivmod";
 
 static const std::string div_func = "__aeabi_idiv";
 
+static const std::string memset = "memset";
+
 static const uint32_t maximum_immediate = 0xffful;
 
 typedef enum inst_type {
@@ -66,6 +68,7 @@ typedef enum inst_type {
   RET,
   CALL,
   GLOBAL,
+  MALLOC,
 } inst_type;
 
 typedef enum branch_type {

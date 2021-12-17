@@ -239,6 +239,8 @@ compiler::reg::inst_type compiler::to_machine_type(
       return compiler::reg::inst_type::RET;
     case compiler::ir::op_type::CALL:
       return compiler::reg::inst_type::CALL;
+    case compiler::ir::op_type::MALLOC:
+      return compiler::reg::inst_type::MALLOC;
     default:
       std::cout << type << '\n';
       throw compiler::unsupported_operation("TODO: Support this.");

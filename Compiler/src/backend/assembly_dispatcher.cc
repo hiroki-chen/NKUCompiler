@@ -346,6 +346,8 @@ compiler::Assembly_dispatcher *compiler::Assembly_dispatcher::dispatch(
       return new compiler::Assembly_dispatcher_return(type, ir);
     case reg::inst_type::CALL:
       return new compiler::Assembly_dispatcher_call(type, ir);
+    case reg::inst_type::MALLOC:
+      return new compiler::Assembly_dispatcher_malloc(type, ir);
     default:
       throw compiler::unsupported_operation("Error: This is not supported :(");
   }
@@ -513,57 +515,68 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
   //    store the arguments on the stack.
   if (type == ir::op_type::PUSH) {
     const uint32_t arg_no = std::stoul(ir->get_op1()->get_value());
+    // Handle global type.
+    reg::Machine_operand *src = nullptr;
+    if (ir->get_op2()->get_is_var() &&
+        ir->get_op2()->get_identifier().substr(0, 1).compare(ir::global_sign) ==
+            0) {
+      src = handle_global(cur_block, asm_builder, ir->get_op2());
+    } else if (ir->get_op2()->get_identifier().find(ir::arr_sign) !=
+               std::string::npos) {
+      // Handle array arguments.
+      reg::Machine_operand *const sp =
+          new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
+
+      const uint32_t array_base =
+          asm_builder->get_array_base(ir->get_op2()->get_identifier());
+
+      reg::Machine_operand *const vreg = new reg::Machine_operand(
+          reg::operand_type::VREG,
+          compiler::concatenate(reg::virtual_sign,
+                                asm_builder->get_available_id()));
+      reg::Machine_operand *const base = new reg::Machine_operand(
+          reg::operand_type::IMM, std::to_string(array_base));
+      check_immediate(cur_block, reg::binary_type::ADD, vreg, sp, base,
+                      asm_builder);
+      src = new reg::Machine_operand(*vreg);
+    } else {
+      src = ir->get_op2()->emit_machine_operand();
+    }
+
     if (arg_no <= 3ul) {
       reg::Machine_operand *const reg = new reg::Machine_operand(
           reg::operand_type::REG,
           compiler::concatenate("r", ir->get_op1()->get_value()));
-
-      // Handle global type.
-      reg::Machine_operand *src = nullptr;
-      if (ir->get_op2()->get_is_var() &&
-          ir->get_op2()->get_identifier().substr(0, 1).compare(
-              ir::global_sign) == 0) {
-        src = handle_global(cur_block, asm_builder, ir->get_op2());
-      } else if (ir->get_op2()->get_identifier().find(ir::arr_sign) !=
-                 std::string::npos) {
-        // Handle array arguments.
-        reg::Machine_operand *const sp = new reg::Machine_operand(
-            reg::operand_type::REG, reg::stack_pointer);
-
-        const uint32_t array_base =
-            asm_builder->get_array_base(ir->get_op2()->get_identifier());
-
-        reg::Machine_operand *const vreg = new reg::Machine_operand(
-            reg::operand_type::VREG,
-            compiler::concatenate(reg::virtual_sign,
-                                  asm_builder->get_available_id()));
-        reg::Machine_operand *const base = new reg::Machine_operand(
-            reg::operand_type::IMM, std::to_string(array_base));
-        check_immediate(cur_block, reg::binary_type::ADD, vreg, sp, base,
-                        asm_builder);
-        src = new reg::Machine_operand(*vreg);
-      } else {
-        src = ir->get_op2()->emit_machine_operand();
-      }
-
       reg::Machine_instruction_mov *const m_inst =
           new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N, reg,
                                            src);
       cur_block->add_instruction(m_inst);
     } else {
-      const std::string overflow = std::to_string((arg_no - 3) * 4);
+      // const std::string overflow = std::to_string((arg_no - 3) * 4);
       // In ARM-v7 assembly language, the arguments are stored in r0-r3.
       // If the argument number is too large, then we have to store the
       // overflown arguments on the stack. To this end, we calculate the offset
       // and then push them onto the stack.
-      reg::Machine_operand *const sp =
-          new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
-      reg::Machine_operand *const offset =
-          new reg::Machine_operand(reg::operand_type::IMM, overflow);
-      reg::Machine_instruction_store *const store =
-          new reg::Machine_instruction_store(
-              cur_block, ir->get_op2()->emit_machine_operand(), sp, offset);
-      cur_block->add_instruction(store);
+      // At last, do not forget to pop them out.
+
+      reg::Machine_operand *arg = src;
+      if (src->is_imm()) {
+        reg::Machine_operand *const vreg = new reg::Machine_operand(
+            reg::operand_type::VREG,
+            compiler::concatenate(reg::virtual_sign,
+                                  asm_builder->get_available_id()));
+        reg::Machine_instruction_mov *const mov =
+            new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N,
+                                             vreg,
+                                             new reg::Machine_operand(*src));
+        cur_block->add_instruction(mov);
+        arg = vreg;
+      }
+
+      reg::Machine_instruction_stack *const push =
+          new reg::Machine_instruction_stack(cur_block, reg::stack_type::PUSH,
+                                             new reg::Machine_operand(*arg));
+      cur_block->add_instruction(push);
       // How to retrieve these arguments from the stack?
     }
   } else if (type == ir::op_type::STR) {
@@ -788,4 +801,75 @@ void compiler::Assembly_dispatcher_return::emit_machine_code(
   // The callee should restore the envionment.
   // ldr r14, [sp,#0]
   return_epilogue(cur_block, ir);
+}
+
+void compiler::Assembly_dispatcher_malloc::emit_machine_code(
+    reg::Assembly_builder *const asm_builder) const {
+  // CALL MEMSET.
+  // mov r0, <array_address> <- must be local.
+  // mov r1, #0
+  // mov r2, size
+  // bl memset.
+  // Fetch the array base address from the stack.
+  reg::Machine_block *const cur_block = asm_builder->get_block();
+
+  const uint32_t array_base =
+      asm_builder->get_array_base(ir->get_op1()->get_identifier());
+  reg::Machine_operand *const base = new reg::Machine_operand(
+      reg::operand_type::IMM, std::to_string(array_base));
+
+  // Generate the virtual register for storing the array address.
+  reg::Machine_operand *const array_address_reg = new reg::Machine_operand(
+      reg::operand_type::VREG,
+      compiler::concatenate(reg::virtual_sign,
+                            asm_builder->get_available_id()));
+  // The stack pointer.
+  reg::Machine_operand *const sp =
+      new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
+
+  // Move to the virtual register.
+  reg::Machine_instruction_mov *const mov = new reg::Machine_instruction_mov(
+      cur_block, reg::mov_type::MOV_N,
+      new reg::Machine_operand(*array_address_reg), sp);
+  cur_block->add_instruction(mov);
+  check_immediate(cur_block, reg::binary_type::ADD, array_address_reg,
+                  array_address_reg, base, asm_builder);
+
+  // PUSH R0
+  {
+    reg::Machine_operand *const r0 =
+        new reg::Machine_operand(reg::operand_type::REG, "r0");
+    reg::Machine_instruction_mov *const mov = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r0,
+        new reg::Machine_operand(*array_address_reg));
+    cur_block->add_instruction(mov);
+  }
+
+  // PUSH R1 0
+  {
+    reg::Machine_operand *const r1 =
+        new reg::Machine_operand(reg::operand_type::REG, "r1");
+    reg::Machine_instruction_mov *const mov = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r1,
+        new reg::Machine_operand(reg::operand_type::IMM, "0"));
+    cur_block->add_instruction(mov);
+  }
+
+  // PUSH R2 size
+  {
+    reg::Machine_operand *const r2 =
+        new reg::Machine_operand(reg::operand_type::REG, "r2");
+    reg::Machine_instruction_mov *const mov = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, r2,
+        new reg::Machine_operand(reg::operand_type::IMM,
+                                 ir->get_op2()->get_value()));
+    cur_block->add_instruction(mov);
+  }
+
+  // CALL memset.
+  reg::Machine_instruction_branch *const memset =
+      new reg::Machine_instruction_branch(
+          cur_block, reg::branch_type::BL,
+          new reg::Machine_operand(reg::memset));
+  cur_block->add_instruction(memset);
 }
