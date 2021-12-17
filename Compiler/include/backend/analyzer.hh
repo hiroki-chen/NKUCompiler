@@ -92,17 +92,17 @@ typedef class Assembly_builder {
 
   void set_unit(Machine_unit* const unit) { machine_unit = unit; }
 
-  void set_function(Machine_function* const func) { machine_function = func; }
+  void set_function(Machine_function* const func) {
+    machine_function = func;
+    cur_sp = 0ul;
+  }
 
   void set_block(Machine_block* const block) { machine_block = block; }
 
   void set_compare_code(const cond_type& opcode) { compare_code = opcode; }
 
   void set_array_base(const std::string& array_name,
-                      const uint32_t& array_size) {
-    array_base[machine_function][array_name] = cur_sp;
-    cur_sp += array_size;
-  }
+                      const uint32_t& array_size);
 
   void set_stack_size_cur(const uint32_t& stack_size) {
     this->stack_size = stack_size;

@@ -54,6 +54,8 @@ static const std::string arg_sign = "$";
 
 static const std::string arr_sign = "&";
 
+static const std::string arr_param_sign = "*";
+
 using ir_list = std::vector<IR>;
 /**
  * @brief Look-up table for enum type compiler::ir::op_type.
