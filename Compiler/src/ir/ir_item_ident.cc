@@ -133,7 +133,7 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       for (auto iter = array_shape.crend(); iter != array_shape.crbegin();
            iter++) {
         // Get the result of the shape.
-        ir::Operand* res = (*iter)->eval_runtime(ir_context);
+        ir::Operand* res = (*iter)->eval_runtime(ir_context, ir_list);
         const uint32_t res_num = std::stoul(res->get_value());
         // Add to the index.
         index += res_num * length;
@@ -188,7 +188,7 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       for (auto iter = array_shape.crbegin() + 1; iter != array_shape.crend();
            iter++) {
         // Get the subscript.
-        ir::Operand* const subscript = (*iter)->eval_runtime(ir_context);
+        ir::Operand* const subscript = (*iter)->eval_runtime(ir_context, ir_list);
         // Intermediate variable for calculating the offset.
         const std::string size_str = compiler::concatenate(
             ir::local_sign, ir_context->get_symbol_table()->get_available_id());

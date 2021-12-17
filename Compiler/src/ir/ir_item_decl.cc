@@ -244,9 +244,9 @@ void compiler::Item_decl_array_init::generate_ir_helper(
       ir_list.emplace_back(ir::op_type::ALLOCA, nullptr,
                            new ir::Operand(name_symbol),
                            operand_alloc_notation);
-      ir_list.emplace_back(ir::op_type::MALLOC, nullptr,
-                           new ir::Operand(name_symbol),
-                           operand_alloc_notation);
+      // ir_list.emplace_back(ir::op_type::MALLOC, nullptr,
+      //                      new ir::Operand(name_symbol),
+      //                      operand_alloc_notation);
       init_helper(init_value->get_value_list(), initial_values, 0, ir_context,
                   ir_list, compiler::to_ir_type(b_type));
     }
