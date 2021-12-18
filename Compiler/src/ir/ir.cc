@@ -331,7 +331,7 @@ compiler::Item_literal* compiler::ir::wrap_value(
     compiler::ir::Operand* const operand) {
   switch (operand->get_type()) {
     case ir::var_type::i32:
-      return new compiler::Item_literal_int(0, std::stol(operand->get_value()));
+      return new compiler::Item_literal_int(0, std::stoi(operand->get_value()));
     case ir::var_type::i8:
       return new compiler::Item_literal_char(0, operand->get_value()[0]);
     case ir::var_type::DB:

@@ -221,8 +221,8 @@ compiler::ir::Operand* compiler::Item_expr_binary::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
   compiler::ir::Operand* const expr_left = lhs->eval_runtime(ir_context);
   compiler::ir::Operand* const expr_right = rhs->eval_runtime(ir_context);
-  const int lval = std::stol(expr_left->get_value());
-  const int rval = std::stol(expr_right->get_value());
+  const int lval = std::stoi(expr_left->get_value());
+  const int rval = std::stoi(expr_right->get_value());
 
   switch (type) {
     case compiler::binary_type::ADD_TYPE: {
