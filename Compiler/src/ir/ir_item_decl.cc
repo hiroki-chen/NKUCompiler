@@ -345,15 +345,13 @@ void compiler::Item_decl_array_init::init_helper(
       }
 
       // Visit child intialization list.
-      init_helper(value_list, init_value, index + 1, ir_context, ir_list,
-                  var_type);
+      init_helper(value->get_value_list(), init_value, index + 1, ir_context,
+                  ir_list, var_type);
       write_size += size_this_shape;
     }
   }
 
-  if (is_const) {
-    // call init_const;
-  } else {
-    // call init_non_const;
-  }
+  ir::Operand* const val = OPERAND_VALUE(std::to_string(size - write_size));
+  do_init_array(val, ir_context, ir_list, init_value, array_name, true,
+                is_const);
 }
