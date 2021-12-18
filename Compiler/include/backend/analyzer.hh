@@ -79,28 +79,16 @@ typedef class Assembly_builder {
   // The current stack pointer.
   uint32_t cur_sp;
 
-  // The number of overflown arguments.
-  uint32_t overflown_arg;
-
   // A map that stores the base offset of each array.
   std::map<Machine_function*, std::map<std::string, uint32_t>> array_base;
 
-  // A vector that temporarily stores the overflown args.
-  std::vector<Machine_instruction*> overflown_args;
+  // A map that stores the base offset of each array in the parameters of a
+  // function. Usage: [func] -> [array_name] -> [name of the vreg].
+  std::map<Machine_function*, std::map<std::string, std::string>>
+      array_base_param;
 
  public:
-  Assembly_builder()
-      : id(0ul), stack_size(0ul), cur_sp(0ul), overflown_arg(0ul) {}
-
-  void add_overflown_arg(Machine_instruction* const inst) {
-    overflown_args.emplace_back(inst);
-  }
-
-  void clear_overflown_args(void) { overflown_args.clear(); }
-
-  void increment_overflown_arg(void) { overflown_arg++; }
-
-  void reset_overflown_arg(void) { overflown_arg = 0ul; }
+  Assembly_builder() : id(0ul), stack_size(0ul), cur_sp(0ul) {}
 
   void set_unit(Machine_unit* const unit) { machine_unit = unit; }
 
@@ -126,17 +114,11 @@ typedef class Assembly_builder {
 
   Machine_block* get_block() { return machine_block; }
 
-  std::vector<Machine_instruction*> get_overflown_args(void) {
-    return overflown_args;
-  }
-
   cond_type get_compare_code() { return compare_code; }
 
   uint32_t get_available_id(void) { return id++; }
 
   uint32_t get_stack_size(void) { return stack_size; }
-
-  uint32_t get_overflown_arg(void) { return overflown_arg; }
 
   uint32_t get_array_base(void) { return cur_sp; }
 
