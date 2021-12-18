@@ -103,10 +103,13 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       throw compiler::unsupported_operation(
           "Error: Cannot index a non-array type!");
     }
-    // Check if the shape can match the symbol.
+
     const size_t shape_cur = array_symbol->get_shape().size();
     // Note that we do not check if the index is out of range.
     // Checking is done by the programmer.
+    // If there is a shape mismatch, then it means we are accessing the address
+    // of the array element. In this case we need to get the address.
+    const bool should_decay = array_shape.size() != shape_cur;
 
     // Fetch basic information.
     const ir::var_type var_type = array_symbol->get_var_type();
@@ -154,9 +157,10 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       ir::Operand* operand_index = new ir::Operand(index_name);
 
       // Multiply the operand index by byte_length.
-      ir_list.emplace_back(ir::op_type::IMUL, operand_index,
-                           array_shape.back()->eval_runtime(ir_context, ir_list),
-                           OPERAND_VALUE(std::to_string(byte_length)));
+      ir_list.emplace_back(
+          ir::op_type::IMUL, operand_index,
+          array_shape.back()->eval_runtime(ir_context, ir_list),
+          OPERAND_VALUE(std::to_string(byte_length)));
 
       // How to get the correct index from shape and the byte_length:
       // E.g.: arr[4][4] (where arr is int type):
@@ -183,7 +187,8 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       for (auto iter = array_shape.crbegin() + 1; iter != array_shape.crend();
            iter++) {
         // Get the subscript.
-        ir::Operand* const subscript = (*iter)->eval_runtime(ir_context, ir_list);
+        ir::Operand* const subscript =
+            (*iter)->eval_runtime(ir_context, ir_list);
         // Intermediate variable for calculating the offset.
         const std::string size_str = compiler::concatenate(
             ir::local_sign, ir_context->get_symbol_table()->get_available_id());
@@ -222,9 +227,22 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
         const std::string dst_name = compiler::concatenate(
             ir::local_sign, ir_context->get_symbol_table()->get_available_id());
         ir::Operand* const dst = new ir::Operand(dst_name);
-        ir_list.emplace_back(op_type, dst,
-                             new ir::Operand(array_symbol->get_name()),
-                             operand_index);
+
+        // Check if there is a array decay.
+        if (should_decay) {
+          const std::string tmp = compiler::concatenate(
+              ir::local_sign,
+              ir_context->get_symbol_table()->get_available_id());
+          ir::Operand* const tmp_op = new ir::Operand(tmp);
+          ir_list.emplace_back(ir::op_type::MOV, tmp_op,
+                               new ir::Operand(array_symbol->get_name()));
+          ir_list.emplace_back(ir::op_type::IADD, dst, tmp_op, operand_index);
+        } else {
+          ir_list.emplace_back(op_type, dst,
+                               new ir::Operand(array_symbol->get_name()),
+                               operand_index);
+        }
+
         return dst;
       }
     }

@@ -594,8 +594,65 @@ void compiler::Assembly_dispatcher_mov::emit_machine_code(
   reg::Machine_operand *src = nullptr;
 
   // We cannot move an address to the register. We need the value.
-  if (ir->get_op1()->get_identifier().substr(0, 1) == ir::global_sign) {
-    src = handle_global(asm_builder, ir->get_op1());
+  const std::string name = ir->get_op1()->get_identifier();
+  if (name.substr(0, 1) == ir::global_sign) {
+    if (name.find(ir::arr_sign) == std::string::npos) {
+      src = handle_global(asm_builder, ir->get_op1());
+    } else {
+      // Move to a virtual register using mov32 instruction.
+      reg::Machine_operand *const vreg = new reg::Machine_operand(
+          reg::operand_type::VREG,
+          compiler::concatenate(reg::virtual_sign,
+                                asm_builder->get_available_id()));
+      reg::Machine_instruction_mov *const mov =
+          new reg::Machine_instruction_mov(
+              block, reg::mov_type::MOV32, vreg,
+              ir->get_op1()->emit_machine_operand());
+      block->add_instruction(mov);
+      src = vreg;
+    }
+  } else if (name.find(ir::arr_sign) != std::string::npos ||
+             name.find(ir::arr_param_sign) != std::string::npos) {
+    // Load the address to the register.
+    // Fetch the array base address from the stack.
+    const uint32_t array_base =
+        asm_builder->get_array_base(ir->get_op1()->get_identifier());
+    reg::Machine_operand *const base = new reg::Machine_operand(
+        reg::operand_type::IMM, std::to_string(array_base));
+
+    // Generate the virtual register for storing the array address.
+    reg::Machine_operand *const array_address_reg = new reg::Machine_operand(
+        reg::operand_type::VREG,
+        compiler::concatenate(reg::virtual_sign,
+                              asm_builder->get_available_id()));
+    reg::Machine_operand *const sp =
+        new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
+
+    if (ir->get_op1()->get_identifier().find(ir::arr_param_sign) !=
+        std::string::npos) {
+      // The address comes from the parameter. Move the parameter to the
+      // temporal register.
+      reg::Machine_instruction_mov *const mov =
+          new reg::Machine_instruction_mov(
+              block, reg::mov_type::MOV_N,
+              new reg::Machine_operand(*array_address_reg),
+              ir->get_op1()->emit_machine_operand());
+      block->add_instruction(mov);
+
+    } else {
+      // Add the stack pointer + array_base.
+      // mov %v0, sp
+      // add %v0, %v0, base
+      reg::Machine_instruction_mov *const mov =
+          new reg::Machine_instruction_mov(
+              block, reg::mov_type::MOV_N,
+              new reg::Machine_operand(*array_address_reg), sp);
+      block->add_instruction(mov);
+      check_immediate(reg::binary_type::ADD, array_address_reg,
+                      array_address_reg, base, asm_builder);
+    }
+
+    src = new reg::Machine_operand(*array_address_reg);
   } else {
     src = ir->get_op1()->emit_machine_operand();
   }
