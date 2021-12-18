@@ -323,7 +323,7 @@ void compiler::reg::Machine_instruction_mov::emit_assembly(
     case MOV_N: {
       // Check if the immediate is too large...
       if (use_list[0]->print()[0] == '#' &&
-          std::stoi(use_list[0]->print().substr(1)) > maximum_immediate) {
+          std::stol(use_list[0]->print().substr(1)) > maximum_immediate) {
         os << "\tldr " << def_list[0]->print() << ", =" << use_list[0]->print()
            << '\n';
         return;

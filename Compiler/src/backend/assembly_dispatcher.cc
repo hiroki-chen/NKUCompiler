@@ -28,7 +28,7 @@ static void check_immediate(
     compiler::reg::Assembly_builder *const asm_builder) {
   compiler::reg::Machine_block *const cur_block = asm_builder->get_block();
   if (!operand_b->get_value().empty() &&
-      std::abs(std::stoi(operand_b->get_value())) <=
+      std::abs(std::stol(operand_b->get_value())) <=
           compiler::reg::maximum_immediate >> 4) {
     compiler::reg::Machine_instruction_binary *const m_inst =
         new compiler::reg::Machine_instruction_binary(cur_block, type_bin, dst,

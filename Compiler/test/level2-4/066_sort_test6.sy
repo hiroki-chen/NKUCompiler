@@ -1,7 +1,6 @@
 int n;
 
 int counting_sort(int ini_arr[], int sorted_arr[], int n) {
-    putint(ini_arr[0]);
 	int count_arr[10];
 	int i;
     int j;
