@@ -638,18 +638,24 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
     if (ir->get_op2()->get_is_var() &&
         ir->get_op2()->get_identifier().substr(0, 1).compare(ir::global_sign) ==
             0) {
-      // A single call to "mov32" is enough.
-      reg::Machine_operand *const vreg = new reg::Machine_operand(
-          reg::operand_type::VREG,
-          compiler::concatenate(reg::virtual_sign,
-                                asm_builder->get_available_id()));
-      reg::Machine_instruction_mov *const mov =
-          new reg::Machine_instruction_mov(
-              cur_block, reg::mov_type::MOV32, vreg,
-              ir->get_op2()->emit_machine_operand());
-              
-      cur_block->add_instruction(mov);
-      src = vreg;
+      if (ir->get_op2()->get_identifier().find(ir::arr_sign) !=
+          std::string::npos) {
+        // A single call to "mov32" is enough (if it is
+        // an array).
+        reg::Machine_operand *const vreg = new reg::Machine_operand(
+            reg::operand_type::VREG,
+            compiler::concatenate(reg::virtual_sign,
+                                  asm_builder->get_available_id()));
+        reg::Machine_instruction_mov *const mov =
+            new reg::Machine_instruction_mov(
+                cur_block, reg::mov_type::MOV32, vreg,
+                ir->get_op2()->emit_machine_operand());
+
+        cur_block->add_instruction(mov);
+        src = vreg;
+      } else {
+        src = handle_global(asm_builder, ir->get_op2());
+      }
     } else if (ir->get_op2()->get_identifier().find(ir::arr_sign) !=
                std::string::npos) {
       // Handle array arguments.
