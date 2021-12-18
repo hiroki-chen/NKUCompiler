@@ -21,15 +21,15 @@
 #include <common/utils.hh>
 
 static void check_immediate(
-    compiler::reg::Machine_block *const cur_block,
     const compiler::reg::binary_type &type_bin,
     compiler::reg::Machine_operand *const dst,
     compiler::reg::Machine_operand *const operand_a,
     compiler::reg::Machine_operand *const operand_b,
     compiler::reg::Assembly_builder *const asm_builder) {
+  compiler::reg::Machine_block *const cur_block = asm_builder->get_block();
   if (!operand_b->get_value().empty() &&
       std::abs(std::stoi(operand_b->get_value())) <=
-          compiler::reg::maximum_immediate) {
+          compiler::reg::maximum_immediate >> 4) {
     compiler::reg::Machine_instruction_binary *const m_inst =
         new compiler::reg::Machine_instruction_binary(cur_block, type_bin, dst,
                                                       operand_a, operand_b);
@@ -56,13 +56,118 @@ static void check_immediate(
   }
 }
 
-static void handle_mod_div(compiler::reg::Machine_block *const cur_block,
-                           compiler::reg::Assembly_builder *const asm_builder,
+static void load_argument_from_stack(
+    compiler::reg::Assembly_builder *const asm_builder,
+    const compiler::ir::IR *const ir) {
+  using namespace compiler;
+
+  // We should generate an instruction as follows:
+  //    LDR %t0, [fp, #0]
+  reg::Machine_block *const cur_block = asm_builder->get_block();
+
+  assert(ir->get_op_type() == ir::op_type::MOV &&
+         "Cannot load arguments from this IR.");
+  const std::string arg = ir->get_op1()->get_identifier();
+
+  const uint32_t offset = std::stoul(arg.substr(1));
+
+  if (offset >= 4) {
+    // Prepare for the stack.
+    // This is a trick as we will explain later...
+    const uint32_t stack_pos = (offset + 5) * 4;
+
+    reg::Machine_operand *const vreg = new reg::Machine_operand(
+        reg::operand_type::VREG,
+        compiler::concatenate(reg::virtual_sign,
+                              asm_builder->get_available_id()));
+    reg::Machine_operand *const fp =
+        new reg::Machine_operand(reg::operand_type::REG, reg::frame_pointer);
+    reg::Machine_operand *const offset_imm = new reg::Machine_operand(
+        reg::operand_type::IMM, std::to_string(stack_pos));
+
+    // Add from the stack.
+    check_immediate(reg::binary_type::ADD, vreg, fp, offset_imm, asm_builder);
+
+    // Generate a load instruction.
+    reg::Machine_instruction_load *const load =
+        new reg::Machine_instruction_load(cur_block,
+                                          ir->get_dst()->emit_machine_operand(),
+                                          new reg::Machine_operand(*vreg));
+    cur_block->add_instruction(load);
+  } else {
+    reg::Machine_instruction_mov *const m_inst =
+        new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N,
+                                         ir->get_dst()->emit_machine_operand(),
+                                         ir->get_op1()->emit_machine_operand());
+    cur_block->add_instruction(m_inst);
+  }
+}
+
+static void handle_overflown_params(
+    compiler::reg::Machine_operand *const src,
+    compiler::reg::Assembly_builder *const asm_builder) {
+  // In ARM-v7 assembly language, the arguments are stored in r0-r3.
+  // If the argument number is too large, then we have to store the
+  // overflown arguments on the stack. To this end, we calculate the offset
+  // and then push them onto the stack.
+  // At last, do not forget to pop them out.
+  using namespace compiler;
+
+  reg::Machine_block *const cur_block = asm_builder->get_block();
+  reg::Machine_operand *arg = src;
+  if (src->is_imm()) {
+    // The immediate value cannot be stored directly to the memory since there
+    // is no bus transfer between immediate and the memory.
+    reg::Machine_operand *const vreg = new reg::Machine_operand(
+        reg::operand_type::VREG,
+        compiler::concatenate(reg::virtual_sign,
+                              asm_builder->get_available_id()));
+    reg::Machine_instruction_mov *const mov = new reg::Machine_instruction_mov(
+        cur_block, reg::mov_type::MOV_N, vreg, new reg::Machine_operand(*src));
+    cur_block->add_instruction(mov);
+    arg = vreg;
+  }
+
+  reg::Machine_instruction_stack *const push =
+      new reg::Machine_instruction_stack(cur_block, reg::stack_type::PUSH,
+                                         new reg::Machine_operand(*arg));
+
+  asm_builder->add_overflown_arg(push);
+  asm_builder->increment_overflown_arg();
+}
+
+static void func_call_epilogue(
+    compiler::reg::Assembly_builder *const asm_builder) {
+  // The overflown argumens are pushed onto the stack by invoking push {reg}
+  // instruction. Thus we need to restore the stack pointer after function call
+  // to prevent segmentation fault.
+  using namespace compiler;
+
+  reg::Machine_block *const cur_block = asm_builder->get_block();
+
+  // Calculate the offset.
+  const uint32_t overflown_arg = asm_builder->get_overflown_arg() << 2ul;
+  reg::Machine_operand *const offset = new reg::Machine_operand(
+      reg::operand_type::IMM, std::to_string(overflown_arg));
+
+  // Restore the stack pointer by adding the offset to it.
+  reg::Machine_operand *const sp =
+      new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
+
+  check_immediate(reg::binary_type::ADD, sp, sp, offset, asm_builder);
+
+  // Reset the argument number.
+  asm_builder->reset_overflown_arg();
+}
+
+static void handle_mod_div(compiler::reg::Assembly_builder *const asm_builder,
                            compiler::ir::Operand *const dst,
                            compiler::reg::Machine_operand *const operand_a,
                            compiler::reg::Machine_operand *const operand_b,
                            const std::string &func_name) {
   using namespace compiler;
+
+  reg::Machine_block *const cur_block = asm_builder->get_block();
   // This will generate a function call.
   // mov r0, opa
   // mov r1, opb
@@ -125,10 +230,10 @@ static void handle_mod_div(compiler::reg::Machine_block *const cur_block,
 // their register, we should use ldr instruction. This can be done via macro
 // definition: mov32: mov \reg16...
 static compiler::reg::Machine_operand *handle_global(
-    compiler::reg::Machine_block *const cur_block,
     compiler::reg::Assembly_builder *const asm_builder,
     compiler::ir::Operand *const raw_operand) {
   using namespace compiler;
+  compiler::reg::Machine_block *const cur_block = asm_builder->get_block();
   // CALL MOV32 + ldr.
   // mov32 r0, symbol
   // ldr r0, [r0]
@@ -151,11 +256,12 @@ static compiler::reg::Machine_operand *handle_global(
 }
 
 static void handle_global_str(
-    compiler::reg::Machine_block *const cur_block,
     compiler::reg::Assembly_builder *const asm_builder,
     compiler::reg::Machine_operand *const raw_operand,
     compiler::ir::Operand *const global_name) {
   using namespace compiler;
+
+  reg::Machine_block *const cur_block = asm_builder->get_block();
   // mov32 r0, symbol
   // str r1, [r0, #0]
   reg::Machine_operand *const tmp = new reg::Machine_operand(
@@ -175,10 +281,11 @@ static void handle_global_str(
 }
 
 static compiler::reg::Machine_operand *handle_immediate(
-    compiler::reg::Machine_block *const cur_block,
     compiler::reg::Assembly_builder *const asm_builder,
     compiler::ir::Operand *const raw_operand) {
   using namespace compiler;
+
+  reg::Machine_block *const cur_block = asm_builder->get_block();
   const std::string id =
       compiler::concatenate(reg::virtual_sign, asm_builder->get_available_id());
   // Insert an explicit MOV!
@@ -366,12 +473,12 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
   bool global_b = false;
   // Check if there is a movement from global variable to the register.
   if (ir->get_op1()->get_identifier().substr(0, 1) == ir::global_sign) {
-    operand_a = handle_global(block, asm_builder, ir->get_op1());
+    operand_a = handle_global(asm_builder, ir->get_op1());
     global_a = true;
   }
 
   if (ir->get_op2()->get_identifier().substr(0, 1) == ir::global_sign) {
-    operand_b = handle_global(block, asm_builder, ir->get_op2());
+    operand_b = handle_global(asm_builder, ir->get_op2());
     global_b = true;
   }
 
@@ -379,7 +486,7 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
   // the first operand is IMMEDIATE:
   // ADD r0, #1,  => This is forbidden in ARM assembly.
   if (false == ir->get_op1()->get_is_var() && !global_a) {
-    operand_a = handle_immediate(block, asm_builder, ir->get_op1());
+    operand_a = handle_immediate(asm_builder, ir->get_op1());
   } else if (!global_a) {
     operand_a = ir->get_op1()->emit_machine_operand();
   }
@@ -388,25 +495,25 @@ void compiler::Assembly_dispatcher_binary::emit_machine_code(
       ir->get_op_type() == ir::op_type::IMUL) {
     // For multiplcation and division, the second operand cannot be immediate
     // either. So we need to transform it too.
-    operand_b = handle_immediate(block, asm_builder, ir->get_op2());
+    operand_b = handle_immediate(asm_builder, ir->get_op2());
   } else if (!global_b) {
     operand_b = ir->get_op2()->emit_machine_operand();
   }
 
   // If this is a division.
   if (type == ir::op_type::IDIV) {
-    handle_mod_div(block, asm_builder, ir->get_dst(), operand_a, operand_b,
+    handle_mod_div(asm_builder, ir->get_dst(), operand_a, operand_b,
                    reg::div_func);
     return;
   } else if (type == ir::op_type::IMOD) {
-    handle_mod_div(block, asm_builder, ir->get_dst(), operand_a, operand_b,
+    handle_mod_div(asm_builder, ir->get_dst(), operand_a, operand_b,
                    reg::mod_func);
     return;
   }
 
   // Check if the immediate exceeds 2^12 = 4096.
   compiler::reg::binary_type type_bin = to_binary_type(type);
-  check_immediate(block, type_bin, dst, operand_a, operand_b, asm_builder);
+  check_immediate(type_bin, dst, operand_a, operand_b, asm_builder);
 }
 
 // FIXME: Maybe this is not needed?...
@@ -426,14 +533,14 @@ void compiler::Assembly_dispatcher_cmp::emit_machine_code(
   // Global type.
   if (ir->get_op1()->get_identifier().substr(0, 1).compare(ir::global_sign) ==
       0) {
-    lhs = handle_global(block, asm_builder, ir->get_op1());
+    lhs = handle_global(asm_builder, ir->get_op1());
   } else {
     lhs = ir->get_op1()->emit_machine_operand();
   }
 
   if (ir->get_op2()->get_identifier().substr(0, 1).compare(ir::global_sign) ==
       0) {
-    rhs = handle_global(block, asm_builder, ir->get_op2());
+    rhs = handle_global(asm_builder, ir->get_op2());
   } else {
     rhs = ir->get_op2()->emit_machine_operand();
   }
@@ -443,12 +550,12 @@ void compiler::Assembly_dispatcher_cmp::emit_machine_code(
   // ADD r0, #1,  => This is forbidden in ARM assembly.
   if (false == ir->get_op1()->get_is_var() &&
       ir->get_op1()->get_identifier().substr(0, 1) != ir::global_sign) {
-    lhs = handle_immediate(block, asm_builder, ir->get_op1());
+    lhs = handle_immediate(asm_builder, ir->get_op1());
   } else if (false == ir->get_op2()->get_is_var() &&
              ir->get_op2()->get_identifier().substr(0, 1) != ir::global_sign) {
     // For multiplcation and division, the second operand cannot be immediate
     // either. So we need to transform it too.
-    rhs = handle_immediate(block, asm_builder, ir->get_op2());
+    rhs = handle_immediate(asm_builder, ir->get_op2());
   }
 
   reg::Machine_instruction_cmp *const m_inst =
@@ -469,6 +576,17 @@ void compiler::Assembly_dispatcher_branch::emit_machine_code(
 
 void compiler::Assembly_dispatcher_mov::emit_machine_code(
     compiler::reg::Assembly_builder *const asm_builder) const {
+  // Caution: Check whether the move instruction is handling with the overflown
+  // arguments. If so, we need to load the arguments from the stack.
+  //
+  // Plus, the stack pointer is stored in the frame pointer after a function is
+  // created. So we should fetch the arguments with the help of the frame
+  // pointer.
+  if (ir->get_op1()->get_identifier().substr(0, 1) == ir::arg_sign) {
+    load_argument_from_stack(asm_builder, ir);
+    return;
+  }
+
   // Construct basic information.
   reg::Machine_block *const block = asm_builder->get_block();
   reg::Machine_operand *dst = nullptr;
@@ -477,7 +595,7 @@ void compiler::Assembly_dispatcher_mov::emit_machine_code(
 
   // We cannot move an address to the register. We need the value.
   if (ir->get_op1()->get_identifier().substr(0, 1) == ir::global_sign) {
-    src = handle_global(block, asm_builder, ir->get_op1());
+    src = handle_global(asm_builder, ir->get_op1());
   } else {
     src = ir->get_op1()->emit_machine_operand();
   }
@@ -486,7 +604,7 @@ void compiler::Assembly_dispatcher_mov::emit_machine_code(
   bool dst_global =
       ir->get_dst()->get_identifier().substr(0, 1) == ir::global_sign;
   if (dst_global) {
-    dst = handle_global(block, asm_builder, ir->get_dst());
+    dst = handle_global(asm_builder, ir->get_dst());
   } else {
     dst = ir->get_dst()->emit_machine_operand();
   }
@@ -499,8 +617,8 @@ void compiler::Assembly_dispatcher_mov::emit_machine_code(
 
   // Store the global variable.
   if (dst_global) {
-    handle_global_str(block, asm_builder,
-                      new compiler::reg::Machine_operand(*dst), ir->get_dst());
+    handle_global_str(asm_builder, new compiler::reg::Machine_operand(*dst),
+                      ir->get_dst());
   }
 }
 
@@ -520,7 +638,24 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
     if (ir->get_op2()->get_is_var() &&
         ir->get_op2()->get_identifier().substr(0, 1).compare(ir::global_sign) ==
             0) {
-      src = handle_global(cur_block, asm_builder, ir->get_op2());
+      if (ir->get_op2()->get_identifier().find(ir::arr_sign) !=
+          std::string::npos) {
+        // A single call to "mov32" is enough (if it is
+        // an array).
+        reg::Machine_operand *const vreg = new reg::Machine_operand(
+            reg::operand_type::VREG,
+            compiler::concatenate(reg::virtual_sign,
+                                  asm_builder->get_available_id()));
+        reg::Machine_instruction_mov *const mov =
+            new reg::Machine_instruction_mov(
+                cur_block, reg::mov_type::MOV32, vreg,
+                ir->get_op2()->emit_machine_operand());
+
+        cur_block->add_instruction(mov);
+        src = vreg;
+      } else {
+        src = handle_global(asm_builder, ir->get_op2());
+      }
     } else if (ir->get_op2()->get_identifier().find(ir::arr_sign) !=
                std::string::npos) {
       // Handle array arguments.
@@ -536,8 +671,7 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
                                 asm_builder->get_available_id()));
       reg::Machine_operand *const base = new reg::Machine_operand(
           reg::operand_type::IMM, std::to_string(array_base));
-      check_immediate(cur_block, reg::binary_type::ADD, vreg, sp, base,
-                      asm_builder);
+      check_immediate(reg::binary_type::ADD, vreg, sp, base, asm_builder);
       src = new reg::Machine_operand(*vreg);
     } else {
       src = ir->get_op2()->emit_machine_operand();
@@ -552,45 +686,10 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
                                            src);
       cur_block->add_instruction(m_inst);
     } else {
-      // const std::string overflow = std::to_string((arg_no - 3) * 4);
-      // In ARM-v7 assembly language, the arguments are stored in r0-r3.
-      // If the argument number is too large, then we have to store the
-      // overflown arguments on the stack. To this end, we calculate the offset
-      // and then push them onto the stack.
-      // At last, do not forget to pop them out.
-
-      reg::Machine_operand *arg = src;
-      if (src->is_imm()) {
-        reg::Machine_operand *const vreg = new reg::Machine_operand(
-            reg::operand_type::VREG,
-            compiler::concatenate(reg::virtual_sign,
-                                  asm_builder->get_available_id()));
-        reg::Machine_instruction_mov *const mov =
-            new reg::Machine_instruction_mov(cur_block, reg::mov_type::MOV_N,
-                                             vreg,
-                                             new reg::Machine_operand(*src));
-        cur_block->add_instruction(mov);
-        arg = vreg;
-      }
-
-      reg::Machine_instruction_stack *const push =
-          new reg::Machine_instruction_stack(cur_block, reg::stack_type::PUSH,
-                                             new reg::Machine_operand(*arg));
-      cur_block->add_instruction(push);
-      // How to retrieve these arguments from the stack?
+      // The overflown arguments are moved onto the stack.
+      handle_overflown_params(src, asm_builder);
     }
   } else if (type == ir::op_type::STR) {
-    // Handle load type.
-    // Explicit instructions for store are generated by ARRAY types.
-    // Note that store instructions are like:
-    //    STR <array_address> <offset> <value>
-    //
-    // We should convert the above instruction into its
-    // corresponding ARM assembly instructions as follows:
-    //
-    //    mov32 %v0, <array_address>
-    //    str <value>, [%v0, <offset>]
-
     // Fetch the array base address from the stack.
     const uint32_t array_base =
         asm_builder->get_array_base(ir->get_dst()->get_identifier());
@@ -633,7 +732,7 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
               cur_block, reg::mov_type::MOV_N,
               new reg::Machine_operand(*array_address_reg), sp);
       cur_block->add_instruction(mov);
-      check_immediate(cur_block, reg::binary_type::ADD, array_address_reg,
+      check_immediate(reg::binary_type::ADD, array_address_reg,
                       array_address_reg, base, asm_builder);
     }
 
@@ -653,7 +752,7 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
     } else if (ir->get_op2()->get_identifier().find(ir::global_sign) !=
                std::string::npos) {
       // Handle global variable type.
-      value = handle_global(cur_block, asm_builder, ir->get_op2());
+      value = handle_global(asm_builder, ir->get_op2());
     } else {
       value = ir->get_op2()->emit_machine_operand();
     }
@@ -716,7 +815,7 @@ void compiler::Assembly_dispatcher_stack::emit_machine_code(
               cur_block, reg::mov_type::MOV_N,
               new reg::Machine_operand(*array_address_reg), sp);
       cur_block->add_instruction(mov);
-      check_immediate(cur_block, reg::binary_type::ADD, array_address_reg,
+      check_immediate(reg::binary_type::ADD, array_address_reg,
                       array_address_reg, base, asm_builder);
     }
 
@@ -748,7 +847,7 @@ void compiler::Assembly_dispatcher_alloca::emit_machine_code(
         new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
     // Sometime the immediate will be larger than 4095. In this case we should
     // move it to a register first.
-    check_immediate(block, reg::binary_type::SUB, sp, sp,
+    check_immediate(reg::binary_type::SUB, sp, sp,
                     ir->get_op2()->emit_machine_operand(), asm_builder);
   }
   block->add_instruction(alloca);
@@ -756,9 +855,16 @@ void compiler::Assembly_dispatcher_alloca::emit_machine_code(
 
 void compiler::Assembly_dispatcher_call::emit_machine_code(
     compiler::reg::Assembly_builder *const asm_builder) const {
+  reg::Machine_block *const cur_block = asm_builder->get_block();
+
+  // Generate overflown arguments.
+  for (auto arg : asm_builder->get_overflown_args()) {
+    cur_block->add_instruction(arg);
+  }
+  asm_builder->clear_overflown_args();
+
   // The arguments are already pushed onto the stack by the stack dispatcher.
   // We only need to generate a single BL instruction.
-  reg::Machine_block *const cur_block = asm_builder->get_block();
   reg::Machine_operand *const func_name =
       new reg::Machine_operand(ir->get_label());
   reg::Machine_instruction_branch *const func_call =
@@ -776,6 +882,9 @@ void compiler::Assembly_dispatcher_call::emit_machine_code(
         cur_block, reg::mov_type::MOV_N, dst, r0);
     cur_block->add_instruction(mov);
   }
+
+  // Restore the environment.
+  func_call_epilogue(asm_builder);
 }
 
 void compiler::Assembly_dispatcher_return::emit_machine_code(
@@ -788,7 +897,7 @@ void compiler::Assembly_dispatcher_return::emit_machine_code(
         new reg::Machine_operand(reg::operand_type::REG, "r0");
 
     if (ir->get_dst()->get_identifier().substr(0, 1) == ir::global_sign) {
-      return_value = handle_global(cur_block, asm_builder, ir->get_dst());
+      return_value = handle_global(asm_builder, ir->get_dst());
     } else {
       return_value = ir->get_dst()->emit_machine_operand();
     }
@@ -832,8 +941,8 @@ void compiler::Assembly_dispatcher_malloc::emit_machine_code(
       cur_block, reg::mov_type::MOV_N,
       new reg::Machine_operand(*array_address_reg), sp);
   cur_block->add_instruction(mov);
-  check_immediate(cur_block, reg::binary_type::ADD, array_address_reg,
-                  array_address_reg, base, asm_builder);
+  check_immediate(reg::binary_type::ADD, array_address_reg, array_address_reg,
+                  base, asm_builder);
 
   // PUSH R0
   {

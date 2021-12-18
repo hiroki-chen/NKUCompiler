@@ -61,6 +61,9 @@ void compiler::Item_func_def::generate_ir_helper(
     // Reset available id.
     ir_context->get_symbol_table()->set_available_id(1ul);
 
+    // Set the function name.
+    ir_context->set_func_name(identifier->get_name());
+
     // Set symbol
     compiler::Symbol* const func_symbol = new compiler::Symbol(
         identifier->get_name(), compiler::symbol_type::FUNC_TYPE);
@@ -186,13 +189,20 @@ compiler::ir::Operand* compiler::Item_func_call::eval_runtime_helper(
   ir::IR* const func_call =
       new ir::IR(ir::op_type::CALL, dst, identifier->get_name());
 
-  // Set arguments.
+  // We first evaluate the arguments then push them into the registers in order
+  // to protect the argument registers.
+  std::vector<ir::Operand*> evaluated_args;
+
   for (uint32_t i = 0; i < args.size(); i++) {
-    ir::Operand* arg = args[i]->eval_runtime(ir_context, ir_list);
+    ir::Operand* const arg = args[i]->eval_runtime(ir_context, ir_list);
+    evaluated_args.emplace_back(arg);
+  }
+
+  // Set arguments.
+  for (int i = evaluated_args.size() - 1; i >= 0; i--) {
     ir::IR* const ir_arg = new ir::IR(ir::op_type::PUSH, nullptr,
-                                      OPERAND_VALUE(std::to_string(i)), arg);
+                                      OPERAND_VALUE(std::to_string(i)), evaluated_args[i]);
     ir_list.emplace_back(*ir_arg);
-    func_call->add_func_call(ir_arg);
   }
 
   ir_list.emplace_back(*func_call);
