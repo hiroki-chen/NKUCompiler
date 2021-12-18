@@ -179,7 +179,6 @@ compiler::reg::Machine_instruction_stack::Machine_instruction_stack(
   this->parent = parent;
   this->op = op;
   this->cond = cond;
-
   use_list.emplace_back(src);
   src->set_parent(this);
 }
