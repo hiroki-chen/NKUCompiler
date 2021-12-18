@@ -22,6 +22,36 @@
 extern compiler::NodeStack stack;
 extern uint32_t opt_level;
 
+static void do_init_array(compiler::ir::Operand* const value,
+                          compiler::ir::IRContext* const ir_context,
+                          std::vector<compiler::ir::IR>& ir_list,
+                          std::vector<compiler::ir::Operand*>& init_value,
+                          const std::string& array_name, bool is_space = false,
+                          bool is_const = false) {
+  using namespace compiler;
+
+  if (is_space) {
+    for (uint32_t i = 0; i < std::stoul(value->get_value()); i++) {
+      init_value.emplace_back(OPERAND_VALUE("0"));
+    }
+
+    if (ir_context->is_global_context()) {
+      const uint32_t alloc_size = 4 * std::stoul(value->get_value());
+      ir_list.emplace_back(ir::op_type::SPACE,
+                           OPERAND_VALUE(std::to_string(alloc_size)));
+    }
+  } else {
+    init_value.emplace_back(is_const ? value : OPERAND_VALUE("0"));
+
+    if (ir_context->is_global_context()) {
+      ir_list.emplace_back(ir::op_type::WORD, value);
+    } else {
+      ir_list.emplace_back(
+          ir::op_type::STR, new ir::Operand(array_name),
+          OPERAND_VALUE(std::to_string(4 * init_value.size() - 4)), value);
+    }
+  }
+}
 void compiler::Item_decl_var::generate_ir_helper(
     compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
     const basic_type& b_type) const {
@@ -101,6 +131,13 @@ void compiler::Item_decl_var_init::generate_ir_helper(
       compiler::Item_stmt_assign* const assignment =
           new compiler::Item_stmt_assign(lineno, identifier, expression);
       assignment->generate_ir(ir_context, ir_list);
+
+      if (is_const) {
+        ir_context->get_symbol_table()->add_const(
+            name, new compiler::Symbol_const(
+                      name_symbol, compiler::symbol_type::VAR_TYPE,
+                      expression->eval_runtime(ir_context)->get_value()));
+      }
     }
 
   } catch (const std::exception& e) {
@@ -149,7 +186,7 @@ uint32_t compiler::Item_decl_array::calculate_array_size(
   uint32_t array_size = 1;
   for (ir::Operand* const shape : array_shape) {
     int size = 0;
-    if ((size = std::stol(shape->get_value())) < 0) {
+    if ((size = std::stoi(shape->get_value())) < 0) {
       throw compiler::fatal_error("The array has negative shape!");
     }
     array_size *= (uint32_t)size;
@@ -248,6 +285,7 @@ void compiler::Item_decl_array_init::generate_ir_helper(
       ir_list.emplace_back(ir::op_type::MALLOC, nullptr,
                            new ir::Operand(name_symbol),
                            operand_alloc_notation);
+
       init_helper(init_value->get_value_list(), initial_values, 0, ir_context,
                   ir_list, compiler::to_ir_type(b_type));
     }
@@ -258,136 +296,63 @@ void compiler::Item_decl_array_init::generate_ir_helper(
   }
 }
 
+// FIXME: Empty list is skipped but the offset is not correct.
 void compiler::Item_decl_array_init::init_helper(
     const std::vector<compiler::Item_literal_array_init*> value_list,
     std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
     compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
     const ir::var_type& var_type) const {
-  auto lambda_handle_init = [&](ir::Operand* const value,
-                                const bool& malloc = false) {
-    // Get the length of the array item.
-    const uint32_t byte_length = ir::to_byte_length(var_type);
-    if (malloc == true) {
-      if (ir_context->is_global_context()) {
-        // Iterate through the size of the array.
-        const uint32_t size = std::stoul(value->get_value());
-        std::cout << "size: " << size << '\n';
-        for (uint32_t i = 0; i < size; i++) {
-          init_value.emplace_back(OPERAND_VALUE("0"));
-        }
-        ir_list.emplace_back(ir::op_type::SPACE,
-                             OPERAND_VALUE(std::to_string(byte_length * size)));
-      }
-    } else {
-      init_value.emplace_back(OPERAND_VALUE("0"));
-      if (ir_context->is_global_context()) {
-        ir_list.emplace_back(ir::op_type::WORD, value);
-      } else {
-        const std::string array_name_local =
-            ir_context->get_symbol_table()
-                ->find_symbol(get_identifier()->get_name())
-                ->get_name();
-        const uint32_t ind = byte_length * (init_value.size() - 1);
-        // STR <ARRAY_NAME> i8 <POSITION> <TYPE> <VALUE>;
-        ir_list.emplace_back(ir::op_type::STR,
-                             new ir::Operand(array_name_local),
-                             new ir::Operand(ir::var_type::i8, "",
-                                             std::to_string(ind), false, false),
-                             value);
-      }
-    }
-  };
+  // This function is a recursive function that initilzes the array.
+  // The reason why the function is implemented in a recursive manner is in that
+  // the scalar initialization list may be nested just like thw following
+  // representation:
+  //      int foo[100] = {{{1,2,3}, {1,2,{3}}}}.
+  // So we have to visit each member seperately.
 
-  auto lambda_handle_init_const = [&](ir::Operand* const value,
-                                      const bool& malloc = false) {
-    // Get the length of the array item.
-    const uint32_t byte_length = ir::to_byte_length(var_type);
-
-    // If there is no initial values, we should allocate zeros for the array.
-    if (malloc) {
-      for (uint32_t i = 0; i < value_list.size(); i++) {
-        init_value.emplace_back(OPERAND_VALUE("0"));
-      }
-
-      // Handle global array definition with initial values.
-      if (ir_context->is_global_context()) {
-        if (value->get_is_var() == true) {
-          throw compiler::unsupported_operation(
-              "Error: Cannot dynamically allocate the subscript!");
-        }
-        const uint32_t size = std::stoul(value->get_value());
-        // Convert the literal to integer type.
-        ir_list.emplace_back(ir::op_type::SPACE,
-                             OPERAND_VALUE(std::to_string(byte_length * size)));
-      }
-    } else {
-      init_value.emplace_back(OPERAND_VALUE("0"));
-
-      if (ir_context->is_global_context()) {
-        ir_list.emplace_back(ir::op_type::WORD, value);
-      } else {
-        compiler::Symbol* const array_name =
-            ir_context->get_symbol_table()->find_symbol(
-                get_identifier()->get_name());
-        ir_list.emplace_back(
-            ir::op_type::STR, nullptr, new ir::Operand(array_name->get_name()),
-            OPERAND_VALUE(
-                std::to_string((init_value.size() - 1) * byte_length)),
-            value);
-      }
-    }
-  };
-
-  // Main.
   const std::vector<compiler::Item_expr*> shape = identifier->get_array_shape();
+  const std::string array_name = ir_context->get_symbol_table()
+                                     ->find_symbol(identifier->get_name())
+                                     ->get_name();
+  if (index >= shape.size()) {
+    return;
+  }
 
-  if (index < shape.size()) {
-    uint32_t size = 1, cur_size = 0;
-    for (auto iter = shape.cbegin() + index; iter != shape.cend(); iter++) {
-      size *= std::stoul((*iter)->eval_runtime(ir_context)->get_value());
-    }
+  uint32_t size = 1, write_size = 0;
+  // Evaluate the size of the dimension from index to the end of the shape
+  // array.
+  for (auto iter = shape.begin() + index; iter != shape.end(); iter++) {
+    size *= std::stoul((*iter)->eval_runtime(ir_context)->get_value());
+  }
 
-    const uint32_t res =
-        std::stoul(shape[index]->eval_runtime(ir_context)->get_value());
-    const uint32_t cur = size / res;
-    // std::cout << "Size for this shape: " << size << '\n';
+  const uint32_t res =
+      std::stoul(shape[index]->eval_runtime(ir_context)->get_value());
+  uint32_t size_this_shape = size / res;
 
-    for (compiler::Item_literal_array_init* const value : value_list) {
-      if (value->get_is_numeric()) {
-        cur_size++;
-        ir::Operand* val = nullptr;
-        if (opt_level > 0) {
-          val = value->get_value()->eval_runtime(ir_context);
-        } else {
-          val = value->get_value()->eval_runtime(ir_context, ir_list);
-        }
+  for (compiler::Item_literal_array_init* const value : value_list) {
+    if (value->get_is_numeric()) {
+      write_size += 1;
 
-        if (is_const) {
-          lambda_handle_init_const(val);
-        } else {
-          lambda_handle_init(val);
-        }
-      } else {
-        if (cur_size % cur != 0) {
-          if (is_const) {
-            lambda_handle_init_const(
-                OPERAND_VALUE(std::to_string(cur - (cur_size % cur))), true);
-          } else {
-            lambda_handle_init(
-                OPERAND_VALUE(std::to_string(cur - (cur_size % cur))), true);
-          }
-        }
-
-        init_helper(value->get_value_list(), init_value, index + 1, ir_context,
-                    ir_list, var_type);
-        cur_size += cur;
-      }
-    }
-    if (is_const) {
-      lambda_handle_init_const(OPERAND_VALUE(std::to_string(size - cur_size)),
-                               true);
+      ir::Operand* const val =
+          value->get_value()->eval_runtime(ir_context, ir_list);
+      do_init_array(val, ir_context, ir_list, init_value, array_name);
     } else {
-      lambda_handle_init(OPERAND_VALUE(std::to_string(size - cur_size)), true);
+      // If the intializaiton list not a numeric value, then it means it has
+      // nested intialization list which we need to visit later.
+      if (write_size % size_this_shape != 0) {
+        ir::Operand* const val = OPERAND_VALUE(
+            std::to_string(size_this_shape - (write_size % size_this_shape)));
+        do_init_array(val, ir_context, ir_list, init_value, array_name, true,
+                      is_const);
+      }
+
+      // Visit child intialization list.
+      init_helper(value->get_value_list(), init_value, index + 1, ir_context,
+                  ir_list, var_type);
+      write_size += size_this_shape;
     }
   }
+
+  ir::Operand* const val = OPERAND_VALUE(std::to_string(size - write_size));
+  do_init_array(val, ir_context, ir_list, init_value, array_name, true,
+                is_const);
 }

@@ -80,13 +80,18 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     // branch.
     ir_list.emplace_back(
         branch_ir.second,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE"));
-    ir_list.emplace_back(ir::op_type::JMP,
-                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF"));
+        compiler::concatenate(".LBB_", ir_context->get_func_name(),
+                              scope_uuid_cur, "_ELSE"));
+    ir_list.emplace_back(
+        ir::op_type::JMP,
+        compiler::concatenate(".LBB_", ir_context->get_func_name(),
+                              scope_uuid_cur, "_IF"));
 
     // Generate a label for if branch.
-    ir_list.emplace_back(ir::op_type::LBL,
-                         compiler::concatenate(".LBB", scope_uuid_cur, "_IF"));
+    ir_list.emplace_back(
+        ir::op_type::LBL,
+        compiler::concatenate(".LBB_", ir_context->get_func_name(),
+                              scope_uuid_cur, "_IF"));
 
     compiler::ir::ir_list ir_if, ir_else;
     compiler::ir::IRContext ir_context_if(*ir_context);
@@ -113,7 +118,8 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     compiler::ir::ir_list ir_list_end;
     ir_list_end.emplace_back(
         compiler::ir::op_type::LBL,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
+        compiler::concatenate(".LBB_", ir_context->get_func_name(),
+                              scope_uuid_cur, "_END_IF"));
 
     const auto symbol_table_if =
         ir_context_if.get_symbol_table()->get_symbol_table();
@@ -162,16 +168,19 @@ void compiler::Item_stmt_eif::generate_ir_helper(
     if (ir_else.empty() == false) {
       ir_list.emplace_back(
           ir::op_type::JMP,
-          compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
+          compiler::concatenate(".LBB_", ir_context->get_func_name(),
+                                scope_uuid_cur, "_END_IF"));
     }
     ir_list.emplace_back(
         ir::op_type::LBL,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_ELSE"));
+        compiler::concatenate(".LBB_", ir_context->get_func_name(),
+                              scope_uuid_cur, "_ELSE"));
 
     compiler::insert_with_move(ir_list, ir_else);
     ir_list.emplace_back(
         ir::op_type::JMP,
-        compiler::concatenate(".LBB", scope_uuid_cur, "_END_IF"));
+        compiler::concatenate(".LBB_", ir_context->get_func_name(),
+                              scope_uuid_cur, "_END_IF"));
     compiler::insert_with_move(ir_list, ir_list_end);
 
     ir_context->leave_scope();
@@ -356,9 +365,10 @@ void compiler::Item_stmt_while::generate_ir_helper(
     compiler::ir::IRContext* ir_context_condition =
         new compiler::ir::IRContext(*ir_context_backup);
     compiler::ir::ir_list ir_list_condition;
-    ir_list_condition.emplace_back(
-        compiler::ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
+    ir_list_condition.emplace_back(compiler::ir::op_type::LBL,
+                                   ".LB_" + ir_context->get_func_name() +
+                                       ir_context->get_top_loop_label() +
+                                       "_LOOP_BEGIN");
 
     compiler::ir::BranchIR branch_ir =
         condition->eval_cond(ir_context_condition, ir_list_condition);
@@ -366,10 +376,12 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Step 3: Set up jump instruction.
     compiler::ir::ir_list ir_list_jump;
     ir_list_jump.emplace_back(
-        branch_ir.second, compiler::concatenate(".LB", scope_id, ".LOOP_END"));
+        branch_ir.second,
+        compiler::concatenate(".LB_", ir_context->get_func_name(), scope_id,
+                              ".LOOP_END"));
     ir_list_jump.emplace_back(
-        ir::op_type::JMP,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BODY");
+        ir::op_type::JMP, ".LB_" + ir_context->get_func_name() +
+                              ir_context->get_top_loop_label() + "_LOOP_BODY");
 
     // Step 4: Create the do body, and then generate ir from it.
     ir::IRContext* ir_context_do = new ir::IRContext(*ir_context_condition);
@@ -424,13 +436,14 @@ void compiler::Item_stmt_while::generate_ir_helper(
     // Step 8: Continue statement.
     ir::IRContext* ir_context_continue = new ir::IRContext(*ir_context_do_real);
     ir::ir_list ir_list_continue;
-    ir_list_continue.emplace_back(
-        ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_CONTINUE");
+    ir_list_continue.emplace_back(ir::op_type::LBL,
+                                  ".LB_" + ir_context->get_func_name() +
+                                      ir_context->get_top_loop_label() +
+                                      "_LOOP_CONTINUE");
     ir_list_condition.clear();
     ir_list_condition.emplace_back(
-        ir::op_type::LBL,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
+        ir::op_type::LBL, ".LB_" + ir_context->get_func_name() +
+                              ir_context->get_top_loop_label() + "_LOOP_BEGIN");
     // Handle phi move.
     auto symbol_table =
         ir_context_backup->get_symbol_table()->get_symbol_table();
@@ -562,8 +575,8 @@ void compiler::Item_stmt_while::generate_ir_helper(
     }
 
     ir_list_continue.emplace_back(
-        ir::op_type::JMP,
-        ".LB" + ir_context->get_top_loop_label() + "_LOOP_BEGIN");
+        ir::op_type::JMP, ".LB_" + ir_context->get_func_name() +
+                              ir_context->get_top_loop_label() + "_LOOP_BEGIN");
 
     // TODO: Optimize loop.
 

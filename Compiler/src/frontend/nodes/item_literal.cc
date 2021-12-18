@@ -30,7 +30,7 @@ compiler::Item_literal_numeric::Item_literal_numeric(const uint32_t& lineno,
 
 compiler::Item_literal_int::Item_literal_int(const uint32_t& lineno,
                                              const int& value)
-    : Item_literal_numeric(lineno, (double)value) {}
+    : Item_literal_numeric(lineno, (double)value), int_val(value) {}
 
 compiler::Item_literal_real::Item_literal_real(const uint32_t& lineno,
                                                const double& value)

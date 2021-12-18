@@ -32,8 +32,7 @@ typedef class Item_literal : public Item_expr {
   using Item_expr::eval_runtime_helper;
 
   virtual ir::Operand* eval_runtime_helper(
-      ir::IRContext* const ir_context,
-      ir::ir_list& ir_list) const override {
+      ir::IRContext* const ir_context, ir::ir_list& ir_list) const override {
     return eval_runtime_helper(ir_context);
   }
 
@@ -54,9 +53,8 @@ typedef class Item_literal : public Item_expr {
     return Item_expr::expr_type::LITERAL_TYPE;
   }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override;
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override;
 
   Item_literal() = delete;
 
@@ -78,13 +76,14 @@ typedef class Item_literal_numeric : public Item_literal {
 
   Item_literal_numeric(const uint32_t& lineno, const double& value);
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
-  virtual std::string dump_value(void) const override { return std::to_string(value); }
+  virtual std::string dump_value(void) const override {
+    return std::to_string(value);
+  }
 
   virtual Item_literal::literal_type get_literal_type(void) const override = 0;
 
@@ -96,6 +95,8 @@ typedef class Item_literal_numeric : public Item_literal {
 
 typedef class Item_literal_int final : public Item_literal_numeric {
  protected:
+  const int int_val;
+
   virtual compiler::ir::Operand* eval_runtime_helper(
       compiler::ir::IRContext* const ir_context) const override;
 
@@ -110,11 +111,11 @@ typedef class Item_literal_int final : public Item_literal_numeric {
     return Item_literal::literal_type::INT_TYPE;
   }
 
-  virtual int get_int() const { return (int)value; }
+  // Prevent integer overflow...
+  virtual int get_int() const { return int_val; }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -145,9 +146,8 @@ typedef class Item_literal_real final : public Item_literal_numeric {
 
   virtual float get_float() const { return (float)value; }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -176,9 +176,8 @@ typedef class Item_literal_char final : public Item_literal_numeric {
 
   virtual char get_char() const { return (char)value; }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -200,9 +199,8 @@ typedef class Item_literal_string final : public Item_literal {
 
   virtual std::string get_str(void) const { return str; }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 

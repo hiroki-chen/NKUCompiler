@@ -27,7 +27,7 @@ static const std::vector<std::pair<std::string, compiler::Symbol*>>
          new compiler::Symbol("getch", compiler::symbol_type::FUNC_TYPE, 0,
                               compiler::ir::var_type::i8)},
         {"getarray",
-         new compiler::Symbol("getarray", compiler::symbol_type::FUNC_TYPE, 0,
+         new compiler::Symbol("getarray", compiler::symbol_type::FUNC_TYPE, 1,
                               compiler::ir::var_type::i32)},
         {"putint",
          new compiler::Symbol("putint", compiler::symbol_type::FUNC_TYPE, 1,
@@ -36,7 +36,7 @@ static const std::vector<std::pair<std::string, compiler::Symbol*>>
          new compiler::Symbol("putch", compiler::symbol_type::FUNC_TYPE, 1,
                               compiler::ir::var_type::NONE)},
         {"putarray",
-         new compiler::Symbol("putarray", compiler::symbol_type::FUNC_TYPE, 1,
+         new compiler::Symbol("putarray", compiler::symbol_type::FUNC_TYPE, 2,
                               compiler::ir::var_type::NONE)},
 };
 

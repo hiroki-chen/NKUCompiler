@@ -61,6 +61,12 @@ typedef class IRContext {
   std::stack<std::string> loop_label;
 
   /**
+   * @brief Temporarily stores the function name.
+   *
+   */
+  std::string func_name;
+
+  /**
    * @brief Stack that is used to store temporary variables for loop statement.
    *
    */
@@ -107,6 +113,10 @@ typedef class IRContext {
    * @param ir_context
    */
   IRContext(const IRContext& ir_context);
+
+  virtual void set_func_name(const std::string& func_name) {
+    this->func_name = func_name;
+  }
 
   /**
    * @brief Called when a new scope is encountered and we should enter a new
@@ -176,6 +186,12 @@ typedef class IRContext {
   virtual std::string get_top_loop_label(void) const {
     return loop_label.top();
   }
+  /**
+   * @brief Get the func name.
+   *
+   * @return std::string
+   */
+  virtual std::string get_func_name(void) const { return func_name; }
 
   /**
    * @brief Get the symbol table object.
