@@ -31,7 +31,7 @@
 
 #ifndef OPERAND_VALUE
 #define OPERAND_VALUE(val) \
-  new ir::Operand(ir::var_type::i32, "", val, false, false)
+  new compiler::ir::Operand(ir::var_type::i32, "", val, false, false)
 #endif
 
 namespace compiler {

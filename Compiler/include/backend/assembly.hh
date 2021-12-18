@@ -53,7 +53,9 @@ static const std::string div_func = "__aeabi_idiv";
 
 static const std::string memset = "memset";
 
-static const uint32_t maximum_immediate = 0xffful;
+static const uint32_t maximum_immediate = 0xfffful;
+
+static const uint32_t func_stack_base = 9ul;
 
 typedef enum inst_type {
   BINARY,
