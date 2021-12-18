@@ -57,7 +57,15 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   // delete some data structures, feel free to do it.
   const std::unique_ptr<compiler::reg::Allocator> allocator =
       std::make_unique<compiler::reg::Allocator>(machine_unit);
-  allocator->do_linear_scan();
+
+  try {
+    allocator->do_linear_scan();
+  } catch (const compiler::fatal_error& e) {
+    std::cerr << "Error detected, dumping raw: " << std::endl;
+    machine_unit->emit_assembly(std::cerr << '\n');
+
+    throw e;
+  }
 
   // Finally, we emit the assembly from machine unit.
   machine_unit->emit_assembly(os);

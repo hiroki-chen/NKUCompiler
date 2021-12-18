@@ -244,7 +244,11 @@ void compiler::reg::Allocator::make_du_chains(void) {
         }
       for (auto& use : *(inst->get_use()))
         if (use->is_vreg()) {
-          if (live_var[use->get_register_name()].first.size() == 0) throw;
+          if (live_var[use->get_register_name()].first.size() == 0) {
+            inst->emit_assembly(std::cerr << '\n');
+            throw compiler::fatal_error(
+                "Error: Cannot allocate the undefined virtual register!");
+          }
           live_var[use->get_register_name()].second.insert(use);
         }
     }
