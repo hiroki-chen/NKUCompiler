@@ -61,6 +61,9 @@ void compiler::Item_func_def::generate_ir_helper(
     // Reset available id.
     ir_context->get_symbol_table()->set_available_id(1ul);
 
+    // Set the function name.
+    ir_context->set_func_name(identifier->get_name());
+
     // Set symbol
     compiler::Symbol* const func_symbol = new compiler::Symbol(
         identifier->get_name(), compiler::symbol_type::FUNC_TYPE);
