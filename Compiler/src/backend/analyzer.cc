@@ -125,7 +125,7 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
   }
 
   // Prune needless instructions.
-  // assembly_epilogue(machine_unit);
+  assembly_epilogue(machine_unit);
   // Finally, we emit the assembly from machine unit.
   machine_unit->emit_assembly(os);
 }
