@@ -21,6 +21,40 @@
 #include <common/utils.hh>
 #include <map>
 
+static bool check_dummy_move(
+    compiler::reg::Machine_instruction* const instruction) {
+  if (instruction->get_type() != compiler::reg::inst_type::MOV) {
+    return false;
+  }
+
+  // Move a register into itself is useless.
+  if (instruction->get_use()->front()->print() ==
+      instruction->get_def()->front()->print()) {
+    return true;
+  }
+
+  return false;
+}
+
+static bool check_dummy_binary(
+    compiler::reg::Machine_instruction* const instruction) {
+  if (instruction->get_type() != compiler::reg::inst_type::BINARY) {
+    return false;
+  }
+
+  compiler::reg::Machine_instruction_binary* const binary =
+      static_cast<compiler::reg::Machine_instruction_binary* const>(
+          instruction);
+  // ADD or SUB zero is useless.
+  if ((binary->get_binary_type() == compiler::reg::binary_type::ADD ||
+       binary->get_binary_type() == compiler::reg::binary_type::SUB) &&
+      binary->get_use()->back()->print() == "#0") {
+    return true;
+  }
+
+  return false;
+}
+
 compiler::reg::Analyzer::Analyzer(
     const std::map<std::string, std::vector<compiler::ir::CFG_block*>>&
         cfg_blocks,
@@ -28,6 +62,30 @@ compiler::reg::Analyzer::Analyzer(
     : cfg_blocks(cfg_blocks), global_defs(global_defs) {
   // Create an empty Assembly_builder class for future usage :)
   asm_builder = std::make_unique<Assembly_builder>();
+}
+
+void compiler::reg::Analyzer::assembly_epilogue(
+    compiler::reg::Machine_unit* const unit) {
+  for (auto func : *unit->get_function_list()) {
+    assembly_epilogue(func);
+  }
+}
+
+void compiler::reg::Analyzer::assembly_epilogue(
+    compiler::reg::Machine_function* const func) {
+  for (auto blocks : *func->get_blocks()) {
+    std::vector<reg::Machine_instruction*>* instructions =
+        blocks->get_instruction_list();
+
+    for (auto iter = instructions->begin(); iter != instructions->end();) {
+      // Do some check.
+      if (check_dummy_move(*iter) || check_dummy_binary(*iter)) {
+        iter = instructions->erase(iter);
+      } else {
+        iter++;
+      }
+    }
+  }
 }
 
 void compiler::reg::Analyzer::generate_code(std::ostream& os) {
@@ -65,6 +123,8 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
     throw e;
   }
 
+  // Prune needless instructions.
+  assembly_epilogue(machine_unit);
   // Finally, we emit the assembly from machine unit.
   machine_unit->emit_assembly(os);
 }
