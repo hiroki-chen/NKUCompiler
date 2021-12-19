@@ -1,92 +1,241 @@
-# Compiler-Homework
+# Basic Framework for Project Compiler
 
-Written in pure C++ 17 by Haobin Chen and Jiawei Xu.
+## Prerequisites
 
+* Make sure that your compiler supports -std=c++17
+* Clang v10
+* CMake v3.20
+* Ubuntu >= 18.04 / macOS >= 10.13 (not recommended)
+* QEMU-ARM
+* gcc-arm-linux-gnueabihf (Ubuntu/Linaro 7.5.0-3ubuntu1~18.04)
 
-## Getting started
+To get all the needed packages, run the following commands:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+```shell
+sudo apt update && \
+sudo apt install -y software-properties-common lsb-release && \
+sudo apt clean all
+wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg 2> /dev/null
+sudo apt-add-repository "deb https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main"
+sudo apt update
+sudo apt-get install qemu cmake clang-10 lldb-10 gcc-10 \
+     gcc-arm-linux-gnueabihf \
+     gcc-arm-none-eabi
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+# Create a symbolic link for future convenience.
+sudo rm /usr/bin/c++ && sudo ln -s $(which clang++-10) /usr/bin/c++
+sudo ln -s $(which gcc-arm-linux-gnueabihf) /usr/bin/gcc-arm
+```
 
-## Add your files
+## Debug our compiler
 
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+There is a way to use lldb to debug the compiler. Please first make sure that you have lldb installed via the above commands and then setup the lldb correctly by using `lldbinit.py`:
+
+```shell
+cp ./util/lldbinit.py ~/.lldbinit.py
+echo "command script import  ~/.lldbinit.py" >> $HOME/.lldbinit
+```
+
+Then you can debug the compiler by
+
+```shell
+lldb ./compiler
+```
+
+## Assemble to binary
+
+If you run the compiler and get the correct output file, you could assemble it by gcc-arm-linux-gnueabihf with the following command (assuming that you are in the correct directory):
+
+```shell
+./compiler -o test.S -S ../test/level1-1/foo.sy # Input the file.
+gcc-arm -o test test.S -static -L../lib -lsysy -static
+```
+
+## Debug the target application
+
+To debug the arm executable, you should first install gdb-multiarch:
+
+```shell
+sudo apt-get install gdb-multiarch
+```
+
+Then create a debug session by qemu-arm:
+
+```shell
+qemu-arm -g 1234 ./test
+```
+
+Connect gdb to qemu:
+
+```shell
+gdb-multiarch -q --nh \ 
+  -ex 'set architecture arm' \
+  -ex 'file test' \
+  -ex 'target remote localhost:1234' \
+  -ex 'layout split'
+```
+
+## 设计目标
+
+* 纯C++实现；
+* 采用多态和虚函数实现抽象语法树（Abstract Syntax Tree）的构建；
+* 中间代码生成 （IR）；
+* 汇编代码生成；
+* 符号表查询
+
+## 食用方法
+
+* 在Unix系统中用`cmake`指令编译工程：
+
+```shell
+mkdir build
+cd build
+cmake ..
+make
+```
+
+* 如果你指定了`-s`后面为目录，那么`-o`会被忽略，所有的输出都会存入`-s`指定目录下的`./output`目录。
+
+* 对于编译指令不熟悉的可以输入-h查看使用指南。
+
+```shell
+./compiler --help
+
+--------- Compiler by Takanashi Guidance ---------
+Usage:
+  Compiler [INPUT FILE POSITIONAL] [OTHER...] positional parameters
+
+ INPUT FILE POSITIONAL options:
+
+ OTHER options:
+  -o, --output arg     The output file name. (default: a.out)
+      --emit-llvm      Print the intermediate representation of the source 
+                       code
+      --print-ast      Print the abstract syntax tree
+  -O, --opt-level arg  Enable Optimization (default: 0)
+  -h, --help           Get the guidance
+  -S, --assembly       Generate assembly code
+```
+
+## 项目布局（截止2021-12-19）
+
+```txt
+.├── build
+│   ├── CMakeFiles
+│   └── Testing
+├── include
+│   ├── backend
+│   ├── common
+│   ├── frontend
+│   ├── ir
+│   └── runtime
+├── lib
+├── src
+│   ├── backend
+│   ├── common
+│   ├── frontend
+│   ├── ir
+│   └── runtime
+├── test
+│   ├── level1-1
+│   ├── level1-2
+│   ├── level2-1
+│   ├── level2-2
+│   ├── level2-3
+│   ├── level2-4
+│   └── level2-5
+└── util
+
+25 directories
+ chb@lab627-Precision-7920-Tower  ~/compilation/compiler/Compiler/build   main ±  tree .. -d -L 3                 (main|✚1⚑2)
+.
+├── build
+│   ├── CMakeFiles
+│   │   ├── 3.22.1
+│   │   ├── CMakeTmp
+│   │   ├── compiler.dir
+│   │   ├── header.dir
+│   │   └── utils.dir
+│   └── Testing
+│       └── Temporary
+├── include
+│   ├── backend
+│   ├── common
+│   ├── frontend
+│   │   ├── nodes
+│   │   ├── parser
+│   │   └── symbol_table
+│   ├── ir
+│   └── runtime
+├── lib
+├── src
+│   ├── backend
+│   ├── common
+│   ├── frontend
+│   │   ├── nodes
+│   │   ├── parser
+│   │   └── symbol_table
+│   ├── ir
+│   └── runtime
+├── test
+│   ├── level1-1
+│   ├── level1-2
+│   ├── level2-1
+│   ├── level2-2
+│   ├── level2-3
+│   ├── level2-4
+│   └── level2-5
+└── util
+```
+
+## 继承关系和几点说明
+
+* 类和其文件名是一样的，想要找什么就直接去对应的文件里面找就行。
+* 所有节点的基类都是`Item`，而该类是抽象基类，请不要实例化，它只能通过指针的形式使用。
+* `Item_expr`继承自`Item`，基本上别的类都是从这里长出来的。
+* `Item_stmt`继承自`Item_expr`，代表表达式类型。
+* 为什么不把`Item_stmt`作为`Item`的子节点？那是因为`Item_stmt`包含`Item_expr`，但是如果`Item_expr`又是`item_stmt`的子节点的话，就会互相包含无穷无尽了。
+* `frontend`为前端分析所需要的源文件和头文件，而`backend`存储了汇编指令生成和中间代码优化等相关文件；`common`是一些通用的枚举类以及一些工具。
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/etyyuiope/compiler-homework.git
-git branch -M main
-git push -uf origin main
+Item -> Item_expr -> Item_expr_cond
+                  -> Item_ident         -> Item_ident_array
+                                        -> Item_ident_pointer
+
+                  -> Item_literal       -> Item_literal_numeric     -> Item_literal_int
+                                                                    -> Item_literal_real
+                                                                    -> Item_literal_char
+                                        -> Item_literal_string
+                                        -> Item_literal_array_init
+
+                  -> Item_expr_binary   -> Item_expr_add
+                                        -> Item_expr_sub
+                                        -> Item_expr_mul
+                                        -> Item_expr_div
+                                                
+                  -> Item_stmt          -> Item_block
+                                        -> Item_stmt_eif
+                                        -> Item_stmt_while
+                                        -> Item_stmt_for
+                                        -> Item_stmt_return
+                                        -> Item_stmt_break
+                                        -> Item_stmt_continue
+                                        -> Item_stmt_decl
+                 
+                 -> Item_func_def_list
+                 -> Item_func_def_arg
+                 -> Item_func_call
+                 -> Item_func_call_list
+
+     -> Item_decl -> Item_decl_var      -> Item_decl_var_init
+                  -> Item_decl_array    -> Item_decl_array_init
+                  -> Item_decl_pointer  -> Item_decl_pointer_init
+
+     -> Item_func_def
 ```
 
-## Integrate with your tools
+## Prerequisites
 
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/project/integrations/)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://docs.gitlab.com/ee/user/clusters/agent/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:c26cbfef4e7935585e00ed94285f1bcf?https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+* C++标准默认为17，请使用支持C++17以上的编译器进行编译，已知可以在clang 12和GCC-11（需要链接到flex和yacc）上运行。
+* 采用了cxxopts库作为command line parser，具体实现已经放在了`src/runtime/runtime.cc`中了。
 
