@@ -75,7 +75,6 @@ bool compiler::reg::Allocator::linear_scan_register_allocate(void) {
     register_free_map[reg] = nullptr;
   }
 
-  // std::cout << "hhh" << std::endl;
   bool res = true;
   compiler::reg::Interval* conflict = nullptr;
   for (auto& reg_usage : intervals) {

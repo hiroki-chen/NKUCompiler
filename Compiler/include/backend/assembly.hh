@@ -343,7 +343,9 @@ typedef class Machine_operand {
 
   void set_value(std::string val) { this->val = val; }
 
-  void set_type(const operand_type type) { this->type = type; }
+  std::string get_value(void) const { return val; };
+  void set_value(std::string val) { this->val = val; };
+  void set_type(const operand_type type) { this->type = type; };
 
   std::string get_register_name(void) const { return register_name; }
 
