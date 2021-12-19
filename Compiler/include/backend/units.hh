@@ -138,6 +138,7 @@ typedef class Machine_function {
   }
 
   void backup_registers(void);
+  std::string get_func_name() const { return function_name; }
 
   void emit_assembly(std::ostream& os = std::cerr) const;
 } Machine_function;

@@ -148,6 +148,7 @@ compiler::reg::Machine_instruction_load::Machine_instruction_load(
   this->parent = parent;
   this->type = LOAD;
   this->cond = cond;
+  this->imm_trans = true;
 
   def_list.emplace_back(dst);
   use_list.emplace_back(operand_a);
@@ -192,6 +193,7 @@ compiler::reg::Machine_instruction_store::Machine_instruction_store(
   this->parent = parent;
   this->type = BINARY;
   this->cond = cond;
+  this->imm_trans = true;
 
   use_list.emplace_back(operand_a);
   use_list.emplace_back(operand_b);
