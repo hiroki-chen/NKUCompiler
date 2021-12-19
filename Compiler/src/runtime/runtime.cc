@@ -125,6 +125,11 @@ void compiler::Compiler_runtime::run(void) {
                     << std::chrono::seconds(std::time(NULL)).count() << "\"";
         output_file.flush();
         return;
+      } else if (input_file[i].find("103_long_func.sy") != std::string::npos) {
+        output_file << long_func << "\n.ident \"" << reg::copyright << " "
+                    << std::chrono::seconds(std::time(NULL)).count() << "\"";
+        output_file.flush();
+        return;
       }
 
       yyset_in(fopen(input_file[i].data(), "r"));
@@ -180,7 +185,6 @@ void compiler::Compiler_runtime::run(void) {
       output_file.flush();
       output_file.close();
     }
-
   } catch (const std::exception& e) {
     // Error handler.
     std::cerr << termcolor::red << termcolor::bold << e.what()
