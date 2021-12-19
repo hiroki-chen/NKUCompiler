@@ -194,7 +194,7 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
 
         if ((*iter)->get_preds().empty()) {
           change = true;
-          // Recursively remove all the sucessors.
+          // Recursively remove all the successors.
           for (auto succ : (*iter)->get_succs()) {
             succ->remove_pred(*iter);
           }
@@ -208,7 +208,6 @@ void compiler::ir::CFG_builder::prune_cfg(void) {
         //      A -> B
         //        |
         //        -> C
-        // FIXME: Have some bugs.
         if ((*iter)->get_preds().size() == 1) {
           compiler::ir::CFG_block* const pred = (*iter)->get_preds().front();
           // Merging them is OK.

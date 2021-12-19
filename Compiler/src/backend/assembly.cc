@@ -128,6 +128,7 @@ compiler::reg::Machine_instruction_branch::Machine_instruction_branch(
     Machine_operand* const label, const cond_type& cond) {
   this->parent = parent;
   this->op = op;
+  this->type = BRANCH;
   this->cond = cond;
   use_list.emplace_back(label);
   label->set_parent(this);
@@ -137,6 +138,7 @@ compiler::reg::Machine_instruction_alloca::Machine_instruction_alloca(
     Machine_block* const parent, Machine_operand* const var,
     const cond_type& cond) {
   this->parent = parent;
+  this->type = ALLOCA;
   def_list.emplace_back(var);
   var->set_parent(this);
 }
@@ -167,6 +169,7 @@ compiler::reg::Machine_instruction_mov::Machine_instruction_mov(
     const cond_type& cond) {
   this->parent = parent;
   this->op = op;
+  this->type = MOV;
   this->cond = cond;
   def_list.emplace_back(dst);
   use_list.emplace_back(src);
@@ -179,6 +182,7 @@ compiler::reg::Machine_instruction_stack::Machine_instruction_stack(
     Machine_operand* const src, const cond_type& cond) {
   this->parent = parent;
   this->op = op;
+  this->type = STACK;
   this->cond = cond;
 
   use_list.emplace_back(src);
@@ -191,7 +195,7 @@ compiler::reg::Machine_instruction_store::Machine_instruction_store(
     Machine_operand* const operand_b, Machine_operand* const operand_c,
     const cond_type& cond) {
   this->parent = parent;
-  this->type = BINARY;
+  this->type = STORE;
   this->cond = cond;
   this->imm_trans = true;
 
@@ -209,6 +213,7 @@ compiler::reg::Machine_instruction_cmp::Machine_instruction_cmp(
     Machine_block* const parent, Machine_operand* const operand_a,
     Machine_operand* const operand_b, const cond_type& cond) {
   this->parent = parent;
+  this->type = CMP;
   use_list.emplace_back(operand_a);
   use_list.emplace_back(operand_b);
   operand_a->set_parent(this);

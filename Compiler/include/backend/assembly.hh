@@ -226,6 +226,8 @@ typedef class Machine_instruction_binary final : public Machine_instruction {
                              const cond_type& cond = cond_type::NONE);
 
   virtual void emit_assembly(std::ostream& os = std::cerr) const override;
+
+  virtual binary_type get_binary_type(void) const { return op; }
 } Machine_instruction_binary;
 
 typedef class Machine_instruction_branch final : public Machine_instruction {
