@@ -98,6 +98,9 @@ typedef class Allocator final {
 
   // =================== Functions ===================== //
   uint32_t get_spill_available_id() { return spill_id++; }
+
+  void function_prologue(void);
+
   void reserve_for_function_call(void);
 
   void set_free_register(const std::string& name);
@@ -119,6 +122,8 @@ typedef class Allocator final {
   void modify_code(void);
 
   void genenrate_spilled_code(void);
+
+  void handle_large_offset(void);
 
  public:
   Allocator() = delete;

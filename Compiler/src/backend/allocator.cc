@@ -99,16 +99,54 @@ bool compiler::reg::Allocator::linear_scan_register_allocate(void) {
       conflict->spill = true;
       res = false;
     }
-    // if (res && conflict) res = false;
   }
-  // if (!res) {
-  //   conflict->spill = true;
-  // }
   return res;
 }
 
 void compiler::reg::Allocator::do_color_graphing(void) {
-  // TODO: Implement me. Choose whatever you want.
+  throw compiler::unimplemented_error(
+      "Error: Color graphing is not yet implemented.");
+}
+
+void compiler::reg::Allocator::function_prologue(void) {
+  reg::Machine_operand* const sp =
+      new reg::Machine_operand(reg::operand_type::REG, reg::stack_pointer);
+  reg::Machine_operand* const fp =
+      new reg::Machine_operand(reg::operand_type::REG, reg::frame_pointer);
+  reg::Machine_operand* const r14 =
+      new reg::Machine_operand(reg::operand_type::REG, "r14");
+  reg::Machine_operand* const r8 =
+      new reg::Machine_operand(reg::operand_type::REG, "r8");
+  reg::Machine_operand* const offset = new reg::Machine_operand(
+      reg::operand_type::IMM, std::to_string(stack_top_offset));
+  reg::Machine_instruction_stack* const stack_fp =
+      new reg::Machine_instruction_stack((*func->begin()),
+                                         reg::stack_type::PUSH, fp);
+  reg::Machine_instruction_stack* const stack_r14 =
+      new reg::Machine_instruction_stack((*func->begin()),
+                                         reg::stack_type::PUSH, r14);
+  reg::Machine_instruction_mov* const mov_sp = new reg::Machine_instruction_mov(
+      (*func->begin()), reg::mov_type::MOV_N, fp, sp);
+  reg::Machine_instruction_mov* const sub_sp_imm =
+      new reg::Machine_instruction_mov((*func->begin()), reg::mov_type::MOV_N,
+                                       r8, offset);
+  reg::Machine_instruction_binary* const sub_sp =
+      new reg::Machine_instruction_binary((*func->begin()),
+                                          reg::binary_type::SUB, sp, sp, r8);
+  func->add_func_prologue_instruction(sub_sp);
+  func->add_func_prologue_instruction(sub_sp_imm);
+  func->add_func_prologue_instruction(mov_sp);
+  func->add_func_prologue_instruction(stack_fp);
+
+  for (auto reg : compiler::reg::general_registers) {
+    reg::Machine_instruction_stack* const stack_r =
+        new reg::Machine_instruction_stack(
+            (*func->begin()), reg::stack_type::PUSH,
+            new reg::Machine_operand(reg::operand_type::REG, reg));
+
+    func->add_func_prologue_instruction(stack_r);
+  }
+  func->add_func_prologue_instruction(stack_r14);
 }
 
 void compiler::reg::Allocator::do_linear_scan(void) {
@@ -126,56 +164,8 @@ void compiler::reg::Allocator::do_linear_scan(void) {
       if (success) {
         // all vregs can be mapped to real regs
         modify_code();
-
-        reg::Machine_operand* const sp = new reg::Machine_operand(
-            reg::operand_type::REG, reg::stack_pointer);
-        reg::Machine_operand* const fp = new reg::Machine_operand(
-            reg::operand_type::REG, reg::frame_pointer);
-        reg::Machine_operand* const r14 =
-            new reg::Machine_operand(reg::operand_type::REG, "r14");
-        reg::Machine_operand* const r8 =
-            new reg::Machine_operand(reg::operand_type::REG, "r8");
-        reg::Machine_operand* const offset = new reg::Machine_operand(
-            reg::operand_type::IMM, std::to_string(stack_top_offset));
-        reg::Machine_instruction_stack* const stack_fp =
-            new reg::Machine_instruction_stack((*func->begin()),
-                                               reg::stack_type::PUSH, fp);
-        reg::Machine_instruction_stack* const stack_r14 =
-            new reg::Machine_instruction_stack((*func->begin()),
-                                               reg::stack_type::PUSH, r14);
-        reg::Machine_instruction_mov* const mov_sp =
-            new reg::Machine_instruction_mov((*func->begin()),
-                                             reg::mov_type::MOV_N, fp, sp);
-        reg::Machine_instruction_mov* const sub_sp_imm =
-            new reg::Machine_instruction_mov((*func->begin()),
-                                             reg::mov_type::MOV_N, r8, offset);
-        reg::Machine_instruction_binary* const sub_sp =
-            new reg::Machine_instruction_binary(
-                (*func->begin()), reg::binary_type::SUB, sp, sp, r8);
-        (*func->begin())
-            ->get_instruction_list()
-            ->insert((*func->begin())->begin(), sub_sp);
-        (*func->begin())
-            ->get_instruction_list()
-            ->insert((*func->begin())->begin(), sub_sp_imm);
-        (*func->begin())
-            ->get_instruction_list()
-            ->insert((*func->begin())->begin(), mov_sp);
-        (*func->begin())
-            ->get_instruction_list()
-            ->insert((*func->begin())->begin(), stack_fp);
-        for (auto reg : compiler::reg::general_registers) {
-          reg::Machine_instruction_stack* const stack_r =
-              new reg::Machine_instruction_stack(
-                  (*func->begin()), reg::stack_type::PUSH,
-                  new reg::Machine_operand(reg::operand_type::REG, reg));
-          (*func->begin())
-              ->get_instruction_list()
-              ->insert((*func->begin())->begin(), stack_r);
-        }
-        (*func->begin())
-            ->get_instruction_list()
-            ->insert((*func->begin())->begin(), stack_r14);
+        // Backup the environment of the callee.
+        function_prologue();
       } else {
         // spill vregs that can't be mapped to real regs
         genenrate_spilled_code();
@@ -184,32 +174,41 @@ void compiler::reg::Allocator::do_linear_scan(void) {
   }
 }
 
-void compiler::reg::Allocator::make_du_chains(void) {
+void compiler::reg::Allocator::handle_large_offset(void) {
+  // Sometimes the offset value is too large for encoding,
+  // which requires us to move it to a register first.
   for (auto& block : *(func->get_blocks()))
     for (auto inst = block->get_instruction_list()->begin();
          inst != block->get_instruction_list()->end(); inst++) {
-      if ((*inst)->need_imm_trans() == false) continue;
-      for (auto& use : *((*inst)->get_use()))
-        if (use->is_imm() &&
-            std::abs(std::atoi(use->get_value().data())) > 4095) {
-          reg::Machine_operand* temp_reg = new reg::Machine_operand(
-              operand_type::VREG,
-              spill_label + std::to_string(get_spill_available_id()));
-          reg::Machine_instruction_mov* mov_imm =
-              new Machine_instruction_mov(block, reg::mov_type::MOV_N, temp_reg,
-                                          new reg::Machine_operand(*use));
-          block->get_instruction_list()->insert(inst, mov_imm);
-          use->set_register_name(temp_reg->get_register_name());
-          use->set_type(operand_type::VREG);
-          use->set_value("");
+      if ((*inst)->need_imm_trans()) {
+        for (auto& use : *((*inst)->get_use())) {
+          if (use->is_imm() && std::abs(std::atoi(use->get_value().data())) >
+                                   maximum_immediate) {
+            reg::Machine_operand* temp_reg = new reg::Machine_operand(
+                operand_type::VREG,
+                spill_label + std::to_string(get_spill_available_id()));
+            reg::Machine_instruction_mov* mov_imm = new Machine_instruction_mov(
+                block, reg::mov_type::MOV_N, temp_reg,
+                new reg::Machine_operand(*use));
+            block->get_instruction_list()->insert(inst, mov_imm);
+            use->set_register_name(temp_reg->get_register_name());
+            use->set_type(operand_type::VREG);
+            use->set_value("");
+          }
         }
+      }
     }
+}
+
+void compiler::reg::Allocator::make_du_chains(void) {
+  handle_large_offset();
 
   du_chains.clear();
   loop_label_stack.clear();
   std::map<std::string, std::pair<std::set<Machine_operand*, Comparator>,
                                   std::set<Machine_operand*, Comparator>>>
       live_var;
+
   uint32_t num = 0;
   for (auto& block : *(func->get_blocks())) {
     if (block->get_label().find("LOOP_BEGIN") != -1 ||
@@ -319,25 +318,6 @@ void compiler::reg::Allocator::compute_live_intervals(void) {
   }
 
   std::sort(intervals.begin(), intervals.end(), interval_compare);
-
-  //////////////////////debug
-  // std::cout << "===" << func->get_func_name() << "===" << std::endl;
-  // for (auto& block : *func->get_blocks())
-  //   for (auto& inst : *block->get_instruction_list()) {
-  //     inst->emit_assembly(std::cout << inst->get_no());
-  //   }
-
-  // for (auto& interval : intervals) {
-  //   std::cout << "--interval--"
-  //             << (*interval->defs.begin())->get_register_name() << ": "
-  //             << interval->start << "~" << interval->end << std::endl;
-  //   for (auto& def : interval->defs)
-  //     def->get_parent()->emit_assembly(
-  //         std::cout << "def " << def->get_parent()->get_no());
-  //   for (auto& use : interval->uses)
-  //     use->get_parent()->emit_assembly(
-  //         std::cout << "use " << use->get_parent()->get_no());
-  // }
 }
 
 void compiler::reg::Allocator::expre_old_intervals(Interval* const interval) {
