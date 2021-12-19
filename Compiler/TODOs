@@ -1,1 +1,12 @@
 1. Decaying an array seems uncorrect... Fix it.
+
+2. Implement the literal pool for constants. (maybe...:P)
+
+3. Testcases with unexpected results:
+    ../test/level2-5/080_color.sy               -> relocation truncated.
+    ../test/level2-5/109_many_params2.sy        -> WA
+    ...
+
+4. Prune assembly...
+
+5. Refactor the code ( if all testcases are passed ).
