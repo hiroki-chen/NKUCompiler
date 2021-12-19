@@ -50,8 +50,6 @@ void compiler::reg::Analyzer::generate_code(std::ostream& os) {
     machine_unit->add_function(machine_function);
   }
 
-  // machine_unit->emit_assembly(std::cerr);
-
   // You need to either implement the graph-colorin / linear-scan algorithm.
   // Use the class "Allocator" to do this job. If you need to add / modify /
   // delete some data structures, feel free to do it.

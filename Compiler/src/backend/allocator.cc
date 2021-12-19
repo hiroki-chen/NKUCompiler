@@ -75,7 +75,6 @@ bool compiler::reg::Allocator::linear_scan_register_allocate(void) {
     register_free_map[reg] = nullptr;
   }
 
-  // std::cout << "hhh" << std::endl;
   bool res = true;
   compiler::reg::Interval* conflict = nullptr;
   for (auto& reg_usage : intervals) {
@@ -186,6 +185,26 @@ void compiler::reg::Allocator::do_linear_scan(void) {
 }
 
 void compiler::reg::Allocator::make_du_chains(void) {
+  for (auto& block : *(func->get_blocks()))
+    for (auto inst = block->get_instruction_list()->begin();
+         inst != block->get_instruction_list()->end(); inst++) {
+      if ((*inst)->need_imm_trans() == false) continue;
+      for (auto& use : *((*inst)->get_use()))
+        if (use->is_imm() &&
+            std::abs(std::atoi(use->get_value().data())) > 4095) {
+          reg::Machine_operand* temp_reg = new reg::Machine_operand(
+              operand_type::VREG,
+              spill_label + std::to_string(get_spill_available_id()));
+          reg::Machine_instruction_mov* mov_imm =
+              new Machine_instruction_mov(block, reg::mov_type::MOV_N, temp_reg,
+                                          new reg::Machine_operand(*use));
+          block->get_instruction_list()->insert(inst, mov_imm);
+          use->set_register_name(temp_reg->get_register_name());
+          use->set_type(operand_type::VREG);
+          use->set_value("");
+        }
+    }
+
   du_chains.clear();
   loop_label_stack.clear();
   std::map<std::string, std::pair<std::set<Machine_operand*, Comparator>,
@@ -217,7 +236,7 @@ void compiler::reg::Allocator::make_du_chains(void) {
 
     for (auto& inst : *(block->get_instruction_list())) {
       inst->set_no(num++);
-      for (auto& def : *(inst->get_def()))
+      for (auto& def : *(inst->get_def())) {
         if (def->is_vreg()) {
           auto& var = live_var[def->get_register_name()];
           if (var.second.size()) {
@@ -242,7 +261,8 @@ void compiler::reg::Allocator::make_du_chains(void) {
           }
           var.first.insert(def);
         }
-      for (auto& use : *(inst->get_use()))
+      }
+      for (auto& use : *(inst->get_use())) {
         if (use->is_vreg()) {
           if (live_var[use->get_register_name()].first.size() == 0) {
             inst->emit_assembly(std::cerr << '\n');
@@ -251,6 +271,7 @@ void compiler::reg::Allocator::make_du_chains(void) {
           }
           live_var[use->get_register_name()].second.insert(use);
         }
+      }
     }
   }
   for (auto& var : live_var) {
@@ -359,10 +380,10 @@ void compiler::reg::Allocator::genenrate_spilled_code(void) {
             reg::operand_type::REG, reg::frame_pointer);
         reg::Machine_operand* const offset =
             new reg::Machine_operand(reg::operand_type::IMM, stack_offset);
-        reg::Machine_instruction_store* const ldr =
-            new reg::Machine_instruction_store(block, new Machine_operand(*def),
-                                               fp, offset);
-        block->get_instruction_list()->insert(pos, ldr);
+        reg::Machine_instruction_store* const str =
+            new reg::Machine_instruction_store(
+                block, new reg::Machine_operand(*def), fp, offset);
+        block->get_instruction_list()->insert(pos, str);
       }
     }
   }
