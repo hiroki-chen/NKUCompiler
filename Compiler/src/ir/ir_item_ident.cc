@@ -14,6 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <cassert>
+
 #include <common/compile_excepts.hh>
 #include <common/termcolor.hh>
 #include <common/utils.hh>
@@ -21,6 +23,82 @@
 #include <frontend/nodes/item_literal.hh>
 
 extern uint32_t opt_level;
+
+static std::vector<uint32_t> compute_prefix_vector(
+    const std::vector<compiler::ir::Operand*>& array_size_info) {
+  // Build a vector that stores the accumulative offset for the array.
+  std::vector<uint32_t> prefix_size_vec;
+  uint32_t prefix = 1ul;
+  prefix_size_vec.emplace_back(prefix);
+
+  for (auto iter = array_size_info.crbegin();
+       iter != array_size_info.crend() - 1; iter++) {
+    // The shape of the array should be determined at compilation phase.
+    assert((*iter)->get_is_var() == false &&
+           "Dynamic array size is not allowed!");
+
+    const uint32_t shape_cur = std::stoul((*iter)->get_value());
+    prefix *= shape_cur;
+    prefix_size_vec.emplace_back(prefix);
+  }
+
+  std::reverse(prefix_size_vec.begin(), prefix_size_vec.end());
+  return prefix_size_vec;
+}
+
+static compiler::ir::Operand* handle_array_decay(
+    compiler::ir::IRContext* const ir_context,
+    std::vector<compiler::ir::IR>& ir_list,
+    const std::vector<compiler::ir::Operand*>& array_size_info,
+    const std::vector<compiler::Item_expr*>& array_size_decayed,
+    const std::string& array_name) {
+  using namespace compiler;
+  // This function computes the offset for the decayed array type.
+  // The offset of the array is computed in a backward manner.
+  //    E.g., if the array is defined as arr[3][4][5], then the offset for
+  //    arr[3]  is actually 4 * 5 * 3 * byte_length.
+
+  const std::vector<uint32_t> prefix_size_vec =
+      std::move(compute_prefix_vector(array_size_info));
+
+  // Multiplication + Addition.
+  // Create a temporary variable for storing the offset.
+  ir::Operand* const offset_counter = new ir::Operand(compiler::concatenate(
+      ir::local_sign, ir_context->get_symbol_table()->get_available_id()));
+  ir_list.emplace_back(ir::op_type::MOV, offset_counter, OPERAND_VALUE("0"));
+  for (uint32_t i = 0; i < array_size_decayed.size(); i++) {
+    // Fetch the basic information from the vector computed aforehand.
+    const std::string offset_this_dimension =
+        std::to_string(prefix_size_vec[i]);
+    ir::Operand* const subscript =
+        array_size_decayed[i]->eval_runtime(ir_context, ir_list);
+
+    // Insert a multiplication instruction.
+    // Create a temporary variable for storing the result which is used at the
+    // addition phase.
+    ir::Operand* const tmp = new ir::Operand(compiler::concatenate(
+        ir::local_sign, ir_context->get_symbol_table()->get_available_id()));
+
+    ir_list.emplace_back(ir::op_type::IMUL, tmp,
+                         OPERAND_VALUE(offset_this_dimension), subscript);
+    // Add to the temporary offset.
+    ir_list.emplace_back(ir::op_type::IADD, offset_counter, offset_counter,
+                         tmp);
+  }
+
+  // Finally add this offset counter to the base address of the array.
+  // Prepare for the destination variable.
+  ir::Operand* const dst = new ir::Operand(compiler::concatenate(
+      ir::local_sign, ir_context->get_symbol_table()->get_available_id()));
+  ir::Operand* const offset_byte = new ir::Operand(compiler::concatenate(
+      ir::local_sign, ir_context->get_symbol_table()->get_available_id()));
+
+  ir_list.emplace_back(ir::op_type::MOV, dst, new ir::Operand(array_name));
+  ir_list.emplace_back(ir::op_type::IMUL, offset_byte, OPERAND_VALUE("4"),
+                       offset_counter);
+  ir_list.emplace_back(ir::op_type::IADD, dst, dst, offset_byte);
+  return dst;
+}
 
 compiler::ir::Operand* compiler::Item_ident::eval_runtime_helper(
     compiler::ir::IRContext* const ir_context) const {
@@ -110,6 +188,14 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
     // If there is a shape mismatch, then it means we are accessing the address
     // of the array element. In this case we need to get the address.
     const bool should_decay = array_shape.size() != shape_cur;
+    if (should_decay) {
+      return handle_array_decay(ir_context, ir_list, array_symbol->get_shape(),
+                                array_shape, array_symbol->get_name());
+    }
+
+    const std::string array_name_new = compiler::concatenate(
+        ir::local_sign, ir_context->get_symbol_table()->get_available_id());
+    ir::Operand* const dst = new ir::Operand(array_name_new);
 
     // Fetch basic information.
     const ir::var_type var_type = array_symbol->get_var_type();
@@ -157,9 +243,10 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
       ir::Operand* operand_index = new ir::Operand(index_name);
 
       // Multiply the operand index by byte_length.
-      ir_list.emplace_back(ir::op_type::IMUL, operand_index,
-                           array_shape.back()->eval_runtime(ir_context, ir_list),
-                           OPERAND_VALUE(std::to_string(byte_length)));
+      ir_list.emplace_back(
+          ir::op_type::IMUL, operand_index,
+          array_shape.back()->eval_runtime(ir_context, ir_list),
+          OPERAND_VALUE(std::to_string(byte_length)));
 
       // How to get the correct index from shape and the byte_length:
       // E.g.: arr[4][4] (where arr is int type):
@@ -216,34 +303,17 @@ compiler::ir::Operand* compiler::Item_ident_array::array_access_helper(
           operand_size = new ir::Operand(*operand_tmp);
         }
       }
+
       if (op_type == ir::op_type::STR) {
-        ir::Operand* const dst = new ir::Operand(array_symbol->get_name());
-        ir_list.emplace_back(op_type, dst, operand_index, expression);
-
-        return dst;
+        ir_list.emplace_back(op_type, new ir::Operand(array_symbol->get_name()),
+                             operand_index, expression);
       } else {
-        // Prepare for the destination variable.
-        const std::string dst_name = compiler::concatenate(
-            ir::local_sign, ir_context->get_symbol_table()->get_available_id());
-        ir::Operand* const dst = new ir::Operand(dst_name);
-
-        // Check if there is a array decay.
-        if (should_decay) {
-          const std::string tmp = compiler::concatenate(
-              ir::local_sign,
-              ir_context->get_symbol_table()->get_available_id());
-          ir::Operand* const tmp_op = new ir::Operand(tmp);
-          ir_list.emplace_back(ir::op_type::MOV, tmp_op,
-                               new ir::Operand(array_symbol->get_name()));
-          ir_list.emplace_back(ir::op_type::IADD, dst, tmp_op, operand_index);
-        } else {
-          ir_list.emplace_back(op_type, dst,
-                               new ir::Operand(array_symbol->get_name()),
-                               operand_index);
-        }
-
-        return dst;
+        ir_list.emplace_back(op_type, dst,
+                             new ir::Operand(array_symbol->get_name()),
+                             operand_index);
       }
+
+      return dst;
     }
   } catch (const std::exception& e) {
     PANIC(lineno, e.what());

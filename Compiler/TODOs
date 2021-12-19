@@ -1,3 +1,12 @@
-1. Handle function that has many parameters.
-2. Implement array evaluation.
-3. For function parameter, if it is an array, then we do not need to allocate any spaces because the address is passed to the function. BUT this should be disambiguified with the ALLOCATED array! This is a special case. So, if the array comes from the argument, then we need to store the address of the array by constructing a map inside the asm_builder.
+1. Decaying an array seems uncorrect... Fix it.
+
+2. Implement the literal pool for constants. (maybe...:P)
+
+3. Testcases with unexpected results:
+    ../test/level2-5/080_color.sy               -> relocation truncated.
+    ../test/level2-5/109_many_params2.sy        -> WA
+    ...
+
+4. Prune assembly...
+
+5. Refactor the code ( if all testcases are passed ).
