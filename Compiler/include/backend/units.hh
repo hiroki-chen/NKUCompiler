@@ -129,7 +129,7 @@ typedef class Machine_function {
   void add_block(Machine_block* const block) { block_list.emplace_back(block); }
 
   void add_func_prologue_instruction(Machine_instruction* const instruction) {
-    func_prologue.emplace_back(instruction);
+    func_prologue.insert(func_prologue.begin(), instruction);
   }
 
   // What is this used for?
