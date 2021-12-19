@@ -280,7 +280,6 @@ void compiler::reg::Allocator::make_du_chains(void) {
 }
 
 void compiler::reg::Allocator::compute_live_intervals(void) {
-  std::cout << "sdfsgf" << std::endl;
   make_du_chains();
 
   intervals.clear();
