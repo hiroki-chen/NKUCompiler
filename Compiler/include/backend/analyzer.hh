@@ -170,6 +170,15 @@ typedef class Analyzer {
 
   void generate(compiler::ir::CFG_block* const block);
 
+  /**
+   * @brief This function will prune unnecessary instructions.
+   * 
+   * @param unit 
+   */
+  void assembly_epilogue(Machine_unit* const unit);
+
+  void assembly_epilogue(Machine_function* const func);
+
  public:
   Analyzer() = delete;
 
