@@ -280,6 +280,7 @@ void compiler::reg::Allocator::make_du_chains(void) {
 }
 
 void compiler::reg::Allocator::compute_live_intervals(void) {
+  std::cout << "sdfsgf" << std::endl;
   make_du_chains();
 
   intervals.clear();
@@ -319,6 +320,25 @@ void compiler::reg::Allocator::compute_live_intervals(void) {
   }
 
   std::sort(intervals.begin(), intervals.end(), interval_compare);
+
+  //////////////////////debug
+  // std::cout << "===" << func->get_func_name() << "===" << std::endl;
+  // for (auto& block : *func->get_blocks())
+  //   for (auto& inst : *block->get_instruction_list()) {
+  //     inst->emit_assembly(std::cout << inst->get_no());
+  //   }
+
+  // for (auto& interval : intervals) {
+  //   std::cout << "--interval--"
+  //             << (*interval->defs.begin())->get_register_name() << ": "
+  //             << interval->start << "~" << interval->end << std::endl;
+  //   for (auto& def : interval->defs)
+  //     def->get_parent()->emit_assembly(
+  //         std::cout << "def " << def->get_parent()->get_no());
+  //   for (auto& use : interval->uses)
+  //     use->get_parent()->emit_assembly(
+  //         std::cout << "use " << use->get_parent()->get_no());
+  // }
 }
 
 void compiler::reg::Allocator::expre_old_intervals(Interval* const interval) {
