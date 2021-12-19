@@ -258,11 +258,11 @@ FuncParamArray: BType Ident LSQUARE RSQUARE                {
                                                         }
               | BType Ident LSQUARE Exp RSQUARE                {
                                                             compiler::Item_ident_array* ident = new compiler::Item_ident_array(yyget_lineno(), $2->get_name());
-                                                            ident->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1));
+                                                            ident->add_shape($4);
                                                             $$ = new compiler::Item_func_def_arg(yyget_lineno(), $1, ident);
                                                         }
               | FuncParamArray LSQUARE RSQUARE          { $$ = $1; static_cast<compiler::Item_ident_array*>($$->get_identifier())->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1)); }
-              | FuncParamArray LSQUARE Exp RSQUARE          { $$ = $1; static_cast<compiler::Item_ident_array*>($$->get_identifier())->add_shape(new compiler::Item_literal_int(yyget_lineno(), 1)); }
+              | FuncParamArray LSQUARE Exp RSQUARE          { $$ = $1; static_cast<compiler::Item_ident_array*>($$->get_identifier())->add_shape($3); }
               ;
 
 Ident: ID       { $$ = new compiler::Item_ident(yyget_lineno(), *$1); }
