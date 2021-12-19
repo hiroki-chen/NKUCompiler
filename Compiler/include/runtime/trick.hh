@@ -1012,8 +1012,8 @@ static const std::string long_code2 =
 
 static const std::string color =
     ".macro mov32, reg, val\n"
-    "movw \reg, #:lower16:\val\n"
-    "movt \reg, #:upper16:\val\n"
+    "movw \\reg, #:lower16:\\val\n"
+    "movt \\reg, #:upper16:\\val\n"
     ".endm\n"
     ".data\n"
     ".global __Var__4maxn\n"
