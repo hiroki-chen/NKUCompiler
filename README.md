@@ -24,7 +24,7 @@ sudo apt-get install qemu cmake clang-10 lldb-10 gcc-10 \
 
 # Create a symbolic link for future convenience.
 sudo rm /usr/bin/c++ && sudo ln -s $(which clang++-10) /usr/bin/c++
-sudo ln -s $(which gcc-arm-linux-gnueabihf) /usr/bin/gcc-arm
+sudo ln -s $(which arm-linux-gnueabihf-gcc) /usr/bin/gcc-arm
 ```
 
 ## Debug our compiler
@@ -34,6 +34,11 @@ There is a way to use lldb to debug the compiler. Please first make sure that yo
 ```shell
 cp ./util/lldbinit.py ~/.lldbinit.py
 echo "command script import  ~/.lldbinit.py" >> $HOME/.lldbinit
+```
+
+Change the build type in the `CMakeLists.txt`:
+```shell
+set(CMAKE_BUILD_TYPE DEBUG)
 ```
 
 Then you can debug the compiler by
@@ -145,47 +150,6 @@ Usage:
 │   ├── level2-4
 │   └── level2-5
 └── util
-
-25 directories
- chb@lab627-Precision-7920-Tower  ~/compilation/compiler/Compiler/build   main ±  tree .. -d -L 3                 (main|✚1⚑2)
-.
-├── build
-│   ├── CMakeFiles
-│   │   ├── 3.22.1
-│   │   ├── CMakeTmp
-│   │   ├── compiler.dir
-│   │   ├── header.dir
-│   │   └── utils.dir
-│   └── Testing
-│       └── Temporary
-├── include
-│   ├── backend
-│   ├── common
-│   ├── frontend
-│   │   ├── nodes
-│   │   ├── parser
-│   │   └── symbol_table
-│   ├── ir
-│   └── runtime
-├── lib
-├── src
-│   ├── backend
-│   ├── common
-│   ├── frontend
-│   │   ├── nodes
-│   │   ├── parser
-│   │   └── symbol_table
-│   ├── ir
-│   └── runtime
-├── test
-│   ├── level1-1
-│   ├── level1-2
-│   ├── level2-1
-│   ├── level2-2
-│   ├── level2-3
-│   ├── level2-4
-│   └── level2-5
-└── util
 ```
 
 ## 继承关系和几点说明
@@ -233,9 +197,4 @@ Item -> Item_expr -> Item_expr_cond
 
      -> Item_func_def
 ```
-
-## Prerequisites
-
-* C++标准默认为17，请使用支持C++17以上的编译器进行编译，已知可以在clang 12和GCC-11（需要链接到flex和yacc）上运行。
-* 采用了cxxopts库作为command line parser，具体实现已经放在了`src/runtime/runtime.cc`中了。
 
