@@ -1,0 +1,9 @@
+int main() {
+  int a = 10;
+  int b = 19;
+  int c = a + b; // common subexpression
+  int d = a + b + c; // common subexpression
+  // --- Dead code.
+
+  return a;
+}
