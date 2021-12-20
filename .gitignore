@@ -1,6 +1,5 @@
 .DS_Store
 .vscode
-test*
 *.zip
 build
 backup
