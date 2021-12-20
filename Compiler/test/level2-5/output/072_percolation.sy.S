@@ -36,6 +36,7 @@ findfa:
 .LBfindfa:
 	mov r9, r0
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, #0
 	mov32 r7, array
@@ -62,6 +63,7 @@ findfa:
 	mov pc, r14
 .LBB_findfa1_ELSE:
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, #0
 	mov32 r7, array
@@ -69,12 +71,15 @@ findfa:
 	mov r0, r8
 	bl findfa
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #4
+	mov r7, r7
 	mul r7, r9, r7
 	mov r6, #0
 	mov32 r6, array
 	str r8, [r6, r7]
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #0
 	mov32 r8, array
@@ -125,6 +130,7 @@ init:
 	mov r7, #0
 	sub r7, r7, #1
 	mov r6, #4
+	mov r6, r6
 	mul r6, r8, r6
 	mov r5, #0
 	mov32 r5, array
@@ -175,6 +181,7 @@ main:
 .LB3_LOOP_BODY:
 	ldr r8, [fp, #-532]
 	sub r8, r8, #1
+	mov r8, r8
 	str r8, [fp, #-532]
 	mov r8, #0
 	mov32 r8, n
@@ -193,6 +200,7 @@ main:
 	mov r0, r6
 	bl init
 	mov r6, r0
+	add sp, sp, #0
 	mov r5, #0
 	mov32 r5, n
 	str r5, [fp, #-8]
@@ -206,6 +214,7 @@ main:
 	ldr r5, [r5, #0]
 	str r5, [fp, #-4]
 	ldr r5, [fp, #-4]
+	mov r5, r5
 	str r5, [fp, #-4]
 	ldr r5, [fp, #-4]
 	ldr r10, [fp, #-8]
@@ -237,11 +246,14 @@ main:
 	bl getint
 	mov r5, r0
 	str r5, [fp, #-28]
+	add sp, sp, #0
 	ldr r5, [fp, #-28]
+	mov r5, r5
 	str r5, [fp, #-708]
 	bl getint
 	mov r5, r0
 	str r5, [fp, #-32]
+	add sp, sp, #0
 	ldr r5, [fp, #-32]
 	mov r9, r5
 	mov r5, #0
@@ -272,6 +284,7 @@ main:
 	ldr r5, [r5, #0]
 	str r5, [fp, #-52]
 	ldr r5, [fp, #-48]
+	mov r5, r5
 	str r5, [fp, #-56]
 	ldr r5, [fp, #-52]
 	ldr r10, [fp, #-56]
@@ -288,10 +301,12 @@ main:
 	add r5, r10, r5
 	str r5, [fp, #-68]
 	ldr r5, [fp, #-68]
+	mov r5, r5
 	str r5, [fp, #-416]
 	mov r5, #4
 	str r5, [fp, #-72]
 	ldr r5, [fp, #-72]
+	mov r5, r5
 	str r5, [fp, #-76]
 	ldr r5, [fp, #-76]
 	ldr r10, [fp, #-416]
@@ -335,6 +350,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-100]
 	ldr r5, [fp, #-100]
+	mov r5, r5
 	str r5, [fp, #-108]
 	ldr r5, [fp, #-104]
 	ldr r10, [fp, #-108]
@@ -363,6 +379,7 @@ main:
 	bl mmerge
 	mov r5, r0
 	str r5, [fp, #-124]
+	add sp, sp, #0
 .LBB_6_ELSE:
 	mov r5, #0
 	mov32 r5, n
@@ -389,6 +406,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-140]
 	ldr r5, [fp, #-140]
+	mov r5, r5
 	str r5, [fp, #-144]
 	ldr r5, [fp, #-144]
 	mul r5, r6, r5
@@ -407,6 +425,7 @@ main:
 	bl mmerge
 	mov r5, r0
 	str r5, [fp, #-156]
+	add sp, sp, #0
 .LBB_7_ELSE:
 	mov r5, #0
 	mov32 r5, n
@@ -425,6 +444,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-164]
 	ldr r5, [fp, #-164]
+	mov r5, r5
 	str r5, [fp, #-172]
 	ldr r5, [fp, #-168]
 	ldr r10, [fp, #-172]
@@ -455,6 +475,7 @@ main:
 	movne r5, #1
 	str r5, [fp, #-196]
 	ldr r5, [fp, #-196]
+	mov r5, r5
 	str r5, [fp, #-200]
 .LB_34_COND_END:
 	mov r5, #0
@@ -477,6 +498,7 @@ main:
 	bl mmerge
 	mov r5, r0
 	str r5, [fp, #-212]
+	add sp, sp, #0
 .LBB_8_ELSE:
 	mov r5, #1
 	str r5, [fp, #-216]
@@ -491,6 +513,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-220]
 	ldr r5, [fp, #-220]
+	mov r5, r5
 	str r5, [fp, #-228]
 	ldr r5, [fp, #-224]
 	ldr r10, [fp, #-228]
@@ -521,6 +544,7 @@ main:
 	movne r5, #1
 	str r5, [fp, #-252]
 	ldr r5, [fp, #-252]
+	mov r5, r5
 	str r5, [fp, #-256]
 .LB_44_COND_END:
 	mov r5, #0
@@ -543,6 +567,7 @@ main:
 	bl mmerge
 	mov r5, r0
 	str r5, [fp, #-268]
+	add sp, sp, #0
 .LBB_9_ELSE:
 	mov r5, #0
 	mov32 r5, n
@@ -563,6 +588,7 @@ main:
 	ldr r5, [r5, #0]
 	str r5, [fp, #-276]
 	ldr r5, [fp, #-276]
+	mov r5, r5
 	str r5, [fp, #-280]
 	ldr r5, [fp, #-280]
 	ldr r10, [fp, #-416]
@@ -573,6 +599,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-284]
 	ldr r5, [fp, #-284]
+	mov r5, r5
 	str r5, [fp, #-292]
 	ldr r5, [fp, #-288]
 	ldr r10, [fp, #-292]
@@ -603,6 +630,7 @@ main:
 	movne r5, #1
 	str r5, [fp, #-316]
 	ldr r5, [fp, #-316]
+	mov r5, r5
 	str r5, [fp, #-320]
 .LB_54_COND_END:
 	mov r5, #0
@@ -622,6 +650,7 @@ main:
 	ldr r5, [r5, #0]
 	str r5, [fp, #-328]
 	ldr r5, [fp, #-328]
+	mov r5, r5
 	str r5, [fp, #-332]
 	ldr r5, [fp, #-332]
 	ldr r10, [fp, #-416]
@@ -636,6 +665,7 @@ main:
 	bl mmerge
 	mov r5, r0
 	str r5, [fp, #-340]
+	add sp, sp, #0
 .LBB_10_ELSE:
 	mov r5, #1
 	str r5, [fp, #-344]
@@ -652,6 +682,7 @@ main:
 	ldr r5, [r5, #0]
 	str r5, [fp, #-348]
 	ldr r5, [fp, #-348]
+	mov r5, r5
 	str r5, [fp, #-352]
 	ldr r5, [fp, #-352]
 	ldr r10, [fp, #-416]
@@ -662,6 +693,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-356]
 	ldr r5, [fp, #-356]
+	mov r5, r5
 	str r5, [fp, #-364]
 	ldr r5, [fp, #-360]
 	ldr r10, [fp, #-364]
@@ -692,6 +724,7 @@ main:
 	movne r5, #1
 	str r5, [fp, #-388]
 	ldr r5, [fp, #-388]
+	mov r5, r5
 	str r5, [fp, #-392]
 .LB_64_COND_END:
 	mov r5, #0
@@ -711,6 +744,7 @@ main:
 	ldr r5, [r5, #0]
 	str r5, [fp, #-400]
 	ldr r5, [fp, #-400]
+	mov r5, r5
 	str r5, [fp, #-404]
 	ldr r5, [fp, #-404]
 	ldr r10, [fp, #-416]
@@ -725,12 +759,14 @@ main:
 	bl mmerge
 	mov r5, r0
 	str r5, [fp, #-412]
+	add sp, sp, #0
 .LBB_11_ELSE:
 	mov r5, #0
 	str r5, [fp, #-424]
 	mov r5, #4
 	str r5, [fp, #-420]
 	ldr r5, [fp, #-420]
+	mov r5, r5
 	str r5, [fp, #-428]
 	ldr r5, [fp, #-424]
 	ldr r10, [fp, #-428]
@@ -763,6 +799,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-452]
 	ldr r5, [fp, #-452]
+	mov r5, r5
 	str r5, [fp, #-456]
 	ldr r5, [fp, #-456]
 	mul r5, r6, r5
@@ -790,6 +827,7 @@ main:
 	movne r5, #1
 	str r5, [fp, #-480]
 	ldr r5, [fp, #-480]
+	mov r5, r5
 	str r5, [fp, #-484]
 .LB_76_COND_END:
 	mov r5, #0
@@ -806,10 +844,12 @@ main:
 	bl findfa
 	mov r5, r0
 	str r5, [fp, #-492]
+	add sp, sp, #0
 	mov r0, r6
 	bl findfa
 	mov r5, r0
 	str r5, [fp, #-496]
+	add sp, sp, #0
 	ldr r5, [fp, #-492]
 	ldr r10, [fp, #-496]
 	str r10, [fp, #-692]
@@ -819,6 +859,7 @@ main:
 	moveq r5, #1
 	str r5, [fp, #-500]
 	ldr r5, [fp, #-500]
+	mov r5, r5
 	str r5, [fp, #-508]
 .LB_74_COND_END:
 	mov r5, #0
@@ -836,16 +877,19 @@ main:
 	add r5, r8, #1
 	str r5, [fp, #-512]
 	ldr r5, [fp, #-512]
+	mov r5, r5
 	str r5, [fp, #-516]
 	ldr r5, [fp, #-516]
 	mov r0, r5
 	bl putint
 	mov r5, r0
 	str r5, [fp, #-520]
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r5, r0
 	str r5, [fp, #-524]
+	add sp, sp, #0
 .LBB_12_ELSE:
 .LBB_5_ELSE:
 	add r5, r8, #1
@@ -868,9 +912,11 @@ main:
 	mov r0, r8
 	bl putint
 	mov r8, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r8, r0
+	add sp, sp, #0
 .LBB_13_ELSE:
 	b .LB_main3_LOOP_BEGIN
 .LB3_LOOP_END:
@@ -908,10 +954,12 @@ mmerge:
 	mov r0, r9
 	bl findfa
 	mov r9, r0
+	add sp, sp, #0
 	mov r7, r9
 	mov r0, r8
 	bl findfa
 	mov r8, r0
+	add sp, sp, #0
 	mov r9, r8
 	cmp r7, r9
 	mov r8, #0
@@ -922,6 +970,7 @@ mmerge:
 	b .LBB_mmerge2_IF
 .LBB_mmerge2_IF:
 	mov r8, #4
+	mov r8, r8
 	mul r8, r7, r8
 	mov r6, #0
 	mov32 r6, array
@@ -939,4 +988,4 @@ mmerge:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004947"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007223"

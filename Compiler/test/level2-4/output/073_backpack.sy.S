@@ -78,11 +78,13 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-16]
 	ldr r5, [fp, #-16]
+	mov r5, r5
 	str r5, [fp, #-20]
 	ldr r5, [fp, #-20]
 	mul r5, r7, r5
 	str r5, [fp, #-28]
 	ldr r5, [fp, #-772]
+	mov r5, r5
 	str r5, [fp, #-24]
 	ldr r5, [fp, #-24]
 	ldr r10, [fp, #-28]
@@ -108,6 +110,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-44]
 	ldr r5, [fp, #-44]
+	mov r5, r5
 	str r5, [fp, #-48]
 	ldr r5, [fp, #-48]
 	mul r5, r6, r5
@@ -117,6 +120,7 @@ KnapSack:
 	sub r5, r7, #1
 	str r5, [fp, #-52]
 	ldr r5, [fp, #-52]
+	mov r5, r5
 	str r5, [fp, #-60]
 	ldr r5, [fp, #-56]
 	ldr r10, [fp, #-60]
@@ -125,6 +129,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-64]
 	ldr r5, [fp, #-64]
+	mov r5, r5
 	str r5, [fp, #-72]
 	ldr r5, [fp, #-68]
 	ldr r10, [fp, #-72]
@@ -144,6 +149,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-84]
 	ldr r5, [fp, #-84]
+	mov r5, r5
 	str r5, [fp, #-88]
 	ldr r5, [fp, #-88]
 	mul r5, r6, r5
@@ -159,6 +165,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-100]
 	ldr r5, [fp, #-100]
+	mov r5, r5
 	str r5, [fp, #-108]
 	ldr r5, [fp, #-104]
 	ldr r10, [fp, #-108]
@@ -185,6 +192,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-124]
 	ldr r5, [fp, #-124]
+	mov r5, r5
 	str r5, [fp, #-128]
 	ldr r5, [fp, #-128]
 	mul r5, r6, r5
@@ -194,6 +202,7 @@ KnapSack:
 	sub r5, r7, #1
 	str r5, [fp, #-132]
 	ldr r5, [fp, #-132]
+	mov r5, r5
 	str r5, [fp, #-140]
 	ldr r5, [fp, #-136]
 	ldr r10, [fp, #-140]
@@ -202,6 +211,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-144]
 	ldr r5, [fp, #-144]
+	mov r5, r5
 	str r5, [fp, #-148]
 	ldr r5, [fp, #-148]
 	ldr r10, [fp, #-152]
@@ -219,16 +229,19 @@ KnapSack:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-164]
 	ldr r5, [fp, #-164]
+	mov r5, r5
 	str r5, [fp, #-312]
 	str r5, [fp, #-344]
 	mov r5, #4
 	str r5, [fp, #-168]
 	ldr r5, [fp, #-168]
+	mov r5, r5
 	str r5, [fp, #-172]
 	ldr r5, [fp, #-172]
 	mul r5, r7, r5
 	str r5, [fp, #-176]
 	ldr r5, [fp, #-772]
+	mov r5, r5
 	str r5, [fp, #-180]
 	ldr r5, [fp, #-176]
 	ldr r10, [fp, #-180]
@@ -237,6 +250,7 @@ KnapSack:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-184]
 	ldr r5, [fp, #-184]
+	mov r5, r5
 	str r5, [fp, #-188]
 	ldr r5, [fp, #-188]
 	sub r5, r6, r5
@@ -244,6 +258,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-192]
 	ldr r5, [fp, #-192]
+	mov r5, r5
 	str r5, [fp, #-200]
 	ldr r5, [fp, #-196]
 	ldr r10, [fp, #-200]
@@ -256,6 +271,7 @@ KnapSack:
 	sub r5, r7, #1
 	str r5, [fp, #-204]
 	ldr r5, [fp, #-204]
+	mov r5, r5
 	str r5, [fp, #-212]
 	ldr r5, [fp, #-208]
 	ldr r10, [fp, #-212]
@@ -264,6 +280,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-216]
 	ldr r5, [fp, #-216]
+	mov r5, r5
 	str r5, [fp, #-220]
 	ldr r5, [fp, #-220]
 	ldr r10, [fp, #-224]
@@ -283,11 +300,13 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-236]
 	ldr r5, [fp, #-236]
+	mov r5, r5
 	str r5, [fp, #-240]
 	ldr r5, [fp, #-240]
 	mul r5, r7, r5
 	str r5, [fp, #-244]
 	ldr r5, [fp, #-792]
+	mov r5, r5
 	str r5, [fp, #-248]
 	ldr r5, [fp, #-244]
 	ldr r10, [fp, #-248]
@@ -296,6 +315,7 @@ KnapSack:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-252]
 	ldr r5, [fp, #-252]
+	mov r5, r5
 	str r5, [fp, #-256]
 	ldr r5, [fp, #-256]
 	ldr r10, [fp, #-260]
@@ -304,6 +324,7 @@ KnapSack:
 	add r5, r10, r5
 	str r5, [fp, #-264]
 	ldr r5, [fp, #-264]
+	mov r5, r5
 	str r5, [fp, #-344]
 	ldr r5, [fp, #-312]
 	ldr r10, [fp, #-344]
@@ -326,6 +347,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-276]
 	ldr r5, [fp, #-276]
+	mov r5, r5
 	str r5, [fp, #-280]
 	ldr r5, [fp, #-280]
 	mul r5, r6, r5
@@ -341,6 +363,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-292]
 	ldr r5, [fp, #-292]
+	mov r5, r5
 	str r5, [fp, #-296]
 	ldr r5, [fp, #-296]
 	ldr r10, [fp, #-300]
@@ -366,6 +389,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-316]
 	ldr r5, [fp, #-316]
+	mov r5, r5
 	str r5, [fp, #-320]
 	ldr r5, [fp, #-320]
 	mul r5, r6, r5
@@ -381,6 +405,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-332]
 	ldr r5, [fp, #-332]
+	mov r5, r5
 	str r5, [fp, #-336]
 	ldr r5, [fp, #-336]
 	ldr r10, [fp, #-340]
@@ -441,6 +466,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-376]
 	ldr r5, [fp, #-376]
+	mov r5, r5
 	str r5, [fp, #-380]
 	ldr r5, [fp, #-380]
 	mul r5, r6, r5
@@ -456,6 +482,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-392]
 	ldr r5, [fp, #-392]
+	mov r5, r5
 	str r5, [fp, #-400]
 	ldr r5, [fp, #-396]
 	ldr r10, [fp, #-400]
@@ -475,6 +502,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-412]
 	ldr r5, [fp, #-412]
+	mov r5, r5
 	str r5, [fp, #-416]
 	ldr r5, [fp, #-416]
 	mul r5, r6, r5
@@ -484,6 +512,7 @@ KnapSack:
 	sub r5, r7, #1
 	str r5, [fp, #-420]
 	ldr r5, [fp, #-420]
+	mov r5, r5
 	str r5, [fp, #-428]
 	ldr r5, [fp, #-424]
 	ldr r10, [fp, #-428]
@@ -492,6 +521,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-432]
 	ldr r5, [fp, #-432]
+	mov r5, r5
 	str r5, [fp, #-440]
 	ldr r5, [fp, #-436]
 	ldr r10, [fp, #-440]
@@ -529,6 +559,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-468]
 	ldr r5, [fp, #-468]
+	mov r5, r5
 	str r5, [fp, #-472]
 	ldr r5, [fp, #-472]
 	mul r5, r7, r5
@@ -550,11 +581,13 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-488]
 	ldr r5, [fp, #-488]
+	mov r5, r5
 	str r5, [fp, #-492]
 	ldr r5, [fp, #-492]
 	mul r5, r7, r5
 	str r5, [fp, #-496]
 	ldr r5, [fp, #-772]
+	mov r5, r5
 	str r5, [fp, #-500]
 	ldr r5, [fp, #-496]
 	ldr r10, [fp, #-500]
@@ -563,6 +596,7 @@ KnapSack:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-504]
 	ldr r5, [fp, #-504]
+	mov r5, r5
 	str r5, [fp, #-508]
 	ldr r5, [fp, #-508]
 	sub r5, r6, r5
@@ -574,6 +608,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-516]
 	ldr r5, [fp, #-516]
+	mov r5, r5
 	str r5, [fp, #-520]
 	ldr r5, [fp, #-520]
 	mul r5, r7, r5
@@ -603,6 +638,7 @@ KnapSack:
 	mov r5, #4
 	str r5, [fp, #-540]
 	ldr r5, [fp, #-540]
+	mov r5, r5
 	str r5, [fp, #-544]
 	ldr r5, [fp, #-544]
 	mul r5, r8, r5
@@ -610,6 +646,7 @@ KnapSack:
 	mov r5, #800
 	str r5, [fp, #-548]
 	ldr r5, [fp, #-580]
+	mov r5, r5
 	str r5, [fp, #-552]
 	ldr r5, [fp, #-548]
 	ldr r10, [fp, #-552]
@@ -618,6 +655,7 @@ KnapSack:
 	mul r5, r5, r10
 	str r5, [fp, #-556]
 	ldr r5, [fp, #-556]
+	mov r5, r5
 	str r5, [fp, #-564]
 	ldr r5, [fp, #-560]
 	ldr r10, [fp, #-564]
@@ -666,55 +704,70 @@ main:
 .LBmain:
 	sub sp, sp, #24
 	mov r8, sp
+	add r8, r8, #0
 	mov r0, r8
 	mov r1, #0
 	mov r2, #24
 	bl memset
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #0
 	str r7, [r8, #0]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #2
 	str r7, [r8, #4]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #2
 	str r7, [r8, #8]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #6
 	str r7, [r8, #12]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #5
 	str r7, [r8, #16]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #4
 	str r7, [r8, #20]
 	sub sp, sp, #24
 	mov r8, sp
+	add r8, r8, #0
 	mov r0, r8
 	mov r1, #0
 	mov r2, #24
 	bl memset
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #0
 	str r7, [r8, #0]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #6
 	str r7, [r8, #4]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #3
 	str r7, [r8, #8]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #5
 	str r7, [r8, #12]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #4
 	str r7, [r8, #16]
 	mov r8, sp
+	add r8, r8, #0
 	mov r7, #6
 	str r7, [r8, #20]
 	sub sp, sp, #24
 	mov r8, #5
 	mov r7, #10
+	add r6, sp, #0
 	mov r3, r6
 	add r6, sp, #24
 	mov r2, r6
@@ -729,6 +782,7 @@ main:
 	mov r0, r9
 	bl putint
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #0
 	mov sp, fp
 	pop {fp}
@@ -742,4 +796,4 @@ main:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004946"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007222"

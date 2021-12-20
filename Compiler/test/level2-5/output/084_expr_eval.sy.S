@@ -52,12 +52,14 @@ eval:
 .LBeval:
 	sub sp, sp, #1024
 	mov r9, sp
+	add r9, r9, #0
 	mov r0, r9
 	mov r1, #0
 	mov r2, #1024
 	bl memset
 	sub sp, sp, #1024
 	mov r9, sp
+	add r9, r9, #0
 	mov r0, r9
 	mov r1, #0
 	mov r2, #1024
@@ -78,6 +80,7 @@ eval:
 .LBB_eval12_IF:
 	bl panic
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, r9
 	mov sp, fp
 	pop {fp}
@@ -99,8 +102,10 @@ eval:
 	mov r0, r9
 	bl stack_push
 	mov r9, r0
+	add sp, sp, #0
 	bl next_token
 	mov r9, r0
+	add sp, sp, #0
 .LB_eval13_LOOP_BEGIN:
 	mov r9, #0
 	mov32 r9, cur_token
@@ -123,6 +128,7 @@ eval:
 	mov r0, r9
 	bl get_op_prec
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	cmp r7, r8
 	mov r8, #0
@@ -136,23 +142,30 @@ eval:
 .LBB_14_ELSE:
 	bl next_token
 	mov r8, r0
+	add sp, sp, #0
 .LB_15_LOOP_BEGIN:
+	add r8, sp, #0
 	mov r0, r8
 	bl stack_size
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	cmp r8, r7
 	mov r8, #0
 	beq .LB_13_COND_END
+	add r7, sp, #0
 	mov r0, r7
 	bl stack_peek
 	mov r7, r0
+	add sp, sp, #0
 	mov r0, r7
 	bl get_op_prec
 	mov r7, r0
+	add sp, sp, #0
 	mov r0, r9
 	bl get_op_prec
 	mov r6, r0
+	add sp, sp, #0
 	cmp r7, r6
 	mov r7, #0
 	movge r7, #1
@@ -163,36 +176,44 @@ eval:
 	beq .LB15_LOOP_END
 	b .LB15_LOOP_BODY
 .LB15_LOOP_BODY:
+	add r7, sp, #0
 	mov r0, r7
 	bl stack_pop
 	mov r7, r0
+	add sp, sp, #0
 	mov r8, r7
 	add r6, sp, #1024
 	mov r0, r6
 	bl stack_pop
 	mov r6, r0
+	add sp, sp, #0
 	mov r7, r6
 	add r5, sp, #1024
 	mov r0, r5
 	bl stack_pop
 	mov r5, r0
+	add sp, sp, #0
 	mov r6, r5
 	mov r2, r7
 	mov r1, r6
 	mov r0, r8
 	bl eval_op
 	mov r8, r0
+	add sp, sp, #0
 	mov r1, r8
 	add r8, sp, #1024
 	mov r0, r8
 	bl stack_push
 	mov r8, r0
+	add sp, sp, #0
 	b .LB_15_LOOP_BEGIN
 .LB15_LOOP_END:
 	mov r1, r9
+	add r9, sp, #0
 	mov r0, r9
 	bl stack_push
 	mov r9, r0
+	add sp, sp, #0
 	mov r9, #0
 	mov32 r9, cur_token
 	ldr r9, [r9, #0]
@@ -209,6 +230,7 @@ eval:
 .LBB_16_IF:
 	bl panic
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, r9
 	mov sp, fp
 	pop {fp}
@@ -230,51 +252,63 @@ eval:
 	mov r0, r9
 	bl stack_push
 	mov r9, r0
+	add sp, sp, #0
 	bl next_token
 	mov r9, r0
+	add sp, sp, #0
 	b .LB_eval13_LOOP_BEGIN
 .LB13_LOOP_END:
 	bl next_token
 	mov r9, r0
+	add sp, sp, #0
 .LB_17_LOOP_BEGIN:
+	add r9, sp, #0
 	mov r0, r9
 	bl stack_size
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #0
 	cmp r9, r8
 	beq .LB17_LOOP_END
 	b .LB17_LOOP_BODY
 .LB17_LOOP_BODY:
+	add r8, sp, #0
 	mov r0, r8
 	bl stack_pop
 	mov r8, r0
+	add sp, sp, #0
 	mov r9, r8
 	add r7, sp, #1024
 	mov r0, r7
 	bl stack_pop
 	mov r7, r0
+	add sp, sp, #0
 	mov r8, r7
 	add r6, sp, #1024
 	mov r0, r6
 	bl stack_pop
 	mov r6, r0
+	add sp, sp, #0
 	mov r7, r6
 	mov r2, r8
 	mov r1, r7
 	mov r0, r9
 	bl eval_op
 	mov r9, r0
+	add sp, sp, #0
 	mov r1, r9
 	add r9, sp, #1024
 	mov r0, r9
 	bl stack_push
 	mov r9, r0
+	add sp, sp, #0
 	b .LB_17_LOOP_BEGIN
 .LB17_LOOP_END:
 	add r9, sp, #1024
 	mov r0, r9
 	bl stack_peek
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, r9
 	mov sp, fp
 	pop {fp}
@@ -682,11 +716,14 @@ main:
 .LBmain:
 	bl getint
 	mov r8, r0
+	add sp, sp, #0
 	mov r9, r8
 	bl getch
 	mov r8, r0
+	add sp, sp, #0
 	bl next_token
 	mov r8, r0
+	add sp, sp, #0
 .LB_main18_LOOP_BEGIN:
 	mov r8, #0
 	cmp r9, r8
@@ -695,12 +732,15 @@ main:
 .LB18_LOOP_BODY:
 	bl eval
 	mov r8, r0
+	add sp, sp, #0
 	mov r0, r8
 	bl putint
 	mov r8, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r8, r0
+	add sp, sp, #0
 	sub r8, r9, #1
 	mov r9, r8
 	b .LB_main18_LOOP_BEGIN
@@ -736,9 +776,11 @@ next_char:
 .LBnext_char:
 	bl getch
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #0
 	mov32 r8, last_char
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, last_char
 	str r9, [r8, #0]
@@ -781,6 +823,7 @@ next_token:
 	mov r0, r9
 	bl is_space
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #0
 	cmp r9, r8
 	beq .LB2_LOOP_END
@@ -788,6 +831,7 @@ next_token:
 .LB2_LOOP_BODY:
 	bl next_char
 	mov r9, r0
+	add sp, sp, #0
 	b .LB_next_token2_LOOP_BEGIN
 .LB2_LOOP_END:
 	mov r9, #0
@@ -796,6 +840,7 @@ next_token:
 	mov r0, r9
 	bl is_num
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #0
 	cmp r9, r8
 	beq .LBB_3_ELSE
@@ -808,15 +853,18 @@ next_token:
 	mov r8, #0
 	mov32 r8, num
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, num
 	str r9, [r8, #0]
 .LB_4_LOOP_BEGIN:
 	bl next_char
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, r9
 	bl is_num
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #0
 	cmp r9, r8
 	beq .LB4_LOOP_END
@@ -826,15 +874,18 @@ next_token:
 	mov32 r9, num
 	ldr r9, [r9, #0]
 	mov r8, #10
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #0
 	mov32 r8, last_char
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	sub r9, r9, #48
 	mov r8, #0
 	mov32 r8, num
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, num
 	str r9, [r8, #0]
@@ -846,6 +897,7 @@ next_token:
 	mov r8, #0
 	mov32 r8, cur_token
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, cur_token
 	str r9, [r8, #0]
@@ -857,17 +909,20 @@ next_token:
 	mov r8, #0
 	mov32 r8, other
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, other
 	str r9, [r8, #0]
 	bl next_char
 	mov r9, r0
+	add sp, sp, #0
 	mov r9, #0
 	mov32 r9, TOKEN_OTHER
 	ldr r9, [r9, #0]
 	mov r8, #0
 	mov32 r8, cur_token
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, cur_token
 	str r9, [r8, #0]
@@ -908,24 +963,31 @@ panic:
 	mov r0, #112
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #97
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #110
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #105
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #99
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #33
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r9, #0
 	sub r9, r9, #1
 	mov r0, r9
@@ -960,11 +1022,14 @@ stack_peek:
 	mov r9, r0
 	mov r8, #0
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, r9
 	ldr r8, [r7, r8]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
+	mov r9, r9
 	ldr r9, [r9, r8]
 	mov r0, r9
 	mov sp, fp
@@ -998,23 +1063,28 @@ stack_pop:
 	mov r9, r0
 	mov r7, #0
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, r9
 	ldr r7, [r6, r7]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, r9
 	ldr r7, [r6, r7]
 	mov r8, r7
 	mov r7, #0
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, r9
 	ldr r7, [r6, r7]
 	sub r7, r7, #1
 	mov r6, #0
 	mov r5, #4
+	mov r5, r5
 	mul r6, r6, r5
+	mov r9, r9
 	str r7, [r9, r6]
 	mov r0, r8
 	mov sp, fp
@@ -1049,22 +1119,27 @@ stack_push:
 	mov r8, r1
 	mov r7, #0
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, r9
 	ldr r7, [r6, r7]
 	add r7, r7, #1
 	mov r6, #0
 	mov r5, #4
+	mov r5, r5
 	mul r6, r6, r5
 	mov r5, r9
 	str r7, [r5, r6]
 	mov r7, #0
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, r9
 	ldr r7, [r6, r7]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
+	mov r9, r9
 	str r8, [r9, r7]
 	mov sp, fp
 	pop {fp}
@@ -1097,7 +1172,9 @@ stack_size:
 	mov r9, r0
 	mov r8, #0
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
+	mov r9, r9
 	ldr r9, [r9, r8]
 	mov r0, r9
 	mov sp, fp
@@ -1112,4 +1189,4 @@ stack_size:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004947"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007223"

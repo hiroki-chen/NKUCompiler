@@ -53,12 +53,14 @@ func1:
 	pop {r14}
 	mov pc, r14
 .LBB_func10_ELSE:
+	mov r7, r7
 	sub r8, r8, r7
 	mov r2, #0
 	mov r1, r8
 	mov r0, r9
 	bl func1
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, r9
 	mov sp, fp
 	pop {fp}
@@ -107,6 +109,7 @@ func2:
 	mov r0, r5
 	bl func2
 	mov r7, r0
+	add sp, sp, #0
 	mov r0, r7
 	mov sp, fp
 	pop {fp}
@@ -174,11 +177,13 @@ func3:
 	pop {r14}
 	mov pc, r14
 .LBB_func32_ELSE:
+	mov r8, r8
 	add r9, r9, r8
 	mov r1, #0
 	mov r0, r9
 	bl func3
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, r9
 	mov sp, fp
 	pop {fp}
@@ -260,6 +265,7 @@ func5:
 .LBfunc5:
 	mov r9, r0
 	mov r8, #0
+	mov r9, r9
 	sub r9, r8, r9
 	mov r0, r9
 	mov sp, fp
@@ -400,15 +406,20 @@ main:
 	str r9, [fp, #-288]
 	bl getint
 	mov r9, r0
+	add sp, sp, #0
+	mov r9, r9
 	str r9, [fp, #-288]
 	bl getint
 	mov r8, r0
+	add sp, sp, #0
 	mov r9, r8
 	bl getint
 	mov r7, r0
+	add sp, sp, #0
 	mov r8, r7
 	bl getint
 	mov r6, r0
+	add sp, sp, #0
 	mov r7, r6
 	sub sp, sp, #40
 	mov r6, #0
@@ -424,11 +435,14 @@ main:
 .LB6_LOOP_BODY:
 	bl getint
 	mov r5, r0
+	add sp, sp, #0
 	mov r10, #4
+	mov r10, r10
 	mul r10, r6, r10
 	mov r4, sp
 	str r4, [fp, #-4]
 	ldr r4, [fp, #-4]
+	add r4, r4, #0
 	str r4, [fp, #-4]
 	ldr r4, [fp, #-4]
 	str r5, [r4, r10]
@@ -441,34 +455,42 @@ main:
 	mov r0, r6
 	bl func7
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, r9
 	bl func5
 	mov r5, r0
+	add sp, sp, #0
 	mov r1, r5
 	mov r0, r6
 	bl func6
 	mov r6, r0
+	add sp, sp, #0
 	mov r1, r8
 	mov r0, r6
 	bl func2
 	mov r6, r0
+	add sp, sp, #0
 	mov r1, r7
 	mov r0, r6
 	bl func3
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, r6
 	bl func5
 	mov r6, r0
+	add sp, sp, #0
 	mov r5, #0
 	mov r10, #4
 	str r10, [fp, #-4]
 	ldr r10, [fp, #-4]
+	mov r10, r10
 	str r10, [fp, #-8]
 	ldr r10, [fp, #-8]
 	mul r5, r5, r10
 	mov r10, sp
 	str r10, [fp, #-12]
 	ldr r10, [fp, #-12]
+	add r10, r10, #0
 	str r10, [fp, #-12]
 	ldr r10, [fp, #-12]
 	ldr r5, [r10, r5]
@@ -477,6 +499,7 @@ main:
 	mov r10, #4
 	str r10, [fp, #-16]
 	ldr r10, [fp, #-16]
+	mov r10, r10
 	str r10, [fp, #-24]
 	ldr r10, [fp, #-20]
 	ldr r4, [fp, #-24]
@@ -487,6 +510,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-28]
 	ldr r10, [fp, #-28]
+	add r10, r10, #0
 	str r10, [fp, #-28]
 	ldr r10, [fp, #-28]
 	ldr r4, [fp, #-32]
@@ -499,11 +523,13 @@ main:
 	bl func5
 	mov r10, r0
 	str r10, [fp, #-152]
+	add sp, sp, #0
 	mov r10, #2
 	str r10, [fp, #-44]
 	mov r10, #4
 	str r10, [fp, #-40]
 	ldr r10, [fp, #-40]
+	mov r10, r10
 	str r10, [fp, #-48]
 	ldr r10, [fp, #-44]
 	ldr r4, [fp, #-48]
@@ -514,6 +540,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-52]
 	ldr r10, [fp, #-52]
+	add r10, r10, #0
 	str r10, [fp, #-52]
 	ldr r10, [fp, #-52]
 	ldr r4, [fp, #-56]
@@ -526,6 +553,7 @@ main:
 	mov r10, #4
 	str r10, [fp, #-60]
 	ldr r10, [fp, #-60]
+	mov r10, r10
 	str r10, [fp, #-64]
 	ldr r10, [fp, #-64]
 	ldr r4, [fp, #-68]
@@ -536,6 +564,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-72]
 	ldr r10, [fp, #-72]
+	add r10, r10, #0
 	str r10, [fp, #-72]
 	ldr r10, [fp, #-72]
 	ldr r4, [fp, #-76]
@@ -548,6 +577,7 @@ main:
 	bl func7
 	mov r10, r0
 	str r10, [fp, #-84]
+	add sp, sp, #0
 	ldr r10, [fp, #-84]
 	mov r1, r10
 	ldr r10, [fp, #-88]
@@ -555,11 +585,13 @@ main:
 	bl func6
 	mov r10, r0
 	str r10, [fp, #-148]
+	add sp, sp, #0
 	mov r10, #4
 	str r10, [fp, #-96]
 	mov r10, #4
 	str r10, [fp, #-92]
 	ldr r10, [fp, #-92]
+	mov r10, r10
 	str r10, [fp, #-100]
 	ldr r10, [fp, #-96]
 	ldr r4, [fp, #-100]
@@ -570,6 +602,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-108]
 	ldr r10, [fp, #-108]
+	add r10, r10, #0
 	str r10, [fp, #-108]
 	ldr r10, [fp, #-104]
 	ldr r4, [fp, #-108]
@@ -582,6 +615,7 @@ main:
 	mov r10, #4
 	str r10, [fp, #-112]
 	ldr r10, [fp, #-112]
+	mov r10, r10
 	str r10, [fp, #-120]
 	ldr r10, [fp, #-116]
 	ldr r4, [fp, #-120]
@@ -592,6 +626,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-128]
 	ldr r10, [fp, #-128]
+	add r10, r10, #0
 	str r10, [fp, #-128]
 	ldr r10, [fp, #-124]
 	ldr r4, [fp, #-128]
@@ -604,6 +639,7 @@ main:
 	bl func7
 	mov r10, r0
 	str r10, [fp, #-136]
+	add sp, sp, #0
 	ldr r10, [fp, #-136]
 	mov r1, r10
 	ldr r10, [fp, #-140]
@@ -611,6 +647,7 @@ main:
 	bl func2
 	mov r10, r0
 	str r10, [fp, #-144]
+	add sp, sp, #0
 	ldr r10, [fp, #-144]
 	mov r2, r10
 	ldr r10, [fp, #-148]
@@ -620,11 +657,13 @@ main:
 	bl func4
 	mov r10, r0
 	str r10, [fp, #-180]
+	add sp, sp, #0
 	mov r10, #6
 	str r10, [fp, #-160]
 	mov r10, #4
 	str r10, [fp, #-156]
 	ldr r10, [fp, #-156]
+	mov r10, r10
 	str r10, [fp, #-164]
 	ldr r10, [fp, #-160]
 	ldr r4, [fp, #-164]
@@ -635,6 +674,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-172]
 	ldr r10, [fp, #-172]
+	add r10, r10, #0
 	str r10, [fp, #-172]
 	ldr r10, [fp, #-168]
 	ldr r4, [fp, #-172]
@@ -649,11 +689,13 @@ main:
 	bl func3
 	mov r10, r0
 	str r10, [fp, #-208]
+	add sp, sp, #0
 	mov r10, #7
 	str r10, [fp, #-188]
 	mov r10, #4
 	str r10, [fp, #-184]
 	ldr r10, [fp, #-184]
+	mov r10, r10
 	str r10, [fp, #-192]
 	ldr r10, [fp, #-188]
 	ldr r4, [fp, #-192]
@@ -664,6 +706,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-200]
 	ldr r10, [fp, #-200]
+	add r10, r10, #0
 	str r10, [fp, #-200]
 	ldr r10, [fp, #-196]
 	ldr r4, [fp, #-200]
@@ -678,11 +721,13 @@ main:
 	bl func2
 	mov r10, r0
 	str r10, [fp, #-268]
+	add sp, sp, #0
 	mov r10, #8
 	str r10, [fp, #-216]
 	mov r10, #4
 	str r10, [fp, #-212]
 	ldr r10, [fp, #-212]
+	mov r10, r10
 	str r10, [fp, #-220]
 	ldr r10, [fp, #-216]
 	ldr r4, [fp, #-220]
@@ -693,6 +738,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-228]
 	ldr r10, [fp, #-228]
+	add r10, r10, #0
 	str r10, [fp, #-228]
 	ldr r10, [fp, #-224]
 	ldr r4, [fp, #-228]
@@ -705,6 +751,7 @@ main:
 	mov r10, #4
 	str r10, [fp, #-232]
 	ldr r10, [fp, #-232]
+	mov r10, r10
 	str r10, [fp, #-240]
 	ldr r10, [fp, #-236]
 	ldr r4, [fp, #-240]
@@ -715,6 +762,7 @@ main:
 	mov r10, sp
 	str r10, [fp, #-244]
 	ldr r10, [fp, #-244]
+	add r10, r10, #0
 	str r10, [fp, #-244]
 	ldr r10, [fp, #-244]
 	ldr r4, [fp, #-248]
@@ -727,6 +775,7 @@ main:
 	bl func7
 	mov r10, r0
 	str r10, [fp, #-256]
+	add sp, sp, #0
 	ldr r10, [fp, #-256]
 	mov r1, r10
 	ldr r10, [fp, #-260]
@@ -734,6 +783,7 @@ main:
 	bl func3
 	mov r10, r0
 	str r10, [fp, #-264]
+	add sp, sp, #0
 	ldr r10, [fp, #-288]
 	mov r2, r10
 	ldr r10, [fp, #-264]
@@ -743,133 +793,172 @@ main:
 	bl func1
 	mov r10, r0
 	str r10, [fp, #-272]
+	add sp, sp, #0
 	ldr r10, [fp, #-272]
 	mov r2, r10
 	mov r1, r5
 	mov r0, r6
 	bl func4
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, r8
 	bl func7
 	mov r8, r0
+	add sp, sp, #0
 	mov r1, r7
 	mov r0, r8
 	bl func3
 	mov r8, r0
+	add sp, sp, #0
 	mov r1, r8
 	mov r0, r9
 	bl func2
 	mov r9, r0
+	add sp, sp, #0
 	mov r1, r9
 	mov r0, r6
 	bl func3
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #0
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, sp
+	add r7, r7, #0
 	ldr r8, [r7, r8]
 	mov r7, #1
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, sp
+	add r6, r6, #0
 	ldr r7, [r6, r7]
 	mov r2, r7
 	mov r1, r8
 	mov r0, r9
 	bl func1
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #2
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, sp
+	add r7, r7, #0
 	ldr r8, [r7, r8]
 	mov r1, r8
 	mov r0, r9
 	bl func2
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #3
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, sp
+	add r7, r7, #0
 	ldr r8, [r7, r8]
 	mov r7, #4
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, sp
+	add r6, r6, #0
 	ldr r7, [r6, r7]
 	mov r6, #5
 	mov r5, #4
+	mov r5, r5
 	mul r6, r6, r5
 	mov r5, sp
+	add r5, r5, #0
 	ldr r6, [r5, r6]
 	mov r0, r6
 	bl func5
 	mov r6, r0
+	add sp, sp, #0
 	mov r1, r6
 	mov r0, r7
 	bl func3
 	mov r7, r0
+	add sp, sp, #0
 	mov r6, #6
 	mov r5, #4
+	mov r5, r5
 	mul r6, r6, r5
 	mov r5, sp
+	add r5, r5, #0
 	ldr r6, [r5, r6]
 	mov r0, r6
 	bl func5
 	mov r6, r0
+	add sp, sp, #0
 	mov r1, r6
 	mov r0, r7
 	bl func2
 	mov r7, r0
+	add sp, sp, #0
 	mov r6, #7
 	mov r5, #4
+	mov r5, r5
 	mul r6, r6, r5
 	mov r5, sp
+	add r5, r5, #0
 	ldr r6, [r5, r6]
 	mov r5, #8
 	mov r10, #4
 	str r10, [fp, #-276]
 	ldr r10, [fp, #-276]
+	mov r10, r10
 	str r10, [fp, #-280]
 	ldr r10, [fp, #-280]
 	mul r5, r5, r10
 	mov r10, sp
 	str r10, [fp, #-284]
 	ldr r10, [fp, #-284]
+	add r10, r10, #0
 	str r10, [fp, #-284]
 	ldr r10, [fp, #-284]
 	ldr r5, [r10, r5]
 	mov r0, r5
 	bl func7
 	mov r5, r0
+	add sp, sp, #0
 	mov r2, r5
 	mov r1, r6
 	mov r0, r7
 	bl func1
 	mov r7, r0
+	add sp, sp, #0
 	mov r6, #9
 	mov r5, #4
+	mov r5, r5
 	mul r6, r6, r5
 	mov r5, sp
+	add r5, r5, #0
 	ldr r6, [r5, r6]
 	mov r0, r6
 	bl func5
 	mov r6, r0
+	add sp, sp, #0
 	mov r1, r6
 	mov r0, r7
 	bl func2
 	mov r7, r0
+	add sp, sp, #0
 	ldr r6, [fp, #-288]
 	mov r1, r6
 	mov r0, r7
 	bl func3
 	mov r7, r0
+	add sp, sp, #0
 	mov r2, r7
 	mov r1, r8
 	mov r0, r9
 	bl func1
 	mov r9, r0
+	add sp, sp, #0
+	mov r9, r9
 	str r9, [fp, #-360]
 	ldr r9, [fp, #-360]
 	mov r0, r9
@@ -885,4 +974,4 @@ main:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004948"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007223"

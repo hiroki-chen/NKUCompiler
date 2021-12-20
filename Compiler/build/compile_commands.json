@@ -1,0 +1,157 @@
+[
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10 -Dutils_EXPORTS -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -fPIC -std=c++17 -o CMakeFiles/utils.dir/src/common/utils.cc.o -c /home/chb/compilation/compiler/Compiler/src/common/utils.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/common/utils.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/backend/allocator.cc.o -c /home/chb/compilation/compiler/Compiler/src/backend/allocator.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/backend/allocator.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/backend/analyzer.cc.o -c /home/chb/compilation/compiler/Compiler/src/backend/analyzer.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/backend/analyzer.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/backend/assembly.cc.o -c /home/chb/compilation/compiler/Compiler/src/backend/assembly.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/backend/assembly.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/backend/assembly_dispatcher.cc.o -c /home/chb/compilation/compiler/Compiler/src/backend/assembly_dispatcher.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/backend/assembly_dispatcher.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/backend/units.cc.o -c /home/chb/compilation/compiler/Compiler/src/backend/units.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/backend/units.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item_decl.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_decl.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_decl.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item_expr.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_expr.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_expr.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item_func.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_func.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_func.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item_ident.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_ident.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_ident.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item_literal.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_literal.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_literal.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item_stmt.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_stmt.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_stmt.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/nodes/item_struct.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_struct.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/nodes/item_struct.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/parser/lexer.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/parser/lexer.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/parser/parser.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/parser/parser.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/symbol_table/symbol.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/symbol_table/symbol.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/symbol_table/symbol.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/frontend/symbol_table/symbol_table.cc.o -c /home/chb/compilation/compiler/Compiler/src/frontend/symbol_table/symbol_table.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/frontend/symbol_table/symbol_table.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/cfg.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/cfg.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/cfg.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/context.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/context.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/context.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir_item.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir_item.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir_item.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir_item_decl.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir_item_decl.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir_item_decl.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir_item_expr.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir_item_expr.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir_item_expr.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir_item_func.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir_item_func.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir_item_func.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir_item_ident.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir_item_ident.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir_item_ident.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir_item_literal.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir_item_literal.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir_item_literal.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/ir_item_stmt.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/ir_item_stmt.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/ir_item_stmt.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/ir/pass.cc.o -c /home/chb/compilation/compiler/Compiler/src/ir/pass.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/ir/pass.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/main.cc.o -c /home/chb/compilation/compiler/Compiler/src/main.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/main.cc"
+},
+{
+  "directory": "/home/chb/compilation/compiler/Compiler/build",
+  "command": "/usr/bin/clang++-10  -I/home/chb/compilation/compiler/Compiler/include -g  -Wno-return-type -Wno-sign-compare                                                      -Wno-unused-parameter                                                      -Wno-nullability-completeness                                                      -Wno-register -O3 -DNDEBUG -std=c++17 -o CMakeFiles/compiler.dir/src/runtime/runtime.cc.o -c /home/chb/compilation/compiler/Compiler/src/runtime/runtime.cc",
+  "file": "/home/chb/compilation/compiler/Compiler/src/runtime/runtime.cc"
+}
+]

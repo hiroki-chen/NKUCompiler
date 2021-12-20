@@ -35,134 +35,176 @@ main:
 	str r8, [fp, #-664]
 	sub sp, sp, #80
 	mov r7, sp
+	add r7, r7, #0
 	mov r0, r7
 	mov r1, #0
 	mov r2, #80
 	bl memset
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #1
 	str r6, [r7, #0]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #2
 	str r6, [r7, #4]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #3
 	str r6, [r7, #8]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #4
 	str r6, [r7, #12]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #5
 	str r6, [r7, #16]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #6
 	str r6, [r7, #20]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #7
 	str r6, [r7, #24]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #8
 	str r6, [r7, #28]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #9
 	str r6, [r7, #32]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #0
 	str r6, [r7, #36]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #1
 	str r6, [r7, #40]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #2
 	str r6, [r7, #44]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #3
 	str r6, [r7, #48]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #4
 	str r6, [r7, #52]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #5
 	str r6, [r7, #56]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #6
 	str r6, [r7, #60]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #7
 	str r6, [r7, #64]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #8
 	str r6, [r7, #68]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #9
 	str r6, [r7, #72]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #0
 	str r6, [r7, #76]
 	sub sp, sp, #80
 	mov r7, sp
+	add r7, r7, #0
 	mov r0, r7
 	mov r1, #0
 	mov r2, #80
 	bl memset
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #2
 	str r6, [r7, #0]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #3
 	str r6, [r7, #4]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #4
 	str r6, [r7, #8]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #2
 	str r6, [r7, #12]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #5
 	str r6, [r7, #16]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #7
 	str r6, [r7, #20]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #9
 	str r6, [r7, #24]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #9
 	str r6, [r7, #28]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #0
 	str r6, [r7, #32]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #1
 	str r6, [r7, #36]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #9
 	str r6, [r7, #40]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #8
 	str r6, [r7, #44]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #7
 	str r6, [r7, #48]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #6
 	str r6, [r7, #52]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #4
 	str r6, [r7, #56]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #3
 	str r6, [r7, #60]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #2
 	str r6, [r7, #64]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #1
 	str r6, [r7, #68]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #2
 	str r6, [r7, #72]
 	mov r7, sp
+	add r7, r7, #0
 	mov r6, #2
 	str r6, [r7, #76]
 	mov r6, #0
@@ -186,6 +228,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-16]
 	ldr r5, [fp, #-16]
+	add r5, r5, #0
 	str r5, [fp, #-16]
 	ldr r5, [fp, #-16]
 	mov r0, r5
@@ -211,6 +254,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-28]
 	ldr r5, [fp, #-28]
+	mov r5, r5
 	str r5, [fp, #-32]
 	ldr r5, [fp, #-32]
 	mul r5, r9, r5
@@ -229,6 +273,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-44]
 	ldr r5, [fp, #-44]
+	mov r5, r5
 	str r5, [fp, #-48]
 	ldr r5, [fp, #-48]
 	mul r5, r9, r5
@@ -273,6 +318,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-76]
 	ldr r5, [fp, #-76]
+	mov r5, r5
 	str r5, [fp, #-80]
 	ldr r5, [fp, #-80]
 	mul r5, r9, r5
@@ -291,6 +337,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-92]
 	ldr r5, [fp, #-92]
+	mov r5, r5
 	str r5, [fp, #-96]
 	ldr r5, [fp, #-96]
 	mul r5, r9, r5
@@ -319,6 +366,7 @@ main:
 	mov r9, r6
 	add r9, r7, r9
 	sub r9, r9, #1
+	mov r9, r9
 	str r9, [fp, #-664]
 	mov r9, #0
 .LB_2_LOOP_BEGIN:
@@ -340,6 +388,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-124]
 	ldr r5, [fp, #-124]
+	mov r5, r5
 	str r5, [fp, #-128]
 	ldr r5, [fp, #-128]
 	mul r5, r9, r5
@@ -347,6 +396,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-136]
 	ldr r5, [fp, #-136]
+	add r5, r5, #0
 	str r5, [fp, #-136]
 	mov r5, #0
 	str r5, [fp, #-132]
@@ -368,6 +418,7 @@ main:
 .LB2_LOOP_END:
 	mov r8, #0
 	sub r9, r6, #1
+	mov r9, r9
 .LB_3_LOOP_BEGIN:
 	mov r5, #0
 	str r5, [fp, #-148]
@@ -392,6 +443,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-164]
 	ldr r5, [fp, #-164]
+	mov r5, r5
 	str r5, [fp, #-168]
 	ldr r5, [fp, #-168]
 	mul r5, r9, r5
@@ -408,10 +460,12 @@ main:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-180]
 	ldr r5, [fp, #-180]
+	mov r5, r5
 	str r5, [fp, #-648]
 	sub r5, r7, #1
 	str r5, [fp, #-184]
 	ldr r5, [fp, #-184]
+	mov r5, r5
 	str r5, [fp, #-504]
 .LB_4_LOOP_BEGIN:
 	mov r5, #0
@@ -440,6 +494,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-204]
 	ldr r5, [fp, #-204]
+	mov r5, r5
 	str r5, [fp, #-208]
 	ldr r5, [fp, #-208]
 	ldr r10, [fp, #-664]
@@ -448,6 +503,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-216]
 	ldr r5, [fp, #-216]
+	add r5, r5, #0
 	str r5, [fp, #-216]
 	ldr r5, [fp, #-212]
 	ldr r10, [fp, #-216]
@@ -458,6 +514,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-220]
 	ldr r5, [fp, #-220]
+	mov r5, r5
 	str r5, [fp, #-224]
 	ldr r5, [fp, #-224]
 	ldr r10, [fp, #-504]
@@ -477,12 +534,14 @@ main:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-236]
 	ldr r5, [fp, #-236]
+	mov r5, r5
 	str r5, [fp, #-240]
 	ldr r5, [fp, #-240]
 	ldr r10, [fp, #-648]
 	mul r5, r10, r5
 	str r5, [fp, #-244]
 	ldr r5, [fp, #-244]
+	mov r5, r5
 	str r5, [fp, #-252]
 	ldr r5, [fp, #-248]
 	ldr r10, [fp, #-252]
@@ -512,6 +571,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-272]
 	ldr r5, [fp, #-272]
+	mov r5, r5
 	str r5, [fp, #-276]
 	ldr r5, [fp, #-276]
 	ldr r10, [fp, #-664]
@@ -520,6 +580,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-284]
 	ldr r5, [fp, #-284]
+	add r5, r5, #0
 	str r5, [fp, #-284]
 	ldr r5, [fp, #-280]
 	ldr r10, [fp, #-284]
@@ -532,6 +593,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-288]
 	ldr r5, [fp, #-288]
+	mov r5, r5
 	str r5, [fp, #-296]
 	ldr r5, [fp, #-292]
 	ldr r10, [fp, #-296]
@@ -542,6 +604,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-304]
 	ldr r5, [fp, #-304]
+	add r5, r5, #0
 	str r5, [fp, #-304]
 	ldr r5, [fp, #-300]
 	ldr r10, [fp, #-304]
@@ -563,6 +626,7 @@ main:
 	ldr r5, [fp, #-312]
 	mov r1, r5
 	ldr r5, [fp, #-316]
+	mov r5, r5
 	str r5, [fp, #-324]
 	ldr r5, [fp, #-320]
 	ldr r10, [fp, #-324]
@@ -576,6 +640,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-328]
 	ldr r5, [fp, #-328]
+	mov r5, r5
 	str r5, [fp, #-336]
 	ldr r5, [fp, #-332]
 	ldr r10, [fp, #-336]
@@ -586,6 +651,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-344]
 	ldr r5, [fp, #-344]
+	add r5, r5, #0
 	str r5, [fp, #-344]
 	ldr r5, [fp, #-340]
 	ldr r10, [fp, #-344]
@@ -602,6 +668,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-352]
 	ldr r5, [fp, #-352]
+	mov r5, r5
 	str r5, [fp, #-356]
 	ldr r5, [fp, #-356]
 	ldr r10, [fp, #-664]
@@ -610,6 +677,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-364]
 	ldr r5, [fp, #-364]
+	add r5, r5, #0
 	str r5, [fp, #-364]
 	ldr r5, [fp, #-360]
 	ldr r10, [fp, #-364]
@@ -622,11 +690,13 @@ main:
 	sub r5, r5, #1
 	str r5, [fp, #-368]
 	ldr r5, [fp, #-368]
+	mov r5, r5
 	str r5, [fp, #-504]
 	ldr r5, [fp, #-664]
 	sub r5, r5, #1
 	str r5, [fp, #-372]
 	ldr r5, [fp, #-372]
+	mov r5, r5
 	str r5, [fp, #-664]
 	b .LB_4_LOOP_BEGIN
 .LB4_LOOP_END:
@@ -640,6 +710,7 @@ main:
 	sub r5, r5, #1
 	str r5, [fp, #-384]
 	ldr r5, [fp, #-384]
+	mov r5, r5
 	str r5, [fp, #-664]
 	sub r5, r9, #1
 	str r5, [fp, #-388]
@@ -652,6 +723,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-392]
 	ldr r5, [fp, #-392]
+	mov r5, r5
 	str r5, [fp, #-400]
 	ldr r5, [fp, #-396]
 	ldr r10, [fp, #-400]
@@ -662,6 +734,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-408]
 	ldr r5, [fp, #-408]
+	add r5, r5, #0
 	str r5, [fp, #-408]
 	ldr r5, [fp, #-404]
 	ldr r10, [fp, #-408]
@@ -694,6 +767,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-428]
 	ldr r5, [fp, #-428]
+	mov r5, r5
 	str r5, [fp, #-436]
 	ldr r5, [fp, #-432]
 	ldr r10, [fp, #-436]
@@ -704,6 +778,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-444]
 	ldr r5, [fp, #-444]
+	add r5, r5, #0
 	str r5, [fp, #-444]
 	ldr r5, [fp, #-440]
 	ldr r10, [fp, #-444]
@@ -716,6 +791,7 @@ main:
 	bl putint
 	mov r5, r0
 	str r5, [fp, #-452]
+	add sp, sp, #0
 .LBB_6_ELSE:
 	mov r9, #1
 .LB_7_LOOP_BEGIN:
@@ -745,6 +821,7 @@ main:
 	mov r5, #4
 	str r5, [fp, #-476]
 	ldr r5, [fp, #-476]
+	mov r5, r5
 	str r5, [fp, #-480]
 	ldr r5, [fp, #-480]
 	mul r5, r9, r5
@@ -752,6 +829,7 @@ main:
 	mov r5, sp
 	str r5, [fp, #-484]
 	ldr r5, [fp, #-484]
+	add r5, r5, #0
 	str r5, [fp, #-484]
 	ldr r5, [fp, #-484]
 	ldr r10, [fp, #-488]
@@ -764,6 +842,7 @@ main:
 	bl putint
 	mov r5, r0
 	str r5, [fp, #-496]
+	add sp, sp, #0
 	add r5, r9, #1
 	str r5, [fp, #-500]
 	ldr r5, [fp, #-500]
@@ -783,4 +862,4 @@ main:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004946"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007222"
