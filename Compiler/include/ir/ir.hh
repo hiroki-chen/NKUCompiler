@@ -328,6 +328,8 @@ typedef class IR final {
   Operand* const operand_c;
   Operand* const dst;
 
+  bool is_dead;
+
   uint32_t lineno;
 
   /**
@@ -363,21 +365,6 @@ typedef class IR final {
   bool emit_helper(decltype(&Operand::get_is_var)&& callback,
                    const bool& chained = true) const;
 
-  /**
-   * @brief The @ref{compiler::ir::IR::emit_ir} funciton will iterator over each
-   * operand and emit their IRs.
-   *
-   * @param callback A lambda expression or a function object: the callback
-   * function.
-   * @param chained    Denote whether the result is related to another IR.
-   *                   Should be evaluated via callback. If there is no incoming
-   *                   edges, the IR could be deleted.
-   */
-  void walk_ir(std::function<void(Operand* const)>&& callback,
-               const bool& chained = true);
-
-  std::vector<IR*> func_call_list;
-
  public:
   // Default constructor is definitely not allowed.
   IR() = delete;
@@ -407,6 +394,19 @@ typedef class IR final {
    */
   void emit_ir(std::ostream& out = std::cout, const bool& verbose = false);
 
+   /**
+   * @brief The @ref{compiler::ir::IR::emit_ir} funciton will iterator over each
+   * operand and emit their IRs.
+   *
+   * @param callback A lambda expression or a function object: the callback
+   * function.
+   * @param chained    Denote whether the result is related to another IR.
+   *                   Should be evaluated via callback. If there is no incoming
+   *                   edges, the IR could be deleted.
+   */
+  void walk_ir(std::function<void(Operand* const)>&& callback,
+               const bool& chained = true);
+
   /**
    * @brief Emit the machine code. IR -> Machine code.
    *
@@ -418,7 +418,7 @@ typedef class IR final {
     phi = phi_block;
   }
 
-  void add_func_call(IR* const ir) { func_call_list.emplace_back(ir); }
+  void set_dead(void) { is_dead = true; }
 
   ir::ir_list::iterator get_phi_block(void) const { return phi; }
 
@@ -432,9 +432,9 @@ typedef class IR final {
 
   Operand* get_op3(void) const { return operand_c; }
 
-  std::vector<IR*> get_func_call_list(void) const { return func_call_list; }
-
   std::string get_label(void) const { return label; }
+
+  bool get_is_dead(void) const { return is_dead; }
 } IR;
 
 using BranchIR = std::pair<compiler::ir::op_type, compiler::ir::op_type>;

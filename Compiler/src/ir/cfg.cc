@@ -18,6 +18,7 @@
 #include <common/compile_excepts.hh>
 #include <common/utils.hh>
 #include <ir/cfg.hh>
+#include <ir/pass.hh>
 
 static void prune_early_return(compiler::ir::CFG_block* const block) {
   compiler::ir::ir_list* const ir_list = block->get_ir_list();
@@ -81,7 +82,9 @@ void compiler::ir::CFG_builder::construct_mapping(
           while (k < ir_list.size() &&
                  ir_list[k].get_op_type() != compiler::ir::op_type::LBL &&
                  ir_list[k].get_op_type() != compiler::ir::op_type::END_FUNC) {
-            basic_block->add_ir(ir_list[k]);
+            if (!ir_list[k].get_is_dead()) {
+              basic_block->add_ir(ir_list[k]);
+            }
             k++;
           }
           // Reset index.
@@ -257,7 +260,29 @@ compiler::ir::CFG_builder::CFG_builder(const compiler::ir::ir_list& ir_list) {
   analyze_control_flow();
   // Prune useless control flows or merge continuous basic blocks.
   prune_cfg();
-  // print_cfg();
+  // Do optimizations on the IR.
+  do_pass();
+}
+
+void compiler::ir::CFG_builder::do_pass(void) {
+  // Do a simple pass.
+  // Note that the the atomic unit for optimization is a function.
+  for (auto blocks : functions) {
+    const std::unique_ptr<ir::pass::Dead_code_pass> pass =
+        std::make_unique<ir::pass::Dead_code_pass>();
+    std::vector<ir::IR*> ir_list;
+    for (auto basic_block : blocks.second) {
+      for (uint32_t i = 0; i < basic_block->get_ir_list()->size(); i++) {
+        // Fetch the raw pointer to manipulate the ir.
+        ir_list.emplace_back(&((*basic_block->get_ir_list())[i]));
+      }
+    }
+
+    for (uint32_t i = 0; i < ir::maximum_pass_time; i++) {
+      pass->do_pass(ir_list);
+      pass->reset();
+    }
+  }
 }
 
 void compiler::ir::CFG_block::splice(const ir::ir_list& ir_list) {
