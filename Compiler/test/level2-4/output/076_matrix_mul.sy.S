@@ -82,31 +82,37 @@ main:
 	b .LB0_LOOP_BODY
 .LB0_LOOP_BODY:
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, sp
 	add r7, r7, #108
 	str r9, [r7, r8]
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, sp
 	add r7, r7, #96
 	str r9, [r7, r8]
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, sp
 	add r7, r7, #84
 	str r9, [r7, r8]
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, sp
 	add r7, r7, #72
 	str r9, [r7, r8]
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, sp
 	add r7, r7, #60
 	str r9, [r7, r8]
 	mov r8, #4
+	mov r8, r8
 	mul r8, r9, r8
 	mov r7, sp
 	add r7, r7, #48
@@ -115,6 +121,7 @@ main:
 	mov r9, r8
 	b .LB_main0_LOOP_BEGIN
 .LB0_LOOP_END:
+	add r9, sp, #0
 	add r8, sp, #12
 	add r7, sp, #24
 	add r6, sp, #48
@@ -135,6 +142,7 @@ main:
 	bl mul
 	mov r9, r0
 	add sp, sp, #20
+	mov r9, r9
 .LB_1_LOOP_BEGIN:
 	mov r7, #0
 	mov32 r7, N
@@ -148,6 +156,7 @@ main:
 	b .LB1_LOOP_BODY
 .LB1_LOOP_BODY:
 	mov r7, #4
+	mov r7, r7
 	mul r7, r9, r7
 	mov r6, sp
 	add r6, r6, #24
@@ -156,6 +165,7 @@ main:
 	mov r0, r8
 	bl putint
 	mov r7, r0
+	add sp, sp, #0
 	add r7, r9, #1
 	mov r9, r7
 	b .LB_1_LOOP_BEGIN
@@ -165,6 +175,7 @@ main:
 	mov r0, r9
 	bl putch
 	mov r7, r0
+	add sp, sp, #0
 .LB_2_LOOP_BEGIN:
 	mov r7, #0
 	mov32 r7, N
@@ -178,6 +189,7 @@ main:
 	b .LB2_LOOP_BODY
 .LB2_LOOP_BODY:
 	mov r7, #4
+	mov r7, r7
 	mul r7, r8, r7
 	mov r6, sp
 	add r6, r6, #12
@@ -186,6 +198,7 @@ main:
 	mov r0, r9
 	bl putint
 	mov r7, r0
+	add sp, sp, #0
 	add r7, r8, #1
 	mov r8, r7
 	b .LB_2_LOOP_BEGIN
@@ -195,6 +208,7 @@ main:
 	mov r0, r9
 	bl putch
 	mov r7, r0
+	add sp, sp, #0
 .LB_3_LOOP_BEGIN:
 	mov r7, #0
 	mov32 r7, N
@@ -208,13 +222,16 @@ main:
 	b .LB3_LOOP_BODY
 .LB3_LOOP_BODY:
 	mov r7, #4
+	mov r7, r7
 	mul r7, r8, r7
 	mov r6, sp
+	add r6, r6, #0
 	ldr r7, [r6, r7]
 	mov r9, r7
 	mov r0, r9
 	bl putint
 	mov r7, r0
+	add sp, sp, #0
 	add r7, r8, #1
 	mov r8, r7
 	b .LB_3_LOOP_BEGIN
@@ -223,6 +240,7 @@ main:
 	mov r0, r9
 	bl putch
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #0
 	mov sp, fp
 	pop {fp}
@@ -283,6 +301,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-12]
 	ldr r5, [fp, #-12]
+	mov r5, r5
 	str r5, [fp, #-16]
 	ldr r5, [fp, #-16]
 	ldr r10, [fp, #-20]
@@ -303,6 +322,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-32]
 	ldr r5, [fp, #-32]
+	mov r5, r5
 	str r5, [fp, #-36]
 	ldr r5, [fp, #-36]
 	ldr r10, [fp, #-40]
@@ -319,6 +339,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-52]
 	ldr r5, [fp, #-52]
+	mov r5, r5
 	str r5, [fp, #-56]
 	ldr r5, [fp, #-56]
 	ldr r10, [fp, #-60]
@@ -331,6 +352,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-64]
 	ldr r5, [fp, #-64]
+	mov r5, r5
 	str r5, [fp, #-72]
 	ldr r5, [fp, #-68]
 	ldr r10, [fp, #-72]
@@ -351,6 +373,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-84]
 	ldr r5, [fp, #-84]
+	mov r5, r5
 	str r5, [fp, #-88]
 	ldr r5, [fp, #-88]
 	ldr r10, [fp, #-92]
@@ -359,6 +382,7 @@ mul:
 	mul r5, r10, r5
 	str r5, [fp, #-96]
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-100]
 	ldr r5, [fp, #-96]
 	ldr r10, [fp, #-100]
@@ -367,6 +391,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-104]
 	ldr r5, [fp, #-104]
+	mov r5, r5
 	str r5, [fp, #-108]
 	ldr r5, [fp, #-108]
 	ldr r10, [fp, #-112]
@@ -375,6 +400,7 @@ mul:
 	mul r5, r10, r5
 	str r5, [fp, #-116]
 	ldr r5, [fp, #-116]
+	mov r5, r5
 	str r5, [fp, #-124]
 	ldr r5, [fp, #-120]
 	ldr r10, [fp, #-124]
@@ -387,6 +413,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-128]
 	ldr r5, [fp, #-128]
+	mov r5, r5
 	str r5, [fp, #-136]
 	ldr r5, [fp, #-132]
 	ldr r10, [fp, #-136]
@@ -407,6 +434,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-148]
 	ldr r5, [fp, #-148]
+	mov r5, r5
 	str r5, [fp, #-156]
 	ldr r5, [fp, #-152]
 	ldr r10, [fp, #-156]
@@ -415,6 +443,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-160]
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-164]
 	ldr r5, [fp, #-160]
 	ldr r10, [fp, #-164]
@@ -423,6 +452,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-168]
 	ldr r5, [fp, #-168]
+	mov r5, r5
 	str r5, [fp, #-172]
 	ldr r5, [fp, #-172]
 	ldr r10, [fp, #-176]
@@ -431,6 +461,7 @@ mul:
 	mul r5, r10, r5
 	str r5, [fp, #-180]
 	ldr r5, [fp, #-180]
+	mov r5, r5
 	str r5, [fp, #-188]
 	ldr r5, [fp, #-184]
 	ldr r10, [fp, #-188]
@@ -443,6 +474,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-192]
 	ldr r5, [fp, #-192]
+	mov r5, r5
 	str r5, [fp, #-200]
 	ldr r5, [fp, #-196]
 	ldr r10, [fp, #-200]
@@ -467,6 +499,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-216]
 	ldr r5, [fp, #-216]
+	mov r5, r5
 	str r5, [fp, #-224]
 	ldr r5, [fp, #-220]
 	ldr r10, [fp, #-224]
@@ -487,6 +520,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-236]
 	ldr r5, [fp, #-236]
+	mov r5, r5
 	str r5, [fp, #-244]
 	ldr r5, [fp, #-240]
 	ldr r10, [fp, #-244]
@@ -503,6 +537,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-256]
 	ldr r5, [fp, #-256]
+	mov r5, r5
 	str r5, [fp, #-260]
 	ldr r5, [fp, #-260]
 	ldr r10, [fp, #-264]
@@ -515,6 +550,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-268]
 	ldr r5, [fp, #-268]
+	mov r5, r5
 	str r5, [fp, #-276]
 	ldr r5, [fp, #-272]
 	ldr r10, [fp, #-276]
@@ -535,6 +571,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-288]
 	ldr r5, [fp, #-288]
+	mov r5, r5
 	str r5, [fp, #-296]
 	ldr r5, [fp, #-292]
 	ldr r10, [fp, #-296]
@@ -543,6 +580,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-300]
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-304]
 	ldr r5, [fp, #-300]
 	ldr r10, [fp, #-304]
@@ -551,6 +589,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-308]
 	ldr r5, [fp, #-308]
+	mov r5, r5
 	str r5, [fp, #-316]
 	ldr r5, [fp, #-312]
 	ldr r10, [fp, #-316]
@@ -559,6 +598,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-320]
 	ldr r5, [fp, #-320]
+	mov r5, r5
 	str r5, [fp, #-324]
 	ldr r5, [fp, #-324]
 	ldr r10, [fp, #-328]
@@ -571,6 +611,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-332]
 	ldr r5, [fp, #-332]
+	mov r5, r5
 	str r5, [fp, #-340]
 	ldr r5, [fp, #-336]
 	ldr r10, [fp, #-340]
@@ -591,6 +632,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-352]
 	ldr r5, [fp, #-352]
+	mov r5, r5
 	str r5, [fp, #-360]
 	ldr r5, [fp, #-356]
 	ldr r10, [fp, #-360]
@@ -599,6 +641,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-364]
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-368]
 	ldr r5, [fp, #-364]
 	ldr r10, [fp, #-368]
@@ -607,6 +650,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-372]
 	ldr r5, [fp, #-372]
+	mov r5, r5
 	str r5, [fp, #-380]
 	ldr r5, [fp, #-376]
 	ldr r10, [fp, #-380]
@@ -615,6 +659,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-384]
 	ldr r5, [fp, #-384]
+	mov r5, r5
 	str r5, [fp, #-392]
 	ldr r5, [fp, #-388]
 	ldr r10, [fp, #-392]
@@ -627,6 +672,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-396]
 	ldr r5, [fp, #-396]
+	mov r5, r5
 	str r5, [fp, #-404]
 	ldr r5, [fp, #-400]
 	ldr r10, [fp, #-404]
@@ -651,6 +697,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-420]
 	ldr r5, [fp, #-420]
+	mov r5, r5
 	str r5, [fp, #-428]
 	ldr r5, [fp, #-424]
 	ldr r10, [fp, #-428]
@@ -671,6 +718,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-440]
 	ldr r5, [fp, #-440]
+	mov r5, r5
 	str r5, [fp, #-448]
 	ldr r5, [fp, #-444]
 	ldr r10, [fp, #-448]
@@ -687,6 +735,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-460]
 	ldr r5, [fp, #-460]
+	mov r5, r5
 	str r5, [fp, #-468]
 	ldr r5, [fp, #-464]
 	ldr r10, [fp, #-468]
@@ -699,6 +748,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-472]
 	ldr r5, [fp, #-472]
+	mov r5, r5
 	str r5, [fp, #-480]
 	ldr r5, [fp, #-476]
 	ldr r10, [fp, #-480]
@@ -719,6 +769,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-492]
 	ldr r5, [fp, #-492]
+	mov r5, r5
 	str r5, [fp, #-500]
 	ldr r5, [fp, #-496]
 	ldr r10, [fp, #-500]
@@ -727,6 +778,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-504]
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-508]
 	ldr r5, [fp, #-504]
 	ldr r10, [fp, #-508]
@@ -735,6 +787,7 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-512]
 	ldr r5, [fp, #-512]
+	mov r5, r5
 	str r5, [fp, #-516]
 	ldr r5, [fp, #-516]
 	ldr r10, [fp, #-520]
@@ -743,6 +796,7 @@ mul:
 	mul r5, r10, r5
 	str r5, [fp, #-524]
 	ldr r5, [fp, #-524]
+	mov r5, r5
 	str r5, [fp, #-532]
 	ldr r5, [fp, #-528]
 	ldr r10, [fp, #-532]
@@ -755,6 +809,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-536]
 	ldr r5, [fp, #-536]
+	mov r5, r5
 	str r5, [fp, #-544]
 	ldr r5, [fp, #-540]
 	ldr r10, [fp, #-544]
@@ -762,6 +817,7 @@ mul:
 	ldr r10, [fp, #-1140]
 	mul r5, r5, r10
 	str r5, [fp, #-548]
+	mov r9, r9
 	ldr r5, [fp, #-548]
 	ldr r9, [r9, r5]
 	mov r5, #2
@@ -769,6 +825,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-552]
 	ldr r5, [fp, #-552]
+	mov r5, r5
 	str r5, [fp, #-560]
 	ldr r5, [fp, #-556]
 	ldr r10, [fp, #-560]
@@ -777,6 +834,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-568]
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-564]
 	ldr r5, [fp, #-564]
 	ldr r10, [fp, #-568]
@@ -785,9 +843,11 @@ mul:
 	ldr r5, [r5, r10]
 	str r5, [fp, #-572]
 	ldr r5, [fp, #-572]
+	mov r5, r5
 	str r5, [fp, #-576]
 	ldr r5, [fp, #-576]
 	mul r9, r9, r5
+	mov r9, r9
 	ldr r5, [fp, #-580]
 	add r9, r5, r9
 	mov r5, #2
@@ -795,6 +855,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-584]
 	ldr r5, [fp, #-584]
+	mov r5, r5
 	str r5, [fp, #-588]
 	ldr r5, [fp, #-588]
 	ldr r10, [fp, #-592]
@@ -802,10 +863,12 @@ mul:
 	ldr r10, [fp, #-1152]
 	mul r5, r10, r5
 	str r5, [fp, #-596]
+	mov r6, r6
 	ldr r5, [fp, #-596]
 	str r9, [r6, r5]
 	mov r9, #0
 	mov r6, #4
+	mov r6, r6
 	mul r9, r9, r6
 	mov r6, r8
 	ldr r9, [r6, r9]
@@ -813,6 +876,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-600]
 	ldr r5, [fp, #-600]
+	mov r5, r5
 	str r5, [fp, #-604]
 	ldr r5, [fp, #-604]
 	mul r6, r6, r5
@@ -820,11 +884,13 @@ mul:
 	str r5, [fp, #-608]
 	ldr r5, [fp, #-608]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r9, r9, r6
 	mov r6, #1
 	mov r5, #4
 	str r5, [fp, #-612]
 	ldr r5, [fp, #-612]
+	mov r5, r5
 	str r5, [fp, #-616]
 	ldr r5, [fp, #-616]
 	mul r6, r6, r5
@@ -837,6 +903,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-624]
 	ldr r5, [fp, #-624]
+	mov r5, r5
 	str r5, [fp, #-632]
 	ldr r5, [fp, #-628]
 	ldr r10, [fp, #-632]
@@ -845,6 +912,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-636]
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-640]
 	ldr r5, [fp, #-636]
 	ldr r10, [fp, #-640]
@@ -853,14 +921,17 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-644]
 	ldr r5, [fp, #-644]
+	mov r5, r5
 	str r5, [fp, #-648]
 	ldr r5, [fp, #-648]
 	mul r6, r6, r5
+	mov r6, r6
 	add r9, r9, r6
 	mov r6, #2
 	mov r5, #4
 	str r5, [fp, #-652]
 	ldr r5, [fp, #-652]
+	mov r5, r5
 	str r5, [fp, #-656]
 	ldr r5, [fp, #-656]
 	mul r6, r6, r5
@@ -873,6 +944,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-664]
 	ldr r5, [fp, #-664]
+	mov r5, r5
 	str r5, [fp, #-668]
 	ldr r5, [fp, #-668]
 	ldr r10, [fp, #-672]
@@ -881,6 +953,7 @@ mul:
 	mul r5, r10, r5
 	str r5, [fp, #-676]
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-680]
 	ldr r5, [fp, #-676]
 	ldr r10, [fp, #-680]
@@ -889,23 +962,28 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-684]
 	ldr r5, [fp, #-684]
+	mov r5, r5
 	str r5, [fp, #-688]
 	ldr r5, [fp, #-688]
 	mul r6, r6, r5
+	mov r6, r6
 	add r9, r9, r6
 	mov r6, #0
 	mov r5, #4
 	str r5, [fp, #-692]
 	ldr r5, [fp, #-692]
+	mov r5, r5
 	str r5, [fp, #-696]
 	ldr r5, [fp, #-696]
 	mul r6, r6, r5
 	ldr r5, [fp, #-880]
+	mov r5, r5
 	str r5, [fp, #-700]
 	ldr r5, [fp, #-700]
 	str r9, [r5, r6]
 	mov r9, #0
 	mov r6, #4
+	mov r6, r6
 	mul r9, r9, r6
 	mov r6, r8
 	ldr r9, [r6, r9]
@@ -913,6 +991,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-704]
 	ldr r5, [fp, #-704]
+	mov r5, r5
 	str r5, [fp, #-708]
 	ldr r5, [fp, #-708]
 	mul r6, r6, r5
@@ -920,11 +999,13 @@ mul:
 	str r5, [fp, #-712]
 	ldr r5, [fp, #-712]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r9, r9, r6
 	mov r6, #1
 	mov r5, #4
 	str r5, [fp, #-716]
 	ldr r5, [fp, #-716]
+	mov r5, r5
 	str r5, [fp, #-720]
 	ldr r5, [fp, #-720]
 	mul r6, r6, r5
@@ -937,6 +1018,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-728]
 	ldr r5, [fp, #-728]
+	mov r5, r5
 	str r5, [fp, #-736]
 	ldr r5, [fp, #-732]
 	ldr r10, [fp, #-736]
@@ -945,6 +1027,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-740]
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-744]
 	ldr r5, [fp, #-740]
 	ldr r10, [fp, #-744]
@@ -953,14 +1036,17 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-748]
 	ldr r5, [fp, #-748]
+	mov r5, r5
 	str r5, [fp, #-752]
 	ldr r5, [fp, #-752]
 	mul r6, r6, r5
+	mov r6, r6
 	add r9, r9, r6
 	mov r6, #2
 	mov r5, #4
 	str r5, [fp, #-756]
 	ldr r5, [fp, #-756]
+	mov r5, r5
 	str r5, [fp, #-760]
 	ldr r5, [fp, #-760]
 	mul r6, r6, r5
@@ -973,6 +1059,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-768]
 	ldr r5, [fp, #-768]
+	mov r5, r5
 	str r5, [fp, #-776]
 	ldr r5, [fp, #-772]
 	ldr r10, [fp, #-776]
@@ -981,6 +1068,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-780]
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-784]
 	ldr r5, [fp, #-780]
 	ldr r10, [fp, #-784]
@@ -989,23 +1077,28 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-788]
 	ldr r5, [fp, #-788]
+	mov r5, r5
 	str r5, [fp, #-792]
 	ldr r5, [fp, #-792]
 	mul r6, r6, r5
+	mov r6, r6
 	add r9, r9, r6
 	mov r6, #1
 	mov r5, #4
 	str r5, [fp, #-796]
 	ldr r5, [fp, #-796]
+	mov r5, r5
 	str r5, [fp, #-800]
 	ldr r5, [fp, #-800]
 	mul r6, r6, r5
 	ldr r5, [fp, #-880]
+	mov r5, r5
 	str r5, [fp, #-804]
 	ldr r5, [fp, #-804]
 	str r9, [r5, r6]
 	mov r9, #0
 	mov r6, #4
+	mov r6, r6
 	mul r9, r9, r6
 	mov r6, r8
 	ldr r9, [r6, r9]
@@ -1013,6 +1106,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-808]
 	ldr r5, [fp, #-808]
+	mov r5, r5
 	str r5, [fp, #-812]
 	ldr r5, [fp, #-812]
 	mul r6, r6, r5
@@ -1020,11 +1114,13 @@ mul:
 	str r5, [fp, #-816]
 	ldr r5, [fp, #-816]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r9, r9, r6
 	mov r6, #1
 	mov r5, #4
 	str r5, [fp, #-820]
 	ldr r5, [fp, #-820]
+	mov r5, r5
 	str r5, [fp, #-824]
 	ldr r5, [fp, #-824]
 	mul r6, r6, r5
@@ -1037,6 +1133,7 @@ mul:
 	mov r5, #4
 	str r5, [fp, #-832]
 	ldr r5, [fp, #-832]
+	mov r5, r5
 	str r5, [fp, #-840]
 	ldr r5, [fp, #-836]
 	ldr r10, [fp, #-840]
@@ -1045,6 +1142,7 @@ mul:
 	mul r5, r5, r10
 	str r5, [fp, #-844]
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-848]
 	ldr r5, [fp, #-844]
 	ldr r10, [fp, #-848]
@@ -1053,178 +1151,243 @@ mul:
 	ldr r5, [r10, r5]
 	str r5, [fp, #-852]
 	ldr r5, [fp, #-852]
+	mov r5, r5
 	str r5, [fp, #-856]
 	ldr r5, [fp, #-856]
 	mul r6, r6, r5
+	mov r6, r6
 	add r9, r9, r6
 	mov r6, #2
 	mov r5, #4
 	str r5, [fp, #-860]
 	ldr r5, [fp, #-860]
+	mov r5, r5
 	str r5, [fp, #-864]
 	ldr r5, [fp, #-864]
 	mul r6, r6, r5
+	mov r8, r8
 	ldr r8, [r8, r6]
 	mov r6, #2
 	mov r5, #4
 	str r5, [fp, #-868]
 	ldr r5, [fp, #-868]
+	mov r5, r5
 	str r5, [fp, #-872]
 	ldr r5, [fp, #-872]
 	mul r6, r6, r5
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-876]
 	ldr r5, [fp, #-876]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r8, r8, r6
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #2
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	ldr r6, [fp, #-880]
+	mov r6, r6
 	str r9, [r6, r8]
 	mov r9, #0
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	ldr r8, [fp, #-1196]
+	mov r8, r8
 	ldr r9, [r8, r9]
 	mov r8, #0
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	mov r6, r7
 	ldr r8, [r6, r8]
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #1
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	ldr r6, [fp, #-1196]
+	mov r6, r6
 	ldr r8, [r6, r8]
 	mov r6, #0
 	mov r5, #4
 	str r5, [fp, #-884]
 	ldr r5, [fp, #-884]
+	mov r5, r5
 	str r5, [fp, #-888]
 	ldr r5, [fp, #-888]
 	mul r6, r6, r5
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-892]
 	ldr r5, [fp, #-892]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r8, r8, r6
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #2
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	ldr r6, [fp, #-1196]
+	mov r6, r6
 	ldr r8, [r6, r8]
 	mov r6, #0
 	mov r5, #4
 	str r5, [fp, #-896]
 	ldr r5, [fp, #-896]
+	mov r5, r5
 	str r5, [fp, #-900]
 	ldr r5, [fp, #-900]
 	mul r6, r6, r5
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-904]
 	ldr r5, [fp, #-904]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r8, r8, r6
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	ldr r6, [fp, #-936]
+	mov r6, r6
 	str r9, [r6, r8]
 	mov r9, #0
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	ldr r8, [fp, #-1196]
+	mov r8, r8
 	ldr r9, [r8, r9]
 	mov r8, #1
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	mov r6, r7
 	ldr r8, [r6, r8]
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #1
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	ldr r6, [fp, #-1196]
+	mov r6, r6
 	ldr r8, [r6, r8]
 	mov r6, #1
 	mov r5, #4
 	str r5, [fp, #-908]
 	ldr r5, [fp, #-908]
+	mov r5, r5
 	str r5, [fp, #-912]
 	ldr r5, [fp, #-912]
 	mul r6, r6, r5
 	ldr r5, [fp, #-1204]
+	mov r5, r5
 	str r5, [fp, #-916]
 	ldr r5, [fp, #-916]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r8, r8, r6
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #2
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	ldr r6, [fp, #-1196]
+	mov r6, r6
 	ldr r8, [r6, r8]
 	mov r6, #1
 	mov r5, #4
 	str r5, [fp, #-920]
 	ldr r5, [fp, #-920]
+	mov r5, r5
 	str r5, [fp, #-924]
 	ldr r5, [fp, #-924]
 	mul r6, r6, r5
 	ldr r5, [fp, #-932]
+	mov r5, r5
 	str r5, [fp, #-928]
 	ldr r5, [fp, #-928]
 	ldr r6, [r5, r6]
+	mov r6, r6
 	mul r8, r8, r6
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #1
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
 	ldr r6, [fp, #-936]
+	mov r6, r6
 	str r9, [r6, r8]
 	mov r9, #0
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	ldr r8, [fp, #-1196]
+	mov r8, r8
 	ldr r9, [r8, r9]
 	mov r8, #2
 	mov r6, #4
+	mov r6, r6
 	mul r8, r8, r6
+	mov r7, r7
 	ldr r8, [r7, r8]
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #1
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	ldr r7, [fp, #-1196]
+	mov r7, r7
 	ldr r8, [r7, r8]
 	mov r7, #2
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	ldr r6, [fp, #-1204]
+	mov r6, r6
 	ldr r7, [r6, r7]
+	mov r7, r7
 	mul r8, r8, r7
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #2
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	ldr r7, [fp, #-1196]
+	mov r7, r7
 	ldr r8, [r7, r8]
 	mov r7, #2
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	ldr r6, [fp, #-932]
+	mov r6, r6
 	ldr r7, [r6, r7]
+	mov r7, r7
 	mul r8, r8, r7
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #2
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	ldr r7, [fp, #-936]
+	mov r7, r7
 	str r9, [r7, r8]
 	mov r0, #0
 	mov sp, fp
@@ -1239,4 +1402,4 @@ mul:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004946"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007383"

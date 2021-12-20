@@ -159,6 +159,7 @@ func:
 	str r7, [fp, #-1628]
 	mov r7, r8
 	add r7, r9, r7
+	mov r7, r7
 	str r7, [fp, #-1628]
 	str r10, [fp, #-2244]
 	str r10, [fp, #-1324]
@@ -196,22 +197,27 @@ func:
 	bl getint
 	mov r10, r0
 	str r10, [fp, #-4]
+	add sp, sp, #0
 	ldr r10, [fp, #-4]
 	mov r7, r10
 	bl getint
 	mov r10, r0
 	str r10, [fp, #-4]
+	add sp, sp, #0
 	ldr r10, [fp, #-4]
 	mov r6, r10
 	bl getint
 	mov r10, r0
 	str r10, [fp, #-8]
+	add sp, sp, #0
 	ldr r10, [fp, #-8]
 	mov r5, r10
 	bl getint
 	mov r10, r0
 	str r10, [fp, #-12]
+	add sp, sp, #0
 	ldr r10, [fp, #-12]
+	mov r10, r10
 	str r10, [fp, #-2244]
 	mov r10, #1
 	str r10, [fp, #-16]
@@ -230,6 +236,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-24]
 	ldr r10, [fp, #-24]
+	mov r10, r10
 	str r10, [fp, #-32]
 	ldr r10, [fp, #-28]
 	ldr r4, [fp, #-32]
@@ -238,6 +245,7 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-36]
 	ldr r10, [fp, #-36]
+	mov r10, r10
 	str r10, [fp, #-1324]
 	mov r10, #2
 	str r10, [fp, #-44]
@@ -256,6 +264,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-48]
 	ldr r10, [fp, #-48]
+	mov r10, r10
 	str r10, [fp, #-52]
 	ldr r10, [fp, #-52]
 	ldr r4, [fp, #-56]
@@ -264,6 +273,7 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-60]
 	ldr r10, [fp, #-60]
+	mov r10, r10
 	str r10, [fp, #-1352]
 	mov r10, #3
 	str r10, [fp, #-68]
@@ -282,6 +292,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-72]
 	ldr r10, [fp, #-72]
+	mov r10, r10
 	str r10, [fp, #-80]
 	ldr r10, [fp, #-76]
 	ldr r4, [fp, #-80]
@@ -290,10 +301,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-84]
 	ldr r10, [fp, #-84]
+	mov r10, r10
 	str r10, [fp, #-1380]
 	mov r10, #4
 	str r10, [fp, #-88]
 	ldr r10, [fp, #-2244]
+	mov r10, r10
 	str r10, [fp, #-92]
 	ldr r10, [fp, #-88]
 	ldr r4, [fp, #-92]
@@ -308,6 +321,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-96]
 	ldr r10, [fp, #-96]
+	mov r10, r10
 	str r10, [fp, #-104]
 	ldr r10, [fp, #-100]
 	ldr r4, [fp, #-104]
@@ -316,10 +330,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-108]
 	ldr r10, [fp, #-108]
+	mov r10, r10
 	str r10, [fp, #-1408]
 	mov r10, #1
 	str r10, [fp, #-112]
 	ldr r10, [fp, #-1324]
+	mov r10, r10
 	str r10, [fp, #-116]
 	ldr r10, [fp, #-112]
 	ldr r4, [fp, #-116]
@@ -334,6 +350,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-120]
 	ldr r10, [fp, #-120]
+	mov r10, r10
 	str r10, [fp, #-128]
 	ldr r10, [fp, #-124]
 	ldr r4, [fp, #-128]
@@ -342,10 +359,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-132]
 	ldr r10, [fp, #-132]
+	mov r10, r10
 	str r10, [fp, #-1212]
 	mov r10, #2
 	str r10, [fp, #-136]
 	ldr r10, [fp, #-1352]
+	mov r10, r10
 	str r10, [fp, #-140]
 	ldr r10, [fp, #-136]
 	ldr r4, [fp, #-140]
@@ -360,6 +379,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-144]
 	ldr r10, [fp, #-144]
+	mov r10, r10
 	str r10, [fp, #-152]
 	ldr r10, [fp, #-148]
 	ldr r4, [fp, #-152]
@@ -368,10 +388,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-156]
 	ldr r10, [fp, #-156]
+	mov r10, r10
 	str r10, [fp, #-1240]
 	mov r10, #3
 	str r10, [fp, #-164]
 	ldr r10, [fp, #-1380]
+	mov r10, r10
 	str r10, [fp, #-160]
 	ldr r10, [fp, #-160]
 	ldr r4, [fp, #-164]
@@ -386,6 +408,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-168]
 	ldr r10, [fp, #-168]
+	mov r10, r10
 	str r10, [fp, #-176]
 	ldr r10, [fp, #-172]
 	ldr r4, [fp, #-176]
@@ -394,10 +417,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-180]
 	ldr r10, [fp, #-180]
+	mov r10, r10
 	str r10, [fp, #-1268]
 	mov r10, #4
 	str r10, [fp, #-184]
 	ldr r10, [fp, #-1408]
+	mov r10, r10
 	str r10, [fp, #-188]
 	ldr r10, [fp, #-184]
 	ldr r4, [fp, #-188]
@@ -412,6 +437,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-192]
 	ldr r10, [fp, #-192]
+	mov r10, r10
 	str r10, [fp, #-200]
 	ldr r10, [fp, #-196]
 	ldr r4, [fp, #-200]
@@ -420,10 +446,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-204]
 	ldr r10, [fp, #-204]
+	mov r10, r10
 	str r10, [fp, #-1296]
 	mov r10, #1
 	str r10, [fp, #-208]
 	ldr r10, [fp, #-1212]
+	mov r10, r10
 	str r10, [fp, #-212]
 	ldr r10, [fp, #-208]
 	ldr r4, [fp, #-212]
@@ -438,6 +466,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-216]
 	ldr r10, [fp, #-216]
+	mov r10, r10
 	str r10, [fp, #-224]
 	ldr r10, [fp, #-220]
 	ldr r4, [fp, #-224]
@@ -446,10 +475,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-228]
 	ldr r10, [fp, #-228]
+	mov r10, r10
 	str r10, [fp, #-1100]
 	mov r10, #2
 	str r10, [fp, #-232]
 	ldr r10, [fp, #-1240]
+	mov r10, r10
 	str r10, [fp, #-236]
 	ldr r10, [fp, #-232]
 	ldr r4, [fp, #-236]
@@ -464,6 +495,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-240]
 	ldr r10, [fp, #-240]
+	mov r10, r10
 	str r10, [fp, #-248]
 	ldr r10, [fp, #-244]
 	ldr r4, [fp, #-248]
@@ -472,10 +504,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-252]
 	ldr r10, [fp, #-252]
+	mov r10, r10
 	str r10, [fp, #-1128]
 	mov r10, #3
 	str r10, [fp, #-256]
 	ldr r10, [fp, #-1268]
+	mov r10, r10
 	str r10, [fp, #-260]
 	ldr r10, [fp, #-256]
 	ldr r4, [fp, #-260]
@@ -490,6 +524,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-264]
 	ldr r10, [fp, #-264]
+	mov r10, r10
 	str r10, [fp, #-272]
 	ldr r10, [fp, #-268]
 	ldr r4, [fp, #-272]
@@ -498,10 +533,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-276]
 	ldr r10, [fp, #-276]
+	mov r10, r10
 	str r10, [fp, #-1156]
 	mov r10, #4
 	str r10, [fp, #-280]
 	ldr r10, [fp, #-1296]
+	mov r10, r10
 	str r10, [fp, #-284]
 	ldr r10, [fp, #-280]
 	ldr r4, [fp, #-284]
@@ -516,6 +553,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-288]
 	ldr r10, [fp, #-288]
+	mov r10, r10
 	str r10, [fp, #-296]
 	ldr r10, [fp, #-292]
 	ldr r4, [fp, #-296]
@@ -524,10 +562,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-300]
 	ldr r10, [fp, #-300]
+	mov r10, r10
 	str r10, [fp, #-1184]
 	mov r10, #1
 	str r10, [fp, #-304]
 	ldr r10, [fp, #-1100]
+	mov r10, r10
 	str r10, [fp, #-308]
 	ldr r10, [fp, #-304]
 	ldr r4, [fp, #-308]
@@ -542,6 +582,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-312]
 	ldr r10, [fp, #-312]
+	mov r10, r10
 	str r10, [fp, #-320]
 	ldr r10, [fp, #-316]
 	ldr r4, [fp, #-320]
@@ -550,10 +591,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-324]
 	ldr r10, [fp, #-324]
+	mov r10, r10
 	str r10, [fp, #-988]
 	mov r10, #2
 	str r10, [fp, #-332]
 	ldr r10, [fp, #-1128]
+	mov r10, r10
 	str r10, [fp, #-328]
 	ldr r10, [fp, #-328]
 	ldr r4, [fp, #-332]
@@ -568,6 +611,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-336]
 	ldr r10, [fp, #-336]
+	mov r10, r10
 	str r10, [fp, #-344]
 	ldr r10, [fp, #-340]
 	ldr r4, [fp, #-344]
@@ -576,10 +620,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-348]
 	ldr r10, [fp, #-348]
+	mov r10, r10
 	str r10, [fp, #-1016]
 	mov r10, #3
 	str r10, [fp, #-352]
 	ldr r10, [fp, #-1156]
+	mov r10, r10
 	str r10, [fp, #-356]
 	ldr r10, [fp, #-352]
 	ldr r4, [fp, #-356]
@@ -594,6 +640,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-360]
 	ldr r10, [fp, #-360]
+	mov r10, r10
 	str r10, [fp, #-364]
 	ldr r10, [fp, #-364]
 	ldr r4, [fp, #-368]
@@ -602,10 +649,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-372]
 	ldr r10, [fp, #-372]
+	mov r10, r10
 	str r10, [fp, #-1044]
 	mov r10, #4
 	str r10, [fp, #-376]
 	ldr r10, [fp, #-1184]
+	mov r10, r10
 	str r10, [fp, #-380]
 	ldr r10, [fp, #-376]
 	ldr r4, [fp, #-380]
@@ -620,6 +669,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-384]
 	ldr r10, [fp, #-384]
+	mov r10, r10
 	str r10, [fp, #-392]
 	ldr r10, [fp, #-388]
 	ldr r4, [fp, #-392]
@@ -628,10 +678,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-396]
 	ldr r10, [fp, #-396]
+	mov r10, r10
 	str r10, [fp, #-1072]
 	mov r10, #1
 	str r10, [fp, #-400]
 	ldr r10, [fp, #-988]
+	mov r10, r10
 	str r10, [fp, #-404]
 	ldr r10, [fp, #-400]
 	ldr r4, [fp, #-404]
@@ -646,6 +698,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-408]
 	ldr r10, [fp, #-408]
+	mov r10, r10
 	str r10, [fp, #-416]
 	ldr r10, [fp, #-412]
 	ldr r4, [fp, #-416]
@@ -654,10 +707,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-420]
 	ldr r10, [fp, #-420]
+	mov r10, r10
 	str r10, [fp, #-876]
 	mov r10, #2
 	str r10, [fp, #-428]
 	ldr r10, [fp, #-1016]
+	mov r10, r10
 	str r10, [fp, #-424]
 	ldr r10, [fp, #-424]
 	ldr r4, [fp, #-428]
@@ -672,6 +727,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-432]
 	ldr r10, [fp, #-432]
+	mov r10, r10
 	str r10, [fp, #-440]
 	ldr r10, [fp, #-436]
 	ldr r4, [fp, #-440]
@@ -680,10 +736,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-444]
 	ldr r10, [fp, #-444]
+	mov r10, r10
 	str r10, [fp, #-904]
 	mov r10, #3
 	str r10, [fp, #-448]
 	ldr r10, [fp, #-1044]
+	mov r10, r10
 	str r10, [fp, #-452]
 	ldr r10, [fp, #-448]
 	ldr r4, [fp, #-452]
@@ -698,6 +756,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-456]
 	ldr r10, [fp, #-456]
+	mov r10, r10
 	str r10, [fp, #-464]
 	ldr r10, [fp, #-460]
 	ldr r4, [fp, #-464]
@@ -706,10 +765,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-468]
 	ldr r10, [fp, #-468]
+	mov r10, r10
 	str r10, [fp, #-932]
 	mov r10, #4
 	str r10, [fp, #-472]
 	ldr r10, [fp, #-1072]
+	mov r10, r10
 	str r10, [fp, #-476]
 	ldr r10, [fp, #-472]
 	ldr r4, [fp, #-476]
@@ -724,6 +785,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-480]
 	ldr r10, [fp, #-480]
+	mov r10, r10
 	str r10, [fp, #-488]
 	ldr r10, [fp, #-484]
 	ldr r4, [fp, #-488]
@@ -732,10 +794,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-492]
 	ldr r10, [fp, #-492]
+	mov r10, r10
 	str r10, [fp, #-960]
 	mov r10, #1
 	str r10, [fp, #-500]
 	ldr r10, [fp, #-876]
+	mov r10, r10
 	str r10, [fp, #-496]
 	ldr r10, [fp, #-496]
 	ldr r4, [fp, #-500]
@@ -750,6 +814,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-504]
 	ldr r10, [fp, #-504]
+	mov r10, r10
 	str r10, [fp, #-512]
 	ldr r10, [fp, #-508]
 	ldr r4, [fp, #-512]
@@ -758,10 +823,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-516]
 	ldr r10, [fp, #-516]
+	mov r10, r10
 	str r10, [fp, #-800]
 	mov r10, #2
 	str r10, [fp, #-520]
 	ldr r10, [fp, #-904]
+	mov r10, r10
 	str r10, [fp, #-524]
 	ldr r10, [fp, #-520]
 	ldr r4, [fp, #-524]
@@ -776,6 +843,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-528]
 	ldr r10, [fp, #-528]
+	mov r10, r10
 	str r10, [fp, #-536]
 	ldr r10, [fp, #-532]
 	ldr r4, [fp, #-536]
@@ -784,10 +852,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-540]
 	ldr r10, [fp, #-540]
+	mov r10, r10
 	str r10, [fp, #-804]
 	mov r10, #3
 	str r10, [fp, #-544]
 	ldr r10, [fp, #-932]
+	mov r10, r10
 	str r10, [fp, #-548]
 	ldr r10, [fp, #-544]
 	ldr r4, [fp, #-548]
@@ -802,6 +872,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-552]
 	ldr r10, [fp, #-552]
+	mov r10, r10
 	str r10, [fp, #-560]
 	ldr r10, [fp, #-556]
 	ldr r4, [fp, #-560]
@@ -810,10 +881,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-564]
 	ldr r10, [fp, #-564]
+	mov r10, r10
 	str r10, [fp, #-820]
 	mov r10, #4
 	str r10, [fp, #-572]
 	ldr r10, [fp, #-960]
+	mov r10, r10
 	str r10, [fp, #-568]
 	ldr r10, [fp, #-568]
 	ldr r4, [fp, #-572]
@@ -828,6 +901,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-576]
 	ldr r10, [fp, #-576]
+	mov r10, r10
 	str r10, [fp, #-580]
 	ldr r10, [fp, #-580]
 	ldr r4, [fp, #-584]
@@ -836,10 +910,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-588]
 	ldr r10, [fp, #-588]
+	mov r10, r10
 	str r10, [fp, #-848]
 	mov r10, #1
 	str r10, [fp, #-592]
 	ldr r10, [fp, #-800]
+	mov r10, r10
 	str r10, [fp, #-596]
 	ldr r10, [fp, #-592]
 	ldr r4, [fp, #-596]
@@ -854,6 +930,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-600]
 	ldr r10, [fp, #-600]
+	mov r10, r10
 	str r10, [fp, #-604]
 	ldr r10, [fp, #-604]
 	ldr r4, [fp, #-608]
@@ -862,10 +939,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-612]
 	ldr r10, [fp, #-612]
+	mov r10, r10
 	str r10, [fp, #-784]
 	mov r10, #2
 	str r10, [fp, #-616]
 	ldr r10, [fp, #-804]
+	mov r10, r10
 	str r10, [fp, #-620]
 	ldr r10, [fp, #-616]
 	ldr r4, [fp, #-620]
@@ -880,6 +959,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-624]
 	ldr r10, [fp, #-624]
+	mov r10, r10
 	str r10, [fp, #-632]
 	ldr r10, [fp, #-628]
 	ldr r4, [fp, #-632]
@@ -888,10 +968,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-636]
 	ldr r10, [fp, #-636]
+	mov r10, r10
 	str r10, [fp, #-788]
 	mov r10, #3
 	str r10, [fp, #-644]
 	ldr r10, [fp, #-820]
+	mov r10, r10
 	str r10, [fp, #-640]
 	ldr r10, [fp, #-640]
 	ldr r4, [fp, #-644]
@@ -906,6 +988,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-648]
 	ldr r10, [fp, #-648]
+	mov r10, r10
 	str r10, [fp, #-656]
 	ldr r10, [fp, #-652]
 	ldr r4, [fp, #-656]
@@ -914,10 +997,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-660]
 	ldr r10, [fp, #-660]
+	mov r10, r10
 	str r10, [fp, #-792]
 	mov r10, #4
 	str r10, [fp, #-664]
 	ldr r10, [fp, #-848]
+	mov r10, r10
 	str r10, [fp, #-668]
 	ldr r10, [fp, #-664]
 	ldr r4, [fp, #-668]
@@ -932,6 +1017,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-672]
 	ldr r10, [fp, #-672]
+	mov r10, r10
 	str r10, [fp, #-680]
 	ldr r10, [fp, #-676]
 	ldr r4, [fp, #-680]
@@ -940,10 +1026,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-684]
 	ldr r10, [fp, #-684]
+	mov r10, r10
 	str r10, [fp, #-796]
 	mov r10, #1
 	str r10, [fp, #-688]
 	ldr r10, [fp, #-784]
+	mov r10, r10
 	str r10, [fp, #-692]
 	ldr r10, [fp, #-688]
 	ldr r4, [fp, #-692]
@@ -958,6 +1046,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-696]
 	ldr r10, [fp, #-696]
+	mov r10, r10
 	str r10, [fp, #-704]
 	ldr r10, [fp, #-700]
 	ldr r4, [fp, #-704]
@@ -966,10 +1055,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-708]
 	ldr r10, [fp, #-708]
+	mov r10, r10
 	str r10, [fp, #-1736]
 	mov r10, #2
 	str r10, [fp, #-712]
 	ldr r10, [fp, #-788]
+	mov r10, r10
 	str r10, [fp, #-716]
 	ldr r10, [fp, #-712]
 	ldr r4, [fp, #-716]
@@ -984,6 +1075,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-720]
 	ldr r10, [fp, #-720]
+	mov r10, r10
 	str r10, [fp, #-728]
 	ldr r10, [fp, #-724]
 	ldr r4, [fp, #-728]
@@ -992,10 +1084,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-732]
 	ldr r10, [fp, #-732]
+	mov r10, r10
 	str r10, [fp, #-1740]
 	mov r10, #3
 	str r10, [fp, #-736]
 	ldr r10, [fp, #-792]
+	mov r10, r10
 	str r10, [fp, #-740]
 	ldr r10, [fp, #-736]
 	ldr r4, [fp, #-740]
@@ -1010,6 +1104,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-744]
 	ldr r10, [fp, #-744]
+	mov r10, r10
 	str r10, [fp, #-752]
 	ldr r10, [fp, #-748]
 	ldr r4, [fp, #-752]
@@ -1018,10 +1113,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-756]
 	ldr r10, [fp, #-756]
+	mov r10, r10
 	str r10, [fp, #-1744]
 	mov r10, #4
 	str r10, [fp, #-760]
 	ldr r10, [fp, #-796]
+	mov r10, r10
 	str r10, [fp, #-764]
 	ldr r10, [fp, #-760]
 	ldr r4, [fp, #-764]
@@ -1036,6 +1133,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-768]
 	ldr r10, [fp, #-768]
+	mov r10, r10
 	str r10, [fp, #-776]
 	ldr r10, [fp, #-772]
 	ldr r4, [fp, #-776]
@@ -1044,51 +1142,70 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-780]
 	ldr r10, [fp, #-780]
+	mov r10, r10
 	str r10, [fp, #-1748]
+	mov r8, r8
 	sub r9, r9, r8
 	add r9, r9, #10
+	mov r9, r9
 	str r9, [fp, #-1628]
 	mov r9, #1
 	ldr r8, [fp, #-784]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a29
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
+	mov r9, r9
 	str r9, [fp, #-1736]
 	mov r9, #2
 	ldr r8, [fp, #-788]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a30
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
+	mov r9, r9
 	str r9, [fp, #-1740]
 	mov r9, #3
 	ldr r8, [fp, #-792]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a31
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
+	mov r9, r9
 	str r9, [fp, #-1744]
 	mov r9, #4
 	ldr r8, [fp, #-796]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a32
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
+	mov r9, r9
 	str r9, [fp, #-1748]
 	mov r9, #1
 	ldr r8, [fp, #-800]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a25
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
+	mov r9, r9
 	mov r8, #2
 	ldr r10, [fp, #-804]
+	mov r10, r10
 	str r10, [fp, #-808]
 	ldr r10, [fp, #-808]
 	add r8, r8, r10
@@ -1099,12 +1216,15 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-812]
 	ldr r10, [fp, #-812]
+	mov r10, r10
 	str r10, [fp, #-816]
 	ldr r10, [fp, #-816]
 	add r8, r8, r10
+	mov r8, r8
 	mov r10, #3
 	str r10, [fp, #-824]
 	ldr r10, [fp, #-820]
+	mov r10, r10
 	str r10, [fp, #-828]
 	ldr r10, [fp, #-824]
 	ldr r4, [fp, #-828]
@@ -1119,6 +1239,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-832]
 	ldr r10, [fp, #-832]
+	mov r10, r10
 	str r10, [fp, #-840]
 	ldr r10, [fp, #-836]
 	ldr r4, [fp, #-840]
@@ -1127,10 +1248,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-844]
 	ldr r10, [fp, #-844]
+	mov r10, r10
 	str r10, [fp, #-1728]
 	mov r10, #4
 	str r10, [fp, #-856]
 	ldr r10, [fp, #-848]
+	mov r10, r10
 	str r10, [fp, #-852]
 	ldr r10, [fp, #-852]
 	ldr r4, [fp, #-856]
@@ -1145,6 +1268,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-860]
 	ldr r10, [fp, #-860]
+	mov r10, r10
 	str r10, [fp, #-868]
 	ldr r10, [fp, #-864]
 	ldr r4, [fp, #-868]
@@ -1153,10 +1277,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-872]
 	ldr r10, [fp, #-872]
+	mov r10, r10
 	str r10, [fp, #-1732]
 	mov r10, #1
 	str r10, [fp, #-880]
 	ldr r10, [fp, #-876]
+	mov r10, r10
 	str r10, [fp, #-884]
 	ldr r10, [fp, #-880]
 	ldr r4, [fp, #-884]
@@ -1171,6 +1297,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-888]
 	ldr r10, [fp, #-888]
+	mov r10, r10
 	str r10, [fp, #-892]
 	ldr r10, [fp, #-892]
 	ldr r4, [fp, #-896]
@@ -1179,10 +1306,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-900]
 	ldr r10, [fp, #-900]
+	mov r10, r10
 	str r10, [fp, #-1712]
 	mov r10, #2
 	str r10, [fp, #-908]
 	ldr r10, [fp, #-904]
+	mov r10, r10
 	str r10, [fp, #-912]
 	ldr r10, [fp, #-908]
 	ldr r4, [fp, #-912]
@@ -1197,6 +1326,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-916]
 	ldr r10, [fp, #-916]
+	mov r10, r10
 	str r10, [fp, #-924]
 	ldr r10, [fp, #-920]
 	ldr r4, [fp, #-924]
@@ -1205,10 +1335,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-928]
 	ldr r10, [fp, #-928]
+	mov r10, r10
 	str r10, [fp, #-1716]
 	mov r10, #3
 	str r10, [fp, #-940]
 	ldr r10, [fp, #-932]
+	mov r10, r10
 	str r10, [fp, #-936]
 	ldr r10, [fp, #-936]
 	ldr r4, [fp, #-940]
@@ -1223,6 +1355,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-944]
 	ldr r10, [fp, #-944]
+	mov r10, r10
 	str r10, [fp, #-952]
 	ldr r10, [fp, #-948]
 	ldr r4, [fp, #-952]
@@ -1231,10 +1364,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-956]
 	ldr r10, [fp, #-956]
+	mov r10, r10
 	str r10, [fp, #-1720]
 	mov r10, #4
 	str r10, [fp, #-964]
 	ldr r10, [fp, #-960]
+	mov r10, r10
 	str r10, [fp, #-968]
 	ldr r10, [fp, #-964]
 	ldr r4, [fp, #-968]
@@ -1249,6 +1384,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-972]
 	ldr r10, [fp, #-972]
+	mov r10, r10
 	str r10, [fp, #-980]
 	ldr r10, [fp, #-976]
 	ldr r4, [fp, #-980]
@@ -1257,10 +1393,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-984]
 	ldr r10, [fp, #-984]
+	mov r10, r10
 	str r10, [fp, #-1724]
 	mov r10, #1
 	str r10, [fp, #-992]
 	ldr r10, [fp, #-988]
+	mov r10, r10
 	str r10, [fp, #-996]
 	ldr r10, [fp, #-992]
 	ldr r4, [fp, #-996]
@@ -1275,6 +1413,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1000]
 	ldr r10, [fp, #-1000]
+	mov r10, r10
 	str r10, [fp, #-1004]
 	ldr r10, [fp, #-1004]
 	ldr r4, [fp, #-1008]
@@ -1283,10 +1422,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1012]
 	ldr r10, [fp, #-1012]
+	mov r10, r10
 	str r10, [fp, #-1696]
 	mov r10, #2
 	str r10, [fp, #-1020]
 	ldr r10, [fp, #-1016]
+	mov r10, r10
 	str r10, [fp, #-1024]
 	ldr r10, [fp, #-1020]
 	ldr r4, [fp, #-1024]
@@ -1301,6 +1442,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1028]
 	ldr r10, [fp, #-1028]
+	mov r10, r10
 	str r10, [fp, #-1032]
 	ldr r10, [fp, #-1032]
 	ldr r4, [fp, #-1036]
@@ -1309,10 +1451,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1040]
 	ldr r10, [fp, #-1040]
+	mov r10, r10
 	str r10, [fp, #-1700]
 	mov r10, #3
 	str r10, [fp, #-1048]
 	ldr r10, [fp, #-1044]
+	mov r10, r10
 	str r10, [fp, #-1052]
 	ldr r10, [fp, #-1048]
 	ldr r4, [fp, #-1052]
@@ -1327,6 +1471,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1056]
 	ldr r10, [fp, #-1056]
+	mov r10, r10
 	str r10, [fp, #-1060]
 	ldr r10, [fp, #-1060]
 	ldr r4, [fp, #-1064]
@@ -1335,10 +1480,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1068]
 	ldr r10, [fp, #-1068]
+	mov r10, r10
 	str r10, [fp, #-1704]
 	mov r10, #4
 	str r10, [fp, #-1076]
 	ldr r10, [fp, #-1072]
+	mov r10, r10
 	str r10, [fp, #-1080]
 	ldr r10, [fp, #-1076]
 	ldr r4, [fp, #-1080]
@@ -1353,6 +1500,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1084]
 	ldr r10, [fp, #-1084]
+	mov r10, r10
 	str r10, [fp, #-1092]
 	ldr r10, [fp, #-1088]
 	ldr r4, [fp, #-1092]
@@ -1361,10 +1509,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1096]
 	ldr r10, [fp, #-1096]
+	mov r10, r10
 	str r10, [fp, #-1708]
 	mov r10, #1
 	str r10, [fp, #-1104]
 	ldr r10, [fp, #-1100]
+	mov r10, r10
 	str r10, [fp, #-1108]
 	ldr r10, [fp, #-1104]
 	ldr r4, [fp, #-1108]
@@ -1379,6 +1529,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1112]
 	ldr r10, [fp, #-1112]
+	mov r10, r10
 	str r10, [fp, #-1120]
 	ldr r10, [fp, #-1116]
 	ldr r4, [fp, #-1120]
@@ -1387,10 +1538,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1124]
 	ldr r10, [fp, #-1124]
+	mov r10, r10
 	str r10, [fp, #-1680]
 	mov r10, #2
 	str r10, [fp, #-1132]
 	ldr r10, [fp, #-1128]
+	mov r10, r10
 	str r10, [fp, #-1136]
 	ldr r10, [fp, #-1132]
 	ldr r4, [fp, #-1136]
@@ -1405,6 +1558,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1140]
 	ldr r10, [fp, #-1140]
+	mov r10, r10
 	str r10, [fp, #-1148]
 	ldr r10, [fp, #-1144]
 	ldr r4, [fp, #-1148]
@@ -1413,10 +1567,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1152]
 	ldr r10, [fp, #-1152]
+	mov r10, r10
 	str r10, [fp, #-1684]
 	mov r10, #3
 	str r10, [fp, #-1160]
 	ldr r10, [fp, #-1156]
+	mov r10, r10
 	str r10, [fp, #-1164]
 	ldr r10, [fp, #-1160]
 	ldr r4, [fp, #-1164]
@@ -1431,6 +1587,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1168]
 	ldr r10, [fp, #-1168]
+	mov r10, r10
 	str r10, [fp, #-1176]
 	ldr r10, [fp, #-1172]
 	ldr r4, [fp, #-1176]
@@ -1439,10 +1596,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1180]
 	ldr r10, [fp, #-1180]
+	mov r10, r10
 	str r10, [fp, #-1688]
 	mov r10, #4
 	str r10, [fp, #-1188]
 	ldr r10, [fp, #-1184]
+	mov r10, r10
 	str r10, [fp, #-1192]
 	ldr r10, [fp, #-1188]
 	ldr r4, [fp, #-1192]
@@ -1457,6 +1616,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1196]
 	ldr r10, [fp, #-1196]
+	mov r10, r10
 	str r10, [fp, #-1200]
 	ldr r10, [fp, #-1200]
 	ldr r4, [fp, #-1204]
@@ -1465,10 +1625,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1208]
 	ldr r10, [fp, #-1208]
+	mov r10, r10
 	str r10, [fp, #-1692]
 	mov r10, #1
 	str r10, [fp, #-1220]
 	ldr r10, [fp, #-1212]
+	mov r10, r10
 	str r10, [fp, #-1216]
 	ldr r10, [fp, #-1216]
 	ldr r4, [fp, #-1220]
@@ -1483,6 +1645,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1224]
 	ldr r10, [fp, #-1224]
+	mov r10, r10
 	str r10, [fp, #-1232]
 	ldr r10, [fp, #-1228]
 	ldr r4, [fp, #-1232]
@@ -1491,10 +1654,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1236]
 	ldr r10, [fp, #-1236]
+	mov r10, r10
 	str r10, [fp, #-1664]
 	mov r10, #2
 	str r10, [fp, #-1244]
 	ldr r10, [fp, #-1240]
+	mov r10, r10
 	str r10, [fp, #-1248]
 	ldr r10, [fp, #-1244]
 	ldr r4, [fp, #-1248]
@@ -1509,6 +1674,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1252]
 	ldr r10, [fp, #-1252]
+	mov r10, r10
 	str r10, [fp, #-1260]
 	ldr r10, [fp, #-1256]
 	ldr r4, [fp, #-1260]
@@ -1517,10 +1683,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1264]
 	ldr r10, [fp, #-1264]
+	mov r10, r10
 	str r10, [fp, #-1668]
 	mov r10, #3
 	str r10, [fp, #-1272]
 	ldr r10, [fp, #-1268]
+	mov r10, r10
 	str r10, [fp, #-1276]
 	ldr r10, [fp, #-1272]
 	ldr r4, [fp, #-1276]
@@ -1535,6 +1703,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1280]
 	ldr r10, [fp, #-1280]
+	mov r10, r10
 	str r10, [fp, #-1288]
 	ldr r10, [fp, #-1284]
 	ldr r4, [fp, #-1288]
@@ -1543,10 +1712,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1292]
 	ldr r10, [fp, #-1292]
+	mov r10, r10
 	str r10, [fp, #-1672]
 	mov r10, #4
 	str r10, [fp, #-1300]
 	ldr r10, [fp, #-1296]
+	mov r10, r10
 	str r10, [fp, #-1304]
 	ldr r10, [fp, #-1300]
 	ldr r4, [fp, #-1304]
@@ -1561,6 +1732,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1308]
 	ldr r10, [fp, #-1308]
+	mov r10, r10
 	str r10, [fp, #-1312]
 	ldr r10, [fp, #-1312]
 	ldr r4, [fp, #-1316]
@@ -1569,10 +1741,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1320]
 	ldr r10, [fp, #-1320]
+	mov r10, r10
 	str r10, [fp, #-1676]
 	mov r10, #1
 	str r10, [fp, #-1332]
 	ldr r10, [fp, #-1324]
+	mov r10, r10
 	str r10, [fp, #-1328]
 	ldr r10, [fp, #-1328]
 	ldr r4, [fp, #-1332]
@@ -1587,6 +1761,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1336]
 	ldr r10, [fp, #-1336]
+	mov r10, r10
 	str r10, [fp, #-1340]
 	ldr r10, [fp, #-1340]
 	ldr r4, [fp, #-1344]
@@ -1595,10 +1770,12 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1348]
 	ldr r10, [fp, #-1348]
+	mov r10, r10
 	str r10, [fp, #-1648]
 	mov r10, #2
 	str r10, [fp, #-1356]
 	ldr r10, [fp, #-1352]
+	mov r10, r10
 	str r10, [fp, #-1360]
 	ldr r10, [fp, #-1356]
 	ldr r4, [fp, #-1360]
@@ -1613,6 +1790,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1364]
 	ldr r10, [fp, #-1364]
+	mov r10, r10
 	str r10, [fp, #-1372]
 	ldr r10, [fp, #-1368]
 	ldr r4, [fp, #-1372]
@@ -1621,10 +1799,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1376]
 	ldr r10, [fp, #-1376]
+	mov r10, r10
 	str r10, [fp, #-1652]
 	mov r10, #3
 	str r10, [fp, #-1388]
 	ldr r10, [fp, #-1380]
+	mov r10, r10
 	str r10, [fp, #-1384]
 	ldr r10, [fp, #-1384]
 	ldr r4, [fp, #-1388]
@@ -1639,6 +1819,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1392]
 	ldr r10, [fp, #-1392]
+	mov r10, r10
 	str r10, [fp, #-1400]
 	ldr r10, [fp, #-1396]
 	ldr r4, [fp, #-1400]
@@ -1647,10 +1828,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1404]
 	ldr r10, [fp, #-1404]
+	mov r10, r10
 	str r10, [fp, #-1656]
 	mov r10, #4
 	str r10, [fp, #-1416]
 	ldr r10, [fp, #-1408]
+	mov r10, r10
 	str r10, [fp, #-1412]
 	ldr r10, [fp, #-1412]
 	ldr r4, [fp, #-1416]
@@ -1665,6 +1848,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1420]
 	ldr r10, [fp, #-1420]
+	mov r10, r10
 	str r10, [fp, #-1424]
 	ldr r10, [fp, #-1424]
 	ldr r4, [fp, #-1428]
@@ -1673,6 +1857,7 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1432]
 	ldr r10, [fp, #-1432]
+	mov r10, r10
 	str r10, [fp, #-1660]
 	mov r10, #1
 	str r10, [fp, #-1436]
@@ -1691,6 +1876,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1444]
 	ldr r10, [fp, #-1444]
+	mov r10, r10
 	str r10, [fp, #-1452]
 	ldr r10, [fp, #-1448]
 	ldr r4, [fp, #-1452]
@@ -1699,6 +1885,7 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1456]
 	ldr r10, [fp, #-1456]
+	mov r10, r10
 	str r10, [fp, #-1632]
 	mov r10, #2
 	str r10, [fp, #-1460]
@@ -1717,6 +1904,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1468]
 	ldr r10, [fp, #-1468]
+	mov r10, r10
 	str r10, [fp, #-1476]
 	ldr r10, [fp, #-1472]
 	ldr r4, [fp, #-1476]
@@ -1725,6 +1913,7 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1480]
 	ldr r10, [fp, #-1480]
+	mov r10, r10
 	str r10, [fp, #-1636]
 	mov r10, #3
 	str r10, [fp, #-1484]
@@ -1743,6 +1932,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1492]
 	ldr r10, [fp, #-1492]
+	mov r10, r10
 	str r10, [fp, #-1500]
 	ldr r10, [fp, #-1496]
 	ldr r4, [fp, #-1500]
@@ -1751,10 +1941,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1504]
 	ldr r10, [fp, #-1504]
+	mov r10, r10
 	str r10, [fp, #-1640]
 	mov r10, #4
 	str r10, [fp, #-1508]
 	ldr r10, [fp, #-2244]
+	mov r10, r10
 	str r10, [fp, #-1512]
 	ldr r10, [fp, #-1508]
 	ldr r4, [fp, #-1512]
@@ -1769,6 +1961,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1516]
 	ldr r10, [fp, #-1516]
+	mov r10, r10
 	str r10, [fp, #-1524]
 	ldr r10, [fp, #-1520]
 	ldr r4, [fp, #-1524]
@@ -1777,6 +1970,7 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1528]
 	ldr r10, [fp, #-1528]
+	mov r10, r10
 	str r10, [fp, #-1644]
 	mov r10, #1
 	str r10, [fp, #-1536]
@@ -1795,6 +1989,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1540]
 	ldr r10, [fp, #-1540]
+	mov r10, r10
 	str r10, [fp, #-1548]
 	ldr r10, [fp, #-1544]
 	ldr r4, [fp, #-1548]
@@ -1803,6 +1998,7 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1552]
 	ldr r10, [fp, #-1552]
+	mov r10, r10
 	str r10, [fp, #-1632]
 	mov r10, #2
 	str r10, [fp, #-1556]
@@ -1821,6 +2017,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1564]
 	ldr r10, [fp, #-1564]
+	mov r10, r10
 	str r10, [fp, #-1572]
 	ldr r10, [fp, #-1568]
 	ldr r4, [fp, #-1572]
@@ -1829,6 +2026,7 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1576]
 	ldr r10, [fp, #-1576]
+	mov r10, r10
 	str r10, [fp, #-1636]
 	mov r10, #3
 	str r10, [fp, #-1584]
@@ -1847,6 +2045,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1588]
 	ldr r10, [fp, #-1588]
+	mov r10, r10
 	str r10, [fp, #-1596]
 	ldr r10, [fp, #-1592]
 	ldr r4, [fp, #-1596]
@@ -1855,10 +2054,12 @@ func:
 	add r10, r10, r4
 	str r10, [fp, #-1600]
 	ldr r10, [fp, #-1600]
+	mov r10, r10
 	str r10, [fp, #-1640]
 	mov r10, #4
 	str r10, [fp, #-1604]
 	ldr r10, [fp, #-2244]
+	mov r10, r10
 	str r10, [fp, #-1608]
 	ldr r10, [fp, #-1604]
 	ldr r4, [fp, #-1608]
@@ -1873,6 +2074,7 @@ func:
 	ldr r10, [r10, #0]
 	str r10, [fp, #-1612]
 	ldr r10, [fp, #-1612]
+	mov r10, r10
 	str r10, [fp, #-1616]
 	ldr r10, [fp, #-1616]
 	ldr r4, [fp, #-1620]
@@ -1881,203 +2083,271 @@ func:
 	add r10, r4, r10
 	str r10, [fp, #-1624]
 	ldr r10, [fp, #-1624]
+	mov r10, r10
 	str r10, [fp, #-1644]
+	mov r7, r7
 	ldr r10, [fp, #-1628]
 	add r7, r10, r7
+	mov r6, r6
 	add r7, r7, r6
 	mov r6, r5
 	add r7, r7, r6
 	ldr r6, [fp, #-2244]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1632]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1636]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1640]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1644]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1648]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1652]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1656]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1660]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1664]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1668]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1672]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1676]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1680]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1684]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1688]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1692]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1696]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1700]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1704]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1708]
+	mov r6, r6
 	sub r7, r7, r6
 	ldr r6, [fp, #-1712]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1716]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1720]
+	mov r6, r6
 	add r7, r7, r6
 	ldr r6, [fp, #-1724]
+	mov r6, r6
 	add r7, r7, r6
+	mov r9, r9
 	sub r9, r7, r9
+	mov r8, r8
 	sub r9, r9, r8
 	ldr r8, [fp, #-1728]
+	mov r8, r8
 	sub r9, r9, r8
 	ldr r8, [fp, #-1732]
+	mov r8, r8
 	sub r9, r9, r8
 	ldr r8, [fp, #-1736]
+	mov r8, r8
 	add r9, r9, r8
 	ldr r8, [fp, #-1740]
+	mov r8, r8
 	add r9, r9, r8
 	ldr r8, [fp, #-1744]
+	mov r8, r8
 	add r9, r9, r8
 	ldr r8, [fp, #-1748]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a1
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a2
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a3
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a4
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a5
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a6
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a7
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a8
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a9
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a10
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a11
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a12
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a13
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a14
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a15
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a16
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a17
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a18
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a19
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a20
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a21
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a22
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a23
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a24
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a25
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a26
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a27
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a28
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a29
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a30
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r8, #0
 	mov32 r8, a31
 	ldr r8, [r8, #0]
+	mov r8, r8
 	add r9, r9, r8
 	mov r8, #0
 	mov32 r8, a32
 	ldr r8, [r8, #0]
+	mov r8, r8
 	sub r9, r9, r8
 	mov r0, r9
 	mov sp, fp
@@ -2110,19 +2380,25 @@ main:
 .LBmain:
 	bl getint
 	mov r7, r0
+	add sp, sp, #0
 	mov r9, r7
 	mov r7, #2
 	mov r6, #9
+	mov r6, r6
 	mul r7, r7, r6
+	mov r7, r7
 	add r7, r9, r7
 	mov r8, r7
 	mov r1, r8
 	mov r0, r9
 	bl func
 	mov r9, r0
+	add sp, sp, #0
+	mov r9, r9
 	mov r0, r9
 	bl putint
 	mov r8, r0
+	add sp, sp, #0
 	mov r0, r9
 	mov sp, fp
 	pop {fp}
@@ -2136,4 +2412,4 @@ main:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004948"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007385"
