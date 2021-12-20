@@ -114,7 +114,8 @@ compiler::ir::IR::IR(const op_type& operation, Operand* const dst,
       operand_a(operand_a),
       operand_b(operand_b),
       operand_c(nullptr),
-      label(label) {}
+      label(label),
+      is_dead(false) {}
 
 compiler::ir::IR::IR(const op_type& operation, Operand* const dst,
                      Operand* const operand_a, const std::string& label)
@@ -123,7 +124,8 @@ compiler::ir::IR::IR(const op_type& operation, Operand* const dst,
       operand_a(operand_a),
       operand_b(nullptr),
       operand_c(nullptr),
-      label(label) {}
+      label(label),
+      is_dead(false) {}
 
 compiler::ir::IR::IR(const op_type& operation, Operand* const dst,
                      const std::string& label)
@@ -132,7 +134,8 @@ compiler::ir::IR::IR(const op_type& operation, Operand* const dst,
       operand_a(nullptr),
       operand_b(nullptr),
       operand_c(nullptr),
-      label(label) {}
+      label(label),
+      is_dead(false) {}
 
 compiler::ir::IR::IR(const op_type& operation, const std::string& label)
     : type(operation),
@@ -140,10 +143,12 @@ compiler::ir::IR::IR(const op_type& operation, const std::string& label)
       operand_a(nullptr),
       operand_b(nullptr),
       operand_c(nullptr),
-      label(label) {}
+      label(label),
+      is_dead(false) {}
 
 compiler::ir::IR::IR(const IR& ir)
     : type(ir.type),
+      is_dead(ir.is_dead),
       dst(ir.dst == nullptr ? nullptr : new ir::Operand(*ir.dst)),
       operand_a(ir.operand_a == nullptr ? nullptr
                                         : new ir::Operand(*ir.operand_a)),
@@ -158,7 +163,7 @@ void compiler::ir::IR::emit_machine_code(
   // We do not handle NOP.
   if (type == compiler::ir::op_type::NOP ||
       type == compiler::ir::op_type::WORD ||
-      type == compiler::ir::op_type::SPACE) {
+      type == compiler::ir::op_type::SPACE || is_dead) {
     return;
   }
   // Let a dispatcher do the job.
@@ -177,7 +182,7 @@ void compiler::ir::IR::emit_machine_code(
 }
 
 void compiler::ir::IR::emit_ir(std::ostream& output, const bool& verbose) {
-  if (type == ir::op_type::NOP) {
+  if (type == ir::op_type::NOP || is_dead) {
     return;
   }
   // Wrap std::ostream in a macro.

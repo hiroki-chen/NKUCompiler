@@ -21,6 +21,7 @@
 #include <vector>
 
 namespace compiler::ir {
+static const uint32_t maximum_pass_time = 0ul;
 /**
  * @brief A basic block in the control flow graph.
  *
@@ -101,6 +102,8 @@ typedef class CFG_builder {
 
   void block_epilogue(compiler::ir::CFG_block* const basic_block,
                       const uint32_t& id, const std::string& name);
+
+  void do_pass(void);
 
  public:
   CFG_builder() = delete;

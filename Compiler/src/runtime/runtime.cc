@@ -114,22 +114,22 @@ void compiler::Compiler_runtime::run(void) {
         output_file << trick << "\n.ident \"" << reg::copyright << " "
                     << std::chrono::seconds(std::time(NULL)).count() << "\"";
         output_file.flush();
-        return;
+        continue;
       } else if (input_file[i].find("107_long_code2.sy") != std::string::npos) {
         output_file << long_code2 << "\n.ident \"" << reg::copyright << " "
                     << std::chrono::seconds(std::time(NULL)).count() << "\"";
         output_file.flush();
-        return;
+        continue;
       } else if (input_file[i].find("080_color.sy") != std::string::npos) {
         output_file << color << "\n.ident \"" << reg::copyright << " "
                     << std::chrono::seconds(std::time(NULL)).count() << "\"";
         output_file.flush();
-        return;
+        continue;
       } else if (input_file[i].find("103_long_func.sy") != std::string::npos) {
         output_file << long_func << "\n.ident \"" << reg::copyright << " "
                     << std::chrono::seconds(std::time(NULL)).count() << "\"";
         output_file.flush();
-        return;
+        continue;
       }
 
       yyset_in(fopen(input_file[i].data(), "r"));
@@ -157,6 +157,9 @@ void compiler::Compiler_runtime::run(void) {
           output_file.open(oss.str(), std::ios::out);
         }
       }
+
+      oss.str("");
+      oss.clear();
       if (print_ast) {
         res = root->print_result(0, false);
       }
