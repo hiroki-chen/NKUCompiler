@@ -69,6 +69,7 @@ chapop:
 	mov r8, #0
 	mov32 r8, chat
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, chat
 	str r9, [r8, #0]
@@ -77,6 +78,7 @@ chapop:
 	ldr r9, [r9, #0]
 	add r9, r9, #1
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #0
 	mov32 r8, chas
@@ -118,6 +120,7 @@ chapush:
 	mov r7, #0
 	mov32 r7, chat
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, chat
 	str r8, [r7, #0]
@@ -125,6 +128,7 @@ chapush:
 	mov32 r8, chat
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, chas
@@ -159,9 +163,11 @@ find:
 .LBfind:
 	bl chapop
 	mov r9, r0
+	add sp, sp, #0
 	mov r8, #0
 	mov32 r8, c
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, c
 	str r9, [r8, #0]
@@ -169,6 +175,7 @@ find:
 	mov32 r9, ii
 	ldr r9, [r9, #0]
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #0
 	mov32 r8, get2
@@ -179,6 +186,7 @@ find:
 	ldr r9, [r9, #0]
 	add r9, r9, #1
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #0
 	mov32 r8, get2
@@ -193,6 +201,7 @@ find:
 	mov r8, #0
 	mov32 r8, ii
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, ii
 	str r9, [r8, #0]
@@ -253,6 +262,7 @@ getstr:
 	mov r9, r0
 	bl getch
 	mov r7, r0
+	add sp, sp, #0
 	mov r8, r7
 	mov r7, #0
 .LB_getstr2_LOOP_BEGIN:
@@ -272,6 +282,7 @@ getstr:
 	b .LB2_LOOP_BODY
 .LB2_LOOP_BODY:
 	mov r6, #4
+	mov r6, r6
 	mul r6, r7, r6
 	mov r5, r9
 	str r8, [r5, r6]
@@ -279,6 +290,7 @@ getstr:
 	mov r7, r6
 	bl getch
 	mov r6, r0
+	add sp, sp, #0
 	mov r8, r6
 	b .LB_getstr2_LOOP_BEGIN
 .LB2_LOOP_END:
@@ -316,16 +328,19 @@ intadd:
 	mov32 r8, intt
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, ints
 	ldr r8, [r7, r8]
 	mov r7, #10
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, intt
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, ints
@@ -334,15 +349,18 @@ intadd:
 	mov32 r8, intt
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, ints
 	ldr r8, [r7, r8]
+	mov r9, r9
 	add r9, r8, r9
 	mov r8, #0
 	mov32 r8, intt
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, ints
@@ -382,6 +400,7 @@ intpop:
 	mov r8, #0
 	mov32 r8, intt
 	ldr r8, [r8, #0]
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, intt
 	str r9, [r8, #0]
@@ -390,6 +409,7 @@ intpop:
 	ldr r9, [r9, #0]
 	add r9, r9, #1
 	mov r8, #4
+	mov r8, r8
 	mul r9, r9, r8
 	mov r8, #0
 	mov32 r8, ints
@@ -431,6 +451,7 @@ intpush:
 	mov r7, #0
 	mov32 r7, intt
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, intt
 	str r8, [r7, #0]
@@ -438,6 +459,7 @@ intpush:
 	mov32 r8, intt
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, ints
@@ -547,6 +569,7 @@ main:
 	mov r0, r8
 	bl getstr
 	mov r8, r0
+	add sp, sp, #0
 	mov r9, r8
 .LB_main4_LOOP_BEGIN:
 	mov r8, #0
@@ -564,6 +587,7 @@ main:
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -571,6 +595,7 @@ main:
 	mov r0, r8
 	bl isdigit
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #1
 	cmp r8, r7
 	mov r8, #0
@@ -584,6 +609,7 @@ main:
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -592,6 +618,7 @@ main:
 	mov32 r7, ii
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -603,6 +630,7 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, ii
 	str r8, [r7, #0]
@@ -612,6 +640,7 @@ main:
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -628,11 +657,13 @@ main:
 	mov r0, #40
 	bl chapush
 	mov r8, r0
+	add sp, sp, #0
 .LBB_6_ELSE:
 	mov r8, #0
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -649,11 +680,13 @@ main:
 	mov r0, #94
 	bl chapush
 	mov r8, r0
+	add sp, sp, #0
 .LBB_7_ELSE:
 	mov r8, #0
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -669,9 +702,11 @@ main:
 .LBB_8_IF:
 	bl chapop
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	mov32 r7, c
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, c
 	str r8, [r7, #0]
@@ -692,6 +727,7 @@ main:
 	mov32 r8, ii
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -702,6 +738,7 @@ main:
 	ldr r8, [r8, #0]
 	add r8, r8, #1
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -716,14 +753,17 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, ii
 	str r8, [r7, #0]
 	bl chapop
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	mov32 r7, c
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, c
 	str r8, [r7, #0]
@@ -734,6 +774,7 @@ main:
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -752,6 +793,7 @@ main:
 	mov32 r8, chat
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, chas
@@ -764,6 +806,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -782,6 +825,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -800,6 +844,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -818,6 +863,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -836,6 +882,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -853,6 +900,7 @@ main:
 .LB11_LOOP_BODY:
 	bl find
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	cmp r8, r7
 	mov r8, #0
@@ -869,11 +917,13 @@ main:
 	mov r0, #43
 	bl chapush
 	mov r8, r0
+	add sp, sp, #0
 .LBB_10_ELSE:
 	mov r8, #0
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -892,6 +942,7 @@ main:
 	mov32 r8, chat
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, chas
@@ -904,6 +955,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -922,6 +974,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -940,6 +993,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -958,6 +1012,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -976,6 +1031,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -993,6 +1049,7 @@ main:
 .LB14_LOOP_BODY:
 	bl find
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	cmp r8, r7
 	mov r8, #0
@@ -1009,11 +1066,13 @@ main:
 	mov r0, #45
 	bl chapush
 	mov r8, r0
+	add sp, sp, #0
 .LBB_13_ELSE:
 	mov r8, #0
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -1032,6 +1091,7 @@ main:
 	mov32 r8, chat
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, chas
@@ -1044,6 +1104,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1062,6 +1123,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1080,6 +1142,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1097,6 +1160,7 @@ main:
 .LB17_LOOP_BODY:
 	bl find
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	cmp r8, r7
 	mov r8, #0
@@ -1113,11 +1177,13 @@ main:
 	mov r0, #42
 	bl chapush
 	mov r8, r0
+	add sp, sp, #0
 .LBB_16_ELSE:
 	mov r8, #0
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -1136,6 +1202,7 @@ main:
 	mov32 r8, chat
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, chas
@@ -1148,6 +1215,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1166,6 +1234,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1184,6 +1253,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1201,6 +1271,7 @@ main:
 .LB20_LOOP_BODY:
 	bl find
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	cmp r8, r7
 	mov r8, #0
@@ -1217,11 +1288,13 @@ main:
 	mov r0, #47
 	bl chapush
 	mov r8, r0
+	add sp, sp, #0
 .LBB_19_ELSE:
 	mov r8, #0
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get
@@ -1240,6 +1313,7 @@ main:
 	mov32 r8, chat
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, chas
@@ -1252,6 +1326,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1270,6 +1345,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1288,6 +1364,7 @@ main:
 	mov32 r7, chat
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, chas
@@ -1305,6 +1382,7 @@ main:
 .LB23_LOOP_BODY:
 	bl find
 	mov r8, r0
+	add sp, sp, #0
 	mov r7, #0
 	cmp r8, r7
 	mov r8, #0
@@ -1321,11 +1399,13 @@ main:
 	mov r0, #37
 	bl chapush
 	mov r8, r0
+	add sp, sp, #0
 .LBB_22_ELSE:
 	mov r8, #0
 	mov32 r8, ii
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1338,6 +1418,7 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, ii
 	str r8, [r7, #0]
@@ -1350,6 +1431,7 @@ main:
 	mov r7, #0
 	mov32 r7, i
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, i
 	str r8, [r7, #0]
@@ -1370,11 +1452,13 @@ main:
 .LB25_LOOP_BODY:
 	bl chapop
 	mov r7, r0
+	add sp, sp, #0
 	mov r8, r7
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -1385,6 +1469,7 @@ main:
 	ldr r7, [r7, #0]
 	add r7, r7, #1
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -1396,6 +1481,7 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, ii
 	str r8, [r7, #0]
@@ -1405,6 +1491,7 @@ main:
 	mov32 r8, ii
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1422,6 +1509,7 @@ main:
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1439,6 +1527,7 @@ main:
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1451,6 +1540,7 @@ main:
 	mov32 r7, i
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -1469,6 +1559,7 @@ main:
 	mov32 r7, i
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -1487,6 +1578,7 @@ main:
 	mov32 r7, i
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -1505,6 +1597,7 @@ main:
 	mov32 r7, i
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -1523,6 +1616,7 @@ main:
 	mov32 r7, i
 	ldr r7, [r7, #0]
 	mov r6, #4
+	mov r6, r6
 	mul r7, r7, r6
 	mov r6, #0
 	mov32 r6, get2
@@ -1540,14 +1634,17 @@ main:
 .LBB_27_IF:
 	bl intpop
 	mov r7, r0
+	add sp, sp, #0
 	mov r8, r7
 	bl intpop
 	mov r6, r0
+	add sp, sp, #0
 	mov r7, r6
 	mov r5, #0
 	mov32 r5, i
 	ldr r5, [r5, #0]
 	mov r10, #4
+	mov r10, r10
 	mul r5, r5, r10
 	mov r10, #0
 	mov32 r10, get2
@@ -1569,6 +1666,7 @@ main:
 	mov32 r5, i
 	ldr r5, [r5, #0]
 	mov r10, #4
+	mov r10, r10
 	mul r5, r5, r10
 	mov r10, #0
 	mov32 r10, get2
@@ -1590,6 +1688,7 @@ main:
 	mov32 r5, i
 	ldr r5, [r5, #0]
 	mov r10, #4
+	mov r10, r10
 	mul r5, r5, r10
 	mov r10, #0
 	mov32 r10, get2
@@ -1611,6 +1710,7 @@ main:
 	mov32 r5, i
 	ldr r5, [r5, #0]
 	mov r10, #4
+	mov r10, r10
 	mul r5, r5, r10
 	mov r10, #0
 	mov32 r10, get2
@@ -1638,6 +1738,7 @@ main:
 	mov32 r5, i
 	ldr r5, [r5, #0]
 	mov r10, #4
+	mov r10, r10
 	mul r5, r5, r10
 	mov r10, #0
 	mov32 r10, get2
@@ -1665,6 +1766,7 @@ main:
 	mov32 r5, i
 	ldr r5, [r5, #0]
 	mov r10, #4
+	mov r10, r10
 	mul r5, r5, r10
 	mov r10, #0
 	mov32 r10, get2
@@ -1682,17 +1784,20 @@ main:
 	mov r0, r7
 	bl power
 	mov r5, r0
+	add sp, sp, #0
 	mov r6, r5
 .LBB_33_ELSE:
 	mov r0, r6
 	bl intpush
 	mov r8, r0
+	add sp, sp, #0
 	b .LBB_27_END_IF
 .LBB_27_ELSE:
 	mov r8, #0
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1710,6 +1815,7 @@ main:
 	mov32 r8, i
 	ldr r8, [r8, #0]
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1718,6 +1824,7 @@ main:
 	mov r0, r8
 	bl intpush
 	mov r8, r0
+	add sp, sp, #0
 	mov r8, #0
 	mov32 r8, ii
 	ldr r8, [r8, #0]
@@ -1732,8 +1839,10 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r7, r7
 	add r8, r8, r7
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1753,8 +1862,10 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r7, r7
 	add r8, r8, r7
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, get2
@@ -1763,6 +1874,7 @@ main:
 	mov r0, r8
 	bl intadd
 	mov r8, r0
+	add sp, sp, #0
 	mov r8, #0
 	mov32 r8, ii
 	ldr r8, [r8, #0]
@@ -1770,6 +1882,7 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, ii
 	str r8, [r7, #0]
@@ -1781,11 +1894,13 @@ main:
 	mov r7, #0
 	mov32 r7, ii
 	ldr r7, [r7, #0]
+	mov r7, r7
 	add r8, r8, r7
 	sub r8, r8, #1
 	mov r7, #0
 	mov32 r7, i
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, i
 	str r8, [r7, #0]
@@ -1799,6 +1914,7 @@ main:
 	mov r7, #0
 	mov32 r7, i
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, i
 	str r8, [r7, #0]
@@ -1806,6 +1922,7 @@ main:
 .LB26_LOOP_END:
 	mov r8, #1
 	mov r7, #4
+	mov r7, r7
 	mul r8, r8, r7
 	mov r7, #0
 	mov32 r7, ints
@@ -1813,6 +1930,7 @@ main:
 	mov r0, r8
 	bl putint
 	mov r8, r0
+	add sp, sp, #0
 	mov r0, #0
 	mov sp, fp
 	pop {fp}
@@ -1875,4 +1993,4 @@ power:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004947"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007385"

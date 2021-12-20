@@ -33,35 +33,48 @@ main:
 	mov r8, #0
 	mov r7, #100
 	mov r6, #0
+	mov r6, r6
 	mul r7, r7, r6
+	mov r7, r7
 	add r8, r8, r7
 	mov r7, #0
 	mov32 r7, buf
+	mov r7, r7
 	mov r6, #4
+	mov r8, r8
 	mul r8, r6, r8
+	mov r8, r8
 	add r7, r7, r8
 	mov r0, r7
 	bl getarray
 	mov r8, r0
+	add sp, sp, #0
 	mov r9, r8
 	mov r1, r9
 	mov r0, #0
 	bl merge_sort
 	mov r8, r0
+	add sp, sp, #0
 	mov r8, #0
 	mov r7, #100
 	mov r6, #0
+	mov r6, r6
 	mul r7, r7, r6
+	mov r7, r7
 	add r8, r8, r7
 	mov r7, #0
 	mov32 r7, buf
+	mov r7, r7
 	mov r6, #4
+	mov r8, r8
 	mul r8, r6, r8
+	mov r8, r8
 	add r7, r7, r8
 	mov r1, r7
 	mov r0, r9
 	bl putarray
 	mov r9, r0
+	add sp, sp, #0
 	mov r0, #0
 	mov sp, fp
 	pop {fp}
@@ -119,6 +132,7 @@ merge_sort:
 	mov pc, r14
 .LBB_merge_sort0_ELSE:
 	ldr r8, [fp, #-512]
+	mov r8, r8
 	ldr r7, [fp, #-412]
 	add r8, r7, r8
 	mov r7, r0
@@ -135,11 +149,13 @@ merge_sort:
 	mov r0, r8
 	bl merge_sort
 	mov r8, r0
+	add sp, sp, #0
 	ldr r8, [fp, #-512]
 	mov r1, r8
 	mov r0, r9
 	bl merge_sort
 	mov r8, r0
+	add sp, sp, #0
 	ldr r7, [fp, #-412]
 	mov r8, r7
 	mov r7, r9
@@ -165,12 +181,14 @@ merge_sort:
 	b .LB1_LOOP_BODY
 .LB1_LOOP_BODY:
 	mov r5, #4
+	mov r5, r5
 	mul r5, r8, r5
 	mov r10, #400
 	str r10, [fp, #-12]
 	mov r10, #0
 	str r10, [fp, #-8]
 	ldr r10, [fp, #-8]
+	mov r10, r10
 	str r10, [fp, #-16]
 	ldr r10, [fp, #-12]
 	ldr r4, [fp, #-16]
@@ -179,6 +197,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-20]
 	ldr r10, [fp, #-20]
+	mov r10, r10
 	str r10, [fp, #-24]
 	ldr r10, [fp, #-24]
 	add r5, r5, r10
@@ -190,6 +209,7 @@ merge_sort:
 	mov r10, #4
 	str r10, [fp, #-32]
 	ldr r10, [fp, #-32]
+	mov r10, r10
 	str r10, [fp, #-36]
 	ldr r10, [fp, #-36]
 	mul r10, r7, r10
@@ -199,6 +219,7 @@ merge_sort:
 	mov r10, #0
 	str r10, [fp, #-40]
 	ldr r10, [fp, #-40]
+	mov r10, r10
 	str r10, [fp, #-48]
 	ldr r10, [fp, #-44]
 	ldr r4, [fp, #-48]
@@ -207,6 +228,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-52]
 	ldr r10, [fp, #-52]
+	mov r10, r10
 	str r10, [fp, #-60]
 	ldr r10, [fp, #-56]
 	ldr r4, [fp, #-60]
@@ -235,12 +257,14 @@ merge_sort:
 	b .LBB_2_IF
 .LBB_2_IF:
 	mov r5, #4
+	mov r5, r5
 	mul r5, r8, r5
 	mov r10, #400
 	str r10, [fp, #-84]
 	mov r10, #0
 	str r10, [fp, #-80]
 	ldr r10, [fp, #-80]
+	mov r10, r10
 	str r10, [fp, #-88]
 	ldr r10, [fp, #-84]
 	ldr r4, [fp, #-88]
@@ -249,6 +273,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-92]
 	ldr r10, [fp, #-92]
+	mov r10, r10
 	str r10, [fp, #-96]
 	ldr r10, [fp, #-96]
 	add r5, r5, r10
@@ -260,6 +285,7 @@ merge_sort:
 	mov r10, #4
 	str r10, [fp, #-104]
 	ldr r10, [fp, #-104]
+	mov r10, r10
 	str r10, [fp, #-108]
 	ldr r10, [fp, #-108]
 	mul r10, r6, r10
@@ -269,6 +295,7 @@ merge_sort:
 	mov r10, #1
 	str r10, [fp, #-112]
 	ldr r10, [fp, #-112]
+	mov r10, r10
 	str r10, [fp, #-120]
 	ldr r10, [fp, #-116]
 	ldr r4, [fp, #-120]
@@ -277,6 +304,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-124]
 	ldr r10, [fp, #-124]
+	mov r10, r10
 	str r10, [fp, #-132]
 	ldr r10, [fp, #-128]
 	ldr r4, [fp, #-132]
@@ -297,12 +325,14 @@ merge_sort:
 	b .LBB_2_END_IF
 .LBB_2_ELSE:
 	mov r5, #4
+	mov r5, r5
 	mul r5, r7, r5
 	mov r10, #400
 	str r10, [fp, #-152]
 	mov r10, #0
 	str r10, [fp, #-144]
 	ldr r10, [fp, #-144]
+	mov r10, r10
 	str r10, [fp, #-148]
 	ldr r10, [fp, #-148]
 	ldr r4, [fp, #-152]
@@ -311,6 +341,7 @@ merge_sort:
 	mul r10, r4, r10
 	str r10, [fp, #-156]
 	ldr r10, [fp, #-156]
+	mov r10, r10
 	str r10, [fp, #-160]
 	ldr r10, [fp, #-160]
 	add r5, r5, r10
@@ -322,6 +353,7 @@ merge_sort:
 	mov r10, #4
 	str r10, [fp, #-168]
 	ldr r10, [fp, #-168]
+	mov r10, r10
 	str r10, [fp, #-172]
 	ldr r10, [fp, #-172]
 	mul r10, r6, r10
@@ -331,6 +363,7 @@ merge_sort:
 	mov r10, #1
 	str r10, [fp, #-176]
 	ldr r10, [fp, #-176]
+	mov r10, r10
 	str r10, [fp, #-184]
 	ldr r10, [fp, #-180]
 	ldr r4, [fp, #-184]
@@ -339,6 +372,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-188]
 	ldr r10, [fp, #-188]
+	mov r10, r10
 	str r10, [fp, #-196]
 	ldr r10, [fp, #-192]
 	ldr r4, [fp, #-196]
@@ -374,12 +408,14 @@ merge_sort:
 	b .LB3_LOOP_BODY
 .LB3_LOOP_BODY:
 	mov r5, #4
+	mov r5, r5
 	mul r5, r8, r5
 	mov r10, #400
 	str r10, [fp, #-216]
 	mov r10, #0
 	str r10, [fp, #-212]
 	ldr r10, [fp, #-212]
+	mov r10, r10
 	str r10, [fp, #-220]
 	ldr r10, [fp, #-216]
 	ldr r4, [fp, #-220]
@@ -388,6 +424,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-224]
 	ldr r10, [fp, #-224]
+	mov r10, r10
 	str r10, [fp, #-228]
 	ldr r10, [fp, #-228]
 	add r5, r5, r10
@@ -399,6 +436,7 @@ merge_sort:
 	mov r10, #4
 	str r10, [fp, #-236]
 	ldr r10, [fp, #-236]
+	mov r10, r10
 	str r10, [fp, #-240]
 	ldr r10, [fp, #-240]
 	mul r10, r6, r10
@@ -408,6 +446,7 @@ merge_sort:
 	mov r10, #1
 	str r10, [fp, #-244]
 	ldr r10, [fp, #-244]
+	mov r10, r10
 	str r10, [fp, #-248]
 	ldr r10, [fp, #-248]
 	ldr r4, [fp, #-252]
@@ -416,6 +455,7 @@ merge_sort:
 	mul r10, r4, r10
 	str r10, [fp, #-256]
 	ldr r10, [fp, #-256]
+	mov r10, r10
 	str r10, [fp, #-260]
 	ldr r10, [fp, #-260]
 	ldr r4, [fp, #-264]
@@ -450,12 +490,14 @@ merge_sort:
 	b .LB4_LOOP_BODY
 .LB4_LOOP_BODY:
 	mov r5, #4
+	mov r5, r5
 	mul r5, r7, r5
 	mov r10, #400
 	str r10, [fp, #-288]
 	mov r10, #0
 	str r10, [fp, #-280]
 	ldr r10, [fp, #-280]
+	mov r10, r10
 	str r10, [fp, #-284]
 	ldr r10, [fp, #-284]
 	ldr r4, [fp, #-288]
@@ -464,6 +506,7 @@ merge_sort:
 	mul r10, r4, r10
 	str r10, [fp, #-292]
 	ldr r10, [fp, #-292]
+	mov r10, r10
 	str r10, [fp, #-296]
 	ldr r10, [fp, #-296]
 	add r5, r5, r10
@@ -475,6 +518,7 @@ merge_sort:
 	mov r10, #4
 	str r10, [fp, #-304]
 	ldr r10, [fp, #-304]
+	mov r10, r10
 	str r10, [fp, #-308]
 	ldr r10, [fp, #-308]
 	mul r10, r6, r10
@@ -484,6 +528,7 @@ merge_sort:
 	mov r10, #1
 	str r10, [fp, #-312]
 	ldr r10, [fp, #-312]
+	mov r10, r10
 	str r10, [fp, #-320]
 	ldr r10, [fp, #-316]
 	ldr r4, [fp, #-320]
@@ -492,6 +537,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-324]
 	ldr r10, [fp, #-324]
+	mov r10, r10
 	str r10, [fp, #-332]
 	ldr r10, [fp, #-328]
 	ldr r4, [fp, #-332]
@@ -527,6 +573,7 @@ merge_sort:
 	b .LB5_LOOP_BODY
 .LB5_LOOP_BODY:
 	mov r5, #4
+	mov r5, r5
 	ldr r10, [fp, #-412]
 	mul r5, r10, r5
 	mov r10, #400
@@ -534,6 +581,7 @@ merge_sort:
 	mov r10, #1
 	str r10, [fp, #-348]
 	ldr r10, [fp, #-348]
+	mov r10, r10
 	str r10, [fp, #-356]
 	ldr r10, [fp, #-352]
 	ldr r4, [fp, #-356]
@@ -542,6 +590,7 @@ merge_sort:
 	mul r10, r10, r4
 	str r10, [fp, #-360]
 	ldr r10, [fp, #-360]
+	mov r10, r10
 	str r10, [fp, #-364]
 	ldr r10, [fp, #-364]
 	add r5, r5, r10
@@ -553,6 +602,7 @@ merge_sort:
 	mov r10, #4
 	str r10, [fp, #-372]
 	ldr r10, [fp, #-372]
+	mov r10, r10
 	str r10, [fp, #-376]
 	ldr r10, [fp, #-376]
 	ldr r4, [fp, #-412]
@@ -565,6 +615,7 @@ merge_sort:
 	mov r10, #0
 	str r10, [fp, #-380]
 	ldr r10, [fp, #-380]
+	mov r10, r10
 	str r10, [fp, #-384]
 	ldr r10, [fp, #-384]
 	ldr r4, [fp, #-388]
@@ -573,6 +624,7 @@ merge_sort:
 	mul r10, r4, r10
 	str r10, [fp, #-392]
 	ldr r10, [fp, #-392]
+	mov r10, r10
 	str r10, [fp, #-396]
 	ldr r10, [fp, #-396]
 	ldr r4, [fp, #-400]
@@ -590,6 +642,7 @@ merge_sort:
 	str r5, [r4, r10]
 	ldr r5, [fp, #-412]
 	add r5, r5, #1
+	mov r5, r5
 	str r5, [fp, #-412]
 	b .LB_5_LOOP_BEGIN
 .LB5_LOOP_END:
@@ -605,4 +658,4 @@ merge_sort:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004947"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007385"

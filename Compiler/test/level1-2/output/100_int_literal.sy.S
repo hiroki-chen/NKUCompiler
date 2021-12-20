@@ -45,9 +45,12 @@ get_ans:
 	mov r6, #1
 .LBB_get_ans1_ELSE:
 	mov r8, #2
+	mov r8, r8
 	mul r9, r9, r8
+	mov r9, r9
 	mov r8, r6
 	add r9, r9, r8
+	mov r9, r9
 	mov r0, r9
 	mov sp, fp
 	pop {fp}
@@ -92,9 +95,12 @@ get_ans_se:
 	mov r6, #1
 .LBB_get_ans_se0_ELSE:
 	mov r8, #2
+	mov r8, r8
 	mul r9, r9, r8
+	mov r9, r9
 	mov r8, r6
 	add r9, r9, r8
+	mov r9, r9
 	mov r8, #0
 	mov32 r8, s
 	ldr r8, [r8, #0]
@@ -103,6 +109,7 @@ get_ans_se:
 	mov r7, #0
 	mov32 r7, s
 	ldr r7, [r7, #0]
+	mov r8, r8
 	mov r7, #0
 	mov32 r7, s
 	str r8, [r7, #0]
@@ -139,6 +146,7 @@ main:
 	mov r9, #0
 	ldr r8, =#-2147483648
 	sub r9, r9, r8
+	mov r9, r9
 	str r9, [fp, #-248]
 	str r9, [fp, #-228]
 	ldr r9, =#-2147483648
@@ -154,34 +162,44 @@ main:
 	mov r0, r6
 	bl putint
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r6, r0
+	add sp, sp, #0
 	ldr r6, [fp, #-228]
 	mov r0, r6
 	bl putint
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, r9
 	bl putint
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, r8
 	bl putint
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, r7
 	bl putint
 	mov r6, r0
+	add sp, sp, #0
 	mov r0, #10
 	bl putch
 	mov r6, r0
+	add sp, sp, #0
 	str r10, [fp, #-108]
 	str r10, [fp, #-224]
 	ldr r10, [fp, #-228]
@@ -192,6 +210,7 @@ main:
 	bl get_ans
 	mov r10, r0
 	str r10, [fp, #-4]
+	add sp, sp, #0
 	ldr r10, [fp, #-4]
 	mov r6, r10
 	ldr r10, [fp, #-248]
@@ -203,6 +222,8 @@ main:
 	mov r0, r6
 	bl get_ans
 	mov r6, r0
+	add sp, sp, #0
+	mov r6, r6
 	mov r10, #0
 	str r10, [fp, #-8]
 	mov r10, r8
@@ -223,6 +244,8 @@ main:
 	mov r0, r6
 	bl get_ans
 	mov r6, r0
+	add sp, sp, #0
+	mov r6, r6
 	add r10, r7, #1
 	str r10, [fp, #-24]
 	ldr r10, [fp, #-24]
@@ -232,6 +255,8 @@ main:
 	mov r0, r6
 	bl get_ans
 	mov r6, r0
+	add sp, sp, #0
+	mov r6, r6
 	mov r10, r0
 	str r10, [fp, #-28]
 	mov r10, r1
@@ -266,6 +291,8 @@ main:
 	mov r0, r6
 	bl get_ans
 	mov r6, r0
+	add sp, sp, #0
+	mov r6, r6
 	mov r10, #0
 	str r10, [fp, #-52]
 	mov r10, r8
@@ -286,6 +313,8 @@ main:
 	mov r0, r6
 	bl get_ans
 	mov r6, r0
+	add sp, sp, #0
+	mov r6, r6
 	add r10, r7, #1
 	str r10, [fp, #-68]
 	ldr r10, [fp, #-68]
@@ -295,12 +324,15 @@ main:
 	mov r0, r6
 	bl get_ans
 	mov r6, r0
+	add sp, sp, #0
+	mov r6, r6
 	mov r2, r8
 	mov r1, r9
 	mov r0, #0
 	bl get_ans
 	mov r10, r0
 	str r10, [fp, #-72]
+	add sp, sp, #0
 	ldr r10, [fp, #-72]
 	mov r5, r10
 	mov r2, r7
@@ -308,11 +340,15 @@ main:
 	mov r0, r5
 	bl get_ans
 	mov r5, r0
+	add sp, sp, #0
+	mov r5, r5
 	mov r2, r7
 	mov r1, r8
 	mov r0, r5
 	bl get_ans
 	mov r5, r0
+	add sp, sp, #0
+	mov r5, r5
 	mov r10, r0
 	str r10, [fp, #-76]
 	mov r10, r1
@@ -348,6 +384,8 @@ main:
 	mov r0, r5
 	bl get_ans
 	mov r5, r0
+	add sp, sp, #0
+	mov r5, r5
 	ldr r10, [fp, #-228]
 	mov r2, r10
 	ldr r10, [fp, #-248]
@@ -356,7 +394,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-100]
+	add sp, sp, #0
 	ldr r10, [fp, #-100]
+	mov r10, r10
 	str r10, [fp, #-108]
 	ldr r10, [fp, #-248]
 	add r10, r10, #1
@@ -369,7 +409,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-112]
+	add sp, sp, #0
 	ldr r10, [fp, #-112]
+	mov r10, r10
 	str r10, [fp, #-132]
 	mov r10, #0
 	str r10, [fp, #-116]
@@ -393,7 +435,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-136]
+	add sp, sp, #0
 	ldr r10, [fp, #-136]
+	mov r10, r10
 	str r10, [fp, #-144]
 	add r10, r7, #1
 	str r10, [fp, #-140]
@@ -406,7 +450,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-148]
+	add sp, sp, #0
 	ldr r10, [fp, #-148]
+	mov r10, r10
 	str r10, [fp, #-176]
 	mov r10, r0
 	str r10, [fp, #-152]
@@ -444,7 +490,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-180]
+	add sp, sp, #0
 	ldr r10, [fp, #-180]
+	mov r10, r10
 	str r10, [fp, #-200]
 	mov r10, #0
 	str r10, [fp, #-188]
@@ -468,7 +516,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-204]
+	add sp, sp, #0
 	ldr r10, [fp, #-204]
+	mov r10, r10
 	str r10, [fp, #-212]
 	add r10, r7, #1
 	str r10, [fp, #-208]
@@ -481,7 +531,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-216]
+	add sp, sp, #0
 	ldr r10, [fp, #-216]
+	mov r10, r10
 	str r10, [fp, #-232]
 	mov r2, r8
 	mov r1, r9
@@ -489,7 +541,9 @@ main:
 	bl get_ans_se
 	mov r10, r0
 	str r10, [fp, #-220]
+	add sp, sp, #0
 	ldr r10, [fp, #-220]
+	mov r10, r10
 	str r10, [fp, #-224]
 	mov r2, r7
 	mov r1, r9
@@ -497,11 +551,15 @@ main:
 	mov r0, r9
 	bl get_ans_se
 	mov r9, r0
+	add sp, sp, #0
+	mov r9, r9
 	mov r2, r7
 	mov r1, r8
 	mov r0, r9
 	bl get_ans_se
 	mov r9, r0
+	add sp, sp, #0
+	mov r9, r9
 	mov r8, r0
 	mov r7, r1
 	ldr r10, [fp, #-248]
@@ -525,10 +583,14 @@ main:
 	mov r0, r9
 	bl get_ans_se
 	mov r9, r0
+	add sp, sp, #0
+	mov r9, r9
 	mov r8, r5
 	add r8, r6, r8
 	ldr r7, [fp, #-232]
+	mov r7, r7
 	add r8, r8, r7
+	mov r9, r9
 	add r9, r8, r9
 	mov r0, r9
 	mov sp, fp
@@ -543,4 +605,4 @@ main:
 	pop {r14}
 	mov pc, r14
 
-.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640004936"
+.ident "@ Generated by Takanashi Compiler © Haobin Chen & Jiawei Xu 1640007397"
