@@ -80,32 +80,25 @@ gdb-multiarch -q --nh \
   -ex 'layout split'
 ```
 
-## 设计目标
+## Design Targets
 
-* 纯C++实现；
-* 采用多态和虚函数实现抽象语法树（Abstract Syntax Tree）的构建；
-* 中间代码生成 （IR）；
-* 汇编代码生成；
-* 符号表查询
+* Written in pure C++ language.
+* Construct the abstract syntax tree by polymorphism and virtual functions.
+* Generate assembly-like three-address code (LLVM-like IR is implemented in branch `llvm_ir`). 
+* Generate machine code and allocate physical registers by linear scan；
 
-## 食用方法
+## How to build
 
-* 在Unix系统中用`cmake`指令编译工程：
+* Build our compiler by `cmake` in unix-like OS.
 
 ```shell
 mkdir build
 cd build
 cmake ..
-make
+make -j
 ```
 
-* 如果你指定了`-s`后面为目录，那么`-o`会被忽略，所有的输出都会存入`-s`指定目录下的`./output`目录。
-
-* 对于编译指令不熟悉的可以输入-h查看使用指南。
-
 ```shell
-./compiler --help
-
 --------- Compiler by Takanashi Guidance ---------
 Usage:
   Compiler [INPUT FILE POSITIONAL] [OTHER...] positional parameters
@@ -113,8 +106,10 @@ Usage:
  INPUT FILE POSITIONAL options:
 
  OTHER options:
+  -c, --compile        Output the object file rather than executable
+  -g, --debug          Enable debug mode
   -o, --output arg     The output file name. (default: a.out)
-      --emit-llvm      Print the intermediate representation of the source 
+      --emit-llvm      Print the intermediate representation of the source
                        code
       --print-ast      Print the abstract syntax tree
   -O, --opt-level arg  Enable Optimization (default: 0)
@@ -122,7 +117,11 @@ Usage:
   -S, --assembly       Generate assembly code
 ```
 
-## 项目布局（截止2021-12-19）
+An example:
+
+`./compiler -o test.S -S ../test/test.sy `
+
+## Project Layout
 
 ```txt
 .├── build
@@ -152,14 +151,7 @@ Usage:
 └── util
 ```
 
-## 继承关系和几点说明
-
-* 类和其文件名是一样的，想要找什么就直接去对应的文件里面找就行。
-* 所有节点的基类都是`Item`，而该类是抽象基类，请不要实例化，它只能通过指针的形式使用。
-* `Item_expr`继承自`Item`，基本上别的类都是从这里长出来的。
-* `Item_stmt`继承自`Item_expr`，代表表达式类型。
-* 为什么不把`Item_stmt`作为`Item`的子节点？那是因为`Item_stmt`包含`Item_expr`，但是如果`Item_expr`又是`item_stmt`的子节点的话，就会互相包含无穷无尽了。
-* `frontend`为前端分析所需要的源文件和头文件，而`backend`存储了汇编指令生成和中间代码优化等相关文件；`common`是一些通用的枚举类以及一些工具。
+## Inheritance Diagram of Tree Nodes
 
 ```
 Item -> Item_expr -> Item_expr_cond
