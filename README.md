@@ -1,5 +1,7 @@
 # Basic Framework for Project Compiler
 
+**Another LLVM-based compiler can be found in my repository:** [LLVM-based Compiler](https://github.com/hiroki-chen/LLVMCompiler)
+
 ## Prerequisites
 
 * Make sure that your compiler supports -std=c++17
