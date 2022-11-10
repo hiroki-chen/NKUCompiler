@@ -58,16 +58,6 @@ file(GLOB_RECURSE UTILS RELATIVE ${PROJECT_SOURCE_DIR}
     "src/common/*.cc"
 )
 
-# Create static library for ARM binary.
-# Remove it before submitting.
-# Set alias before generaing. If you do not want to generate it, just comment them out.
-#add_custom_target(
-#    sysy_lib
-#    COMMAND arm-linux-gnueabihf-g++ -o  ${CMAKE_BINARY_DIR}/sylib.o -std=c++17 -fPIC -O2 ${CMAKE_SOURCE_DIR}/#src/sylib.cc -I${CMAKE_SOURCE_DIR}/include -I/usr/arm-linux-gnueabi/include -c
-#    COMMAND arm-linux-gnueabihf-ar -o ${CMAKE_SOURCE_DIR}/lib/libsysy.a ${CMAKE_BINARY_DIR}/sylib.o -rcs
-#    DEPENDS ${CMAKE_SOURCE_DIR}/src/sylib.cc
-#)
-
 add_library(utils SHARED ${UTILS})
 set_target_properties(utils PROPERTIES VERSION ${PROJECT_VERSION})
 target_include_directories(utils PRIVATE include)
@@ -92,11 +82,3 @@ target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_link_libraries(${PROJECT_NAME} l utils)
 
 add_dependencies(${PROJECT_NAME} utils header)
-
-# Run the test
-enable_testing()
-add_test(
-    test
-    ./${PROJECT_NAME} -t -s ../test/functional_tes
-    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-)

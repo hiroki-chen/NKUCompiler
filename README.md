@@ -20,8 +20,8 @@ sudo apt clean all
 wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg 2> /dev/null
 sudo apt-add-repository "deb https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main"
 sudo apt update
-sudo apt-get install qemu cmake clang-10 lldb-10 gcc-10 \
-     bison \
+sudo apt-get install qemu-user cmake clang-10 lldb-10 gcc-10 \
+     bison flex \
      gcc-arm-linux-gnueabihf \
      gcc-arm-none-eabi
 
@@ -55,7 +55,7 @@ If you run the compiler and get the correct output file, you could assemble it b
 
 ```shell
 ./compiler -o test.S -S ../test/level1-1/foo.sy # Input the file.
-gcc-arm -o test test.S -static -L../lib -lsysy -static
+gcc-arm -o test test.S -static -L../lib -lsysy -march=armv7-a
 ```
 
 ## Debug the target application
@@ -101,6 +101,8 @@ make -j
 ```
 
 ```shell
+$ ./compiler --help
+
 --------- Compiler by Takanashi Guidance ---------
 Usage:
   Compiler [INPUT FILE POSITIONAL] [OTHER...] positional parameters
@@ -111,7 +113,7 @@ Usage:
   -c, --compile        Output the object file rather than executable
   -g, --debug          Enable debug mode
   -o, --output arg     The output file name. (default: a.out)
-      --emit-llvm      Print the intermediate representation of the source
+      --emit-llvm      Print the intermediate representation of the source 
                        code
       --print-ast      Print the abstract syntax tree
   -O, --opt-level arg  Enable Optimization (default: 0)
@@ -119,16 +121,18 @@ Usage:
   -S, --assembly       Generate assembly code
 ```
 
-An example:
+An full workflow:
 
-`./compiler -o test.S -S ../test/test.sy `
+**You are in `build` directory.**
+
+`./compiler -o test.S -S ../test/test.sy ` for compilation.
+`arm-linux-gnueabihf-gcc -o test -static -L../lib -lsysy -march=armv7-a ./test.S` for assembly.
+`qemu-arm ./test` for running the application.
 
 ## Project Layout
 
 ```txt
-.├── build
-│   ├── CMakeFiles
-│   └── Testing
+.
 ├── include
 │   ├── backend
 │   ├── common
@@ -191,4 +195,3 @@ Item -> Item_expr -> Item_expr_cond
 
      -> Item_func_def
 ```
-
