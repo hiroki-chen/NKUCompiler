@@ -1,7 +1,0 @@
-test.S: Assembler messages:
-test.S:131: 错误： bad immediate value for offset (4096)
-test.S:135: 错误： bad immediate value for offset (8192)
-test.S:139: 错误： bad immediate value for offset (8196)
-test.S:143: 错误： bad immediate value for offset (12288)
-test.S:147: 错误： bad immediate value for offset (12292)
-test.S:151: 错误： bad immediate value for offset (12296)

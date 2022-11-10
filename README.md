@@ -21,11 +21,11 @@ wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | 
 sudo apt-add-repository "deb https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main"
 sudo apt update
 sudo apt-get install qemu cmake clang-10 lldb-10 gcc-10 \
+     bison \
      gcc-arm-linux-gnueabihf \
      gcc-arm-none-eabi
 
 # Create a symbolic link for future convenience.
-sudo rm /usr/bin/c++ && sudo ln -s $(which clang++-10) /usr/bin/c++
 sudo ln -s $(which arm-linux-gnueabihf-gcc) /usr/bin/gcc-arm
 ```
 

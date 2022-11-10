@@ -1,6 +1,0 @@
-/home/chb/compilation/compiler/Compiler/build/CMakeFiles/header.dir
-/home/chb/compilation/compiler/Compiler/build/CMakeFiles/utils.dir
-/home/chb/compilation/compiler/Compiler/build/CMakeFiles/compiler.dir
-/home/chb/compilation/compiler/Compiler/build/CMakeFiles/test.dir
-/home/chb/compilation/compiler/Compiler/build/CMakeFiles/edit_cache.dir
-/home/chb/compilation/compiler/Compiler/build/CMakeFiles/rebuild_cache.dir

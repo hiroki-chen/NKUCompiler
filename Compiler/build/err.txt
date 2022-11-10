@@ -1,2 +1,0 @@
-[4;90;107mTakanashi Compiler is running!![0m
-Reading ../test/level2-4/089_hidden_var.sy
