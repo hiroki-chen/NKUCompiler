@@ -77,10 +77,12 @@ std::string generate_assembly(Operator&& op, Args&&... args) {
  * @brief Print indentation for each node in the AST.
  *
  * @param indent
- * @param leaf
+ * @param should_grow_this should be print `|` for this level of indentation
+ * @param leaf is the current node a leaf node
  * @param os
  */
-void print_indent(const uint32_t& indent, const bool& leaf, std::ostream& os);
+void print_indent(uint32_t indent, const std::vector<bool> should_grow_this,
+                  bool leaf, std::ostream& os);
 
 /**
  * @brief Checks whether a given file path is a directory.

@@ -127,8 +127,9 @@ typedef class Item_expr_cond final : public Item_expr {
 
   Item_expr_cond(const uint32_t& lineno, Item_expr* const expr);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_expr_cond() override = default;
 } Item_expr_cond;
@@ -157,10 +158,13 @@ typedef class Item_expr_comma final : public Item_expr {
     return Item_expr::expr_type::COMMA_TYPE;
   }
 
-  virtual std::vector<Item_expr*> get_expressions(void) const { return expressions; }
+  virtual std::vector<Item_expr*> get_expressions(void) const {
+    return expressions;
+  }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_expr_comma() override = default;
 } Item_expr_comma;
@@ -200,8 +204,9 @@ typedef class Item_expr_binary final : public Item_expr {
   Item_expr_binary(const uint32_t& lineno, const binary_type& type,
                    Item_expr* const lhs, Item_expr* const rhs);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_expr_binary() override = default;
 } Item_expr_binary;
@@ -231,8 +236,9 @@ typedef class Item_expr_unary final : public Item_expr {
   Item_expr_unary(const uint32_t& lineno, const unary_type& type,
                   Item_expr* const expr);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_expr_unary() override = default;
 } Item_expr_unary;

@@ -87,8 +87,9 @@ typedef class Item_literal_numeric : public Item_literal {
 
   virtual Item_literal::literal_type get_literal_type(void) const override = 0;
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_literal_numeric() override = default;
 } Item_literal_numeric;
@@ -208,8 +209,9 @@ typedef class Item_literal_string final : public Item_literal {
 
   Item_literal_string(const uint32_t& lineno, const std::string& str);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_literal_string() override = default;
 } Item_literal_string;
@@ -246,8 +248,9 @@ typedef class Item_literal_array_init : public Item_literal {
   Item_literal_array_init(const uint32_t& lineno, Item_expr* const expression,
                           const bool& is_numeric);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_literal_array_init() override = default;
 } Item_literal_array_init;

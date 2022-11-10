@@ -34,12 +34,12 @@ typedef class Item_struct_body final : Item_stmt {
     return Item_stmt::stmt_type::STRUCT_BODY;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 

@@ -55,8 +55,9 @@ typedef class Item_ident : public Item_expr {
     return Item_ident::ident_type::VARIABLE;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 } Item_ident;
 
 /**
@@ -67,9 +68,8 @@ typedef class Item_ident_array final : public Item_ident {
  protected:
   std::vector<Item_expr*> array_shape;
 
-  virtual ir::Operand* eval_runtime_helper(
-      ir::IRContext* const ir_context,
-      ir::ir_list& ir_list) const override;
+  virtual ir::Operand* eval_runtime_helper(ir::IRContext* const ir_context,
+                                           ir::ir_list& ir_list) const override;
 
   virtual ir::Operand* eval_runtime_helper(
       ir::IRContext* ir_context) const override;
@@ -86,22 +86,21 @@ typedef class Item_ident_array final : public Item_ident {
     return Item_ident::ident_type::ARRAY;
   }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
-  virtual void assign_to_array(ir::IRContext* ir_context,
-                               ir::ir_list& ir_list,
+  virtual void assign_to_array(ir::IRContext* ir_context, ir::ir_list& ir_list,
                                compiler::ir::Operand* const expression) const;
 
   Item_ident_array() = delete;
 
   Item_ident_array(const uint32_t& lineno, const std::string& name);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual std::vector<Item_expr*> get_array_shape(void) const {
     return array_shape;
@@ -120,8 +119,9 @@ typedef class Item_ident_func final : public Item_ident {
 
   Item_ident_func(const uint32_t& lineno, const std::string& name);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_ident_func() override = default;
 } Item_ident_func;
@@ -140,14 +140,14 @@ typedef class Item_ident_pointer final : public Item_ident {
 
   Item_ident_pointer(const uint32_t& lineno, const std::string& name);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual void add_shape(void) { shape++; };
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 

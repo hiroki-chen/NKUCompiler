@@ -73,10 +73,15 @@ typedef class Item {
    * 2) virtual function until there is no child anymore. You should implement
    * this function in each <b>final</b> class.
    *
+   * @param indent current indentation
+   * @param should_grow_this should we print `|` for this level of indentation
+   * @param leaf is the current node a leaf node
+   *
    * @return std::string
    */
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const = 0;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const = 0;
 
   virtual ~Item() = default;
 } Item;
@@ -99,8 +104,9 @@ typedef class Item_root : public Item {
 
   Item_root(const uint32_t& lineno);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_root() override = default;
 } Item_root;

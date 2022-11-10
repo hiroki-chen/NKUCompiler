@@ -55,56 +55,68 @@ void compiler::Item_func_def_list::add_arg(Item_func_def_arg* const arg) {
 }
 
 std::string compiler::Item_func_call_list::print_result(
-    const uint32_t& indent, const bool& leaf) const {
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Function Call List" << '\n';
   for (uint32_t i = 0; i < arguments.size(); i++) {
-    oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1);
+    oss << arguments[i]->print_result(indent + 1, should_grow_this,
+                                      i == arguments.size() - 1);
   }
   return oss.str();
 }
 
-std::string compiler::Item_func_call::print_result(const uint32_t& indent,
-                                                   const bool& leaf) const {
+std::string compiler::Item_func_call::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Function Call" << '\n';
-  oss << identifier->print_result(indent + 2, false);
-  oss << arguments->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, false);
+  oss << arguments->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_func_def_arg::print_result(const uint32_t& indent,
-                                                      const bool& leaf) const {
+std::string compiler::Item_func_def_arg::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
 
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Function Definition Argument with type " << termcolor::bright_blue
       << compiler::to_string(type) << termcolor::reset << '\n';
-  oss << identifier->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_func_def_list::print_result(const uint32_t& indent,
-                                                       const bool& leaf) const {
+std::string compiler::Item_func_def_list::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Function Definition Argument List" << '\n';
   for (uint32_t i = 0; i < arguments.size(); i++) {
-    oss << arguments[i]->print_result(indent + 2, i == arguments.size() - 1);
+    oss << arguments[i]->print_result(indent + 1, should_grow_this,
+                                      i == arguments.size() - 1);
   }
   return oss.str();
 }
 
-std::string compiler::Item_func_def::print_result(const uint32_t& indent,
-                                                  const bool& leaf) const {
+std::string compiler::Item_func_def::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Function Definition with return type " << termcolor::bright_blue
       << compiler::to_string(return_type) << termcolor::reset << '\n';
-  oss << identifier->print_result(indent + 2, false);
-  oss << parameter->print_result(indent + 2, false);
-  oss << func_body->print_result(indent + 2, false);
+  oss << identifier->print_result(indent + 1, should_grow_this, false);
+  oss << parameter->print_result(indent + 1, should_grow_this, false);
+  oss << func_body->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }

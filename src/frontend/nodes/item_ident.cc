@@ -39,47 +39,51 @@ void compiler::Item_ident_array::add_shape(Item_expr* const shape) {
   array_shape.emplace_back(shape);
 }
 
-std::string compiler::Item_ident::print_result(const uint32_t& indent,
-                                               const bool& leaf) const {
+std::string compiler::Item_ident::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
+  should_grow_this.emplace_back(!leaf);
 
-  print_indent(indent, leaf, oss);
-  oss << " Identifier with name " << termcolor::red << name << termcolor::reset
-      << '\n';
+  print_indent(indent, should_grow_this, leaf, oss);
+  oss << " Identifier with name `" << termcolor::red << name << "`"
+      << termcolor::reset << '\n';
   return oss.str();
 }
 
-std::string compiler::Item_ident_pointer::print_result(const uint32_t& indent,
-                                                       const bool& leaf) const {
+std::string compiler::Item_ident_pointer::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
+  should_grow_this.emplace_back(!leaf);
 
-  print_indent(indent, leaf, oss);
-  oss << " Identifier with name " << termcolor::red << name << termcolor::reset
-      << ", with shape " << termcolor::red << shape << termcolor::reset
-      << '\n';
+  print_indent(indent, should_grow_this, leaf, oss);
+  oss << " Identifier with name `" << termcolor::red << name << "`"
+      << termcolor::reset << ", with shape " << termcolor::red << shape
+      << termcolor::reset << '\n';
   return oss.str();
 }
 
-std::string compiler::Item_ident_func::print_result(const uint32_t& indent,
-                                                    const bool& leaf) const {
+std::string compiler::Item_ident_func::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
+  should_grow_this.emplace_back(!leaf);
 
-  print_indent(indent, leaf, oss);
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Identifier Function with name " << termcolor::red << name
       << termcolor::reset << '\n';
   return oss.str();
 }
 
-std::string compiler::Item_ident_array::print_result(const uint32_t& indent,
-                                                     const bool& leaf) const {
+std::string compiler::Item_ident_array::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
+  should_grow_this.emplace_back(!leaf);
 
-  print_indent(indent, leaf, oss);
-  oss << " Array Identifier with name " << termcolor::red << name
+  print_indent(indent, should_grow_this, leaf, oss);
+  oss << " Array Identifier with name `" << termcolor::red << name << "`"
       << termcolor::reset << ", and the shape is " << '\n';
   for (uint32_t i = 0; i < array_shape.size(); i++) {
     oss << array_shape[i]->print_result(
-        indent + 2,
+        indent + 1, should_grow_this,
         i == array_shape.size() - 1);  // Each number is a dimension.
   }
   return oss.str();

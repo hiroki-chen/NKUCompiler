@@ -161,7 +161,8 @@ void compiler::Compiler_runtime::run(void) {
       oss.str("");
       oss.clear();
       if (print_ast) {
-        res = root->print_result(0, false);
+        std::vector<bool> should_grow_this;
+        res = root->print_result(0, should_grow_this, false);
       }
 
       // Generate the IR.

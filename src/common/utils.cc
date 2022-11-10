@@ -25,19 +25,19 @@
 std::string compiler::to_string(const compiler::basic_type& type) {
   switch (type) {
     case INT_TYPE:
-      return "int";
+      return "`int`";
 
     case REAL_TYPE:
-      return "double";
+      return "`double`";
 
     case VOID_TYPE:
-      return "void";
+      return "`void`";
 
     case CHAR_TYPE:
-      return "char";
+      return "`char`";
 
     case STR_TYPE:
-      return "string";
+      return "`string`";
 
     default:
       throw compiler::type_error("Unrecognized basic type!");
@@ -72,63 +72,68 @@ std::string compiler::to_string(const compiler::unary_type& type) {
 std::string compiler::to_string(const compiler::binary_type& type) {
   switch (type) {
     case ADD_TYPE:
-      return "Add";
+      return "`+`";
 
     case SUB_TYPE:
-      return "Sub";
+      return "`-`";
 
     case MUL_TYPE:
-      return "Mul";
+      return "`*`";
 
     case DIV_TYPE:
-      return "Div";
+      return "`/`";
 
     case MOD_TYPE:
-      return "Mod";
+      return "`%`";
 
     case BITOR_TYPE:
-      return "Bitwise_or";
+      return "`|`";
 
     case BITAND_TYPE:
-      return "Bitwise_and";
+      return "`&`";
 
     case BITXOR_TYPE:
-      return "Bitwise_xor";
+      return "`^`";
 
     case EQ_TYPE:
-      return "Conditional_equal";
+      return "`==`";
 
     case NEQ_TYPE:
-      return "Conditional_nonequal";
+      return "`!=`";
 
     case G_TYPE:
-      return "Conditional_greater";
+      return "`>`";
 
     case L_TYPE:
-      return "Conditional_less";
+      return "`<`";
 
     case GE_TYPE:
-      return "Conditional_greater_or_equal";
+      return "`>=`";
 
     case LE_TYPE:
-      return "Conditional_less_or_equal";
+      return "`<=`";
 
     case LOR_TYPE:
-      return "Conditional_or";
+      return "`||`";
 
     case LAND_TYPE:
-      return "Conditional_and";
+      return "`&&`";
 
     default:
       throw compiler::type_error("Unrecognized binary type!");
   }
 }
 
-void compiler::print_indent(const uint32_t& indent, const bool& leaf,
-                            std::ostream& os) {
+void compiler::print_indent(uint32_t indent,
+                            const std::vector<bool> should_grow_this,
+                            bool leaf, std::ostream& os) {
   // Print indentation.
-  for (uint32_t i = 0; i < indent; i += 2) {
-    os << termcolor::bright_green << "│  " << termcolor::reset;
+  for (uint32_t i = 0; i < indent; i++) {
+    if (should_grow_this[i]) {
+      os << termcolor::bright_green << "│  " << termcolor::reset;
+    } else {
+      os << termcolor::bright_green << "   " << termcolor::reset;
+    }
   }
 
   // Print node.

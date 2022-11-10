@@ -40,9 +40,8 @@ typedef class Item_func_call_list final : public Item_expr {
     return arguments;
   }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -50,8 +49,9 @@ typedef class Item_func_call_list final : public Item_expr {
     return Item_expr::expr_type::CALL_LIST_TYPE;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   Item_func_call_list() = delete;
 
@@ -79,8 +79,9 @@ typedef class Item_func_call final : public Item_expr {
 
   virtual Item_func_call_list* get_call_list(void) const { return arguments; }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   Item_func_call() = delete;
 
@@ -103,16 +104,16 @@ typedef class Item_func_def_arg final : public Item_expr {
 
   virtual basic_type get_arg_type(void) const { return type; }
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
   virtual Item_ident* get_identifier(void) const { return identifier; }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   Item_func_def_arg() = delete;
 
@@ -139,8 +140,9 @@ typedef class Item_func_def_list final : public Item_expr {
     return arguments;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual Item_expr::expr_type get_expr_type(void) const override {
     return Item_expr::expr_type::FUNC_DEF_LIST_TYPE;
@@ -175,8 +177,9 @@ typedef class Item_func_def final : public Item {
                 Item_func_def_list* const parameter,
                 Item_block* const func_body);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_func_def() override = default;
 } Item_func_def;

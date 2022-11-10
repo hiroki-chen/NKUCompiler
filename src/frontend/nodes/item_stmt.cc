@@ -72,104 +72,125 @@ void compiler::Item_block::add_item(Item_stmt* const statement) {
   statements.emplace_back(statement);
 }
 
-std::string compiler::Item_stmt_assign::print_result(const uint32_t& indent,
-                                                     const bool& leaf) const {
+std::string compiler::Item_stmt_assign::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Assignment Statement" << '\n';
-  oss << identifier->print_result(indent + 2, true);
-  oss << expression->print_result(indent + 2, false);
+  oss << identifier->print_result(indent + 1, should_grow_this, false);
+  oss << expression->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_stmt_break::print_result(const uint32_t& indent,
-                                                    const bool& leaf) const {
+std::string compiler::Item_stmt_break::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Break Statement" << '\n';
   return oss.str();
 }
 
-std::string compiler::Item_stmt_continue::print_result(const uint32_t& indent,
-                                                       const bool& leaf) const {
+std::string compiler::Item_stmt_continue::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Continue Statement" << '\n';
   return oss.str();
 }
 
-std::string compiler::Item_stmt_eif::print_result(const uint32_t& indent,
-                                                  const bool& leaf) const {
+std::string compiler::Item_stmt_eif::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " If-else Statement" << '\n';
-  oss << condition->print_result(indent + 2, false);
+  oss << condition->print_result(indent + 1, should_grow_this, false);
 
   // There could be no else statement at all.
   if (else_branch != nullptr) {
-    oss << if_branch->print_result(indent + 2, false);
-    oss << else_branch->print_result(indent + 2, true);
+    oss << if_branch->print_result(indent + 1, should_grow_this, false);
+    oss << else_branch->print_result(indent + 1, should_grow_this, true);
   } else {
-    oss << if_branch->print_result(indent + 2, true);
+    oss << if_branch->print_result(indent + 1, should_grow_this, true);
   }
   return oss.str();
 }
 
-std::string compiler::Item_stmt_while::print_result(const uint32_t& indent,
-                                                    const bool& leaf) const {
+std::string compiler::Item_stmt_while::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << (is_do_while ? "Do While Statement" : " While Statement") << '\n';
-  oss << condition->print_result(indent + 2, false);
-  oss << statement->print_result(indent + 2, true);
+  oss << condition->print_result(indent + 1, should_grow_this, false);
+  oss << statement->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_stmt_postfix::print_result(const uint32_t& indent,
-                                                      const bool& leaf) const {
+std::string compiler::Item_stmt_postfix::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Postfix Statement with identifier"
-      << identifier->print_result(indent + 2, true) << '\n';
+      << identifier->print_result(indent + 1, should_grow_this, true) << '\n';
   return oss.str();
 }
 
-std::string compiler::Item_stmt_void::print_result(const uint32_t& indent,
-                                                   const bool& leaf) const {
+std::string compiler::Item_stmt_void::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Empty Statement" << '\n';
   return oss.str();
 }
 
-std::string compiler::Item_stmt_eval::print_result(const uint32_t& indent,
-                                                   const bool& leaf) const {
+std::string compiler::Item_stmt_eval::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Eval Statement" << '\n';
-  oss << expression->print_result(indent + 2, true);
+  oss << expression->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_stmt_return::print_result(const uint32_t& indent,
-                                                     const bool& leaf) const {
+std::string compiler::Item_stmt_return::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Return statement" << '\n';
   if (expr != nullptr) {
-    oss << expr->print_result(indent + 2, true);
+    oss << expr->print_result(indent + 1, should_grow_this, true);
   }
 
   return oss.str();
 }
 
-std::string compiler::Item_block::print_result(const uint32_t& indent,
-                                               const bool& leaf) const {
+std::string compiler::Item_block::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Block" << '\n';
   for (uint32_t i = 0; i < statements.size(); i++) {
-    oss << statements[i]->print_result(indent + 2, i == statements.size() - 1);
+    oss << statements[i]->print_result(indent + 1, should_grow_this,
+                                       i == statements.size() - 1);
   }
   return oss.str();
 }

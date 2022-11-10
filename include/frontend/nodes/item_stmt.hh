@@ -90,8 +90,9 @@ typedef class Item_stmt_assign final : public Item_stmt {
     return Item_stmt::stmt_type::ASSIGN_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_stmt_assign() override = default;
 } Item_stmt_assign;
@@ -130,8 +131,9 @@ typedef class Item_stmt_eif final : public Item_stmt {
     return Item_stmt::stmt_type::EIF_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_stmt_eif() override = default;
 } Item_stmt_eif;
@@ -187,8 +189,9 @@ typedef class Item_stmt_while final : public Item_stmt {
     return Item_stmt::stmt_type::WHILE_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_stmt_while() override = default;
 } Item_stmt_while;
@@ -211,8 +214,9 @@ typedef class Item_stmt_break final : public Item_stmt {
     return Item_stmt::stmt_type::BREAK_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_stmt_break() override = default;
 } Item_stmt_break;
@@ -235,8 +239,9 @@ typedef class Item_stmt_continue final : public Item_stmt {
     return Item_stmt::stmt_type::CONTINUE_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_stmt_continue() override = default;
 } Item_stmt_continue;
@@ -264,8 +269,9 @@ typedef class Item_stmt_return final : public Item_stmt {
     return Item_stmt::stmt_type::RETURN_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_stmt_return() override = default;
 } Item_stmt_return;
@@ -289,8 +295,9 @@ typedef class Item_stmt_void final : public Item_stmt {
     return Item_stmt::stmt_type::VOID_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_stmt_void() override = default;
 } Item_stmt_void;
@@ -321,8 +328,9 @@ typedef class Item_stmt_eval final : public Item_stmt {
     return Item_stmt::stmt_type::EVAL_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   Item_stmt_eval() = delete;
 
@@ -353,8 +361,9 @@ typedef class Item_stmt_postfix final : public Item_stmt {
     return Item_stmt::stmt_type::POSTFIX_STMT;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   Item_stmt_postfix() = delete;
 
@@ -387,8 +396,9 @@ typedef class Item_block final : public Item_stmt {
     return Item_stmt::stmt_type::BLOCK;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_block() override = default;
 } Item_block;

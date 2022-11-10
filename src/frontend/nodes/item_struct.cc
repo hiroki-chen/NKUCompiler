@@ -21,14 +21,17 @@
 compiler::Item_struct_body::Item_struct_body(const uint32_t& lineno)
     : Item_stmt(lineno) {}
 
-std::string compiler::Item_struct_body::print_result(const uint32_t& indent,
-                                                     const bool& leaf) const {
+std::string compiler::Item_struct_body::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Struct Body" << '\n';
   for (uint32_t i = 0; i < struct_body.size(); i++) {
     oss << struct_body[i]->print_result(
-        indent + 2, i == struct_body.size() - 1 ? true : false);
+        indent + 1, should_grow_this,
+        i == struct_body.size() - 1 ? true : false);
   }
   return oss.str();
 }

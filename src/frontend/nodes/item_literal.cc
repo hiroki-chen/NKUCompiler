@@ -54,10 +54,10 @@ void compiler::Item_literal_array_init::add_value(
 }
 
 std::string compiler::Item_literal_numeric::print_result(
-    const uint32_t& indent, const bool& leaf) const {
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
 
-  print_indent(indent, leaf, oss);
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Literal Numeric with value ";
 
   switch (get_literal_type()) {
@@ -82,7 +82,7 @@ std::string compiler::Item_literal_numeric::print_result(
 }
 
 std::string compiler::Item_literal_string::print_result(
-    const uint32_t& indent, const bool& leaf) const {
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
 
   oss << " Literal String with value " << termcolor::red << str
@@ -91,17 +91,20 @@ std::string compiler::Item_literal_string::print_result(
 }
 
 std::string compiler::Item_literal_array_init::print_result(
-    const uint32_t& indent, const bool& leaf) const {
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::stringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Literal Array Init" << '\n';
 
   if (expression != nullptr) {
-    oss << expression->print_result(indent + 2, false);
+    oss << expression->print_result(indent + 1, should_grow_this, false);
   }
 
   for (uint32_t i = 0; i < value_list.size(); i++) {
-    oss << value_list[i]->print_result(indent + 2, i == value_list.size() - 1);
+    oss << value_list[i]->print_result(indent + 1, should_grow_this,
+                                       i == value_list.size() - 1);
   }
 
   return oss.str();

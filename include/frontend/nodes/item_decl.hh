@@ -107,8 +107,9 @@ typedef class Item_stmt_decl : public Item_stmt {
     return declarations;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   Item_stmt_decl() = delete;
 
@@ -133,8 +134,9 @@ typedef class Item_decl_var : public Item_decl {
   Item_decl_var(const uint32_t& lineno, Item_ident* const identifier,
                 const bool& is_decl = true);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual Item_ident* get_identifier(void) const { return identifier; }
 
@@ -160,8 +162,9 @@ typedef class Item_decl_pointer : public Item_decl {
     return Item_decl::decl_type::POINTER;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_decl_pointer() override = default;
 } Item_decl_pointer;
@@ -180,9 +183,8 @@ typedef class Item_decl_pointer_init final : public Item_decl_pointer {
                          Item_expr* const expression, const bool& is_const,
                          const bool& is_decl = false);
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
@@ -190,8 +192,9 @@ typedef class Item_decl_pointer_init final : public Item_decl_pointer {
 
   virtual Item_expr* get_expression(void) const { return expression; }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_decl_pointer_init() override = default;
 
@@ -216,8 +219,9 @@ typedef class Item_decl_var_init final : public Item_decl_var {
 
   virtual Item_expr* get_expression(void) const { return expression; }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   Item_decl_var_init() = delete;
 
@@ -241,9 +245,8 @@ typedef class Item_decl_array : public Item_decl {
                                   const basic_type& b_type) const override;
 
   virtual uint32_t calculate_array_size(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list, const basic_type& b_type,
-      std::vector<ir::Operand*>& shape) const;
+      compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
+      const basic_type& b_type, std::vector<ir::Operand*>& shape) const;
 
  public:
   Item_decl_array() = delete;
@@ -257,8 +260,9 @@ typedef class Item_decl_array : public Item_decl {
     return Item_decl::decl_type::ARRAY;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_decl_array() override = default;
 } Item_decl_array;
@@ -287,8 +291,7 @@ typedef class Item_decl_array_init final : public Item_decl_array {
   virtual void init_helper(
       const std::vector<compiler::Item_literal_array_init*> value_list,
       std::vector<compiler::ir::Operand*>& init_value, const uint32_t& index,
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list,
+      compiler::ir::IRContext* const ir_context, compiler::ir::ir_list& ir_list,
       const compiler::ir::var_type& var_type) const;
 
  public:
@@ -305,8 +308,9 @@ typedef class Item_decl_array_init final : public Item_decl_array {
                        Item_literal_array_init* const init_value,
                        const bool& is_const, const bool& is_decl = false);
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual ~Item_decl_array_init() override = default;
 } Item_decl_array_init;
@@ -324,14 +328,14 @@ typedef class Item_decl_struct final : public Item_decl {
                    Item_struct_body* const struct_body,
                    const bool& is_decl = true);
 
-  virtual void generate_ir(
-      compiler::ir::IRContext* const ir_context,
-      compiler::ir::ir_list& ir_list) const override {
+  virtual void generate_ir(compiler::ir::IRContext* const ir_context,
+                           compiler::ir::ir_list& ir_list) const override {
     return;
   }
 
-  virtual std::string print_result(const uint32_t& indent,
-                                   const bool& leaf) const override;
+  virtual std::string print_result(uint32_t indent,
+                                   std::vector<bool> should_grow_this,
+                                   bool leaf) const override;
 
   virtual Item_decl::decl_type get_decl_type(void) const override {
     return Item_decl::decl_type::STRUCT;

@@ -39,47 +39,53 @@ compiler::Item_expr_unary::Item_expr_unary(const uint32_t& lineno,
                                            Item_expr* const expr)
     : Item_expr(lineno), type(type), expr(expr) {}
 
-std::string compiler::Item_expr_cond::print_result(const uint32_t& indent,
-                                                   const bool& leaf) const {
+std::string compiler::Item_expr_cond::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Conditional Expression" << '\n';
-  oss << expr->print_result(indent + 2, true);
+  oss << expr->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_expr_comma::print_result(const uint32_t& indent,
-                                                    const bool& leaf) const {
+std::string compiler::Item_expr_comma::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Comma Expression" << '\n';
   for (uint32_t i = 0; i < expressions.size(); i++) {
     oss << expressions[i]->print_result(
-        indent + 2, i == expressions.size() - 1 ? true : false);
+        indent + 1, should_grow_this,
+        i == expressions.size() - 1 ? true : false);
   }
   return oss.str();
 }
 
-std::string compiler::Item_expr_binary::print_result(const uint32_t& indent,
-                                                     const bool& leaf) const {
+std::string compiler::Item_expr_binary::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
+  should_grow_this.emplace_back(!leaf);
 
-  print_indent(indent, leaf, oss);
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Binary Expression with type " << termcolor::bright_blue
-      << compiler::to_string(get_binary_type()) << termcolor::reset
-      << '\n';
-  oss << lhs->print_result(indent + 2, false);
-  oss << rhs->print_result(indent + 2, true);
+      << compiler::to_string(get_binary_type()) << termcolor::reset << '\n';
+  oss << lhs->print_result(indent + 1, should_grow_this, false);
+  oss << rhs->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_expr_unary::print_result(const uint32_t& indent,
-                                                    const bool& leaf) const {
+std::string compiler::Item_expr_unary::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
+  should_grow_this.emplace_back(!leaf);
 
-  print_indent(indent, leaf, oss);
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Unary Expression with type " << termcolor::bright_blue
       << compiler::to_string(get_unary_type()) << termcolor::reset << '\n';
-  oss << expr->print_result(indent + 2, false);
+  oss << expr->print_result(indent + 1, should_grow_this, false);
   return oss.str();
 }

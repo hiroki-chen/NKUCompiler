@@ -76,95 +76,111 @@ void compiler::Item_stmt_decl::add_declaration(Item_decl* const declaration) {
   declarations.emplace_back(declaration);
 }
 
-std::string compiler::Item_stmt_decl::print_result(const uint32_t& indent,
-                                                   const bool& leaf) const {
+std::string compiler::Item_stmt_decl::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Declaration" << '\n';
 
   for (uint32_t i = 0; i < declarations.size(); i++) {
-    oss << declarations[i]->print_result(indent + 2,
+    oss << declarations[i]->print_result(indent + 1, should_grow_this,
                                          i == declarations.size() - 1);
   }
   return oss.str();
 }
 
-std::string compiler::Item_decl_var::print_result(const uint32_t& indent,
-                                                  const bool& leaf) const {
+std::string compiler::Item_decl_var::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Variable Declaration" << '\n';
-  oss << identifier->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_decl_var_init::print_result(const uint32_t& indent,
-                                                       const bool& leaf) const {
+std::string compiler::Item_decl_var_init::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
+  should_grow_this.emplace_back(!leaf);
 
-  print_indent(indent, leaf, oss);
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Variale Declaration with initial value";
   if (is_const == true) {
     oss << " and is CONST" << termcolor::reset;
   }
   oss << '\n';
-  oss << identifier->print_result(indent + 2, false);
-  oss << expression->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, false);
+  oss << expression->print_result(indent + 1, should_grow_this, true);
 
   return oss.str();
 }
 
-std::string compiler::Item_decl_array::print_result(const uint32_t& indent,
-                                                    const bool& leaf) const {
+std::string compiler::Item_decl_array::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Array Declaration" << '\n';
-  oss << identifier->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
 std::string compiler::Item_decl_array_init::print_result(
-    const uint32_t& indent, const bool& leaf) const {
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Array Declaration with initial value" << '\n';
-  oss << identifier->print_result(indent + 2, false);
-  oss << init_value->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, false);
+  oss << init_value->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_decl_pointer::print_result(const uint32_t& indent,
-                                                      const bool& leaf) const {
+std::string compiler::Item_decl_pointer::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Pointer Declaration" << '\n';
-  oss << identifier->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
 std::string compiler::Item_decl_pointer_init::print_result(
-    const uint32_t& indent, const bool& leaf) const {
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
   oss << " Pointer Declaration with initial value";
   if (is_const == true) {
     oss << " and is CONST" << termcolor::reset;
   }
   oss << '\n';
-  oss << identifier->print_result(indent + 2, false);
-  oss << expression->print_result(indent + 2, true);
+  oss << identifier->print_result(indent + 1, should_grow_this, false);
+  oss << expression->print_result(indent + 1, should_grow_this, true);
   return oss.str();
 }
 
-std::string compiler::Item_decl_struct::print_result(const uint32_t& indent,
-                                                     const bool& leaf) const {
+std::string compiler::Item_decl_struct::print_result(
+    uint32_t indent, std::vector<bool> should_grow_this, bool leaf) const {
   std::ostringstream oss;
-  print_indent(indent, leaf, oss);
+  should_grow_this.emplace_back(!leaf);
+
+  print_indent(indent, should_grow_this, leaf, oss);
+
   oss << " Struct Declaration" << '\n';
-  oss << identifier->print_result(indent + 2, false);
+  oss << identifier->print_result(indent + 1, should_grow_this, false);
 
   if (struct_body != nullptr) {
-    oss << struct_body->print_result(indent + 2, true);
+    oss << struct_body->print_result(indent + 1, should_grow_this, true);
   }
 
   return oss.str();

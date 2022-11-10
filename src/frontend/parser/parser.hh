@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_HOME_HAOBIN_NKUCOMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
-# define YY_YY_HOME_HAOBIN_NKUCOMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
+#ifndef YY_YY_HOME_HAOBIN_NKUCOMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
+# define YY_YY_HOME_HAOBIN_NKUCOMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -108,7 +108,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 65 "/home/haobin/NKUCompiler/Compiler/src/frontend/parser/parser.ypp"
+#line 65 "/home/haobin/NKUCompiler/src/frontend/parser/parser.ypp"
 
     compiler::basic_type                btype;
     compiler::Item_root*                item_root;               // root
@@ -134,7 +134,7 @@ union YYSTYPE
     std::string*                        raw_string;
     char                                raw_char;
 
-#line 138 "/home/haobin/NKUCompiler/Compiler/src/frontend/parser/parser.hh"
+#line 138 "/home/haobin/NKUCompiler/src/frontend/parser/parser.hh"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -161,4 +161,4 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_HAOBIN_NKUCOMPILER_COMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED  */
+#endif /* !YY_YY_HOME_HAOBIN_NKUCOMPILER_SRC_FRONTEND_PARSER_PARSER_HH_INCLUDED  */
