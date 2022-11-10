@@ -99,7 +99,8 @@ std::string compiler::Item_literal_array_init::print_result(
   oss << " Literal Array Init" << '\n';
 
   if (expression != nullptr) {
-    oss << expression->print_result(indent + 1, should_grow_this, false);
+    oss << expression->print_result(indent + 1, should_grow_this,
+                                    value_list.empty());
   }
 
   for (uint32_t i = 0; i < value_list.size(); i++) {
