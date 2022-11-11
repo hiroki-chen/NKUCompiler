@@ -72,6 +72,8 @@ typedef class Compiler_runtime {
 
   bool generate_assembly = false;
 
+  bool to_stderr = false;
+
   Item_root* root = nullptr;
 
   uint32_t opt_level = 0;

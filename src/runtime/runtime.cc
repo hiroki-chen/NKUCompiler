@@ -76,6 +76,8 @@ compiler::Command_parser::Command_parser(const int& argc, const char** argv)
       cxxopts::value<std::string>()->default_value("a.out"))(
       "emit-llvm", "Print the intermediate representation of the source code",
       cxxopts::value<bool>()->default_value("false"))(
+      "to-stderr", "Print the output to the console",
+      cxxopts::value<bool>()->default_value("false"))(
       "print-ast", "Print the abstract syntax tree",
       cxxopts::value<bool>()->default_value("false"))(
       "O,opt-level", "Enable Optimization",
@@ -89,6 +91,7 @@ compiler::Compiler_runtime::Compiler_runtime(const cxxopts::ParseResult& result)
       debug_on(result["debug"].as<bool>()),
       print_ast(result["print-ast"].as<bool>()),
       print_ir(result["emit-llvm"].as<bool>()),
+      to_stderr(result["to-stderr"].as<bool>()),
       opt_level(/*result["opt-level"].as<int>()*/ 0ul),
       generate_assembly(result["assembly"].as<bool>()) {
   ::opt_level = opt_level;
@@ -171,6 +174,9 @@ void compiler::Compiler_runtime::run(void) {
       compiler::ir::CFG_builder* const cfg_builder =
           new compiler::ir::CFG_builder(ir_list);
 
+      // Do clean-up.
+      delete root;
+
       // Check what should be printed.
       if (print_ir) {
         for (auto ir : ir_list) {
@@ -188,6 +194,10 @@ void compiler::Compiler_runtime::run(void) {
       output_file << res;
       output_file.flush();
       output_file.close();
+
+      if (to_stderr) {
+        std::cerr << res << std::endl;
+      }
     }
   } catch (const std::exception& e) {
     // Error handler.
